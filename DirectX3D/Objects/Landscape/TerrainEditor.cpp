@@ -4,7 +4,10 @@ TerrainEditor::TerrainEditor()
     : GameObject(L"Landscape/TerrainEditor.hlsl"),
     width(MAX_SIZE), height(MAX_SIZE)
 {
-    material->SetDiffuseMap(L"Textures/Landscape/Dirt2.png");
+    material->SetDiffuseMap(L"Textures/Landscape/Tile_Ice.png");// base
+    zeroMap = Texture::Add(L"Textures/Landscape/Tile_Ice.png");
+
+    firstMap = Texture::Add(L"Textures/Landscape/Dirt2.png"); // add 
     secondMap = Texture::Add(L"Textures/Landscape/Dirt.png");
     thirdMap = Texture::Add(L"Textures/Landscape/Dirt3.png");
 
@@ -69,8 +72,11 @@ void TerrainEditor::Update()
 void TerrainEditor::Render()
 {
     brushBuffer->SetPS(10);
-    secondMap->PSSet(11);
-    thirdMap->PSSet(12);
+
+    zeroMap->PSSet(11);
+    firstMap->PSSet(12);
+    secondMap->PSSet(13);
+    thirdMap->PSSet(14);
 
     SetRender();
     mesh->Draw();
