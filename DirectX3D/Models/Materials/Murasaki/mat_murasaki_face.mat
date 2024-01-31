@@ -1,0 +1,10 @@
+<Material Name="mat_murasaki_face">
+    <Shader Vertex="" Pixel=""/>
+    <Texture Diffuse="Textures/Color/White.png" Specular="Textures/Color/White.png" Normal="Textures/Color/White.png"/>
+    <Property Shininess="20" HasNormalMap="0">
+        <Diffuse R="0.93333334" G="0.93333334" B="0.93333334" A="1"/>
+        <Specular R="0.2" G="0.2" B="0.2" A="1"/>
+        <Ambient R="0.95294118" G="0.78431374" B="0.69803923" A="1"/>
+        <Emissive R="0" G="0" B="0" A="1"/>
+    </Property>
+</Material>

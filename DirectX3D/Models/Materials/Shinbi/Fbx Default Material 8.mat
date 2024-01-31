@@ -1,0 +1,10 @@
+<Material Name="Fbx Default Material 8">
+    <Shader Vertex="" Pixel=""/>
+    <Texture Diffuse="Textures/Color/White.png" Specular="Textures/Color/White.png" Normal="Textures/Color/White.png"/>
+    <Property Shininess="24" HasNormalMap="0">
+        <Diffuse R="0.72000003" G="0.72000003" B="0.72000003" A="1"/>
+        <Specular R="0" G="0" B="0" A="1"/>
+        <Ambient R="0.2" G="0.2" B="0.2" A="1"/>
+        <Emissive R="0" G="0" B="0" A="1"/>
+    </Property>
+</Material>

@@ -1,0 +1,10 @@
+<Material Name="Standardmaterial">
+    <Shader Vertex="" Pixel=""/>
+    <Texture Diffuse="Textures/Model/Fish/fish_TXTR.png" Specular="Textures/Color/White.png" Normal="Textures/Model/Fish/fish_NM.png"/>
+    <Property Shininess="5.6568542" HasNormalMap="1">
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="1"/>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Emissive R="0" G="0" B="0" A="1"/>
+    </Property>
+</Material>
