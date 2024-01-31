@@ -1,0 +1,10 @@
+<Material Name="DefaultMaterial">
+    <Shader Vertex="" Pixel=""/>
+    <Texture Diffuse="Textures/Color/White.png" Specular="Textures/Color/White.png" Normal="Textures/Color/White.png"/>
+    <Property Shininess="24" HasNormalMap="0">
+        <Diffuse R="0.80000001" G="0.80000001" B="0.80000001" A="1"/>
+        <Specular R="0" G="0" B="0" A="1"/>
+        <Ambient R="0" G="0" B="0" A="1"/>
+        <Emissive R="0" G="0" B="0" A="1"/>
+    </Property>
+</Material>

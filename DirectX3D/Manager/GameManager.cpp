@@ -24,6 +24,7 @@
 #include "Scenes/QuadTreeScene.h"
 #include "Scenes/TessellationScene.h"
 #include "Scenes/TerrainLODScene.h"
+#include "Scenes/DevScene/TestScene.h"
 
 // 오늘 진행된 설명 : 궤적 파티클, 다른 특수 파티클(눈, 스파크)
 //                   + 궤적 파티클 적용 (휴먼 클래스에 추가함)
@@ -46,7 +47,7 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("ModelRender", new ModelRenderScene());
     //SceneManager::Get()->Create("ModelAnimationScene", new ModelAnimationScene());
     //SceneManager::Get()->Create("Instancing", new IntancingScene());
-    SceneManager::Get()->Create("HumanTest", new HumanScene());
+    //SceneManager::Get()->Create("HumanTest", new HumanScene());
     //SceneManager::Get()->Create("Game", new GameScene());
     //SceneManager::Get()->Create("RenderTarget", new RenderTargetScene());
     //SceneManager::Get()->Create("GeometryBuffer", new GBufferScene());
@@ -61,10 +62,11 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("QuadTree", new QuadTreeScene());
     //SceneManager::Get()->Create("Tessellation", new TessellationScene());
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
+    SceneManager::Get()->Create("TestScene", new TestScene());
 
     SceneManager::Get()->Add("Grid");
     //SceneManager::Get()->Add("ModelExport");
-    SceneManager::Get()->Add("HumanTest");
+    //SceneManager::Get()->Add("HumanTest");
     //SceneManager::Get()->Add("Game");
     //SceneManager::Get()->Add("RenderTarget");
     //SceneManager::Get()->Add("GeometryBuffer");
@@ -79,6 +81,9 @@ GameManager::GameManager()
     //SceneManager::Get()->Add("QuadTree");
     //SceneManager::Get()->Add("Tessellation");
     //SceneManager::Get()->Add("LOD");
+
+    
+    SceneManager::Get()->Add("TestScene");
 }
 
 GameManager::~GameManager()
