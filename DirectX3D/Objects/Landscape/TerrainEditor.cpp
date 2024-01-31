@@ -85,6 +85,12 @@ void TerrainEditor::GUIRender()
     if (ImGui::DragInt("Height", (int*)&height, 1.0f, 2, MAX_SIZE))
         Resize();
 
+    ImGui::Text("Terrain Pick Position");
+    ImGui::Text("X : %.1f, Y : %.1f, Z : %.1f",
+        brushBuffer->Get().pickingPos.x,
+        brushBuffer->Get().pickingPos.y,
+        brushBuffer->Get().pickingPos.z);
+
     const char* editList[] = { "Height", "Alpha"};
     ImGui::Combo("EditType", (int*)&editType, editList, 2);
 

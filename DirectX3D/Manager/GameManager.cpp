@@ -46,7 +46,7 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("ModelRender", new ModelRenderScene());
     //SceneManager::Get()->Create("ModelAnimationScene", new ModelAnimationScene());
     //SceneManager::Get()->Create("Instancing", new IntancingScene());
-    SceneManager::Get()->Create("HumanTest", new HumanScene());
+    //SceneManager::Get()->Create("HumanTest", new HumanScene());
     //SceneManager::Get()->Create("Game", new GameScene());
     //SceneManager::Get()->Create("RenderTarget", new RenderTargetScene());
     //SceneManager::Get()->Create("GeometryBuffer", new GBufferScene());
@@ -64,7 +64,7 @@ GameManager::GameManager()
 
     SceneManager::Get()->Add("Grid");
     //SceneManager::Get()->Add("ModelExport");
-    SceneManager::Get()->Add("HumanTest");
+    //SceneManager::Get()->Add("HumanTest");
     //SceneManager::Get()->Add("Game");
     //SceneManager::Get()->Add("RenderTarget");
     //SceneManager::Get()->Add("GeometryBuffer");
@@ -78,6 +78,13 @@ GameManager::GameManager()
     //SceneManager::Get()->Add("WaterScene");
     //SceneManager::Get()->Add("QuadTree");
     //SceneManager::Get()->Add("Tessellation");
+    //SceneManager::Get()->Add("LOD");
+
+
+    // Mapping - Choi
+    SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
+    SceneManager::Get()->Add("Terrain");
+    //SceneManager::Get()->Create("LOD", new TerrainLODScene());
     //SceneManager::Get()->Add("LOD");
 }
 
