@@ -4,6 +4,8 @@
 ModelRenderScene::ModelRenderScene()
 {
     model = new Model("LastBossMap1");
+    model->Scale() *= 1.0f;
+    model->Pos().y -= 5;
 }
 
 ModelRenderScene::~ModelRenderScene()
@@ -26,6 +28,12 @@ void ModelRenderScene::Update()
 
     if (KEY_PRESS(VK_LEFT))
         model->Pos().x -= 100 * DELTA;
+
+    if (KEY_PRESS('Z'))
+        model->Pos().y -= 100 * DELTA;
+
+    if (KEY_PRESS('C'))
+        model->Pos().y += 100 * DELTA;
 }
 
 void ModelRenderScene::PreRender()
