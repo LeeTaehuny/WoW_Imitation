@@ -4,6 +4,7 @@
 #include "Scenes/GridScene.h"
 #include "Scenes/SphereScene.h"
 #include "Scenes/TerrainEditorScene.h"
+#include "Scenes/TerrainScene.h"
 #include "Scenes/CollisionScene.h"
 #include "Scenes/ModelExportScene.h"
 #include "Scenes/ModelRenderScene.h"
@@ -84,8 +85,17 @@ GameManager::GameManager()
     // Mapping - Choi
     SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
     SceneManager::Get()->Add("Terrain");
+    //SceneManager::Get()->Create("TerrainScene", new TerrainScene());
+    //SceneManager::Get()->Add("TerrainScene");
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
     //SceneManager::Get()->Add("LOD");
+
+    // Model Print
+    //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
+    //SceneManager::Get()->Add("ModelExport");
+    SceneManager::Get()->Create("ModelRender", new ModelRenderScene());
+    SceneManager::Get()->Add("ModelRender");
+
 }
 
 GameManager::~GameManager()

@@ -3,7 +3,7 @@
 TerrainLOD::TerrainLOD(wstring heightFile)
 {
     material->SetShader(L"TS/TerrainLOD.hlsl");
-    material->SetDiffuseMap(L"Textures/Landscape/Dirt2.png");
+    material->SetDiffuseMap(L"Textures/Landscape/Tile_Ice.png");
 
     hullShader = Shader::AddHS(L"TS/TerrainLOD.hlsl");
     domainShader = Shader::AddDS(L"TS/TerrainLOD.hlsl");
@@ -23,6 +23,10 @@ TerrainLOD::TerrainLOD(wstring heightFile)
     mesh = new Mesh<VertexType>();
     MakeMesh();
     mesh->CreateMesh();
+
+
+    model = new Model("LastBossMap1");
+    model->Pos() = { 0,500,0 };
 }
 
 TerrainLOD::~TerrainLOD()
@@ -31,6 +35,8 @@ TerrainLOD::~TerrainLOD()
 
     delete terrainBuffer;
     delete heightBuffer;
+
+    delete model;
 }
 
 void TerrainLOD::Render()
@@ -51,6 +57,8 @@ void TerrainLOD::Render()
 
     DC->HSSetShader(nullptr, nullptr, 0);
     DC->DSSetShader(nullptr, nullptr, 0);
+
+    model->Render();
 }
 
 void TerrainLOD::GUIRender()

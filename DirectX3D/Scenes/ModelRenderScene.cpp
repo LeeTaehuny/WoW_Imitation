@@ -3,7 +3,7 @@
 
 ModelRenderScene::ModelRenderScene()
 {
-    model = new Model("Kunai");
+    model = new Model("LastBossMap1");
 }
 
 ModelRenderScene::~ModelRenderScene()
@@ -14,6 +14,18 @@ ModelRenderScene::~ModelRenderScene()
 void ModelRenderScene::Update()
 {
     model->UpdateWorld();
+
+    if (KEY_PRESS(VK_UP))
+        model->Pos().z += 100 * DELTA;
+
+    if (KEY_PRESS(VK_DOWN))
+        model->Pos().z -= 100 * DELTA;
+
+    if (KEY_PRESS(VK_RIGHT))
+        model->Pos().x += 100 * DELTA;
+
+    if (KEY_PRESS(VK_LEFT))
+        model->Pos().x -= 100 * DELTA;
 }
 
 void ModelRenderScene::PreRender()
