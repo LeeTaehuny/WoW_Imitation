@@ -10,6 +10,18 @@ Potion::Potion(string name, PotionType type) : Item(ItemType::Potion, name), pot
 	collider->SetTag("PotionCollider");
 	collider->SetParent(this);
 	collider->Scale() *= 0.3f;
+
+	// 포션 타입에 따라 아이콘 및 회복량 설정
+	if (potionType == PotionType::Hp)
+	{
+		icon = new Quad(L"Textures/UI/Items/hp_potion.png");
+		amount = 1000;
+	}
+	else
+	{
+		icon = new Quad(L"Textures/UI/Items/mp_potion.png");
+		amount = 500;
+	}
 }
 
 Potion::~Potion()
@@ -33,4 +45,8 @@ void Potion::GUIRender()
 {
 	Item::GUIRender();
 	collider->GUIRender();
+}
+
+void Potion::Use()
+{
 }

@@ -21,6 +21,7 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 	virtual void GUIRender() override;
+	virtual void Use() override;
 
 // Getter
 public:
@@ -30,7 +31,7 @@ public:
 
 private:
 	// 무기의 타입에 따라 초기화를 위한 함수
-	void InitWeapon();
+	void InitWeapon(string name);
 
 private:
 	// 무기의 데미지를 저장하기 위한 변수

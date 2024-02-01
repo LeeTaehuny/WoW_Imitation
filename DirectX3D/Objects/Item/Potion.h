@@ -17,6 +17,7 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 	virtual void GUIRender() override;
+	virtual void Use() override;
 
 public:
 

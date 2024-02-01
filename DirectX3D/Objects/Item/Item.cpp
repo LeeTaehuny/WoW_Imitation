@@ -9,6 +9,11 @@ Item::Item(ItemType type, string name) : Model(name), type(type)
 
 Item::~Item()
 {
+	if (icon)
+	{
+		delete icon;
+		icon = nullptr;
+	}
 }
 
 void Item::Update()
@@ -18,6 +23,9 @@ void Item::Update()
 
 void Item::Render()
 {
+	// 아이콘 출력 테스트
+	//if (icon)
+	//	icon->Render();
 	Model::Render();
 }
 
