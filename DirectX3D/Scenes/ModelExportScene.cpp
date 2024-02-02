@@ -9,10 +9,10 @@ ModelExportScene::ModelExportScene()
     //string clipName;
     Model_MER_MESH(name);
 
-    exporter = new ModelExporter(name, file);
-    exporter->ExportMaterial();
-    exporter->ExportMesh();
-    delete exporter;    
+    //exporter = new ModelExporter(name, file);
+    //exporter->ExportMaterial();
+    //exporter->ExportMesh();
+    //delete exporter;    
     
     //clipName = "Dying";
     //file = "Models/Animations/" + name + "/" + clipName + ".fbx";
