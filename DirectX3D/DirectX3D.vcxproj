@@ -142,6 +142,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Character_\MarksmanshipHunter.h" />
+    <ClInclude Include="Objects\Character_\HolyPriest.h" />
+    <ClInclude Include="Objects\Character_\FireMage.h" />
+    <ClInclude Include="Objects\Character_\ArmsWarrior.h" />
+    <ClInclude Include="Objects\Character_\ProtectionWarrior.h" />
+    <ClInclude Include="Scenes\KimScene.h" />
+    <ClInclude Include="Objects\Character_\CH_Base.h" />
     <ClInclude Include="Framework\Environment\Reflection.h" />
     <ClInclude Include="Framework\Environment\Refraction.h" />
     <ClInclude Include="Framework\Shader\DomainShader.h" />
@@ -267,10 +274,17 @@
     <ClInclude Include="Scenes\TessellationScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Character_\MarksmanshipHunter.cpp" />
+    <ClCompile Include="Objects\Character_\HolyPriest.cpp" />
+    <ClCompile Include="Objects\Character_\FireMage.cpp" />
+    <ClCompile Include="Objects\Character_\ArmsWarrior.cpp" />
     <ClCompile Include="Framework\Environment\Reflection.cpp" />
     <ClCompile Include="Framework\Environment\Refraction.cpp" />
     <ClCompile Include="Framework\Shader\DomainShader.cpp" />
     <ClCompile Include="Framework\Shader\HullShader.cpp" />
+    <ClCompile Include="Objects\Character_\ProtectionWarrior.cpp" />
+    <ClCompile Include="Objects\Character_\CH_Base.cpp" />
+    <ClCompile Include="Scenes\KimScene.cpp" />
     <ClCompile Include="Scenes\MirrorScene.cpp" />
     <ClCompile Include="Objects\Algorithm\AStar.cpp" />
     <ClCompile Include="Objects\Particle\ParticleSystem.cpp" />

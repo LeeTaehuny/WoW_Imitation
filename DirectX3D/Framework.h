@@ -190,6 +190,14 @@ using namespace GameMath;
 #include "Objects/Character/Robot.h"
 #include "Objects/Character/Fox.h"
 
+// 캐릭터
+#include "Objects/Character_/CH_Base.h"
+#include "Objects/Character_/ProtectionWarrior.h"
+#include "Objects/Character_/ArmsWarrior.h"
+#include "Objects/Character_/FireMage.h"
+#include "Objects/Character_/HolyPriest.h"
+#include "Objects/Character_/MarksmanshipHunter.h"
+
 #include "Objects/Manager/BlockManager.h"
 #include "Objects/Manager/KunaiManager.h"
 #include "Objects/Manager/RobotManager.h"
