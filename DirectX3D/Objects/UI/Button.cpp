@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "Button.h"
 
 Button::Button(wstring textureFile)
@@ -24,25 +24,37 @@ void Button::Update()
     {
         if (KEY_DOWN(VK_LBUTTON))
         {
-            // �̺�Ʈ �Լ� ����
+            // 이벤트 함수 실행
             if (eventDown != nullptr)
                 eventDown();
 
             bIsClicked = true;
             bIsSelected = true;
         }
+
+        if (KEY_PRESS(VK_LBUTTON) && bIsClicked)
+        {
+            // 이벤트 함수 실행
+            if (eventPress != nullptr)
+                eventPress();
+        }
         
         if (!bIsClicked)
         {
-            // �̺�Ʈ �Լ� ����
+            // 이벤트 함수 실행
             if (eventOver != nullptr)
                 eventOver();
         }
-    }
-    else
-    {
-        bIsClicked = false;
-        bIsSelected = false;
+
+        if (KEY_UP(VK_LBUTTON))
+        {
+            // 이벤트 함수 실행
+            if (eventUp != nullptr)
+                eventUp();
+
+            bIsClicked = false;
+            bIsSelected = false;
+        }
     }
 
     UpdateWorld();

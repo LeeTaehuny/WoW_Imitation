@@ -1,7 +1,7 @@
-#pragma once
+ï»¿#pragma once
 #include "Objects/UI/Button.h"
 
-// ½½·ÔÀÇ Å¸ÀÔÀ» ±¸ºĞÇÏ±â À§ÇÑ ¿­°ÅÇü
+// ìŠ¬ë¡¯ì˜ íƒ€ì…ì„ êµ¬ë¶„í•˜ê¸° ìœ„í•œ ì—´ê±°í˜•
 enum class SlotType
 {
 	Inventory_Frame,
@@ -21,6 +21,8 @@ public:
 private:
 	void OnClick();
 	void OnHover();
+	void OnPress();
+	void OnRelease();
 
 private:
 	SlotType slotType;

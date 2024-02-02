@@ -1,17 +1,17 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "Potion.h"
 
 Potion::Potion(string name, PotionType type) : Item(ItemType::Potion, name), potionType(type)
 {
 	SetTag(name);
 
-	// Ãæµ¹Ã¼ »ý¼º ¹× ¿É¼Ç ÃÊ±âÈ­
+	// ì¶©ëŒì²´ ìƒì„± ë° ì˜µì…˜ ì´ˆê¸°í™”
 	collider = new SphereCollider();
 	collider->SetTag("PotionCollider");
 	collider->SetParent(this);
 	collider->Scale() *= 0.3f;
 
-	// Æ÷¼Ç Å¸ÀÔ¿¡ µû¶ó ¾ÆÀÌÄÜ ¹× È¸º¹·® ¼³Á¤
+	// í¬ì…˜ íƒ€ìž…ì— ë”°ë¼ ì•„ì´ì½˜ ë° íšŒë³µëŸ‰ ì„¤ì •
 	if (potionType == PotionType::Hp)
 	{
 		icon = new Quad(L"Textures/UI/Items/hp_potion.png");

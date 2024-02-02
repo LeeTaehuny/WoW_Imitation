@@ -1,15 +1,15 @@
-#pragma once
+ï»¿#pragma once
 #include "Objects/Item/Item.h"
 
-// ¹«±âÀÇ Å¸ÀÔÀ» ±¸ºĞÇÏ±â À§ÇÑ ¿­°ÅÇü
+// ë¬´ê¸°ì˜ íƒ€ì…ì„ êµ¬ë¶„í•˜ê¸° ìœ„í•œ ì—´ê±°í˜•
 enum class WeaponType
 {
-	Sword,	// °Ë
-	Bow,	// È°
-	Hammer,	// ¸ÁÄ¡
-	Staff,	// ÁöÆÎÀÌ
-	Shield,	// ¹æÆĞ
-	Arrow,	// È­»ì
+	Sword,	// ê²€
+	Bow,	// í™œ
+	Hammer,	// ë§ì¹˜
+	Staff,	// ì§€íŒ¡ì´
+	Shield,	// ë°©íŒ¨
+	Arrow,	// í™”ì‚´
 };
 
 class Weapon : public Item
@@ -30,11 +30,11 @@ public:
 	int GetDamage() { return damage; }
 
 private:
-	// ¹«±âÀÇ Å¸ÀÔ¿¡ µû¶ó ÃÊ±âÈ­¸¦ À§ÇÑ ÇÔ¼ö
+	// ë¬´ê¸°ì˜ íƒ€ì…ì— ë”°ë¼ ì´ˆê¸°í™”ë¥¼ ìœ„í•œ í•¨ìˆ˜
 	void InitWeapon(string name);
 
 private:
-	// ¹«±âÀÇ µ¥¹ÌÁö¸¦ ÀúÀåÇÏ±â À§ÇÑ º¯¼ö
+	// ë¬´ê¸°ì˜ ë°ë¯¸ì§€ë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
 	int damage;
 
 	SphereCollider* collider;

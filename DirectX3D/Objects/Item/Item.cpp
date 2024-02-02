@@ -1,9 +1,9 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "Item.h"
 
 Item::Item(ItemType type, string name) : Model(name), type(type)
 {
-	// ¼ÎÀÌ´õ ¼öÁ¤(¾ÆÀÌÅÛÀº ÃÖ¼Ò ¹à±â º¸Àå)
+	// ì…°ì´ë” ìˆ˜ì •(ì•„ì´í…œì€ ìµœì†Œ ë°ê¸° ë³´ìž¥)
 	SetShader(L"Light/ItemLight.hlsl");
 }
 
@@ -23,7 +23,7 @@ void Item::Update()
 
 void Item::Render()
 {
-	// ¾ÆÀÌÄÜ Ãâ·Â Å×½ºÆ®
+	// ì•„ì´ì½˜ ì¶œë ¥ í…ŒìŠ¤íŠ¸
 	//if (icon)
 	//	icon->Render();
 	Model::Render();

@@ -1,17 +1,23 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "Slot.h"
 
 
 Slot::Slot(wstring textureFile, SlotType type) : Button(textureFile), slotType(type)
 {
+	// ì´ë²¤íŠ¸ ë“±ë¡
 	SetDownEvent(bind(&Slot::OnClick, this));
 	SetOverEvent(bind(&Slot::OnHover, this));
+	SetPressEvent(bind(&Slot::OnPress, this));
+	SetUpEvent(bind(&Slot::OnRelease, this));
 }
 
 Slot::Slot(Vector2 size, SlotType type) : Button(size), slotType(type)
 {
+	// ì´ë²¤íŠ¸ ë“±ë¡
 	SetDownEvent(bind(&Slot::OnClick, this));
 	SetOverEvent(bind(&Slot::OnHover, this));
+	SetPressEvent(bind(&Slot::OnPress, this));
+	SetUpEvent(bind(&Slot::OnRelease, this));
 }
 
 Slot::~Slot()
@@ -30,7 +36,7 @@ void Slot::Render()
 
 void Slot::OnClick()
 {
-	// ½½·Ô Å¸ÀÔ¿¡ µû¶ó Àû¿ë
+	// ìŠ¬ë¡¯ íƒ€ìž…ì— ë”°ë¼ ì ìš©
 	switch (slotType)
 	{
 	case SlotType::Inventory_Frame:
@@ -44,12 +50,44 @@ void Slot::OnClick()
 
 void Slot::OnHover()
 {
-	// ½½·Ô Å¸ÀÔ¿¡ µû¶ó Àû¿ë
+	// ìŠ¬ë¡¯ íƒ€ìž…ì— ë”°ë¼ ì ìš©
 	switch (slotType)
 	{
 	case SlotType::Inventory_Frame:
 		break;
 	case SlotType::Inventory_Slot:
+		break;
+	default:
+		break;
+	}
+}
+
+void Slot::OnPress()
+{
+	// ìŠ¬ë¡¯ íƒ€ìž…ì— ë”°ë¼ ì ìš©
+	switch (slotType)
+	{
+	case SlotType::Inventory_Frame:
+		Observer::Get()->ExcuteEvent("MoveInvFrame");
+		break;
+	case SlotType::Inventory_Slot:
+		Observer::Get()->ExcuteParamEvent("PickInvItem", this);
+		break;
+	default:
+		break;
+	}
+}
+
+void Slot::OnRelease()
+{
+	// ìŠ¬ë¡¯ íƒ€ìž…ì— ë”°ë¼ ì ìš©
+	switch (slotType)
+	{
+	case SlotType::Inventory_Frame:
+		Observer::Get()->ExcuteEvent("StopInvFrame");
+		break;
+	case SlotType::Inventory_Slot:
+		Observer::Get()->ExcuteParamEvent("DownInvItem", this);
 		break;
 	default:
 		break;

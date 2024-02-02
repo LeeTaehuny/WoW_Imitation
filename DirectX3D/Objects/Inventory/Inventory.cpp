@@ -1,16 +1,25 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "Inventory.h"
 #include "Objects/Item/Item.h"
 #include "Objects/Inventory/Slot.h"
 
 Inventory::Inventory()
 {
-	// ÀÎº¥Åä¸® ÇÁ·¹ÀÓ ¼³Á¤
+	// ì¸ë²¤í† ë¦¬ í”„ë ˆì„ ì„¤ì •
 	invFrame = new Slot(L"Textures/UI/Inventory.png", SlotType::Inventory_Frame);
 	invFrame->Scale() *= 1.75f;
-	invFrame->Pos() = { CENTER_X, CENTER_Y };
+	invFrame->Pos() = { CENTER_X, CENTER_Y, 1.0f };
 
-	// ÀÎº¥Åä¸® ½½·Ô ¼³Á¤
+	// ì¸ë²¤í† ë¦¬ ë‚´ìš© ì´ˆê¸°í™”
+	inventory.resize(28);
+	int idx = 0;
+	for (InventoryItem& i : inventory)
+	{
+		i.index = idx;
+		idx++;
+	}
+
+	// ì¸ë²¤í† ë¦¬ ìŠ¬ë¡¯ ì„¤ì •
 	invSlot.resize(28);
 	for (int i = 0; i < invSlot.size(); i++)
 	{
@@ -20,12 +29,25 @@ Inventory::Inventory()
 		Slot* slot = new Slot(Vector2(33.0f, 33.0f), SlotType::Inventory_Slot);
 		slot->GetMaterial()->SetDiffuseMap(L"Textures/Color/White.png");
 		slot->SetParent(invFrame);
-		slot->Pos() = { -143.0f + (idxX * 47.5f), 45.0f - (idxY * 40.5f), 0}; 
+		slot->Pos() = { -143.0f + (idxX * 47.5f), 45.0f - (idxY * 40.5f), 0.0f}; 
 		invSlot[i] = slot;
 	}
 
-	// ÀÎº¥Åä¸® ¾×Æ¼ºê off
+	// ì¸ë²¤í† ë¦¬ ì•¡í‹°ë¸Œ off
 	SetActive(false);
+
+	// ì´ë²¤íŠ¸ ë“±ë¡
+	{
+		// ì¸ë²¤í† ë¦¬ ì´ë™
+		Observer::Get()->AddEvent("MoveInvFrame", bind(&Inventory::MoveInventoryFrame, this));
+		Observer::Get()->AddEvent("StopInvFrame", bind(&Inventory::StopInventoryFrame, this));
+		// ì•„ì´í…œ ì´ë™
+		Observer::Get()->AddParamEvent("PickInvItem", bind(&Inventory::PickItem, this, placeholders::_1));
+		Observer::Get()->AddParamEvent("DownInvItem", bind(&Inventory::DownItem, this, placeholders::_1));
+	}
+
+	mouseImg = new Quad(Vector2(55.0f, 55.0f));
+	mouseImg->SetActive(false);
 }
 
 Inventory::~Inventory()
@@ -39,7 +61,7 @@ Inventory::~Inventory()
 
 void Inventory::Update()
 {
-	// Å×½ºÆ® ÄÚµå. ³ªÁß¿¡´Â ÇÃ·¹ÀÌ¾î¿¡¼­ iÅ°¿Í ¸ÅÇÎÇÒ °Í.
+	// í…ŒìŠ¤íŠ¸ ì½”ë“œ. ë‚˜ì¤‘ì—ëŠ” í”Œë ˆì´ì–´ì—ì„œ ií‚¤ì™€ ë§¤í•‘í•  ê²ƒ.
 	if (KEY_DOWN('I'))
 	{
 		if (Active())
@@ -54,10 +76,151 @@ void Inventory::Update()
 
 	if (!Active()) return;
 
-	// ÀÎº¥Åä¸® ¾÷µ¥ÀÌÆ®
+	// ì¸ë²¤í† ë¦¬ ì—…ë°ì´íŠ¸
 	UpdateInventory();
 
-	if (KEY_PRESS(VK_LBUTTON) && invFrame->GetSelect())
+	// ìŠ¬ë¡¯ ë° í”„ë ˆì„ ì—…ë°ì´íŠ¸
+	for (Slot* slot : invSlot)
+	{
+		slot->Update();
+	}
+
+	invFrame->Update();
+
+	if (mouseImg->Active())
+	{
+		mouseImg->Pos() = mousePos;
+		mouseImg->UpdateWorld();
+	}
+
+	if (KEY_UP(VK_LBUTTON))
+	{
+		mouseImg->SetActive(false);
+	}
+}
+
+void Inventory::UIRender()
+{
+	if (!Active()) return;
+
+	invFrame->Render();
+	for (Slot* slot : invSlot)
+	{
+		slot->Render();
+	}
+
+	if (mouseImg->Active())
+	{
+		mouseImg->Render();
+	}
+}
+
+void Inventory::UpdateInventory()
+{
+	// ì¸ë²¤í† ë¦¬ ë‚´ìš©ì„ ìˆœíšŒí•˜ë©° ì•„ì´ì½˜ì„ í•´ë‹¹ ìŠ¬ë¡¯ì— ì ìš©ì‹œí‚¤ê¸°
+	for (InventoryItem inv : inventory)
+	{
+		if (inv.item == nullptr)
+		{
+			invSlot[inv.index]->GetMaterial()->SetDiffuseMap(L"Textures/Color/White.png");
+		}
+		else
+		{
+			// ì¸ë²¤í† ë¦¬ ë‚´ì˜ ì•„ì´í…œ ì¸ë±ìŠ¤ì— ë”°ë¥¸ ì´ë¯¸ì§€ ì¶”ì¶œ
+			Texture* icon = inv.item->GetIcon()->GetMaterial()->GetDiffuseMap();
+			// ì¸ë±ìŠ¤ ë²ˆì§¸ ìŠ¬ë¡¯ì— ì´ë¯¸ì§€ ì ìš©
+			invSlot[inv.index]->GetMaterial()->SetDiffuseMap(icon);
+		}
+	}
+}
+
+void Inventory::AddItem(Item* item)
+{
+	// ì „ë‹¬ë°›ì€ ì•„ì´í…œì˜ íƒ€ì…ì´ ë¬´ê¸° íƒ€ì…ì´ë¼ë©´?
+	if (item->GetType() == ItemType::Weapon)
+	{
+		// ì•„ì´í…œ ì •ë³´ ìƒì„±
+		InventoryItem desc;
+
+		// ë¹„ì–´ìˆëŠ” ì¸ë²¤í† ë¦¬ ì¸ë±ìŠ¤ ì°¾ê¸°
+		for (InventoryItem i : inventory)
+		{
+			if (i.item == nullptr)
+			{
+				desc.index = i.index;
+				desc.item = item;
+				desc.quantity = 1;
+
+				// ì¸ë²¤í† ë¦¬ì— ì•„ì´í…œ ì¶”ê°€
+				inventory[i.index] = desc;
+				return;
+			}
+		}
+	}
+
+	// ì „ë‹¬ë°›ì€ ì•„ì´í…œì˜ íƒ€ì…ì´ í¬ì…˜ì¸ ê²½ìš° ì¤‘ë³µë˜ëŠ” ì•„ì´í…œì´ ìˆëŠ”ì§€ ì°¾ê¸°
+	for (InventoryItem inv : inventory)
+	{
+		if (inv.item == nullptr) continue;
+		// ë§Œì•½ ì•„ì´í…œì˜ íƒœê·¸ê°€ ê°™ë‹¤ë©´?
+		if (inv.item->GetTag() == item->GetTag())
+		{
+			// ìˆ˜ëŸ‰ ì¦ê°€
+			inv.quantity++;
+			return;
+		}
+	}
+
+	// ì¤‘ë³µëœ ì•„ì´í…œì´ ì—†ëŠ” ê²½ìš° ì¸ë²¤í† ë¦¬ì˜ ë§¨ ë’¤ì— ì•„ì´í…œ ì¶”ê°€
+	// * ì•„ì´í…œ ì •ë³´ ìƒì„±
+	InventoryItem desc;
+
+	// ë¹„ì–´ìˆëŠ” ì¸ë²¤í† ë¦¬ ì¸ë±ìŠ¤ ì°¾ê¸°
+	for (InventoryItem i : inventory)
+	{
+		if (i.item == nullptr)
+		{
+			desc.index = i.index;
+			desc.item = item;
+			desc.quantity = 1;
+
+			// ì¸ë²¤í† ë¦¬ì— ì¶”ê°€
+			inventory[i.index] = desc;
+			return;
+		}
+	}
+
+	
+}
+
+void Inventory::DeleteItem(Item* item)
+{
+	// ì‚­ì œëŠ” ì¼ë‹¨ ë‚˜ì¤‘ì— ìƒí™©ë³´ê³  ì‘ì„±
+
+	// ì „ë‹¬ë°›ì€ ì•„ì´í…œì˜ íƒ€ì…ì´ ë¬´ê¸° íƒ€ì…ì´ë¼ë©´?
+	//if (item->GetType() == ItemType::Weapon)
+	//{
+	//	// ìˆœíšŒ
+	//	for (InventoryItem inv : inventory)
+	//	{
+	//		// ë§Œì•½ ì•„ì´í…œì˜ íƒœê·¸ê°€ ê°™ë‹¤ë©´?
+	//		if (item->GetTag() == inv.item->GetTag())
+	//		{
+	//			// í•´ë‹¹ ìŠ¬ë¡¯ì˜ ì´ë¯¸ì§€ ì´ˆê¸°í™”
+	//			invSlot[inv.index]->GetMaterial()->SetDiffuseMap(L"Textures/Color/White.png");
+	//
+	//			// ì•„ì´í…œ ì‚­ì œ
+	//			SAFE_DEL(inv.item);
+	//			return;
+	//		}
+	//	}
+	//}
+	
+}
+
+void Inventory::MoveInventoryFrame()
+{
+	if (invFrame->GetSelect())
 	{
 		for (Slot* slot : invSlot)
 		{
@@ -83,106 +246,79 @@ void Inventory::Update()
 			prevPos = mousePos;
 		}
 	}
-	else
-	{
-		bIsMove = false;
-	}
-
-	// ½½·Ô ¹× ÇÁ·¹ÀÓ ¾÷µ¥ÀÌÆ®
-	for (Slot* slot : invSlot)
-	{
-		slot->Update();
-	}
-
-	invFrame->Update();
 }
 
-void Inventory::UIRender()
+void Inventory::StopInventoryFrame()
 {
-	if (!Active()) return;
-
-	invFrame->Render();
-	for (Slot* slot : invSlot)
-	{
-		slot->Render();
-	}
+	bIsMove = false;
 }
 
-void Inventory::UpdateInventory()
+void Inventory::PickItem(void* slot)
 {
-	// ÀÎº¥Åä¸® ³»¿ëÀ» ¼øÈ¸ÇÏ¸ç ¾ÆÀÌÄÜÀ» ÇØ´ç ½½·Ô¿¡ Àû¿ë½ÃÅ°±â
-	for (InventoryItem inv : inventory)
+	Slot* tmpSlot = static_cast<Slot*>(slot);
+
+	if (tmpSlot)
 	{
-		// ÀÎº¥Åä¸® ³»ÀÇ ¾ÆÀÌÅÛ ÀÎµ¦½º¿¡ µû¸¥ ÀÌ¹ÌÁö ÃßÃâ
-		Texture* icon = inv.item->GetIcon()->GetMaterial()->GetDiffuseMap();
-		// ÀÎµ¦½º ¹øÂ° ½½·Ô¿¡ ÀÌ¹ÌÁö Àû¿ë
-		invSlot[inv.index]->GetMaterial()->SetDiffuseMap(icon);
-	}
-}
-
-void Inventory::AddItem(Item* item)
-{
-	// Àü´Ş¹ŞÀº ¾ÆÀÌÅÛÀÇ Å¸ÀÔÀÌ ¹«±â Å¸ÀÔÀÌ¶ó¸é?
-	if (item->GetType() == ItemType::Weapon)
-	{
-		// ¾ÆÀÌÅÛ Á¤º¸ »ı¼º
-		InventoryItem desc;
-
-		desc.index = inventory.size();
-		desc.item = item;
-		desc.quantity = 1;
-
-		// ÀÎº¥Åä¸®ÀÇ ¸Ç µÚ¿¡ ¾ÆÀÌÅÛ Ãß°¡
-		inventory.push_back(desc);
-
-		return;
-	}
-
-	// Àü´Ş¹ŞÀº ¾ÆÀÌÅÛÀÇ Å¸ÀÔÀÌ Æ÷¼ÇÀÎ °æ¿ì Áßº¹µÇ´Â ¾ÆÀÌÅÛÀÌ ÀÖ´ÂÁö Ã£±â
-	for (InventoryItem inv : inventory)
-	{
-		// ¸¸¾à ¾ÆÀÌÅÛÀÇ ÅÂ±×°¡ °°´Ù¸é?
-		if (inv.item->GetTag() == item->GetTag())
+		// ëª¨ë“  ìŠ¬ë¡¯ì„ ìˆœíšŒí•˜ë©° ë™ì¼í•œ ìŠ¬ë¡¯ ì¸ë±ìŠ¤ ì°¾ê¸°
+		int idx = 0;
+		for (Slot* slot : invSlot)
 		{
-			// ¼ö·® Áõ°¡
-			inv.quantity++;
+			if (slot == tmpSlot)
+			{
+				break;
+			}
+			idx++;
+		}
+
+		// í•´ë‹¹ ìŠ¬ë¡¯ì— ì•„ì´í…œì´ ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê²½ìš° ë¦¬í„´
+		if (inventory[idx].item == nullptr)
+		{
+			tempIndex = -1;
+			// í˜„ì¬ ì„ íƒí•œ ë²„íŠ¼ ì„ íƒ ì—¬ë¶€ ë° í™œì„±í™” off
+			invSlot[idx]->SetSelect(false);
+			invSlot[idx]->SetCilck(false);
 			return;
 		}
+
+		// í•´ë‹¹ ìŠ¬ë¡¯ì˜ ì¸ë±ìŠ¤ ì €ì¥
+		tempIndex = idx;
+
+		// ë§ˆìš°ìŠ¤ ì´ë¯¸ì§€ í™œì„±í™” ë° í•´ë‹¹ ìŠ¬ë¡¯ ì´ë¯¸ì§€ ë„£ê¸°
+		mouseImg->GetMaterial()->SetDiffuseMap(invSlot[idx]->GetMaterial()->GetDiffuseMap());
+		mouseImg->SetActive(true);
+
 	}
-
-	// Áßº¹µÈ ¾ÆÀÌÅÛÀÌ ¾ø´Â °æ¿ì ÀÎº¥Åä¸®ÀÇ ¸Ç µÚ¿¡ ¾ÆÀÌÅÛ Ãß°¡
-	// * ¾ÆÀÌÅÛ Á¤º¸ »ı¼º
-	InventoryItem desc;
-
-	desc.index = inventory.size();
-	desc.item = item;
-	desc.quantity = 1;
-
-	// * ÀÎº¥Åä¸®¿¡ Ãß°¡
-	inventory.push_back(desc);
 }
 
-void Inventory::DeleteItem(Item* item)
+void Inventory::DownItem(void* slot)
 {
-	// »èÁ¦´Â ÀÏ´Ü ³ªÁß¿¡ »óÈ²º¸°í ÀÛ¼º
+	if (tempIndex == -1) return;
 
-	// Àü´Ş¹ŞÀº ¾ÆÀÌÅÛÀÇ Å¸ÀÔÀÌ ¹«±â Å¸ÀÔÀÌ¶ó¸é?
-	//if (item->GetType() == ItemType::Weapon)
-	//{
-	//	// ¼øÈ¸
-	//	for (InventoryItem inv : inventory)
-	//	{
-	//		// ¸¸¾à ¾ÆÀÌÅÛÀÇ ÅÂ±×°¡ °°´Ù¸é?
-	//		if (item->GetTag() == inv.item->GetTag())
-	//		{
-	//			// ÇØ´ç ½½·ÔÀÇ ÀÌ¹ÌÁö ÃÊ±âÈ­
-	//			invSlot[inv.index]->GetMaterial()->SetDiffuseMap(L"Textures/Color/White.png");
-	//
-	//			// ¾ÆÀÌÅÛ »èÁ¦
-	//			SAFE_DEL(inv.item);
-	//			return;
-	//		}
-	//	}
-	//}
-	
+	Slot* tmpSlot = static_cast<Slot*>(slot);
+
+	if (tmpSlot)
+	{
+		// ëª¨ë“  ìŠ¬ë¡¯ì„ ìˆœíšŒí•˜ë©° ë™ì¼í•œ ìŠ¬ë¡¯ ì¸ë±ìŠ¤ ì°¾ê¸°
+		int idx = 0;
+		for (Slot* slot : invSlot)
+		{
+			if (slot == tmpSlot)
+			{
+				break;
+			}
+			idx++;
+		}
+
+		// ì´ì „ ì¸ë±ìŠ¤ ìŠ¬ë¡¯ì˜ í´ë¦­ í•´ì œ
+		invSlot[tempIndex]->SetSelect(false);
+		invSlot[tempIndex]->SetCilck(false);
+
+		// í•´ë‹¹ ì¸ë±ìŠ¤ì˜ ìœ„ì¹˜ì— ì•„ì´í…œ ì •ë³´ ì˜®ê¸°ê¸°
+		Item* item = inventory[tempIndex].item;
+		int quantity = inventory[tempIndex].quantity;
+		inventory[tempIndex].item = inventory[idx].item;
+		inventory[tempIndex].quantity = inventory[idx].quantity;
+		inventory[idx].item = item;
+		inventory[idx].quantity = quantity;
+	}
 }

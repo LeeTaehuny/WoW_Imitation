@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include "Framework/Model/Model.h"
 
-// ¾ÆÀÌÅÛ Å¸ÀÔ ±¸ºĞÀ» À§ÇÑ ¿­°ÅÇü
+// ì•„ì´í…œ íƒ€ì… êµ¬ë¶„ì„ ìœ„í•œ ì—´ê±°í˜•
 enum class ItemType
 {
-	Weapon,	// ¹«±â
-	Potion,	// Æ÷¼Ç
+	Weapon,	// ë¬´ê¸°
+	Potion,	// í¬ì…˜
 };
 
 class Item : public Model

@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include "Objects/Item/Item.h"
 
-// Æ÷¼ÇÀÇ Å¸ÀÔÀ» ±¸ºĞÇÏ±â À§ÇÑ ¿­°ÅÇü
+// í¬ì…˜ì˜ íƒ€ì…ì„ êµ¬ë¶„í•˜ê¸° ìœ„í•œ ì—´ê±°í˜•
 enum class PotionType
 {
-	Hp,	// HP Æ÷¼Ç
-	Mp,	// MP Æ÷¼Ç
+	Hp,	// HP í¬ì…˜
+	Mp,	// MP í¬ì…˜
 };
 
 class Potion : public Item
@@ -22,7 +22,7 @@ public:
 public:
 
 private:
-	// Æ÷¼ÇÀÇ È¸º¹·®À» ÀúÀåÇÏ±â À§ÇÑ º¯¼ö
+	// í¬ì…˜ì˜ íšŒë³µëŸ‰ì„ ì €ì¥í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
 	int amount;
 
 	SphereCollider* collider;

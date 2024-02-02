@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "Weapon.h"
 
 Weapon::Weapon(string name, WeaponType type) : Item(ItemType::Weapon, name), weaponType(type)
@@ -37,7 +37,7 @@ void Weapon::Use()
 
 void Weapon::InitWeapon(string name)
 {
-	// Ãæµ¹Ã¼ »ı¼º ¹× ¿É¼Ç ÃÊ±âÈ­
+	// ì¶©ëŒì²´ ìƒì„± ë° ì˜µì…˜ ì´ˆê¸°í™”
 	collider = new SphereCollider();
 	collider->SetTag("WeaponCollider");
 	collider->SetParent(this);
@@ -45,7 +45,7 @@ void Weapon::InitWeapon(string name)
 
 	char num = atoi(&name[name.size() - 1]);
 
-	// ¹«±â Å¸ÀÔ¿¡ µû¶ó Äİ¶óÀÌ´õ À§Ä¡ ¹× µ¥¹ÌÁö ¼³Á¤ + ¾ÆÀÌÄÜ ¼³Á¤
+	// ë¬´ê¸° íƒ€ì…ì— ë”°ë¼ ì½œë¼ì´ë” ìœ„ì¹˜ ë° ë°ë¯¸ì§€ ì„¤ì • + ì•„ì´ì½˜ ì„¤ì •
 	switch (weaponType)
 	{
 	case WeaponType::Sword:
