@@ -17,4 +17,6 @@ private:
 
     Collider* coll;
 
+    Model* skel;
+
 };

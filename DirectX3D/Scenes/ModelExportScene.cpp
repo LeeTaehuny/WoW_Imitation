@@ -3,11 +3,15 @@
 
 ModelExportScene::ModelExportScene()
 {
-    string name = "FireMage";
+    string name = "Skeleton";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
     //string clipName;
     Model_MER_MESH(name);
+
+    name = "Skeleton_Knight";
+    Model_MER_MESH(name);
+
 
     //exporter = new ModelExporter(name, file);
     //exporter->ExportMaterial();
