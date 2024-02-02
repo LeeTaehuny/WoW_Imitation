@@ -56,6 +56,10 @@ void Transform::GUIRender()
     
         temp = tag + "_Scale";
         ImGui::DragFloat3(temp.c_str(), (float*)&localScale, 0.1f);
+
+        temp = tag + "mousePos";
+        string pos = "X : " + to_string(mousePos.x) + ", Y : " + to_string(mousePos.y);
+        ImGui::Text(pos.c_str());
     
         if (ImGui::Button("Save"))
             Save();

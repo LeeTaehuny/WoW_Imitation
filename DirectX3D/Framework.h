@@ -29,6 +29,13 @@
 
 #define FOR(n) for(int i = 0; i < n ; i++)
 
+#define SAFE_DEL(p) \
+if (p != nullptr)	\
+{					\
+	delete p;		\
+	p = nullptr;	\
+}					\
+
 #include <windows.h>
 #include <string>
 #include <vector>

@@ -149,10 +149,15 @@
     <ClInclude Include="Objects\Character_\ProtectionWarrior.h" />
     <ClInclude Include="Scenes\KimScene.h" />
     <ClInclude Include="Objects\Character_\CH_Base.h" />
+    <ClInclude Include="Objects\Inventory\Slot.h" />
+    <ClInclude Include="Objects\UI\Button.h" />
     <ClInclude Include="Framework\Environment\Reflection.h" />
     <ClInclude Include="Framework\Environment\Refraction.h" />
     <ClInclude Include="Framework\Shader\DomainShader.h" />
     <ClInclude Include="Framework\Shader\HullShader.h" />
+    <ClInclude Include="Objects\Inventory\Inventory.h" />
+    <ClInclude Include="Objects\Item\Item.h" />
+    <ClInclude Include="Objects\Item\Potion.h" />
     <ClInclude Include="Scenes\MirrorScene.h" />
     <ClInclude Include="Objects\Algorithm\AStar.h" />
     <ClInclude Include="Objects\Particle\ParticleSystem.h" />
@@ -272,12 +277,16 @@
     <ClInclude Include="Objects\Landscape\TerrainLOD.h" />
     <ClInclude Include="Scenes\TerrainLODScene.h" />
     <ClInclude Include="Scenes\TessellationScene.h" />
+    <ClInclude Include="Scenes\DevScene\TestScene.h" />
+    <ClInclude Include="Objects\Item\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Objects\Character_\MarksmanshipHunter.cpp" />
     <ClCompile Include="Objects\Character_\HolyPriest.cpp" />
     <ClCompile Include="Objects\Character_\FireMage.cpp" />
     <ClCompile Include="Objects\Character_\ArmsWarrior.cpp" />
+    <ClCompile Include="Objects\Inventory\Slot.cpp" />
+    <ClCompile Include="Objects\UI\Button.cpp" />
     <ClCompile Include="Framework\Environment\Reflection.cpp" />
     <ClCompile Include="Framework\Environment\Refraction.cpp" />
     <ClCompile Include="Framework\Shader\DomainShader.cpp" />
@@ -285,6 +294,9 @@
     <ClCompile Include="Objects\Character_\ProtectionWarrior.cpp" />
     <ClCompile Include="Objects\Character_\CH_Base.cpp" />
     <ClCompile Include="Scenes\KimScene.cpp" />
+    <ClCompile Include="Objects\Inventory\Inventory.cpp" />
+    <ClCompile Include="Objects\Item\Item.cpp" />
+    <ClCompile Include="Objects\Item\Potion.cpp" />
     <ClCompile Include="Scenes\MirrorScene.cpp" />
     <ClCompile Include="Objects\Algorithm\AStar.cpp" />
     <ClCompile Include="Objects\Particle\ParticleSystem.cpp" />
@@ -396,6 +408,8 @@
     <ClCompile Include="Objects\Landscape\TerrainLOD.cpp" />
     <ClCompile Include="Scenes\TerrainLODScene.cpp" />
     <ClCompile Include="Scenes\TessellationScene.cpp" />
+    <ClCompile Include="Scenes\DevScene\TestScene.cpp" />
+    <ClCompile Include="Objects\Item\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX3D.rc" />
@@ -524,6 +538,8 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <DeploymentContent>true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
     </FxCompile>
     <FxCompile Include="Shaders\Light\GBuffer.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
@@ -557,6 +573,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="Shaders\Light\ItemLight.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="Shaders\Model\ModelAnimation.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
@@ -586,6 +608,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Shaders\UI\ProgressBar.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>

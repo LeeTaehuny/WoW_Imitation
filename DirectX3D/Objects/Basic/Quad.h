@@ -16,8 +16,8 @@ public:
 private:
     void MakeMesh();
 
-private:
+protected:
     Vector2 size;
-
+    ColorBuffer* colorBuffer = nullptr;
     Mesh<VertexType>* mesh;    
 };

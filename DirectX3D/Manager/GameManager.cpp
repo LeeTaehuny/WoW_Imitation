@@ -25,13 +25,14 @@
 #include "Scenes/TessellationScene.h"
 #include "Scenes/TerrainLODScene.h"
 #include "Scenes/KimScene.h"
+#include "Scenes/DevScene/TestScene.h"
 
-// ¿À´Ã ÁøÇàµÈ ¼³¸í : ±ËÀû ÆÄÆ¼Å¬, ´Ù¸¥ Æ¯¼ö ÆÄÆ¼Å¬(´«, ½ºÆÄÅ©)
-//                   + ±ËÀû ÆÄÆ¼Å¬ Àû¿ë (ÈÞ¸Õ Å¬·¡½º¿¡ Ãß°¡ÇÔ)
-//                   + ÆÄÆ¼Å¬ ÆÄÀÏ ¼³Á¤¿ë ¾À
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼Å¬, ï¿½Ù¸ï¿½ Æ¯ï¿½ï¿½ ï¿½ï¿½Æ¼Å¬(ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½Å©)
+//                   + ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼Å¬ ï¿½ï¿½ï¿½ï¿½ (ï¿½Þ¸ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½)
+//                   + ï¿½ï¿½Æ¼Å¬ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
-// * ÆÄÆ¼Å¬ ¼³Á¤ ¾À -> Æ¯¼öÈ¿°ú°¡ Ãß°¡·Î ÇÊ¿äÇÏ°Å³ª, È¤Àº ±×³É º¹½ÀÇÏ½Ç ºÐÀÌ¶óµµ...
-//                    ±×·± °æ¿ì¿¡ ÇØ´çÇÏ´Â ºÐµéÀº ¹Ù·Î ÇÑ¹ø ½áº¾½Ã´Ù.
+// * ï¿½ï¿½Æ¼Å¬ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ -> Æ¯ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Ï°Å³ï¿½, È¤ï¿½ï¿½ ï¿½×³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½...
+//                    ï¿½×·ï¿½ ï¿½ï¿½ì¿¡ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½Ðµï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½Ñ¹ï¿½ ï¿½áº¾ï¿½Ã´ï¿½.
 
 GameManager::GameManager()
 {
@@ -58,11 +59,12 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("Billboard", new BillboardScene());
     //SceneManager::Get()->Create("Particle", new ParticleScene());
     //SceneManager::Get()->Create("ParticleConfig", new ParticleConfigScene());
-    // * ÀÛ¾÷Áß. //SceneManager::Get()->Create("MirrorScene", new MirrorScene());
+    // * ï¿½Û¾ï¿½ï¿½ï¿½. //SceneManager::Get()->Create("MirrorScene", new MirrorScene());
     //SceneManager::Get()->Create("WaterScene", new WaterScene());
     //SceneManager::Get()->Create("QuadTree", new QuadTreeScene());
     //SceneManager::Get()->Create("Tessellation", new TessellationScene());
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
+    SceneManager::Get()->Create("TestScene", new TestScene());
 
     SceneManager::Get()->Add("Grid");
     //SceneManager::Get()->Add("ModelExport");
@@ -83,6 +85,9 @@ GameManager::GameManager()
     //SceneManager::Get()->Add("QuadTree");
     //SceneManager::Get()->Add("Tessellation");
     //SceneManager::Get()->Add("LOD");
+
+    
+    SceneManager::Get()->Add("TestScene");
 }
 
 GameManager::~GameManager()
@@ -147,7 +152,7 @@ void GameManager::Create()
     Observer::Get();
     
     Font::Get()->AddColor("White", 1, 1, 1);
-    Font::Get()->AddStyle("Default", L"¹è´ÞÀÇ¹ÎÁ· ÁÖ¾Æ");
+    Font::Get()->AddStyle("Default", L"ï¿½ï¿½ï¿½ï¿½Ç¹ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½");
     
     Font::Get()->SetColor("White");
     Font::Get()->SetStyle("Default");
