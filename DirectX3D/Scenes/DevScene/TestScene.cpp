@@ -3,6 +3,7 @@
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
 #include "Objects/Inventory/Inventory.h"
+#include "Objects/Shop/Shop.h"
 
 TestScene::TestScene()
 {
@@ -16,6 +17,8 @@ TestScene::TestScene()
 	inv->AddItem(potion);
 	inv->AddItem(weapon);
 	inv->AddItem(weapon);
+
+	shop = new Shop();
 }
 
 TestScene::~TestScene()
@@ -28,6 +31,8 @@ void TestScene::Update()
 	weapon->Update();
 	potion->Update();
 	inv->Update();
+
+	shop->Update();
 }
 
 void TestScene::PreRender()
@@ -38,11 +43,13 @@ void TestScene::Render()
 {
 	weapon->Render();
 	potion->Render();
+	shop->Render();
 }
 
 void TestScene::PostRender()
 {
 	inv->UIRender();
+	shop->UIRender();
 }
 
 void TestScene::GUIRender()

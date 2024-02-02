@@ -40,7 +40,7 @@ GameManager::GameManager()
 
     SceneManager::Get()->Create("Grid", new GridScene());
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
-    SceneManager::Get()->Create("KIM", new KimScene());
+    //SceneManager::Get()->Create("KIM", new KimScene());
 
     //SceneManager::Get()->Create("Cube", new CubeScene());
     //SceneManager::Get()->Create("Sphere", new SphereScene());
@@ -68,7 +68,7 @@ GameManager::GameManager()
 
     SceneManager::Get()->Add("Grid");
     //SceneManager::Get()->Add("ModelExport");
-    SceneManager::Get()->Add("KIM");
+    //SceneManager::Get()->Add("KIM");
     
     //SceneManager::Get()->Add("HumanTest");
     //SceneManager::Get()->Add("Game");

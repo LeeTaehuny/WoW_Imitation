@@ -268,6 +268,7 @@
     <ClInclude Include="Objects\Particle\Sprite.h" />
     <ClInclude Include="Objects\Particle\Snow.h" />
     <ClInclude Include="Objects\Particle\Spark.h" />
+    <ClInclude Include="Objects\Shop\Shop.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Objects\Test\TestLight.h" />
     <ClInclude Include="Objects\Particle\Trail.h" />
@@ -410,6 +411,7 @@
     <ClCompile Include="Scenes\TessellationScene.cpp" />
     <ClCompile Include="Scenes\DevScene\TestScene.cpp" />
     <ClCompile Include="Objects\Item\Weapon.cpp" />
+    <ClCompile Include="Objects\Shop\Shop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX3D.rc" />

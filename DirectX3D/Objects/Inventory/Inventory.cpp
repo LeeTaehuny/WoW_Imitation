@@ -96,6 +96,12 @@ void Inventory::Update()
 	if (KEY_UP(VK_LBUTTON))
 	{
 		mouseImg->SetActive(false);
+
+		if (tempIndex != -1)
+		{
+			invSlot[tempIndex]->SetSelect(false);
+			invSlot[tempIndex]->SetCilck(false);
+		}
 	}
 }
 

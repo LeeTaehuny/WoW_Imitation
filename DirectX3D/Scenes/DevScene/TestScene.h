@@ -21,5 +21,6 @@ private:
     class Item* weapon;
     class Item* potion;
     class Inventory* inv;
+    class Shop* shop;
 };
 
