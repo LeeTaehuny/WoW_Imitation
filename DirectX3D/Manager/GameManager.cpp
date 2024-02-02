@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 #include "Scenes/CubeScene.h"
 #include "Scenes/GridScene.h"
@@ -26,13 +26,6 @@
 #include "Scenes/TerrainLODScene.h"
 #include "Scenes/KimScene.h"
 
-// ¿À´Ã ÁøÇàµÈ ¼³¸í : ±ËÀû ÆÄÆ¼Å¬, ´Ù¸¥ Æ¯¼ö ÆÄÆ¼Å¬(´«, ½ºÆÄÅ©)
-//                   + ±ËÀû ÆÄÆ¼Å¬ Àû¿ë (ÈÞ¸Õ Å¬·¡½º¿¡ Ãß°¡ÇÔ)
-//                   + ÆÄÆ¼Å¬ ÆÄÀÏ ¼³Á¤¿ë ¾À
-
-// * ÆÄÆ¼Å¬ ¼³Á¤ ¾À -> Æ¯¼öÈ¿°ú°¡ Ãß°¡·Î ÇÊ¿äÇÏ°Å³ª, È¤Àº ±×³É º¹½ÀÇÏ½Ç ºÐÀÌ¶óµµ...
-//                    ±×·± °æ¿ì¿¡ ÇØ´çÇÏ´Â ºÐµéÀº ¹Ù·Î ÇÑ¹ø ½áº¾½Ã´Ù.
-
 GameManager::GameManager()
 {
     Create();
@@ -58,7 +51,7 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("Billboard", new BillboardScene());
     //SceneManager::Get()->Create("Particle", new ParticleScene());
     //SceneManager::Get()->Create("ParticleConfig", new ParticleConfigScene());
-    // * ÀÛ¾÷Áß. //SceneManager::Get()->Create("MirrorScene", new MirrorScene());
+    // * ìž‘ì—…ì¤‘. //SceneManager::Get()->Create("MirrorScene", new MirrorScene());
     //SceneManager::Get()->Create("WaterScene", new WaterScene());
     //SceneManager::Get()->Create("QuadTree", new QuadTreeScene());
     //SceneManager::Get()->Create("Tessellation", new TessellationScene());
@@ -147,7 +140,7 @@ void GameManager::Create()
     Observer::Get();
     
     Font::Get()->AddColor("White", 1, 1, 1);
-    Font::Get()->AddStyle("Default", L"¹è´ÞÀÇ¹ÎÁ· ÁÖ¾Æ");
+    Font::Get()->AddStyle("Default", L"ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„");
     
     Font::Get()->SetColor("White");
     Font::Get()->SetStyle("Default");

@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 ProtectionWarrior::ProtectionWarrior() : CH_Base("ProtectionWarrior")
 {
@@ -132,7 +132,7 @@ void ProtectionWarrior::Attack()
 
 void ProtectionWarrior::Casting()
 {
-	// ÇöÀç ½ºÅ³À» »ç¿ëÇß´Ù¸é
+	// í˜„ì¬ ìŠ¤í‚¬ì„ ì‚¬ìš©í–ˆë‹¤ë©´
 	if (isCasting)
 	{
 		isCasting = false;

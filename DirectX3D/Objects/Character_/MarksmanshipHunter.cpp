@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 MarksmanshipHunter::MarksmanshipHunter() : CH_Base("MarksmanshipHunter")
 {
@@ -35,7 +35,7 @@ MarksmanshipHunter::~MarksmanshipHunter()
 
 void MarksmanshipHunter::Moving()
 {
-	// Á¡ÇÁ, °ø°İ Á×ÀÏ¶§ ¿òÁ÷ÀÌÁö ¾ÊÀ½
+	// ì í”„, ê³µê²© ì£½ì¼ë•Œ ì›€ì§ì´ì§€ ì•ŠìŒ
 	if (isJump) return;
 	if (INTstate == (int)ATTACK1) return;
 	if (INTstate == (int)DIE) return;
@@ -46,7 +46,7 @@ void MarksmanshipHunter::Moving()
 	bool isMoveX = false;
 	float deceleration = 10;
 
-	// Ä³¸¯ÅÍ ¾ÕµÚÁÂ¿ì ÀÌµ¿ÀÔ´Ï´Ù
+	// ìºë¦­í„° ì•ë’¤ì¢Œìš° ì´ë™ì…ë‹ˆë‹¤
 	if (KEY_PRESS('W'))
 	{
 		velocity.z += DELTA;
@@ -68,10 +68,10 @@ void MarksmanshipHunter::Moving()
 		isMoveX = true;
 	}
 
-	// ¸¶¿ì½º ¿ìÅ¬¸¯½Ã 
+	// ë§ˆìš°ìŠ¤ ìš°í´ë¦­ì‹œ 
 	if (KEY_PRESS(VK_RBUTTON))
 	{
-		// ÁÂ¿ì ÀÌµ¿
+		// ì¢Œìš° ì´ë™
 		if (KEY_PRESS('A'))
 		{
 			velocity.x -= DELTA;
@@ -83,13 +83,13 @@ void MarksmanshipHunter::Moving()
 			isMoveX = true;
 		}
 	}
-	// ¸¶¿ì½º ¿ìÅ¬¸¯ÀÌ ¾Æ´Ò¶§
+	// ë§ˆìš°ìŠ¤ ìš°í´ë¦­ì´ ì•„ë‹ë•Œ
 	else
 	{
-		// ¾ÕµÚ·Î ÀÌµ¿ ÁßÀÌ ¾Æ´Ò ¶§
+		// ì•ë’¤ë¡œ ì´ë™ ì¤‘ì´ ì•„ë‹ ë•Œ
 		if (KEY_PRESS('W') || KEY_PRESS('S'))
 		{
-			// ÁÂ¿ì È¸Àü
+			// ì¢Œìš° íšŒì „
 			float turnSpeed = 2;
 			if (KEY_PRESS('A'))
 			{
