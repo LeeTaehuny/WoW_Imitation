@@ -60,9 +60,13 @@ void KimScene::Update()
 	if (KEY_DOWN('3')) dlatl = coll[2];
 	if (KEY_DOWN('4')) dlatl = coll[3];
 
-	if (KEY_DOWN(VK_SPACE))
+	if (KEY_DOWN(VK_LEFT))
 	{
 		MONSTER->SpawnSkeleton(Vector3());
+	}
+	if (KEY_DOWN(VK_RIGHT))
+	{
+		MONSTER->SpawnSkeletonKnight(Vector3());
 	}
 
 	MONSTER->Update();

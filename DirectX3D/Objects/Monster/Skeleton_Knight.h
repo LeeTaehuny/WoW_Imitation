@@ -1,27 +1,27 @@
-ï»¿#pragma once
-class Skeleton : public MonsterBase
+#pragma once
+class Skeleton_Knight : public MonsterBase
 {
 public:
     enum State
     {
         IDLE,
-        ATTACK1, ATTACK2,
-        WALKING, RUN,
-        DEATH, HIT, SCREAM,
+        ATTACK1,
+        WALKING,
+        DEATH, HIT,
     };
 
 public:
 
-    Skeleton(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<Collider*> target);
-    ~Skeleton();
+    Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<Collider*> target);
+    ~Skeleton_Knight();
 
     void Update();
     void Render();
     void PostRender();
 
-    // ë°ë¯¸ì§€ë¥¼ ë°›ê¸° ìœ„í•œ í•¨ìˆ˜
+    // µ¥¹ÌÁö¸¦ ¹Ş±â À§ÇÑ ÇÔ¼ö
     void Hit(float amount = 1, int targetNumber = 0);
-    // í—¤ì´íŠ¸ë²¡í„°ì˜ ìˆœë²ˆì„ ì§€ì •í•˜ê¸° ìœ„í•œ ì„ì‹œë³€ìˆ˜
+    // ÇìÀÌÆ®º¤ÅÍÀÇ ¼ø¹øÀ» ÁöÁ¤ÇÏ±â À§ÇÑ ÀÓ½Ãº¯¼ö
     int targetNumber = 0;
     void Spawn(Vector3 pos);
 
@@ -39,9 +39,9 @@ public:
 
     void SetState(State state);
 
-    // ì ì„ ì¶”ê²©í•˜ëŠ” í•¨ìˆ˜
+    // ÀûÀ» Ãß°İÇÏ´Â ÇÔ¼ö
     void Move();
-    // ê³µê²©ë²”ìœ„ ì½œë¼ì´ë”ì— ì¶©ëŒí•œ ì ì„ ê³µê²©ì„ ë‹´ë‹¹í•˜ëŠ” í•¨ìˆ˜
+    // °ø°İ¹üÀ§ Äİ¶óÀÌ´õ¿¡ Ãæµ¹ÇÑ ÀûÀ» °ø°İÀ» ´ã´çÇÏ´Â ÇÔ¼ö
     void targetAttack();
 
 private:

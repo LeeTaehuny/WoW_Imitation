@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Monster\MonsterBase.h" />
     <ClInclude Include="Objects\Monster\MonsterManager.h" />
     <ClInclude Include="Objects\Character_\MarksmanshipHunter.h" />
     <ClInclude Include="Objects\Character_\HolyPriest.h" />
@@ -265,6 +266,7 @@
     <ClInclude Include="Objects\Particle\Sprite.h" />
     <ClInclude Include="Objects\Particle\Snow.h" />
     <ClInclude Include="Objects\Particle\Spark.h" />
+    <ClInclude Include="Objects\Monster\Skeleton_Knight.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Objects\Test\TestLight.h" />
     <ClInclude Include="Objects\Particle\Trail.h" />
@@ -400,6 +402,7 @@
     <ClCompile Include="Objects\Landscape\TerrainLOD.cpp" />
     <ClCompile Include="Scenes\TerrainLODScene.cpp" />
     <ClCompile Include="Scenes\TessellationScene.cpp" />
+    <ClCompile Include="Objects\Monster\Skeleton_Knight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX3D.rc" />

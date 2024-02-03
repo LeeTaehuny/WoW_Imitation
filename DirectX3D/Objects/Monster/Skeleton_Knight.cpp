@@ -1,6 +1,6 @@
-ï»¿#include "Framework.h"
+#include "Framework.h"
 
-Skeleton::Skeleton(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<Collider*> target)
+Skeleton_Knight::Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<Collider*> target)
 {
 	this->transform = transform;
 	this->instancing = instancing;
@@ -19,11 +19,10 @@ Skeleton::Skeleton(Transform* transform, ModelAnimatorInstancing* instancing, UI
 	totalEvents.resize(instancing->GetClipSize());
 	eventIters.resize(instancing->GetClipSize());
 
-	// ì• ë‹ˆë©”ì´ì…˜ ì„¸íŒ…
-	SetEvent(ATTACK1, bind(&Skeleton::EndAttack, this), 0.7f);
-	SetEvent(ATTACK2, bind(&Skeleton::EndAttack, this), 0.7f);
-	SetEvent(HIT, bind(&Skeleton::EndHit, this), 0.9f);
-	SetEvent(DEATH, bind(&Skeleton::EndDeath, this), 1);
+	// ¾Ö´Ï¸ÞÀÌ¼Ç ¼¼ÆÃ
+	SetEvent(ATTACK1, bind(&Skeleton_Knight::EndAttack, this), 0.7f);
+	SetEvent(HIT, bind(&Skeleton_Knight::EndHit, this), 0.9f);
+	SetEvent(DEATH, bind(&Skeleton_Knight::EndDeath, this), 1);
 
 	FOR(totalEvents.size())
 	{
@@ -31,11 +30,11 @@ Skeleton::Skeleton(Transform* transform, ModelAnimatorInstancing* instancing, UI
 	}
 	velocity = Vector3();
 
-	// í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ ìˆ˜ë§Œí¼ í•´ì´íŠ¸ ì •ë³´ í™•ìž¥
+	// ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍÀÇ ¼ö¸¸Å­ ÇØÀÌÆ® Á¤º¸ È®Àå
 	targetHate.resize(this->target.size());
 }
 
-Skeleton::~Skeleton()
+Skeleton_Knight::~Skeleton_Knight()
 {
 	delete collider;
 	delete attackRange;
@@ -43,7 +42,7 @@ Skeleton::~Skeleton()
 	delete targetTransform;
 }
 
-void Skeleton::Update()
+void Skeleton_Knight::Update()
 {
 	if (!transform->Active()) return;
 	//if (curState == DEATH) return;
@@ -66,17 +65,17 @@ void Skeleton::Update()
 	attackRange->UpdateWorld();
 }
 
-void Skeleton::Render()
+void Skeleton_Knight::Render()
 {
 	//collider->Render();
 	//attackRange->Render();
 }
 
-void Skeleton::PostRender()
+void Skeleton_Knight::PostRender()
 {
 }
 
-void Skeleton::Hit(float amount, int targetNumber)
+void Skeleton_Knight::Hit(float amount, int targetNumber)
 {
 	if (KEY_DOWN(VK_LBUTTON))
 	{
@@ -95,12 +94,12 @@ void Skeleton::Hit(float amount, int targetNumber)
 			}
 		}
 	}
-	
+
 	//curHP = curHP - amount;
 	//hpBar->SetAmount(curHP / maxHP);	
 }
 
-void Skeleton::Spawn(Vector3 pos)
+void Skeleton_Knight::Spawn(Vector3 pos)
 {
 	transform->SetActive(true);
 	collider->SetActive(true);
@@ -109,13 +108,13 @@ void Skeleton::Spawn(Vector3 pos)
 	transform->Pos() = pos;
 }
 
-void Skeleton::SetEvent(int clip, Event event, float timeRatio)
+void Skeleton_Knight::SetEvent(int clip, Event event, float timeRatio)
 {
 	if (totalEvents[clip].count(timeRatio) > 0) return;
 	totalEvents[clip][timeRatio] = event;
 }
 
-void Skeleton::ExecuteEvent()
+void Skeleton_Knight::ExecuteEvent()
 {
 	int index = curState;
 
@@ -130,23 +129,23 @@ void Skeleton::ExecuteEvent()
 	eventIters[index]++;
 }
 
-void Skeleton::EndAttack()
+void Skeleton_Knight::EndAttack()
 {
 	SetState(WALKING);
 }
 
-void Skeleton::EndHit()
+void Skeleton_Knight::EndHit()
 {
 	SetState(WALKING);
 }
 
-void Skeleton::EndDeath()
+void Skeleton_Knight::EndDeath()
 {
 	transform->SetActive(false);
 	collider->SetActive(false);
 }
 
-void Skeleton::SetState(State state)
+void Skeleton_Knight::SetState(State state)
 {
 	if (state == curState) return;
 	curState = state;
@@ -154,11 +153,10 @@ void Skeleton::SetState(State state)
 	eventIters[state] = totalEvents[state].begin();
 }
 
-void Skeleton::Move()
+void Skeleton_Knight::Move()
 {
 	if (!Moving) return;
 	if (curState == DEATH) return;
-	if (curState == SCREAM) return;
 	if (curState == HIT) return;
 
 	float Maxhate = 0;
@@ -179,27 +177,16 @@ void Skeleton::Move()
 	transform->Rot().y = atan2(velocity.x, velocity.z) + XM_PI;
 }
 
-void Skeleton::targetAttack()
+void Skeleton_Knight::targetAttack()
 {
 	if (curState == ATTACK1) return;
-	if (curState == ATTACK2) return;
 	if (curState == DEATH) return;
-	if (curState == SCREAM) return;
 	if (curState == HIT) return;
 
 	if (attackRange->IsCollision(targetTransform))
 	{
 		Moving = false;
-		int ran = Random(1, 3);
-
-		if (ran == 1)
-		{
-			SetState(ATTACK1);
-		}
-		else if (ran == 2)
-		{
-			SetState(ATTACK2);
-		}
+		SetState(ATTACK1);
 	}
 	else
 	{
@@ -207,6 +194,6 @@ void Skeleton::targetAttack()
 	}
 }
 
-void Skeleton::UpdateUI()
+void Skeleton_Knight::UpdateUI()
 {
 }

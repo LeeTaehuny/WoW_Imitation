@@ -15,14 +15,18 @@ public:
 	void SetTarget(Collider* transform);
 
 	void SpawnSkeleton(Vector3 pos);
-
-	void HitCollider(Collider* collider);
+	void SpawnSkeletonKnight(Vector3 pos);
 
 private:
 	// 스켈레톤의 인스턴싱
 	ModelAnimatorInstancing* skeleton_body;
 	// 스켈레톤 클래스
 	vector<Skeleton*> skeleton;
+
+	// 스켈레톤 나이트의 인스턴싱
+	ModelAnimatorInstancing* skeletonKnight_body;
+	// 스켈레톤 나이트 클래스
+	vector<Skeleton_Knight*> skeleton_Knight;
 
 	// 타겟들의 정보를 저장함
 	vector<Collider*> targets;

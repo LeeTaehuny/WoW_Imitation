@@ -203,7 +203,9 @@ using namespace GameMath;
 #include "Objects/Manager/RobotManager.h"
 
 // 몬스터
+#include "Objects/Monster/MonsterBase.h"
 #include "Objects/Monster/Skeleton.h"
+#include "Objects/Monster/Skeleton_Knight.h"
 #include "Objects/Monster/MonsterManager.h"
 
 #include "Objects/Test/TestLight.h"

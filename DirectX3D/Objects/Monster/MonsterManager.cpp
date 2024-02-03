@@ -16,14 +16,25 @@ MonsterManager::MonsterManager()
 	skeleton_body->ReadClip("Death");
 	skeleton_body->ReadClip("Hit");
 	skeleton_body->ReadClip("Scream");
+
+	skeletonKnight_body = new ModelAnimatorInstancing("Skeleton_Knight");
+	skeletonKnight_body->ReadClip("Idle");
+	skeletonKnight_body->ReadClip("Attack_1");
+	skeletonKnight_body->ReadClip("Walking");
+	skeletonKnight_body->ReadClip("Death");
+	skeletonKnight_body->ReadClip("Hit");
 }
 
 MonsterManager::~MonsterManager()
 {
 	delete skeleton_body;
+	delete skeletonKnight_body;
 
 	for (Skeleton* skel : skeleton)
 		delete skel;
+	for (Skeleton_Knight* skel : skeleton_Knight)
+		delete skel;
+
 	for (Collider* col : targets)
 		delete col;
 }
@@ -31,16 +42,22 @@ MonsterManager::~MonsterManager()
 void MonsterManager::Update()
 {
 	skeleton_body->Update();
+	skeletonKnight_body->Update();
 
 	for (Skeleton* skel : skeleton)
+		UPDATE(skel);
+	for (Skeleton_Knight* skel : skeleton_Knight)
 		UPDATE(skel);
 }
 
 void MonsterManager::Render()
 {
 	skeleton_body->Render();
+	skeletonKnight_body->Render();
 
 	for (Skeleton* skel : skeleton)
+		RENDER(skel);
+	for (Skeleton_Knight* skel : skeleton_Knight)
 		RENDER(skel);
 }
 
@@ -73,16 +90,26 @@ void MonsterManager::SpawnSkeleton(Vector3 pos)
 	skeleton[skeleton.size() - 1]->Spawn(pos);
 }
 
-void MonsterManager::HitCollider(Collider* collider)
+void MonsterManager::SpawnSkeletonKnight(Vector3 pos)
 {
-	//Ray ray = CAM->ScreenPointToRay(mousePos);
-	//
-	//for (int i = 0; i < skeleton.size(); i++)
-	//{
-	//	if (skeleton[i]->GetCollider()->IsRayCollision())
-	//	{
-	//		skeleton[i]->SetState(Skeleton::HIT);
-	//		skeleton[i]->targetHate[i] += 1;
-	//	}
-	//}
+	int curindex = 0;
+	if (skeleton_Knight.size() == 0) {}
+	else
+	{
+		for (UINT i = 0; i < skeleton_Knight.size(); ++i)
+		{
+			if (skeleton_Knight[i]->GetmyNumber() == curindex)
+			{
+				curindex++;
+				continue;
+			}
+			else if (skeleton_Knight[i]->GetmyNumber() != curindex) break;
+		}
+	}
+
+	Transform* transform = skeletonKnight_body->Add();
+	transform->Scale() *= 0.02f;
+	Skeleton_Knight* skel = new Skeleton_Knight(transform, skeletonKnight_body, curindex, targets);
+	skeleton_Knight.push_back(skel);
+	skeleton_Knight[skeleton_Knight.size() - 1]->Spawn(pos);
 }
