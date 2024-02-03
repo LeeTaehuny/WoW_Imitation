@@ -1,6 +1,6 @@
 ﻿#include "Framework.h"
 
-HolyPriest::HolyPriest() : CH_Base("HolyPriest")
+HolyPriest::HolyPriest(int myNober) : CH_Base("HolyPriest", myNober)
 {
 	ReadClip("Idle_1");
 	ReadClip("Idle_2");

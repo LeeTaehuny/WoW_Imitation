@@ -2,7 +2,8 @@
 class CH_Base : public ModelAnimator
 {
 public:
-	CH_Base(string name) : ModelAnimator(name) {}
+	CH_Base(string name, int myNober) : ModelAnimator(name)
+	{ this->myNober = myNober; }
 	virtual ~CH_Base() = default;
 
 	// 플레이어용 업데이트
@@ -31,6 +32,7 @@ public: // 가상 함수
 	virtual void OnHit(Collider* collider) = 0;
 
 	bool isCasting = false;
+	int myNober = 0;
 protected:
 	int INTstate = 0;
 	Vector3 velocity;

@@ -51,7 +51,6 @@ private:
 private:
 
     Transform* transform;
-    //SphereCollider* collider; // 인간형 액터에게 구체 충돌체는 조금 크다
     CapsuleCollider* collider;   // 캡슐 콜라이더
 
     //모델을 쿠나이처럼 밖에서 만들고 총괄관리

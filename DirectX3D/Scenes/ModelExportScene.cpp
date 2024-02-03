@@ -7,11 +7,8 @@ ModelExportScene::ModelExportScene()
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
     //string clipName;
-    Model_MER_MESH(name);
-
-    name = "Skeleton_Knight";
-    Model_MER_MESH(name);
-
+    //Model_MER_MESH(name);
+    AnimationClip(name, "Hit");
 
     //exporter = new ModelExporter(name, file);
     //exporter->ExportMaterial();

@@ -40,6 +40,7 @@ public:
     void Save();
     void Load();
 
+    float hate = 0;
 protected:
     string tag;
 
