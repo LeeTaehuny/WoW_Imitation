@@ -18,6 +18,7 @@ protected:
     CapsuleCollider* collider;
     // 공격범위 콜라이더 (충돌시 공격 모션 재생)
     SphereCollider* attackRange;
+    BoxCollider* attackBumwe;
 
     ModelAnimatorInstancing* instancing;
     ModelAnimatorInstancing::Motion* motion;

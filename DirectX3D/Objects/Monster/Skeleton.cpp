@@ -33,6 +33,10 @@ Skeleton::Skeleton(Transform* transform, ModelAnimatorInstancing* instancing, UI
 
 	// 플레이어 캐릭터의 수만큼 해이트 정보 확장
 	targetHate.resize(this->target.size());
+	attackBumwe = new BoxCollider(Vector3(50, 200, 150));
+	attackBumwe->SetParent(root);
+	attackBumwe->Pos() = Vector3(0, 0, -150);
+	attackBumwe->SetActive(false);
 }
 
 Skeleton::~Skeleton()
@@ -41,6 +45,7 @@ Skeleton::~Skeleton()
 	delete attackRange;
 	delete root;
 	delete targetTransform;
+	delete attackBumwe;
 }
 
 void Skeleton::Update()
@@ -64,12 +69,14 @@ void Skeleton::Update()
 	root->SetWorld(instancing->GetTransformByNode(index, 3));
 	collider->UpdateWorld();
 	attackRange->UpdateWorld();
+	attackBumwe->UpdateWorld();
 }
 
 void Skeleton::Render()
 {
 	//collider->Render();
 	//attackRange->Render();
+	attackBumwe->Render();
 }
 
 void Skeleton::PostRender()
@@ -132,6 +139,7 @@ void Skeleton::ExecuteEvent()
 
 void Skeleton::EndAttack()
 {
+	attackBumwe->SetActive(false);
 	SetState(WALKING);
 }
 
@@ -191,6 +199,7 @@ void Skeleton::targetAttack()
 	{
 		Moving = false;
 		int ran = Random(1, 3);
+		attackBumwe->SetActive(true);
 
 		if (ran == 1)
 		{
@@ -204,6 +213,13 @@ void Skeleton::targetAttack()
 	else
 	{
 		Moving = true;
+	}
+
+	if (!attackBumwe->Active()) return;
+
+	if (attackBumwe->IsCollision(targetTransform))
+	{
+
 	}
 }
 
