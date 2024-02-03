@@ -22,14 +22,29 @@ void LastBossMap_Scene::Update()
 {
     //terrain->UpdateWorld();
 
-    Phase1->Update();
+    if (PhaseNum == 0) Phase1->Update();
 
+    if (PhaseNum == 1)
+    {
+        Phase1->NextPhase();
+        Phase2->Update();
+    }
+
+    if (PhaseNum == 2) 
+    {
+        Phase1->NextPhase();
+        Phase1->Update();
+    }
+
+    if (PhaseNum >= 3)
+    {
+        Phase1->NextPhase();
+        Phase2->Update();
+    }
 
     if(KEY_DOWN(VK_RIGHT))
     {
-        Phase1->NextPhase();
-
-        PhaseNum += 1;
+        Phase1->NextPhase();    
         Phase2->Update();
     }
 }
@@ -44,12 +59,11 @@ void LastBossMap_Scene::Render()
     //terrain->Render();
 
     Phase1->Render();
-    if(PhaseNum == 1) Phase2->Render();
+    Phase2->Render();
 }
 
 void LastBossMap_Scene::PostRender()
 {
-
 }
 
 void LastBossMap_Scene::GUIRender()

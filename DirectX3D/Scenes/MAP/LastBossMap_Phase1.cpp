@@ -67,6 +67,13 @@ void LastBossMap_Phase1::Update()
         FOR(4) Icerib_Collider[i]->UpdateWorld();
     }
 
+
+    if (PhaseNum == 2)
+    {
+        Ground->UpdateWorld();
+        Ground_Collider->UpdateWorld();
+    }
+
     Ground_Prop->UpdateWorld();
     Obj_Prop->UpdateWorld();  
 }
@@ -91,7 +98,7 @@ void LastBossMap_Phase1::Render()
         Ground->Render();
         Ground_Collider->Render();
     }
-    
+  
     Ground_Prop->Render();
     Obj_Prop->Render();
 }
