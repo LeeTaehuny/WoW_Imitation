@@ -26,6 +26,8 @@
 #include "Scenes/TessellationScene.h"
 #include "Scenes/TerrainLODScene.h"
 
+#include "Scenes/MAP/LastBossMap_Scene.h"
+
 // 오늘 진행된 설명 : 궤적 파티클, 다른 특수 파티클(눈, 스파크)
 //                   + 궤적 파티클 적용 (휴먼 클래스에 추가함)
 //                   + 파티클 파일 설정용 씬
@@ -83,8 +85,8 @@ GameManager::GameManager()
 
 
     // Mapping - Choi
-    SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
-    SceneManager::Get()->Add("Terrain");
+    //SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
+    //SceneManager::Get()->Add("Terrain");
     //SceneManager::Get()->Create("TerrainScene", new TerrainScene());
     //SceneManager::Get()->Add("TerrainScene");
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
@@ -93,8 +95,12 @@ GameManager::GameManager()
     // Model Print
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
     //SceneManager::Get()->Add("ModelExport");
-    SceneManager::Get()->Create("ModelRender", new ModelRenderScene());
-    SceneManager::Get()->Add("ModelRender");
+    //SceneManager::Get()->Create("ModelRender", new ModelRenderScene());
+    //SceneManager::Get()->Add("ModelRender");
+
+    // Scene
+    SceneManager::Get()->Create("LastBossMap", new LastBossMap_Scene());
+    SceneManager::Get()->Add("LastBossMap");
 
 }
 

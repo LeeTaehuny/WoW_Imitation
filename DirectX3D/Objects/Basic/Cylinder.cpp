@@ -185,3 +185,13 @@ void Cylinder::MakeTangent()
         vertices[index2].tangent += tangent;
     }
 }
+
+void Cylinder::SetHeight(float newHeight)
+{
+    height = newHeight;
+
+    MakeMesh();
+    MakeNormal();
+    MakeTangent();
+    mesh->CreateMesh();
+}

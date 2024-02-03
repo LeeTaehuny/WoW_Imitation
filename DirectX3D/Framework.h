@@ -195,6 +195,8 @@ using namespace GameMath;
 #include "Objects/Manager/RobotManager.h"
 
 #include "Objects/Test/TestLight.h"
+#include "Scenes/MAP/LastBossMap_Phase1.h"
+#include "Scenes/MAP/LastBossMap_Phase2.h"
 
 //Scene Header
 #include "Scenes/Scene.h"

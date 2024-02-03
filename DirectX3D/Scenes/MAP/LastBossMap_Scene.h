@@ -1,10 +1,10 @@
 #pragma once
 
-class ModelRenderScene : public Scene
+class LastBossMap_Scene : public Scene
 {
 public:
-    ModelRenderScene();
-    ~ModelRenderScene();
+    LastBossMap_Scene();
+    ~LastBossMap_Scene();
 
     virtual void Update() override;
     virtual void PreRender() override;
@@ -13,8 +13,12 @@ public:
     virtual void GUIRender() override;
 
 private:
-    Model* model;
-    Model* model2;
-    Model* model3;
-    Model* model4[4];
+    Terrain* terrain;
+
+    UINT PhaseNum = 0;
+
+    // Phase Ground
+    LastBossMap_Phase1* Phase1;
+    LastBossMap_Phase2* Phase2;
 };
+

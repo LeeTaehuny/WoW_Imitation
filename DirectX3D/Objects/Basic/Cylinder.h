@@ -11,6 +11,8 @@ public:
 
     void Render() override;
 
+    void SetHeight(float newHeight);
+   
 private:
     void MakeMesh();
     void MakeNormal();

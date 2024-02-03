@@ -146,6 +146,9 @@
     <ClInclude Include="Framework\Environment\Refraction.h" />
     <ClInclude Include="Framework\Shader\DomainShader.h" />
     <ClInclude Include="Framework\Shader\HullShader.h" />
+    <ClInclude Include="Scenes\MAP\LastBossMap_Phase2.h" />
+    <ClInclude Include="Scenes\MAP\LastBossMap_Phase1.h" />
+    <ClInclude Include="Scenes\MAP\LastBossMap_Scene.h" />
     <ClInclude Include="Scenes\MirrorScene.h" />
     <ClInclude Include="Objects\Algorithm\AStar.h" />
     <ClInclude Include="Objects\Particle\ParticleSystem.h" />
@@ -271,6 +274,9 @@
     <ClCompile Include="Framework\Environment\Refraction.cpp" />
     <ClCompile Include="Framework\Shader\DomainShader.cpp" />
     <ClCompile Include="Framework\Shader\HullShader.cpp" />
+    <ClCompile Include="Scenes\MAP\LastBossMap_Phase2.cpp" />
+    <ClCompile Include="Scenes\MAP\LastBossMap_Phase1.cpp" />
+    <ClCompile Include="Scenes\MAP\LastBossMap_Scene.cpp" />
     <ClCompile Include="Scenes\MirrorScene.cpp" />
     <ClCompile Include="Objects\Algorithm\AStar.cpp" />
     <ClCompile Include="Objects\Particle\ParticleSystem.cpp" />
