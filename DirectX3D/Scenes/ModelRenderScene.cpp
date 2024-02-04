@@ -33,7 +33,12 @@ ModelRenderScene::ModelRenderScene()
     model4[3]->Pos().x += 30;
     model4[3]->Pos().z += 30;
     model4[3]->Rot().y -= 1.575f;
-    
+
+    model5 = new Model("IceEdge4");
+    model5->Pos().y -= 5;
+
+    model6 = new Model("IceBreak");
+    model6->Pos().y -= 5;
 }
 
 ModelRenderScene::~ModelRenderScene()
@@ -42,6 +47,8 @@ ModelRenderScene::~ModelRenderScene()
     delete model2;
     delete model3;
     FOR(4) delete model4[i];
+    delete model5;
+    delete model6;
 }
 
 void ModelRenderScene::Update()
@@ -50,6 +57,8 @@ void ModelRenderScene::Update()
     model2->UpdateWorld();
     model3->UpdateWorld();
     FOR(4) model4[i]->UpdateWorld();
+    model5->UpdateWorld();
+    model6->UpdateWorld();
 
     if (KEY_PRESS(VK_UP))
     {
@@ -84,6 +93,8 @@ void ModelRenderScene::Render()
     model2->Render();
     model3->Render();
     FOR(4) model4[i]->Render();
+    model5->Render();
+    model6->Render();
 }
 
 void ModelRenderScene::PostRender()

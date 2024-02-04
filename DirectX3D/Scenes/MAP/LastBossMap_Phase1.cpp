@@ -53,68 +53,52 @@ LastBossMap_Phase1::~LastBossMap_Phase1()
     FOR(4) delete Obj_Icerib[i];
 
     delete Ground_Collider;
-    delete Icerib_Collider;
+    FOR(4) delete Icerib_Collider[i];
 }
 
 void LastBossMap_Phase1::Update()
 {
+    Ground_Prop->UpdateWorld();
+    Obj_Prop->UpdateWorld();
+
     if (PhaseNum == 0)
     {
         Ground->UpdateWorld();
-        Ground_Collider->UpdateWorld();
+        Ground->SetActive(true);
 
         FOR(4) Obj_Icerib[i]->UpdateWorld();
-        FOR(4) Icerib_Collider[i]->UpdateWorld();
     }
-
-
     if (PhaseNum == 2)
     {
         Ground->UpdateWorld();
-        Ground_Collider->UpdateWorld();
+        Ground->SetActive(true);
+
+        FOR(4) Obj_Icerib[i]->SetActive(false);
     }
-
-    Ground_Prop->UpdateWorld();
-    Obj_Prop->UpdateWorld();  
-}
-
-void LastBossMap_Phase1::PreRender()
-{
 }
 
 void LastBossMap_Phase1::Render()
 {
-    if (PhaseNum == 0)
-    {
-        Ground->Render();
-        Ground_Collider->Render();
-
-        FOR(4) Obj_Icerib[i]->Render();
-        FOR(4) Icerib_Collider[i]->Render();
-    }
-
-    if (PhaseNum == 2)
-    {
-        Ground->Render();
-        Ground_Collider->Render();
-    }
-  
     Ground_Prop->Render();
     Obj_Prop->Render();
-}
 
-void LastBossMap_Phase1::PostRender()
-{
-}
+   if(PhaseNum == 0)
+   {
+       Ground->Render();
+       Ground->SetActive(true);
 
-void LastBossMap_Phase1::GUIRender()
-{
+       FOR(4) Obj_Icerib[i]->Render();
+   }
+   if (PhaseNum == 2)
+   {
+       Ground->Render();
+       Ground->SetActive(true);
+
+       FOR(4) Obj_Icerib[i]->SetActive(false);
+   }
 }
 
 void LastBossMap_Phase1::NextPhase()
 {
-    Ground->SetActive(false);
-    FOR(4) Icerib_Collider[i]->SetActive(false);
-
     PhaseNum += 1;
 }

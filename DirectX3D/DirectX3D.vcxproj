@@ -142,10 +142,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\MAP\BossMap.h" />
     <ClInclude Include="Framework\Environment\Reflection.h" />
     <ClInclude Include="Framework\Environment\Refraction.h" />
     <ClInclude Include="Framework\Shader\DomainShader.h" />
     <ClInclude Include="Framework\Shader\HullShader.h" />
+    <ClInclude Include="Scenes\MAP\IceEdges.h" />
     <ClInclude Include="Scenes\MAP\LastBossMap_Phase2.h" />
     <ClInclude Include="Scenes\MAP\LastBossMap_Phase1.h" />
     <ClInclude Include="Scenes\MAP\LastBossMap_Scene.h" />
@@ -270,10 +272,12 @@
     <ClInclude Include="Scenes\TessellationScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\MAP\BossMap.cpp" />
     <ClCompile Include="Framework\Environment\Reflection.cpp" />
     <ClCompile Include="Framework\Environment\Refraction.cpp" />
     <ClCompile Include="Framework\Shader\DomainShader.cpp" />
     <ClCompile Include="Framework\Shader\HullShader.cpp" />
+    <ClCompile Include="Scenes\MAP\IceEdges.cpp" />
     <ClCompile Include="Scenes\MAP\LastBossMap_Phase2.cpp" />
     <ClCompile Include="Scenes\MAP\LastBossMap_Phase1.cpp" />
     <ClCompile Include="Scenes\MAP\LastBossMap_Scene.cpp" />

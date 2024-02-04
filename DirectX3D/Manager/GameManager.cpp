@@ -98,7 +98,7 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("ModelRender", new ModelRenderScene());
     //SceneManager::Get()->Add("ModelRender");
 
-    // Scene
+    /// Scene
     SceneManager::Get()->Create("LastBossMap", new LastBossMap_Scene());
     SceneManager::Get()->Add("LastBossMap");
 

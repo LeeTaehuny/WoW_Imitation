@@ -13,7 +13,9 @@ public:
 
 private:
     Model* Ground;
-    
+   
+    IceEdges* IceBreak;
+
     //Collider
     Cylinder* Ground_Collider;
 };

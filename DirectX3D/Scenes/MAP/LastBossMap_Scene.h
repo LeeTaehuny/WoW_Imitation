@@ -20,5 +20,15 @@ private:
     // Phase Ground
     LastBossMap_Phase1* Phase1;
     LastBossMap_Phase2* Phase2;
+    IceEdges* IceBreak;
+
+    SphereCollider* Test;
+
+    float Map_Height = 0.0f;
+    float FallDeath = -150.0f;
+
+
+//private:
+//    class BossMap* bossmap;
 };
 
