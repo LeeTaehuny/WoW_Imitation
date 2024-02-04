@@ -21,6 +21,9 @@ public:
     void SetSelect(bool value) { bIsSelected = value; }
     void SetCilck(bool value) { bIsClicked = value; }
 
+private:
+    bool MouseOver();
+
 // Member Variable
 private:
     Event eventDown = nullptr;

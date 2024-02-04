@@ -22,11 +22,18 @@ public:
 	void UpdateInventory();
 	// 인벤토리 아이템 추가용 함수
 	void AddItem(class Item* item);
-	// 인벤토리 아이템 제거용 함수 (미완)
-	void DeleteItem(class Item* item);
+	// 인벤토리 아이템 제거용 함수
+	void DeleteItem(int itemIndex);
+
+// Getter & Setter
+public:
+	const vector<InventoryItem>& GetInventory() { return inventory; }
+	const vector<class Slot*>& GetInvSlots() { return invSlot; }
 
 // Event Func
 private:
+	// 인벤토리 초기화 함수
+	void InitInventory();
 	// 인벤토리 위치 이동용 함수
 	void MoveInventoryFrame();
 	// 인벤토리 위치 이동 종료용 함수

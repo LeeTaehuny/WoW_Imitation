@@ -1,7 +1,7 @@
 ﻿#include "Framework.h"
 #include "Item.h"
 
-Item::Item(ItemType type, string name) : Model(name), type(type)
+Item::Item(ItemType type, string name) : Model(name), type(type), itemName(name)
 {
 	// 셰이더 수정(아이템은 최소 밝기 보장)
 	SetShader(L"Light/ItemLight.hlsl");

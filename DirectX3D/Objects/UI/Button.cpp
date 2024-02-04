@@ -19,8 +19,7 @@ void Button::Update()
 {
     if (!isActive) return;
 
-    if (mousePos.x <= GlobalPos().x + size.x && mousePos.x >= GlobalPos().x - size.x &&
-        mousePos.y <= GlobalPos().y + size.y && mousePos.y >= GlobalPos().y - size.y)
+    if (MouseOver())
     {
         if (KEY_DOWN(VK_LBUTTON))
         {
@@ -65,4 +64,10 @@ void Button::Render()
     if (!isActive) return;
 
     Quad::Render();
+}
+
+bool Button::MouseOver()
+{
+    // 마우스가 영역 내에 존재하는지를 판별해 리턴
+    return (mousePos.x <= GlobalPos().x + size.x && mousePos.x >= GlobalPos().x - size.x && mousePos.y <= GlobalPos().y + size.y && mousePos.y >= GlobalPos().y - size.y);
 }

@@ -1,11 +1,12 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "Shop.h"
 #include "Objects/Item/Item.h"
 #include "Objects/Inventory/Slot.h"
+#include "Objects/Inventory/Inventory.h"
 
 Shop::Shop()
 {
-	// �� ����
+	// 모델 설정
 	{
 		shop = new Model("Shop");
 		trader = new Model("Trader");
@@ -19,17 +20,35 @@ Shop::Shop()
 		trader->GetMaterials()[0]->SetShader(L"Light/ItemLight.hlsl");
 	}
 	
-	// RS ���� (shop ����)
+	// RS 설정 (shop 전용)
 	{
 		FOR(2) rs[i] = new RasterizerState();
 		rs[1]->CullMode(D3D11_CULL_NONE);
 	}
 
-	// UI ����
+	// 아이템 배열 초기화
+	items.resize(28);
+
+	// UI 설정
 	shopFrame = new Slot(L"Textures/UI/shop_frame.png", SlotType::Inventory_Frame);
 
 	shopFrame->Scale() *= 1.75f;
 	shopFrame->Pos() = { CENTER_X * 0.5f, CENTER_Y, 1.0f };
+
+	itemSlots.resize(28);
+	for (int i = 0; i < itemSlots.size(); i++)
+	{
+		int idxY = i / 7;
+		int idxX = i % 7;
+
+		Slot* slot = new Slot(Vector2(33.0f, 33.0f), SlotType::Inventory_Slot);
+		slot->GetMaterial()->SetDiffuseMap(L"Textures/Color/Black.png");
+		slot->SetParent(shopFrame);
+		slot->Pos() = { -143.0f + (idxX * 47.5f), 65.5f - (idxY * 42.5f), 0.0f };
+		itemSlots[i] = slot;
+	}
+
+	SetActive(false);
 }
 
 Shop::~Shop()
@@ -43,10 +62,17 @@ Shop::~Shop()
 
 void Shop::Update()
 {
-	shopFrame->Update();
-
 	shop->UpdateWorld();
 	trader->UpdateWorld();
+	
+	if (!Active()) return;
+
+	shopFrame->Update();
+
+	for (Slot* slot : itemSlots)
+	{
+		slot->Update();
+	}
 }
 
 void Shop::Render()
@@ -60,9 +86,93 @@ void Shop::Render()
 
 void Shop::UIRender()
 {
+	if (!Active()) return;
+
 	shopFrame->Render();
+
+	for (Slot* slot : itemSlots)
+	{
+		slot->Render();
+	}
 }
 
 void Shop::GUIRender()
 {
+}
+
+void Shop::AddItem(Item* item)
+{
+	for (int i = 0; i < items.size(); i++)
+	{
+		if (items[i] == nullptr)
+		{
+			items[i] = item;
+			break;
+		}
+	}
+
+	UpdataItems();
+}
+
+string Shop::GetItemName(int index)
+{
+	if (items[index] != nullptr)
+	{
+		return items[index]->GetItemName();
+	}
+	else
+	{
+		return "";
+	}
+}
+
+void Shop::UpdataItems()
+{
+	for (int i = 0; i < items.size(); i++)
+	{
+		if (items[i] != nullptr)
+		{
+			itemSlots[i]->GetMaterial()->SetDiffuseMap(items[i]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		}
+	}
+}
+
+Item* Shop::CreateWeapon(string name, WeaponType type)
+{
+	return new Weapon(name, type);
+}
+
+Item* Shop::CreatePotion(string name, PotionType type)
+{
+	return new Potion(name, type);
+}
+
+void Shop::PurchaseItem(string itemName, Inventory* inventory)
+{
+	for (Item* item : items)
+	{
+		if (item->GetName() == itemName)
+		{
+			if (Weapon* weapon = dynamic_cast<Weapon*>(item))
+			{
+				Item* item = CreateWeapon(weapon->GetName(), weapon->GetWeaponType());
+				inventory->AddItem(item);
+				return;
+			}
+			else if (Potion* potion = dynamic_cast<Potion*>(item))
+			{
+				Item* item = CreatePotion(potion->GetName(), potion->GetPotionType());
+				inventory->AddItem(item);
+				return;
+			}
+		}
+	}
+}
+
+void Shop::SellItem(int itemIndex, Inventory* inventory)
+{
+	// 나중에 추가 사항(골드 등)이 있다면 추가하기
+
+	// 해당 인덱스의 아이템 삭제
+	inventory->DeleteItem(itemIndex);
 }

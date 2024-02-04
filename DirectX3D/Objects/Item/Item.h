@@ -23,10 +23,11 @@ public:
 public:
 	ItemType GetType() { return type; }
 	Quad* GetIcon() { return icon; }
+	string GetItemName() { return itemName; }
 
 protected:
 	Quad* icon;
-
+	string itemName;
 	ItemType type;
 };
 

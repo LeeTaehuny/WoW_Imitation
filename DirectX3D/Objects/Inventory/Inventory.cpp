@@ -5,36 +5,8 @@
 
 Inventory::Inventory()
 {
-	// 인벤토리 프레임 설정
-	invFrame = new Slot(L"Textures/UI/Inventory.png", SlotType::Inventory_Frame);
-	invFrame->Scale() *= 1.75f;
-	invFrame->Pos() = { CENTER_X, CENTER_Y, 1.0f };
-
-	// 인벤토리 내용 초기화
-	inventory.resize(28);
-	int idx = 0;
-	for (InventoryItem& i : inventory)
-	{
-		i.index = idx;
-		idx++;
-	}
-
-	// 인벤토리 슬롯 설정
-	invSlot.resize(28);
-	for (int i = 0; i < invSlot.size(); i++)
-	{
-		int idxY = i / 7;
-		int idxX = i % 7;
-
-		Slot* slot = new Slot(Vector2(33.0f, 33.0f), SlotType::Inventory_Slot);
-		slot->GetMaterial()->SetDiffuseMap(L"Textures/Color/White.png");
-		slot->SetParent(invFrame);
-		slot->Pos() = { -143.0f + (idxX * 47.5f), 45.0f - (idxY * 40.5f), 0.0f}; 
-		invSlot[i] = slot;
-	}
-
-	// 인벤토리 액티브 off
-	SetActive(false);
+	// 인벤토리 초기화
+	InitInventory();
 
 	// 이벤트 등록
 	{
@@ -45,9 +17,6 @@ Inventory::Inventory()
 		Observer::Get()->AddParamEvent("PickInvItem", bind(&Inventory::PickItem, this, placeholders::_1));
 		Observer::Get()->AddParamEvent("DownInvItem", bind(&Inventory::DownItem, this, placeholders::_1));
 	}
-
-	mouseImg = new Quad(Vector2(55.0f, 55.0f));
-	mouseImg->SetActive(false);
 }
 
 Inventory::~Inventory()
@@ -128,7 +97,7 @@ void Inventory::UpdateInventory()
 	{
 		if (inv.item == nullptr)
 		{
-			invSlot[inv.index]->GetMaterial()->SetDiffuseMap(L"Textures/Color/White.png");
+			invSlot[inv.index]->GetMaterial()->SetDiffuseMap(L"Textures/Color/Black.png");
 		}
 		else
 		{
@@ -173,6 +142,8 @@ void Inventory::AddItem(Item* item)
 		{
 			// 수량 증가
 			inv.quantity++;
+			// 전달받은 아이템 삭제
+			SAFE_DEL(item);
 			return;
 		}
 	}
@@ -199,35 +170,71 @@ void Inventory::AddItem(Item* item)
 	
 }
 
-void Inventory::DeleteItem(Item* item)
+void Inventory::DeleteItem(int itemIndex)
 {
-	// 삭제는 일단 나중에 상황보고 작성
+	// 인덱스 오류 체크
+	if (itemIndex < 0 || itemIndex >= 28) return;
 
-	// 전달받은 아이템의 타입이 무기 타입이라면?
-	//if (item->GetType() == ItemType::Weapon)
-	//{
-	//	// 순회
-	//	for (InventoryItem inv : inventory)
-	//	{
-	//		// 만약 아이템의 태그가 같다면?
-	//		if (item->GetTag() == inv.item->GetTag())
-	//		{
-	//			// 해당 슬롯의 이미지 초기화
-	//			invSlot[inv.index]->GetMaterial()->SetDiffuseMap(L"Textures/Color/White.png");
-	//
-	//			// 아이템 삭제
-	//			SAFE_DEL(inv.item);
-	//			return;
-	//		}
-	//	}
-	//}
-	
+	// 만약 아이템이 존재한다면?
+	if (inventory[itemIndex].item != nullptr)
+	{
+		// 수량 체크
+		if (inventory[itemIndex].quantity > 1)
+		{
+			inventory[itemIndex].quantity--;
+		}
+		else if (inventory[itemIndex].quantity == 1)
+		{
+			inventory[itemIndex].quantity--;
+			SAFE_DEL(inventory[itemIndex].item);
+		}
+	}
+}
+
+void Inventory::InitInventory()
+{
+	// 인벤토리 프레임 설정
+	invFrame = new Slot(L"Textures/UI/Inventory.png", SlotType::Inventory_Frame);
+	invFrame->Scale() *= 1.75f;
+	invFrame->Pos() = { CENTER_X, CENTER_Y, 1.0f };
+
+	// 인벤토리 내용 초기화
+	inventory.resize(28);
+	int idx = 0;
+	for (InventoryItem& i : inventory)
+	{
+		i.index = idx;
+		idx++;
+	}
+
+	// 인벤토리 슬롯 설정
+	invSlot.resize(28);
+	for (int i = 0; i < invSlot.size(); i++)
+	{
+		int idxY = i / 7;
+		int idxX = i % 7;
+
+		Slot* slot = new Slot(Vector2(33.0f, 33.0f), SlotType::Inventory_Slot);
+		slot->GetMaterial()->SetDiffuseMap(L"Textures/Color/Black.png");
+		slot->SetParent(invFrame);
+		slot->Pos() = { -143.0f + (idxX * 47.5f), 45.0f - (idxY * 40.5f), 2.0f };
+		invSlot[i] = slot;
+	}
+
+	// 인벤토리 액티브 off
+	SetActive(false);
+
+	// 마우스 액티브 off
+	mouseImg = new Quad(Vector2(55.0f, 55.0f));
+	mouseImg->SetActive(false);
 }
 
 void Inventory::MoveInventoryFrame()
 {
+	// 인벤토리 프레임이 선택되었다면?
 	if (invFrame->GetSelect())
 	{
+		// 슬롯이 선택된 것이 아닌지 체크하기
 		for (Slot* slot : invSlot)
 		{
 			if (slot->GetSelect())
@@ -236,6 +243,7 @@ void Inventory::MoveInventoryFrame()
 			}
 		}
 
+		// 마우스 이동량의 Delta값 만큼 이동시키기
 		if (!bIsMove)
 		{
 			prevPos = mousePos;
@@ -256,6 +264,7 @@ void Inventory::MoveInventoryFrame()
 
 void Inventory::StopInventoryFrame()
 {
+	// 이동중이 아니라고 설정
 	bIsMove = false;
 }
 
@@ -275,6 +284,8 @@ void Inventory::PickItem(void* slot)
 			}
 			idx++;
 		}
+
+		if (idx >= 28) return;
 
 		// 해당 슬롯에 아이템이 존재하지 않는 경우 리턴
 		if (inventory[idx].item == nullptr)
@@ -314,6 +325,8 @@ void Inventory::DownItem(void* slot)
 			}
 			idx++;
 		}
+
+		if (idx >= 28) return;
 
 		// 이전 인덱스 슬롯의 클릭 해제
 		invSlot[tempIndex]->SetSelect(false);
