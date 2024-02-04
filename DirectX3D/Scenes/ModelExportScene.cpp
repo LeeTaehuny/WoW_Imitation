@@ -51,7 +51,7 @@ ModelExportScene::ModelExportScene()
     //exporter->ExportMesh();
     //delete exporter;
 
-    string name = "IceBreak";
+    string name = "LastBossMap_S";
     string file = "Models/FBX/" + name + ".fbx";
     ModelExporter* exporter;
     exporter = new ModelExporter(name, file);

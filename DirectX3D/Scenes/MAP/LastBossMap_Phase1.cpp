@@ -43,6 +43,9 @@ LastBossMap_Phase1::LastBossMap_Phase1()
     Obj_Icerib[3]->Pos().z += 30;
     Obj_Icerib[3]->Rot().y -= 1.575f;
 
+    //Sky = new Model("LastBossMap_S");
+    //Sky->Scale() *= 1.0f;
+    //Sky->Pos().y -= 50;
 }
 
 LastBossMap_Phase1::~LastBossMap_Phase1()
@@ -54,12 +57,15 @@ LastBossMap_Phase1::~LastBossMap_Phase1()
 
     delete Ground_Collider;
     FOR(4) delete Icerib_Collider[i];
+
+    //delete Sky;
 }
 
 void LastBossMap_Phase1::Update()
 {
     Ground_Prop->UpdateWorld();
     Obj_Prop->UpdateWorld();
+    //Sky->UpdateWorld();
 
     if (PhaseNum == 0)
     {
@@ -81,6 +87,7 @@ void LastBossMap_Phase1::Render()
 {
     Ground_Prop->Render();
     Obj_Prop->Render();
+    //Sky->Render();
 
    if(PhaseNum == 0)
    {

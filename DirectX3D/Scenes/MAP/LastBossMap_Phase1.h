@@ -21,6 +21,8 @@ private:
     Model* Obj_Prop;
     Model* Obj_Icerib[4];
 
+    Model* Sky;
+
     // Collider
     Cylinder* Ground_Collider;
     Cylinder* Icerib_Collider[4];

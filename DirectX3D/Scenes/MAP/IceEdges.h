@@ -18,8 +18,7 @@ private:
     Model* Edge3;
     Model* Edge4;
 
-    bool isReset = false;
-    bool isFalling = false;
+    bool Falling = true;
 
     //Collider
     Cylinder* Ground_Collider;
