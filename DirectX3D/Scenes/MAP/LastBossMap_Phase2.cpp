@@ -27,6 +27,8 @@ void LastBossMap_Phase2::Update()
     Ground_Collider->UpdateWorld();
 
     IceBreak->Update();
+
+    if (KEY_DOWN(VK_DOWN)) IceBreak->ZeroSet();
 }
 
 void LastBossMap_Phase2::PreRender()

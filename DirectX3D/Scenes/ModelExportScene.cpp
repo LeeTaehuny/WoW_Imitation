@@ -51,13 +51,13 @@ ModelExportScene::ModelExportScene()
     //exporter->ExportMesh();
     //delete exporter;
 
-    string name = "LastBossMap_S";
-    string file = "Models/FBX/" + name + ".fbx";
-    ModelExporter* exporter;
-    exporter = new ModelExporter(name, file);
-    exporter->ExportMaterial();
-    exporter->ExportMesh();
-    delete exporter;
+    //string name = "Ice_debris4";
+    //string file = "Models/FBX/" + name + ".fbx";
+    //ModelExporter* exporter;
+    //exporter = new ModelExporter(name, file);
+    //exporter->ExportMaterial();
+    //exporter->ExportMesh();
+    //delete exporter;
 
     //string name = "Robot";
     //string file = "Models/FBX/" + name + ".fbx";

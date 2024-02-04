@@ -44,7 +44,9 @@ LastBossMap_Phase1::LastBossMap_Phase1()
     Obj_Icerib[3]->Rot().y -= 1.575f;
 
     //Sky = new Model("LastBossMap_S");
-    //Sky->Scale() *= 1.0f;
+    //Sky = new SkyBox(L"LastBossMap_S");
+    //Sky = new SkyBox(L"Textures/Landscape/BlueSky.dds");
+    //Sky->Scale() *= 10.0f;
     //Sky->Pos().y -= 50;
 }
 
