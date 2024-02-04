@@ -22,4 +22,6 @@ private:
     ModelAnimator* skel;
 
     int value = 0;
+
+    SkillBase* skill;
 };

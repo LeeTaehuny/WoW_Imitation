@@ -40,6 +40,8 @@ KimScene::KimScene()
 	{
 		MONSTER->SetTarget(coll[i]);
 	}
+
+	skill = new Target(TargetSkill::BB);
 }
 
 KimScene::~KimScene()
@@ -49,12 +51,11 @@ KimScene::~KimScene()
 	for (Collider* col : coll)
 		delete col;
 	delete skel;
+	delete skill;
 }
 
 void KimScene::Update()
 {
-	float forward = 3;
-
 	if (KEY_DOWN('1')) dlatl = coll[0];
 	if (KEY_DOWN('2')) dlatl = coll[1];
 	if (KEY_DOWN('3')) dlatl = coll[2];
@@ -68,6 +69,20 @@ void KimScene::Update()
 	{
 		MONSTER->SpawnSkeletonKnight(Vector3());
 	}
+	
+	skill->SkillFire(CAM->Pos());
+
+	for (Collider* coll : MONSTER->monsterCollider)
+	{
+		Ray ray = CAM->ScreenPointToRay(mousePos);
+		
+		if (coll->IsRayCollision(ray, nullptr))
+		{
+			skill->SetEnemy(coll);
+			break;
+		}
+	}
+	skill->SkillUpdate();
 
 	MONSTER->Update();
 	UPDATE(mainPlayer);
@@ -79,6 +94,7 @@ void KimScene::Update()
 
 void KimScene::PreRender()
 {
+	
 }
 
 void KimScene::Render()
@@ -90,6 +106,8 @@ void KimScene::Render()
 
 	for (Collider* col : coll)
 		col->Render();
+
+	skill->Render();
 }
 
 void KimScene::PostRender()

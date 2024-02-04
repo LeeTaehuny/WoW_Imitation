@@ -37,6 +37,8 @@ MonsterManager::~MonsterManager()
 
 	for (Collider* col : targets)
 		delete col;
+	for (Collider* col : monsterCollider)
+		delete col;
 }
 
 void MonsterManager::Update()
@@ -86,6 +88,7 @@ void MonsterManager::SpawnSkeleton(Vector3 pos)
 	Transform* transform = skeleton_body->Add();
 	transform->Scale() *= 0.01f;
 	Skeleton* skel = new Skeleton(transform, skeleton_body, curindex, targets);
+	monsterCollider.push_back(skel->collider);
 	skeleton.push_back(skel);
 	skeleton[skeleton.size() - 1]->Spawn(pos);
 }
@@ -110,6 +113,7 @@ void MonsterManager::SpawnSkeletonKnight(Vector3 pos)
 	Transform* transform = skeletonKnight_body->Add();
 	transform->Scale() *= 0.02f;
 	Skeleton_Knight* skel = new Skeleton_Knight(transform, skeletonKnight_body, curindex, targets);
+	monsterCollider.push_back(skel->collider);
 	skeleton_Knight.push_back(skel);
 	skeleton_Knight[skeleton_Knight.size() - 1]->Spawn(pos);
 }

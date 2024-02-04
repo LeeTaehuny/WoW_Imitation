@@ -1,6 +1,10 @@
 ﻿#pragma once
 class MonsterBase
 {
+public:
+    // 몬스터의 피격 콜라이더
+    CapsuleCollider* collider;
+
 protected:
 
     // 타겟의 콜라이더를 받아옴 (나중에 변경 가능)
@@ -14,8 +18,6 @@ protected:
     vector<float> targetHate;
 
     Transform* transform;
-    // 몬스터의 피격 콜라이더
-    CapsuleCollider* collider;
     // 공격범위 콜라이더 (충돌시 공격 모션 재생)
     SphereCollider* attackRange;
     BoxCollider* attackBumwe;
