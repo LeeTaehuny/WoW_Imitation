@@ -1,24 +1,19 @@
 ﻿#include "Framework.h"
 
-TargetSkill::TargetSkill(Type type) : 
-	SkillBase(TARGET), // 타겟팅 스킬임을 설정
-	type(type)         // 즉발성인지 아닌지 구분하기 위함
+TargetSkill::TargetSkill(Type type)
+	: type(type) // 즉발성인지 아닌지 구분하기 위함
 {
-	particle = new Snow();
+	
 }
-
 TargetSkill::~TargetSkill()
 {
 	delete enemy;
 }
 
-void TargetSkill::NonTarget(){}
-
 void TargetSkill::Target()
 {
 	if (!enemy) return;
-	if (!myCollider->Active()) return;
-
+	
 	switch (type)
 	{
 	case TargetSkill::AA: // 즉발성
@@ -29,18 +24,12 @@ void TargetSkill::Target()
 		wing();
 		break;
 	}
-
-	particle->Play(myCollider->Pos());
-	if (particle != nullptr) particle->Update();
-	myCollider->UpdateWorld();
 }
-
 void TargetSkill::vong()
 {
 	// 대상의 위치로 콜라이더 이동
 	myCollider->Pos() = enemy->GlobalPos();
 }
-
 void TargetSkill::wing()
 {
 	// 자신과 적의 위치를 받아와 방향을 정합니다.

@@ -12,9 +12,13 @@ public:
 	TargetSkill(Type type);
 	virtual ~TargetSkill();
 
-	virtual void NonTarget() override;
-	virtual void Target() override;
+	virtual void Update() = 0;
+	virtual void Render() = 0;
+	virtual void UseSkill(Vector3 pos) = 0;
 
+	// 콜라이더를 날리는 함수
+	// 즉발성인가 투사체인가 판별도 알아서 해줍니다.
+	void Target();
 	// 즉발성 형식의 타겟팅 스킬인 경우
 	void vong();
 	// 투사체 형식의 타겟팅 스킬인 경우
@@ -32,6 +36,7 @@ protected:
 
 	// 투사체라면 날아가는 속도를 지정 (생성자로 스킬 생성시 재조정 필요)
 	float FlyingSpeed = 10;
+	// 즉발성인가 투사체인가를 판별하기 위한 변수
 	Type type;
 
 };

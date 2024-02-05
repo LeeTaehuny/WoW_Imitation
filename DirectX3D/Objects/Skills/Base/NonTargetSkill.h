@@ -3,10 +3,12 @@ class NonTargetSkill : public SkillBase
 {
 public:
 	NonTargetSkill();
-	~NonTargetSkill();
+	virtual ~NonTargetSkill();
 
-	virtual void NonTarget() override;
-	virtual void Target() = 0;
+	virtual void Update() = 0;
+	virtual void Render() = 0;
+	virtual void UseSkill() = 0;
+
+	void NonTarget();
 
 };
-

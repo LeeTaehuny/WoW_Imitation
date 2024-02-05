@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Skills\FireBall.h" />
     <ClInclude Include="Objects\Skills\Base\NonTargetSkill.h" />
     <ClInclude Include="Objects\Monster\MonsterBase.h" />
     <ClInclude Include="Objects\Monster\MonsterManager.h" />
@@ -152,7 +153,6 @@
     <ClInclude Include="Objects\Character_\ProtectionWarrior.h" />
     <ClInclude Include="Objects\Monster\Skeleton.h" />
     <ClInclude Include="Objects\Skills\Base\SkillBase.h" />
-    <ClInclude Include="Objects\Skills\Target.h" />
     <ClInclude Include="Objects\Skills\Base\TargetSkill.h" />
     <ClInclude Include="Scenes\KimScene.h" />
     <ClInclude Include="Objects\Character_\CH_Base.h" />
@@ -290,6 +290,7 @@
     <ClInclude Include="Objects\Item\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Skills\FireBall.cpp" />
     <ClCompile Include="Objects\Skills\Base\NonTargetSkill.cpp" />
     <ClCompile Include="Objects\Monster\MonsterManager.cpp" />
     <ClCompile Include="Objects\Character_\MarksmanshipHunter.cpp" />
@@ -306,7 +307,6 @@
     <ClCompile Include="Objects\Character_\CH_Base.cpp" />
     <ClCompile Include="Objects\Monster\Skeleton.cpp" />
     <ClCompile Include="Objects\Skills\Base\SkillBase.cpp" />
-    <ClCompile Include="Objects\Skills\Target.cpp" />
     <ClCompile Include="Objects\Skills\Base\TargetSkill.cpp" />
     <ClCompile Include="Scenes\KimScene.cpp" />
     <ClCompile Include="Objects\Inventory\Inventory.cpp" />

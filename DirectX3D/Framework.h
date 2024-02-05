@@ -221,7 +221,7 @@ using namespace GameMath;
 #include "Objects/Skills/Base/TargetSkill.h"
 
 // 스킬
-#include "Objects/Skills/Target.h"
+#include "Objects/Skills/FireBall.h"
 
 #include "Objects/Test/TestLight.h"
 

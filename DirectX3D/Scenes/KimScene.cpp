@@ -41,7 +41,10 @@ KimScene::KimScene()
 		MONSTER->SetTarget(coll[i]);
 	}
 
-	skill = new Target(TargetSkill::BB);
+	skill = new FireBall();
+
+	//par = new Spark(L"Textures/Effect/star.png");
+	//particleSystem = new ParticleSystem(L"Textures/Effect/star.png");
 }
 
 KimScene::~KimScene()
@@ -52,6 +55,8 @@ KimScene::~KimScene()
 		delete col;
 	delete skel;
 	delete skill;
+	delete par;
+	delete particleSystem;
 }
 
 void KimScene::Update()
@@ -69,24 +74,34 @@ void KimScene::Update()
 	{
 		MONSTER->SpawnSkeletonKnight(Vector3());
 	}
-	
-	skill->SkillFire(CAM->Pos());
 
-	for (Collider* coll : MONSTER->monsterCollider)
+	if (KEY_DOWN(VK_SPACE))
+		skill->UseSkill(CAM->Pos());
+
+	if (KEY_DOWN(VK_LBUTTON))
 	{
-		Ray ray = CAM->ScreenPointToRay(mousePos);
-		
-		if (coll->IsRayCollision(ray, nullptr))
+		for (Collider* coll : MONSTER->monsterCollider)
 		{
-			skill->SetEnemy(coll);
-			break;
+			Ray ray = CAM->ScreenPointToRay(mousePos);
+
+			if (coll->IsRayCollision(ray, nullptr))
+			{
+				skill->SetEnemy(coll);
+				break;
+			}
 		}
 	}
-	skill->SkillUpdate();
+	skill->Update();
+
+	//if (KEY_DOWN('A'))
+	//	particleSystem->Play(Vector3());
 
 	MONSTER->Update();
 	UPDATE(mainPlayer);
 	UPDATE(skel);
+	UPDATE(particleSystem);
+
+	UPDATE(par);
 
 	for (Collider* col : coll)
 		col->UpdateWorld();
@@ -94,7 +109,7 @@ void KimScene::Update()
 
 void KimScene::PreRender()
 {
-	
+
 }
 
 void KimScene::Render()
@@ -108,6 +123,8 @@ void KimScene::Render()
 		col->Render();
 
 	skill->Render();
+	RENDER(par);
+	RENDER(particleSystem);
 }
 
 void KimScene::PostRender()
@@ -116,6 +133,7 @@ void KimScene::PostRender()
 
 void KimScene::GUIRender()
 {
+	skill->particle->GUIRender();
 	GUIRENDER(mainPlayer);
 	GUIRENDER(skel);
 	for (Collider* col : coll)

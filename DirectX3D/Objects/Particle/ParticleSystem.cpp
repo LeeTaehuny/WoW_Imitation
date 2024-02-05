@@ -93,16 +93,19 @@ void ParticleSystem::GUIRender()
 
 void ParticleSystem::Play(Vector3 pos, Vector3 rot)
 {
+    isPlay = true;
+
     quad->SetActive(true);
 
     quad->Pos() = pos;
-    quad->Rot() = rot;
+    quad->Rot() = rot;        
 
     Init();
 }
 
 void ParticleSystem::Stop()
 {
+    isPlay = false;
     quad->SetActive(false);
 }
 

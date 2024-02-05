@@ -24,4 +24,7 @@ private:
     int value = 0;
 
     SkillBase* skill;
+
+    Particle* par;
+    ParticleSystem* particleSystem;
 };
