@@ -13,9 +13,9 @@ private:
         float x, z, size;
         UINT triangleCount = 0;
 
-        Mesh<VertexType>* mesh = nullptr;
+        Mesh<VertexType>* mesh = nullptr; // 해당노드에서 갖고있는 지형의 쪼개진 모양
 
-        Node* children[4] = {};
+        Node* children[4] = {}; // 노드 자식이 몇개인지
     };
 
 public:

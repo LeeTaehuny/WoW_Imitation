@@ -137,6 +137,7 @@ bool QuadTreeTerrain::IsTriangleContained(UINT index, float x, float z, float si
     if (maxZ < (z - halfSize))
         return false;
 
+
     return true;
 }
 
@@ -178,9 +179,10 @@ void QuadTreeTerrain::CreateTreeNode(Node* node, float x, float z, float size)
         return;
     }
 
-    //Leaf Node
+    //Leaf Node 나눌수 없는상황 
     node->triangleCount = triangles;
     UINT vertexCount = triangles * 3;
+
     node->mesh = new Mesh<VertexType>();
     vector<VertexType>& vertices = node->mesh->GetVertices();
     vertices.resize(vertexCount);
