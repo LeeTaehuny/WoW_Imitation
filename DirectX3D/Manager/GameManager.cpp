@@ -27,7 +27,7 @@
 #include "Scenes/TerrainLODScene.h"
 
 #include "Scenes/MAP/LastBossMap_Scene.h"
-#include "Objects/MAP/BossMap.h"
+#include "Scenes/MAP/MapTestScene.h"
 
 // 오늘 진행된 설명 : 궤적 파티클, 다른 특수 파티클(눈, 스파크)
 //                   + 궤적 파티클 적용 (휴먼 클래스에 추가함)
@@ -93,15 +93,19 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
     //SceneManager::Get()->Add("LOD");
 
-    // Model Print
+    //Model Print
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
     //SceneManager::Get()->Add("ModelExport");
     //SceneManager::Get()->Create("ModelRender", new ModelRenderScene());
     //SceneManager::Get()->Add("ModelRender");
 
     /// Scene
-    SceneManager::Get()->Create("LastBossMap", new LastBossMap_Scene());
-    SceneManager::Get()->Add("LastBossMap");
+    //SceneManager::Get()->Create("LastBossMap", new LastBossMap_Scene());
+    //SceneManager::Get()->Add("LastBossMap");
+
+    SceneManager::Get()->Create("BossMapTest", new MapTestScene());
+    SceneManager::Get()->Add("BossMapTest");
+
 
     //SceneManager::Get()->Create("BossMap", new BossMap());
     //SceneManager::Get()->Add("BossMap");

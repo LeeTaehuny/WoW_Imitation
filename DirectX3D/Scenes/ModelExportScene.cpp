@@ -3,7 +3,7 @@
 
 ModelExportScene::ModelExportScene()
 {
-    //string name = "LastBossMap1";
+    //string name = "DungeonMap";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
     //exporter = new ModelExporter(name, file);
@@ -11,54 +11,7 @@ ModelExportScene::ModelExportScene()
     //exporter->ExportMesh();
     //delete exporter;   
    
-    //string name = "LastBossMap1_B";
-    //string file = "Models/FBX/" + name + ".fbx";
-    //ModelExporter* exporter;
-    //exporter = new ModelExporter(name, file);
-    //exporter->ExportMaterial();
-    //exporter->ExportMesh();
-    //delete exporter;   
-
-    //string name = "LastBossMap1_O";
-    //string file = "Models/FBX/" + name + ".fbx";
-    //ModelExporter* exporter;
-    //exporter = new ModelExporter(name, file);
-    //exporter->ExportMaterial();
-    //exporter->ExportMesh();
-    //delete exporter;
-
-    //string name = "LastBossMap1_O2";
-    //string file = "Models/FBX/" + name + ".fbx";
-    //ModelExporter* exporter;
-    //exporter = new ModelExporter(name, file);
-    //exporter->ExportMaterial();
-    //exporter->ExportMesh();
-    //delete exporter;
-
-    //string name = "LastBossMap2";
-    //string file = "Models/FBX/" + name + ".fbx";
-    //ModelExporter* exporter;
-    //exporter = new ModelExporter(name, file);
-    //exporter->ExportMaterial();
-    //exporter->ExportMesh();
-    //delete exporter;
-
-    //string name = "IceEdge1";
-    //string file = "Models/FBX/" + name + ".fbx";
-    //ModelExporter* exporter;
-    //exporter = new ModelExporter(name, file);
-    //exporter->ExportMaterial();
-    //exporter->ExportMesh();
-    //delete exporter;
-
-    //string name = "Ice_debris4";
-    //string file = "Models/FBX/" + name + ".fbx";
-    //ModelExporter* exporter;
-    //exporter = new ModelExporter(name, file);
-    //exporter->ExportMaterial();
-    //exporter->ExportMesh();
-    //delete exporter;
-
+    
     //string name = "Robot";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;

@@ -142,6 +142,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\MAP\Dungeon.h" />
+    <ClInclude Include="Scenes\MAP\MapTestScene.h" />
     <ClInclude Include="Objects\MAP\BossMap.h" />
     <ClInclude Include="Framework\Environment\Reflection.h" />
     <ClInclude Include="Framework\Environment\Refraction.h" />
@@ -272,6 +274,8 @@
     <ClInclude Include="Scenes\TessellationScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\MAP\Dungeon.cpp" />
+    <ClCompile Include="Scenes\MAP\MapTestScene.cpp" />
     <ClCompile Include="Objects\MAP\BossMap.cpp" />
     <ClCompile Include="Framework\Environment\Reflection.cpp" />
     <ClCompile Include="Framework\Environment\Refraction.cpp" />

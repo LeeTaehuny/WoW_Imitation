@@ -199,7 +199,9 @@ using namespace GameMath;
 #include "Scenes/MAP/LastBossMap_Phase1.h"
 #include "Scenes/MAP/IceEdges.h"
 #include "Scenes/MAP/LastBossMap_Phase2.h"
+
 #include "Objects/MAP/BossMap.h"
+#include "Objects/MAP/Dungeon.h"
 
 //Scene Header
 #include "Scenes/Scene.h"

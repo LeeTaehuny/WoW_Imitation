@@ -3,7 +3,7 @@
 
 ModelRenderScene::ModelRenderScene()
 {
-    model = new Model("LastBossMap2");
+    model = new Model("DungeonMap");
     model->Scale() *= 1.0f;
     model->Pos().y -= 5;
 
