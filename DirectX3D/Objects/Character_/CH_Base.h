@@ -2,8 +2,7 @@
 class CH_Base : public ModelAnimator
 {
 public:
-	CH_Base(string name, int myNober) : ModelAnimator(name)
-	{ this->myNober = myNober; }
+	CH_Base(string name);
 	virtual ~CH_Base() = default;
 
 	// 플레이어용 업데이트
@@ -13,6 +12,7 @@ public:
 	// 모션 설정
 	void SetState(int state);
 	void Render();
+	void UIRender();
 
 	Collider* GetCollider() { return collider; }
 
@@ -31,13 +31,15 @@ public: // 가상 함수
 	// 다른 콜라이더와 충돌했을 때
 	virtual void OnHit(Collider* collider) = 0;
 
-	bool isCasting = false;
-	int myNober = 0;
+// Getter & Setter
+public:
+	class Inventory* GetInventory() { return inventory; }
+
 protected:
 	int INTstate = 0;
 	Vector3 velocity;
 	bool isJump = false;
-
+	bool isCasting = false;
 	Collider* collider;
 
 
@@ -45,4 +47,8 @@ protected: // 스탯 관련
 
 	float Max_hp = 0;
 	float cur_hp = Max_hp;
+
+// 인벤토리
+protected:
+	class Inventory* inventory;
 };

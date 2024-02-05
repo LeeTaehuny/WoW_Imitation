@@ -11,7 +11,7 @@ private:
 	};
 
 public:
-	ArmsWarrior(int myNober);
+	ArmsWarrior();
 	~ArmsWarrior();
 
 	virtual void Moving() override;

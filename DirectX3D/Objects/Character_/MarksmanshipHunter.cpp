@@ -1,6 +1,6 @@
 ﻿#include "Framework.h"
 
-MarksmanshipHunter::MarksmanshipHunter(int myNober) : CH_Base("MarksmanshipHunter", myNober)
+MarksmanshipHunter::MarksmanshipHunter() : CH_Base("MarksmanshipHunter")
 {
 	ReadClip("Idle");
 	ReadClip("Attack_1");

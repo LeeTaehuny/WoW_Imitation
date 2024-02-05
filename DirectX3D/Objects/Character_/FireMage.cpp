@@ -1,6 +1,6 @@
 ﻿#include "Framework.h"
 
-FireMage::FireMage(int myNober) : CH_Base("FireMage", myNober)
+FireMage::FireMage() : CH_Base("FireMage")
 {
 	ReadClip("Idle_1");
 	ReadClip("Idle_2");

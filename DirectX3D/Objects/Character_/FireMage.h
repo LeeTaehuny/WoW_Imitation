@@ -10,7 +10,7 @@ class FireMage : public CH_Base
 	};
 
 public:
-	FireMage(int myNober);
+	FireMage();
 	~FireMage();
 
 	virtual void Moving() override;

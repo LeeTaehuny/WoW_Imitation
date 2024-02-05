@@ -1,6 +1,6 @@
 ﻿#include "Framework.h"
 
-ProtectionWarrior::ProtectionWarrior(int myNober) : CH_Base("ProtectionWarrior", myNober)
+ProtectionWarrior::ProtectionWarrior() : CH_Base("ProtectionWarrior")
 {
 	ReadClip("Idle_1");
 	ReadClip("Idle_2");

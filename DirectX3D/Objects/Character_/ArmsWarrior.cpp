@@ -1,6 +1,6 @@
 ﻿#include "Framework.h"
 
-ArmsWarrior::ArmsWarrior(int myNober) : CH_Base("ArmsWarrior", myNober)
+ArmsWarrior::ArmsWarrior() : CH_Base("ArmsWarrior")
 {
 	ReadClip("Idle_1");
 	ReadClip("Idle_2");

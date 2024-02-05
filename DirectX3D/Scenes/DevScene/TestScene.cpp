@@ -5,6 +5,8 @@
 #include "Objects/Inventory/Inventory.h"
 #include "Objects/Shop/Shop.h"
 #include "Objects/Inventory/Slot.h"
+#include "Objects/Character_/CH_Base.h"
+#include "Objects/Character_/MarksmanshipHunter.h"
 
 TestScene::TestScene()
 {
@@ -13,7 +15,7 @@ TestScene::TestScene()
 
 	//potion->Pos() = { 1, 0, 0 };
 
-	inv = new Inventory();
+	//inv = new Inventory();
 	//inv->AddItem(potion);
 	//inv->AddItem(potion);
 	//inv->AddItem(weapon);
@@ -31,22 +33,24 @@ TestScene::TestScene()
 	shop->AddItem(new Weapon("hammer_2", WeaponType::Hammer));
 	shop->AddItem(new Potion("potion", PotionType::Hp));
 	shop->AddItem(new Potion("potionMp", PotionType::Mp));
+
+	player = new MarksmanshipHunter();
 }
 
 TestScene::~TestScene()
 {
-	delete weapon;
+	//delete weapon;
 }
 
 void TestScene::Update()
 {
 	//weapon->Update();
 	//potion->Update();
-	inv->Update();
-
+	//inv->Update();
+	//
 	shop->Update();
-
-	if ((CAM->GlobalPos() - shop->GlobalPos()).Length() < 10.0f)
+	
+	if ((player->GlobalPos() - shop->GlobalPos()).Length() < 10.0f)
 	{
 		shop->SetActive(true);
 	}
@@ -54,11 +58,11 @@ void TestScene::Update()
 	{
 		shop->SetActive(false);
 	}
-
+	
 	if (shop->Active())
 	{
 		const vector<Slot*> slots = shop->GetItemSlots();
-		const vector<Slot*> items = inv->GetInvSlots();
+		const vector<Slot*> items = player->GetInventory()->GetInvSlots();
 		
 		int idx = 0;
 		for (Slot* slot : slots)
@@ -72,14 +76,14 @@ void TestScene::Update()
 					
 					if (tmpName.size())
 					{
-						shop->PurchaseItem(tmpName, inv);
+						shop->PurchaseItem(tmpName, player->GetInventory());
 					}
 				}
 			}
-
+	
 			idx++;
 		}
-
+	
 		idx = 0;
 		for (Slot* item : items)
 		{
@@ -88,13 +92,15 @@ void TestScene::Update()
 			{
 				if (KEY_DOWN(VK_RBUTTON))
 				{
-					shop->SellItem(idx, inv);
+					shop->SellItem(idx, player->GetInventory());
 				}
 			}
-
+	
 			idx++;
 		}
 	}
+
+	player->PlayerUpdate();
 }
 
 void TestScene::PreRender()
@@ -106,11 +112,12 @@ void TestScene::Render()
 	//weapon->Render();
 	//potion->Render();
 	shop->Render();
+	player->Render();
 }
 
 void TestScene::PostRender()
 {
-	inv->UIRender();
+	player->UIRender();
 	shop->UIRender();
 }
 

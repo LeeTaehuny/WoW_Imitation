@@ -1,4 +1,10 @@
 ﻿#include "Framework.h"
+#include "Objects/Inventory/Inventory.h"
+
+CH_Base::CH_Base(string name) : ModelAnimator(name)
+{
+	inventory = new Inventory();
+}
 
 void CH_Base::PlayerUpdate()
 {
@@ -9,6 +15,8 @@ void CH_Base::PlayerUpdate()
 	Jump();
 	Attack();
 	Casting();
+
+	inventory->Update();
 
 	// 충돌체 업데이트
 	collider->UpdateWorld();
@@ -38,4 +46,11 @@ void CH_Base::Render()
 
 	collider->Render();
 	ModelAnimator::Render();
+}
+
+void CH_Base::UIRender()
+{
+	if (!Active()) return;
+
+	inventory->UIRender();
 }
