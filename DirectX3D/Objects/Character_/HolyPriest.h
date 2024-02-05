@@ -11,13 +11,22 @@ private:
 	};
 
 public:
-	HolyPriest();
+	HolyPriest(CreatureType type);
 	~HolyPriest();
 
-	virtual void Moving() override;
-	virtual void Jump() override;
-	virtual void Attack() override;
-	virtual void Casting() override;
+	virtual void Update() override;
+	virtual void Render() override;
+
+
+	// 플레이어용 업데이트
+	virtual void PlayerUpdate() override;
+	// NPC용 업데이트
+	virtual void AIUpdate() override;
+
+	void Moving();
+	void Jump();
+	void Attack();
+	void Casting();
 
 	virtual void OnHit(Collider* collider) override;
 

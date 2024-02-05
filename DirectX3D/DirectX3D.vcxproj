@@ -142,14 +142,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Character_\ArmsWarrior.h" />
+    <ClInclude Include="Objects\Character_\FireMage.h" />
+    <ClInclude Include="Objects\Character_\HolyPriest.h" />
+    <ClInclude Include="Objects\Character_\ProtectionWarrior.h" />
     <ClInclude Include="Objects\Skills\Base\NonTargetSkill.h" />
     <ClInclude Include="Objects\Monster\MonsterBase.h" />
     <ClInclude Include="Objects\Monster\MonsterManager.h" />
     <ClInclude Include="Objects\Character_\MarksmanshipHunter.h" />
-    <ClInclude Include="Objects\Character_\HolyPriest.h" />
-    <ClInclude Include="Objects\Character_\FireMage.h" />
-    <ClInclude Include="Objects\Character_\ArmsWarrior.h" />
-    <ClInclude Include="Objects\Character_\ProtectionWarrior.h" />
     <ClInclude Include="Objects\Monster\Skeleton.h" />
     <ClInclude Include="Objects\Skills\Base\SkillBase.h" />
     <ClInclude Include="Objects\Skills\Target.h" />
@@ -290,19 +290,19 @@
     <ClInclude Include="Objects\Item\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Character_\ArmsWarrior.cpp" />
+    <ClCompile Include="Objects\Character_\FireMage.cpp" />
+    <ClCompile Include="Objects\Character_\HolyPriest.cpp" />
+    <ClCompile Include="Objects\Character_\ProtectionWarrior.cpp" />
     <ClCompile Include="Objects\Skills\Base\NonTargetSkill.cpp" />
     <ClCompile Include="Objects\Monster\MonsterManager.cpp" />
     <ClCompile Include="Objects\Character_\MarksmanshipHunter.cpp" />
-    <ClCompile Include="Objects\Character_\HolyPriest.cpp" />
-    <ClCompile Include="Objects\Character_\FireMage.cpp" />
-    <ClCompile Include="Objects\Character_\ArmsWarrior.cpp" />
     <ClCompile Include="Objects\Inventory\Slot.cpp" />
     <ClCompile Include="Objects\UI\Button.cpp" />
     <ClCompile Include="Framework\Environment\Reflection.cpp" />
     <ClCompile Include="Framework\Environment\Refraction.cpp" />
     <ClCompile Include="Framework\Shader\DomainShader.cpp" />
     <ClCompile Include="Framework\Shader\HullShader.cpp" />
-    <ClCompile Include="Objects\Character_\ProtectionWarrior.cpp" />
     <ClCompile Include="Objects\Character_\CH_Base.cpp" />
     <ClCompile Include="Objects\Monster\Skeleton.cpp" />
     <ClCompile Include="Objects\Skills\Base\SkillBase.cpp" />

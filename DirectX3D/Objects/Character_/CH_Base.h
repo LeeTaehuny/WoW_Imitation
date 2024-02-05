@@ -1,54 +1,59 @@
 #pragma once
+
+enum class CreatureType
+{
+	Player,
+	NonPlayer,
+};
+
+enum class ProfessionType
+{
+	ArmsWarrior,		// 전사[무기]
+	ProtectionWarrior,  // 성기사[보호]
+	MarksmanshipHunter, // 사냥꾼[사격]
+	FireMage,			// 마법사[화염]
+	HolyPriest,			// 사제[신성]
+};
+
 class CH_Base : public ModelAnimator
 {
 public:
-	CH_Base(string name);
-	virtual ~CH_Base() = default;
+	CH_Base(string name, CreatureType creatureType, ProfessionType professionType);
+	virtual ~CH_Base();
 
-	// 플레이어용 업데이트
-	void PlayerUpdate();
-	// NPC용 업데이트
-	void AIUpdate();
-	// 모션 설정
-	void SetState(int state);
-	void Render();
+	virtual void Update();
+	virtual void Render();
 	void UIRender();
 
-	Collider* GetCollider() { return collider; }
-
-
-public: // 가상 함수
-
-	// 키보드 조작용 움직임
-	virtual void Moving() = 0;
-	// 키보드 조작용 움직임
-	virtual void Jump() = 0;
-	// 공격 함수
-	virtual void Attack() = 0;
-	// 캐스팅 함수
-	virtual void Casting() = 0;
-
+public:
+	// 플레이어용 업데이트
+	virtual void PlayerUpdate() = 0;
+	// NPC용 업데이트
+	virtual void AIUpdate() = 0;
 	// 다른 콜라이더와 충돌했을 때
 	virtual void OnHit(Collider* collider) = 0;
 
 // Getter & Setter
 public:
 	class Inventory* GetInventory() { return inventory; }
+	Collider* GetCollider() { return collider; }
 
 protected:
+	void SetState(int state);
+
+// Member Variable
+protected:
+	CreatureType creatureType;
+	ProfessionType professionType;
+
 	int INTstate = 0;
 	Vector3 velocity;
 	bool isJump = false;
 	bool isCasting = false;
 	Collider* collider;
 
-
-protected: // 스탯 관련
+	class Inventory* inventory;
 
 	float Max_hp = 0;
 	float cur_hp = Max_hp;
-
-// 인벤토리
-protected:
-	class Inventory* inventory;
 };

@@ -1,6 +1,7 @@
 ﻿#include "Framework.h"
 
-ProtectionWarrior::ProtectionWarrior() : CH_Base("ProtectionWarrior")
+ProtectionWarrior::ProtectionWarrior(CreatureType type) 
+	: CH_Base("ProtectionWarrior", type, ProfessionType::ProtectionWarrior)
 {
 	ReadClip("Idle_1");
 	ReadClip("Idle_2");
@@ -32,6 +33,50 @@ ProtectionWarrior::ProtectionWarrior() : CH_Base("ProtectionWarrior")
 ProtectionWarrior::~ProtectionWarrior()
 {
 	delete collider;
+}
+
+void ProtectionWarrior::Update()
+{
+	// 액티브 상태가 아니라면 업데이트하지 않음
+	if (!Active()) return;
+
+	// 플레이어 타입에 따라 업데이트 수행
+	switch (creatureType)
+	{
+	case CreatureType::Player:
+		PlayerUpdate();
+		break;
+
+	case CreatureType::NonPlayer:
+		AIUpdate();
+		break;
+	}
+
+	CH_Base::Update();
+}
+
+void ProtectionWarrior::Render()
+{
+	// 액티브 상태가 아니라면 업데이트하지 않음
+	if (!Active()) return;
+
+	collider->Render();
+	CH_Base::Render();
+}
+
+void ProtectionWarrior::PlayerUpdate()
+{
+	Moving();
+	Jump();
+	Attack();
+	Casting();
+
+	// 충돌체 업데이트
+	collider->UpdateWorld();
+}
+
+void ProtectionWarrior::AIUpdate()
+{
 }
 
 void ProtectionWarrior::Moving()

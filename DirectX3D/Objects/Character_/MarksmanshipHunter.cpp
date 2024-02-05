@@ -1,6 +1,7 @@
 ﻿#include "Framework.h"
 
-MarksmanshipHunter::MarksmanshipHunter() : CH_Base("MarksmanshipHunter")
+MarksmanshipHunter::MarksmanshipHunter(CreatureType type) 
+	: CH_Base("MarksmanshipHunter", type, ProfessionType::MarksmanshipHunter)
 {
 	ReadClip("Idle");
 	ReadClip("Attack_1");
@@ -31,6 +32,51 @@ MarksmanshipHunter::MarksmanshipHunter() : CH_Base("MarksmanshipHunter")
 MarksmanshipHunter::~MarksmanshipHunter()
 {
 	delete collider;
+}
+
+void MarksmanshipHunter::Update()
+{
+	// 액티브 상태가 아니라면 업데이트하지 않음
+	if (!Active()) return;
+
+	// 플레이어 타입에 따라 업데이트 수행
+	switch (creatureType)
+	{
+	case CreatureType::Player:
+		PlayerUpdate();
+		break;
+
+	case CreatureType::NonPlayer:
+		AIUpdate();
+		break;
+	}
+
+	CH_Base::Update();
+}
+
+void MarksmanshipHunter::Render()
+{
+	// 액티브 상태가 아니라면 업데이트하지 않음
+	if (!Active()) return;
+
+	collider->Render();
+	CH_Base::Render();
+}
+
+void MarksmanshipHunter::PlayerUpdate()
+{
+	Moving();
+	Jump();
+	Attack();
+	Casting();
+
+	// 충돌체 업데이트
+	collider->UpdateWorld();
+}
+
+void MarksmanshipHunter::AIUpdate()
+{
+	//
 }
 
 void MarksmanshipHunter::Moving()

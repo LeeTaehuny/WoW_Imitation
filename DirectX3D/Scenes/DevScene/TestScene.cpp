@@ -7,6 +7,8 @@
 #include "Objects/Inventory/Slot.h"
 #include "Objects/Character_/CH_Base.h"
 #include "Objects/Character_/MarksmanshipHunter.h"
+#include "Objects/Character_/ArmsWarrior.h"
+#include "Objects/Character_/FireMage.h"
 
 TestScene::TestScene()
 {
@@ -22,19 +24,19 @@ TestScene::TestScene()
 	//inv->AddItem(weapon);
 
 	shop = new Shop();
-	shop->AddItem(new Weapon("sword_1", WeaponType::Sword));
-	shop->AddItem(new Weapon("sword_2", WeaponType::Sword));
-	shop->AddItem(new Weapon("staff_1", WeaponType::Staff));
-	shop->AddItem(new Weapon("staff_2", WeaponType::Staff));
-	shop->AddItem(new Weapon("staff_3", WeaponType::Staff));
-	shop->AddItem(new Weapon("bow_1", WeaponType::Bow));
-	shop->AddItem(new Weapon("bow_2", WeaponType::Bow));
-	shop->AddItem(new Weapon("hammer_1", WeaponType::Hammer));
-	shop->AddItem(new Weapon("hammer_2", WeaponType::Hammer));
-	shop->AddItem(new Potion("potion", PotionType::Hp));
-	shop->AddItem(new Potion("potionMp", PotionType::Mp));
+	//shop->AddItem(new Weapon("sword_1", WeaponType::Sword));
+	//shop->AddItem(new Weapon("sword_2", WeaponType::Sword));
+	//shop->AddItem(new Weapon("staff_1", WeaponType::Staff));
+	//shop->AddItem(new Weapon("staff_2", WeaponType::Staff));
+	//shop->AddItem(new Weapon("staff_3", WeaponType::Staff));
+	//shop->AddItem(new Weapon("bow_1", WeaponType::Bow));
+	//shop->AddItem(new Weapon("bow_2", WeaponType::Bow));
+	//shop->AddItem(new Weapon("hammer_1", WeaponType::Hammer));
+	//shop->AddItem(new Weapon("hammer_2", WeaponType::Hammer));
+	//shop->AddItem(new Potion("potion", PotionType::Hp));
+	//shop->AddItem(new Potion("potionMp", PotionType::Mp));
 
-	player = new MarksmanshipHunter();
+	player = new FireMage(CreatureType::Player);
 }
 
 TestScene::~TestScene()
@@ -67,8 +69,8 @@ void TestScene::Update()
 		int idx = 0;
 		for (Slot* slot : slots)
 		{
-			if (mousePos.x <= slot->GlobalPos().x + 33.0f && mousePos.x >= slot->GlobalPos().x - 33.0f &&
-				mousePos.y <= slot->GlobalPos().y + 33.0f && mousePos.y >= slot->GlobalPos().y - 33.0f)
+			if (mousePos.x <= slot->GlobalPos().x + slot->GetSize().x && mousePos.x >= slot->GlobalPos().x - slot->GetSize().x &&
+				mousePos.y <= slot->GlobalPos().y + slot->GetSize().y && mousePos.y >= slot->GlobalPos().y - slot->GetSize().y)
 			{
 				if (KEY_DOWN(VK_RBUTTON))
 				{
@@ -100,7 +102,7 @@ void TestScene::Update()
 		}
 	}
 
-	player->PlayerUpdate();
+	player->Update();
 }
 
 void TestScene::PreRender()
@@ -111,7 +113,7 @@ void TestScene::Render()
 {
 	//weapon->Render();
 	//potion->Render();
-	shop->Render();
+	//shop->Render();
 	player->Render();
 }
 

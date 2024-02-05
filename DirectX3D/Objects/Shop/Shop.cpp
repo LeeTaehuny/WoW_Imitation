@@ -48,6 +48,21 @@ Shop::Shop()
 		itemSlots[i] = slot;
 	}
 
+	// 아이템 추가
+	{
+		AddItem(new Weapon("sword_1", WeaponType::Sword));
+		AddItem(new Weapon("sword_2", WeaponType::Sword));
+		AddItem(new Weapon("staff_1", WeaponType::Staff));
+		AddItem(new Weapon("staff_2", WeaponType::Staff));
+		AddItem(new Weapon("staff_3", WeaponType::Staff));
+		AddItem(new Weapon("bow_1", WeaponType::Bow));
+		AddItem(new Weapon("bow_2", WeaponType::Bow));
+		AddItem(new Weapon("hammer_1", WeaponType::Hammer));
+		AddItem(new Weapon("hammer_2", WeaponType::Hammer));
+		AddItem(new Potion("potion", PotionType::Hp));
+		AddItem(new Potion("potionMp", PotionType::Mp));
+	}
+
 	SetActive(false);
 }
 

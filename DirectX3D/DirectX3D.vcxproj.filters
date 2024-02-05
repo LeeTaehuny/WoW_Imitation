@@ -391,18 +391,6 @@
     <ClInclude Include="Scenes\KimScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Character_\ProtectionWarrior.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Character_\ArmsWarrior.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Character_\FireMage.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Character_\HolyPriest.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Objects\Character_\MarksmanshipHunter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -428,6 +416,18 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Skills\Base\NonTargetSkill.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Character_\ArmsWarrior.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Character_\FireMage.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Character_\HolyPriest.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Character_\ProtectionWarrior.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -774,19 +774,7 @@
     <ClCompile Include="Scenes\KimScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Character_\ProtectionWarrior.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Character_\ArmsWarrior.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Objects\Character_\CH_Base.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Character_\FireMage.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Character_\HolyPriest.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Character_\MarksmanshipHunter.cpp">
@@ -811,6 +799,18 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Skills\Base\NonTargetSkill.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Character_\ArmsWarrior.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Character_\FireMage.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Character_\HolyPriest.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Character_\ProtectionWarrior.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

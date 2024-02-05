@@ -1,6 +1,7 @@
 ﻿#include "Framework.h"
 
-ArmsWarrior::ArmsWarrior() : CH_Base("ArmsWarrior")
+ArmsWarrior::ArmsWarrior(CreatureType type) 
+	: CH_Base("ArmsWarrior", type, ProfessionType::ArmsWarrior)
 {
 	ReadClip("Idle_1");
 	ReadClip("Idle_2");
@@ -29,6 +30,50 @@ ArmsWarrior::ArmsWarrior() : CH_Base("ArmsWarrior")
 ArmsWarrior::~ArmsWarrior()
 {
 	delete collider;
+}
+
+void ArmsWarrior::Update()
+{
+	// 액티브 상태가 아니라면 업데이트하지 않음
+	if (!Active()) return;
+
+	// 플레이어 타입에 따라 업데이트 수행
+	switch (creatureType)
+	{
+	case CreatureType::Player:
+		PlayerUpdate();
+		break;
+
+	case CreatureType::NonPlayer:
+		AIUpdate();
+		break;
+	}
+
+	CH_Base::Update();
+}
+
+void ArmsWarrior::Render()
+{
+	// 액티브 상태가 아니라면 업데이트하지 않음
+	if (!Active()) return;
+
+	collider->Render();
+	CH_Base::Render();
+}
+
+void ArmsWarrior::PlayerUpdate()
+{
+	Moving();
+	Jump();
+	Attack();
+	Casting();
+
+	// 충돌체 업데이트
+	collider->UpdateWorld();
+}
+
+void ArmsWarrior::AIUpdate()
+{
 }
 
 void ArmsWarrior::Moving()

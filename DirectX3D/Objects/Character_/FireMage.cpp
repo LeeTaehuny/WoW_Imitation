@@ -1,6 +1,6 @@
 ﻿#include "Framework.h"
 
-FireMage::FireMage() : CH_Base("FireMage")
+FireMage::FireMage(CreatureType type) : CH_Base("FireMage", type, ProfessionType::FireMage)
 {
 	ReadClip("Idle_1");
 	ReadClip("Idle_2");
@@ -38,6 +38,50 @@ FireMage::FireMage() : CH_Base("FireMage")
 FireMage::~FireMage()
 {
 	delete collider;
+}
+
+void FireMage::Update()
+{
+	// 액티브 상태가 아니라면 업데이트하지 않음
+	if (!Active()) return;
+
+	// 플레이어 타입에 따라 업데이트 수행
+	switch (creatureType)
+	{
+	case CreatureType::Player:
+		PlayerUpdate();
+		break;
+
+	case CreatureType::NonPlayer:
+		AIUpdate();
+		break;
+	}
+
+	CH_Base::Update();
+}
+
+void FireMage::Render()
+{
+	// 액티브 상태가 아니라면 업데이트하지 않음
+	if (!Active()) return;
+
+	collider->Render();
+	CH_Base::Render();
+}
+
+void FireMage::PlayerUpdate()
+{
+	Moving();
+	Jump();
+	Attack();
+	Casting();
+
+	// 충돌체 업데이트
+	collider->UpdateWorld();
+}
+
+void FireMage::AIUpdate()
+{
 }
 
 void FireMage::Moving()

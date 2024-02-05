@@ -1,33 +1,20 @@
 ﻿#include "Framework.h"
 #include "Objects/Inventory/Inventory.h"
 
-CH_Base::CH_Base(string name) : ModelAnimator(name)
+CH_Base::CH_Base(string name, CreatureType creatureType, ProfessionType professionType) 
+	: ModelAnimator(name), creatureType(creatureType), professionType(professionType)
 {
 	inventory = new Inventory();
 }
 
-void CH_Base::PlayerUpdate()
+CH_Base::~CH_Base()
 {
-	// 액티브 상태가 아니라면 업데이트하지 않음
-	if (!Active()) return;
-
-	Moving();
-	Jump();
-	Attack();
-	Casting();
-
-	inventory->Update();
-
-	// 충돌체 업데이트
-	collider->UpdateWorld();
-	
-	ModelAnimator::Update();
+	SAFE_DEL(inventory);
 }
 
-void CH_Base::AIUpdate()
+void CH_Base::Update()
 {
-	Attack();
-
+	inventory->Update();
 	ModelAnimator::Update();
 }
 
@@ -39,18 +26,14 @@ void CH_Base::SetState(int state)
 	PlayClip(state);
 }
 
+
 void CH_Base::Render()
 {
-	// 액티브 상태가 아니면 렌더하지 않음
-	if (!Active()) return;
-
-	collider->Render();
 	ModelAnimator::Render();
 }
 
 void CH_Base::UIRender()
 {
 	if (!Active()) return;
-
 	inventory->UIRender();
 }
