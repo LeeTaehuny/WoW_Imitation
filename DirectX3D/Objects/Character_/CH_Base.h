@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 enum class CreatureType
 {
@@ -8,11 +8,11 @@ enum class CreatureType
 
 enum class ProfessionType
 {
-	ArmsWarrior,		// Àü»ç[¹«±â]
-	ProtectionWarrior,  // ¼º±â»ç[º¸È£]
-	MarksmanshipHunter, // »ç³É²Û[»ç°İ]
-	FireMage,			// ¸¶¹ı»ç[È­¿°]
-	HolyPriest,			// »çÁ¦[½Å¼º]
+	ArmsWarrior,		// ì „ì‚¬[ë¬´ê¸°]
+	ProtectionWarrior,  // ì„±ê¸°ì‚¬[ë³´í˜¸]
+	MarksmanshipHunter, // ì‚¬ëƒ¥ê¾¼[ì‚¬ê²©]
+	FireMage,			// ë§ˆë²•ì‚¬[í™”ì—¼]
+	HolyPriest,			// ì‚¬ì œ[ì‹ ì„±]
 };
 
 class CH_Base : public ModelAnimator
@@ -26,11 +26,11 @@ public:
 	void UIRender();
 
 public:
-	// ÇÃ·¹ÀÌ¾î¿ë ¾÷µ¥ÀÌÆ®
+	// í”Œë ˆì´ì–´ìš© ì—…ë°ì´íŠ¸
 	virtual void PlayerUpdate() = 0;
-	// NPC¿ë ¾÷µ¥ÀÌÆ®
+	// NPCìš© ì—…ë°ì´íŠ¸
 	virtual void AIUpdate() = 0;
-	// ´Ù¸¥ Äİ¶óÀÌ´õ¿Í Ãæµ¹ÇßÀ» ¶§
+	// ë‹¤ë¥¸ ì½œë¼ì´ë”ì™€ ì¶©ëŒí–ˆì„ ë•Œ
 	virtual void OnHit(Collider* collider) = 0;
 
 // Getter & Setter

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 class ArmsWarrior : public CH_Base
 {
 private:
@@ -18,9 +18,9 @@ public:
 	virtual void Render() override;
 
 
-	// ÇÃ·¹ÀÌ¾î¿ë ¾÷µ¥ÀÌÆ®
+	// í”Œë ˆì´ì–´ìš© ì—…ë°ì´íŠ¸
 	virtual void PlayerUpdate() override;
-	// NPC¿ë ¾÷µ¥ÀÌÆ®
+	// NPCìš© ì—…ë°ì´íŠ¸
 	virtual void AIUpdate() override;
 
 	void Moving();

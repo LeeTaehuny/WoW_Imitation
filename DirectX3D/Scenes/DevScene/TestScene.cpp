@@ -8,7 +8,7 @@
 #include "Objects/Character_/CH_Base.h"
 #include "Objects/Character_/MarksmanshipHunter.h"
 #include "Objects/Character_/ArmsWarrior.h"
-#include "Objects/Character_/FireMage.h"
+#include "Objects/Character_/HolyPriest.h"
 
 TestScene::TestScene()
 {
@@ -36,7 +36,7 @@ TestScene::TestScene()
 	//shop->AddItem(new Potion("potion", PotionType::Hp));
 	//shop->AddItem(new Potion("potionMp", PotionType::Mp));
 
-	player = new FireMage(CreatureType::Player);
+	player = new HolyPriest(CreatureType::Player);
 }
 
 TestScene::~TestScene()
