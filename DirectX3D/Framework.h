@@ -209,6 +209,20 @@ using namespace GameMath;
 #include "Objects/Manager/KunaiManager.h"
 #include "Objects/Manager/RobotManager.h"
 
+// 몬스터
+#include "Objects/Monster/MonsterBase.h"
+#include "Objects/Monster/Skeleton.h"
+#include "Objects/Monster/Skeleton_Knight.h"
+#include "Objects/Monster/MonsterManager.h"
+
+// 스킬 배이스
+#include "Objects/Skills/Base/SkillBase.h"
+#include "Objects/Skills/Base/NonTargetSkill.h"
+#include "Objects/Skills/Base/TargetSkill.h"
+
+// 스킬
+#include "Objects/Skills/Target.h"
+
 #include "Objects/Test/TestLight.h"
 
 //Scene Header

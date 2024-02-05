@@ -13,7 +13,7 @@ private:
 	};
 
 public:
-	ProtectionWarrior();
+	ProtectionWarrior(int myNober);
 	~ProtectionWarrior();
 
 	virtual void Moving() override;

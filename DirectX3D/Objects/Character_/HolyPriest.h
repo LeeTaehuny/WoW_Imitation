@@ -11,7 +11,7 @@ private:
 	};
 
 public:
-	HolyPriest();
+	HolyPriest(int myNober);
 	~HolyPriest();
 
 	virtual void Moving() override;

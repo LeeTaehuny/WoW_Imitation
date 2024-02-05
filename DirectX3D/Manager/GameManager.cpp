@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 
 #include "Scenes/CubeScene.h"
 #include "Scenes/GridScene.h"
@@ -27,13 +27,6 @@
 #include "Scenes/KimScene.h"
 #include "Scenes/DevScene/TestScene.h"
 
-// ���� ����� ���� : ���� ��ƼŬ, �ٸ� Ư�� ��ƼŬ(��, ����ũ)
-//                   + ���� ��ƼŬ ���� (�޸� Ŭ������ �߰���)
-//                   + ��ƼŬ ���� ������ ��
-
-// * ��ƼŬ ���� �� -> Ư��ȿ���� �߰��� �ʿ��ϰų�, Ȥ�� �׳� �����Ͻ� ���̶�...
-//                    �׷� ��쿡 �ش��ϴ� �е��� �ٷ� �ѹ� �Ế�ô�.
-
 GameManager::GameManager()
 {
     Create();
@@ -59,7 +52,7 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("Billboard", new BillboardScene());
     //SceneManager::Get()->Create("Particle", new ParticleScene());
     //SceneManager::Get()->Create("ParticleConfig", new ParticleConfigScene());
-    // * �۾���. //SceneManager::Get()->Create("MirrorScene", new MirrorScene());
+    // * 작업중. //SceneManager::Get()->Create("MirrorScene", new MirrorScene());
     //SceneManager::Get()->Create("WaterScene", new WaterScene());
     //SceneManager::Get()->Create("QuadTree", new QuadTreeScene());
     //SceneManager::Get()->Create("Tessellation", new TessellationScene());
@@ -152,7 +145,7 @@ void GameManager::Create()
     Observer::Get();
     
     Font::Get()->AddColor("White", 1, 1, 1);
-    Font::Get()->AddStyle("Default", L"����ǹ��� �־�");
+    Font::Get()->AddStyle("Default", L"배달의민족 주아");
     
     Font::Get()->SetColor("White");
     Font::Get()->SetStyle("Default");

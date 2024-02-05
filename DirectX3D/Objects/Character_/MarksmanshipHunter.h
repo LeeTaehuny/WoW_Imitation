@@ -12,7 +12,7 @@ private:
 	};
 
 public:
-	MarksmanshipHunter();
+	MarksmanshipHunter(int myNober);
 	~MarksmanshipHunter();
 
 	virtual void Moving() override;

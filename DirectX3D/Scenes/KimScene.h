@@ -15,6 +15,13 @@ private:
     // 캐릭터 배이스
     CH_Base* mainPlayer;
 
-    Collider* coll;
+    vector<Collider*> coll;
+    Collider* dlatl;
 
+    //Model* skel;
+    ModelAnimator* skel;
+
+    int value = 0;
+
+    SkillBase* skill;
 };

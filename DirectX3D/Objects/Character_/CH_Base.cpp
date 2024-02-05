@@ -1,8 +1,8 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 void CH_Base::PlayerUpdate()
 {
-	// ¾×Æ¼ºê »óÅÂ°¡ ¾Æ´Ï¶ó¸é ¾÷µ¥ÀÌÆ®ÇÏÁö ¾ÊÀ½
+	// ì•¡í‹°ë¸Œ ìƒíƒœê°€ ì•„ë‹ˆë¼ë©´ ì—…ë°ì´íŠ¸í•˜ì§€ ì•ŠìŒ
 	if (!Active()) return;
 
 	Moving();
@@ -10,7 +10,7 @@ void CH_Base::PlayerUpdate()
 	Attack();
 	Casting();
 
-	// Ãæµ¹Ã¼ ¾÷µ¥ÀÌÆ®
+	// ì¶©ëŒì²´ ì—…ë°ì´íŠ¸
 	collider->UpdateWorld();
 	
 	ModelAnimator::Update();
@@ -33,7 +33,7 @@ void CH_Base::SetState(int state)
 
 void CH_Base::Render()
 {
-	// ¾×Æ¼ºê »óÅÂ°¡ ¾Æ´Ï¸é ·»´õÇÏÁö ¾ÊÀ½
+	// ì•¡í‹°ë¸Œ ìƒíƒœê°€ ì•„ë‹ˆë©´ ë Œë”í•˜ì§€ ì•ŠìŒ
 	if (!Active()) return;
 
 	collider->Render();

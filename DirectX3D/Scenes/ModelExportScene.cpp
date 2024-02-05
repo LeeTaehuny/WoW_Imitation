@@ -1,13 +1,15 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "ModelExportScene.h"
 
 ModelExportScene::ModelExportScene()
 {
-    string name = "FireMage";
+    string name = "Skeleton_Knight";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
     //string clipName;
-    Model_MER_MESH(name);
+    //Model_MER_MESH(name);
+    AnimationClip(name, "Attack_2");
+    AnimationClip(name, "Attack_3");
 
     //exporter = new ModelExporter(name, file);
     //exporter->ExportMaterial();
