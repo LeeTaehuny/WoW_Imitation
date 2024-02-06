@@ -25,7 +25,7 @@ void TestDungeonScene::Update()
 		if (KEY_PRESS('D')) TestSize->Pos().z -= 100 * DELTA;
 		if (KEY_PRESS('A')) TestSize->Pos().z += 100 * DELTA;
 
-		if (KEY_PRESS('F')) dungeon->OpenDoor(true);
+		if (KEY_DOWN('F')) dungeon->OpenDoor(true);
 	}
 }
 
