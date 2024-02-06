@@ -17,11 +17,10 @@ MarksmanshipHunter::MarksmanshipHunter(CreatureType type)
 
 	GetClip((int)ATTACK1)->SetEvent(bind(&MarksmanshipHunter::EndATK, this), 0.3f);
 
-	GetClip((int)JUMP)->SetEvent(bind(&MarksmanshipHunter::EndJUMP, this), 0.6f);
 	GetClip((int)HIT)->SetEvent(bind(&MarksmanshipHunter::EndHit, this), 0.6f);
 	GetClip((int)DIE)->SetEvent(bind(&MarksmanshipHunter::EndDie, this), 0.9f);
 
-	GetClip((int)SKILL1)->SetEvent(bind(&MarksmanshipHunter::EndCasting, this), 0.9f);
+	//GetClip((int)SKILL1)->SetEvent(bind(&MarksmanshipHunter::EndCasting, this), 0.9f);
 	//GetClip((int)SKILL2)->SetEvent(bind(&MarksmanshipHunter::EndCasting, this), 0.9f);
 
 	collider = new CapsuleCollider(0.5f, 1.3f);
@@ -65,10 +64,8 @@ void MarksmanshipHunter::Render()
 
 void MarksmanshipHunter::PlayerUpdate()
 {
-	Moving();
-	Jump();
-	Attack();
-	Casting();
+	Control();
+	//Casting();
 
 	// 충돌체 업데이트
 	collider->UpdateWorld();
@@ -76,81 +73,105 @@ void MarksmanshipHunter::PlayerUpdate()
 
 void MarksmanshipHunter::AIUpdate()
 {
-	//
+}
+
+void MarksmanshipHunter::Control()
+{
+	Moving();
+
+	if (KEY_DOWN(VK_SPACE) && !isJump)
+	{
+		if (curState == IDLE1 || curState == WALK_F || curState == WALK_B || curState == WALK_L || curState == WALK_R)
+		{
+			SetState(JUMP);
+			jumpVelocity = jumpForce;
+			isJump = true;
+		}
+	}
+
+	Attack();
+	Jump();
 }
 
 void MarksmanshipHunter::Moving()
 {
-	// 점프, 공격 죽일때 움직이지 않음
-	if (isJump) return;
-	if (INTstate == (int)ATTACK1) return;
-	if (INTstate == (int)DIE) return;
-	if (INTstate == (int)SKILL1) return;
-	if (INTstate == (int)SKILL2) return;
+	// 점프, 공격, 맞을 때, 죽었을 경우 움직이지 않기
+	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
-	float deceleration = 10;
 
-	// 캐릭터 앞뒤좌우 이동입니다
-	if (KEY_PRESS('W'))
+	// 캐릭터 기본 이동 : W(앞), S(뒤), Q(좌), E(우)
 	{
-		velocity.z += DELTA;
-		isMoveZ = true;
-	}
-	if (KEY_PRESS('S'))
-	{
-		velocity.z -= DELTA;
-		isMoveZ = true;
-	}
-	if (KEY_PRESS('Q'))
-	{
-		velocity.x -= DELTA;
-		isMoveX = true;
-	}
-	if (KEY_PRESS('E'))
-	{
-		velocity.x += DELTA;
-		isMoveX = true;
-	}
-
-	// 마우스 우클릭시 
-	if (KEY_PRESS(VK_RBUTTON))
-	{
-		// 좌우 이동
-		if (KEY_PRESS('A'))
+		if (KEY_PRESS('W'))
+		{
+			velocity.z += DELTA;
+			isMoveZ = true;
+		}
+		if (KEY_PRESS('S'))
+		{
+			velocity.z -= DELTA;
+			isMoveZ = true;
+		}
+		if (KEY_PRESS('Q'))
 		{
 			velocity.x -= DELTA;
 			isMoveX = true;
 		}
-		if (KEY_PRESS('D'))
+		if (KEY_PRESS('E'))
 		{
 			velocity.x += DELTA;
 			isMoveX = true;
 		}
 	}
-	// 마우스 우클릭이 아닐때
-	else
+
+	// 캐릭터 마우스 우클릭에 따른 이동 변화
 	{
-		// 앞뒤로 이동 중이 아닐 때
-		if (KEY_PRESS('W') || KEY_PRESS('S'))
+		if (KEY_PRESS(VK_RBUTTON))
 		{
-			// 좌우 회전
-			float turnSpeed = 2;
+			// 좌우 이동
 			if (KEY_PRESS('A'))
 			{
-				Rot().y -= turnSpeed * DELTA;
+				velocity.x -= DELTA;
+				isMoveX = true;
 			}
 			if (KEY_PRESS('D'))
 			{
-				Rot().y += turnSpeed * DELTA;
+				velocity.x += DELTA;
+				isMoveX = true;
+			}
+		}
+		else
+		{
+			// 앞뒤로 이동 중이 아닐 때
+			if (KEY_PRESS('W') || KEY_PRESS('S'))
+			{
+				// 좌우 회전
+				if (KEY_PRESS('A'))
+				{
+					Rot().y -= turnSpeed * DELTA;
+				}
+				if (KEY_PRESS('D'))
+				{
+					Rot().y += turnSpeed * DELTA;
+				}
 			}
 		}
 	}
 
+	// 가속도 설정
 	if (velocity.Length() > 1) velocity.Normalize();
 	if (!isMoveZ) velocity.z = Lerp(velocity.z, 0, deceleration * DELTA);
 	if (!isMoveX) velocity.x = Lerp(velocity.x, 0, deceleration * DELTA);
+
+	Matrix rotY = XMMatrixRotationY(Rot().y);
+	Vector3 direction = XMVector3TransformCoord(velocity, rotY);
+
+	// 위치 이동
+	Pos() += direction * -1 * moveSpeed * DELTA;
+
+	// 점프인 경우라면 애니메이션 설정 X
+	if (curState == JUMP) return;
 
 	if (velocity.z > 0.1f)
 		SetState(WALK_F);
@@ -161,26 +182,34 @@ void MarksmanshipHunter::Moving()
 	else if (velocity.x > 0.1f)
 		SetState(WALK_R);
 	else
-	{
 		SetState(IDLE1);
-	}
 }
 
 void MarksmanshipHunter::Jump()
 {
-	if (INTstate == (int)DIE) return;
+	// 점프중이 아니라면 리턴
+	if (!isJump) return;
 
-	if (KEY_DOWN(VK_SPACE))
+	jumpVelocity -= 1.8f * gravityMult * DELTA;
+	Pos().y += jumpVelocity;
+
+	// 현재의 지정 높이보다 위치가 낮다면?
+	if (Pos().y < curheight)
 	{
-		SetState(JUMP);
-		isJump = true;
+		// 위치 초기화 및 상태 전환
+		Pos().y = curheight;
+		jumpVelocity = 0;
+		SetState(IDLE1);
+		isJump = false;
 	}
 }
 
 void MarksmanshipHunter::Attack()
 {
-	if (INTstate == (int)DIE) return;
+	// 점프, 사망, 피격, 공격 상태인 경우 리턴
+	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
+	// 좌클릭 시 공격 설정
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		int atk_ran = Random(1, 2);
@@ -192,19 +221,27 @@ void MarksmanshipHunter::Attack()
 	}
 }
 
-void MarksmanshipHunter::Casting()
+void MarksmanshipHunter::SetState(State state)
 {
-	if (isCasting)
-	{
-		isCasting = false;
-		int castValue = Random(1, 3);
+	if (curState == state) return;
 
-		if (castValue == 1)
-		{
-			SetState(SKILL1);
-		}
-	}
+	curState = state;
+	PlayClip(state);
 }
+
+//void MarksmanshipHunter::Casting()
+//{
+//	if (isCasting)
+//	{
+//		isCasting = false;
+//		int castValue = Random(1, 3);
+//
+//		if (castValue == 1)
+//		{
+//			SetState(SKILL1);
+//		}
+//	}
+//}
 
 void MarksmanshipHunter::OnHit(Collider* collider)
 {
@@ -226,12 +263,6 @@ void MarksmanshipHunter::EndATK()
 	SetState(IDLE1);
 }
 
-void MarksmanshipHunter::EndJUMP()
-{
-	SetState(IDLE1);
-	isJump = false;
-}
-
 void MarksmanshipHunter::EndHit()
 {
 	if (cur_hp <= 0)
@@ -242,11 +273,11 @@ void MarksmanshipHunter::EndHit()
 
 void MarksmanshipHunter::EndDie()
 {
-	SetActive(false);
+//	SetActive(false);
 }
 
-void MarksmanshipHunter::EndCasting()
-{
-	isCasting = false;
-	SetState(IDLE1);
-}
+//void MarksmanshipHunter::EndCasting()
+//{
+//	isCasting = false;
+//	SetState(IDLE1);
+//}

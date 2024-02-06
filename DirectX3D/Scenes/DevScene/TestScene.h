@@ -24,5 +24,7 @@ private:
     class Shop* shop;
 
     class CH_Base* player;
+
+    class SkillBase* skill;    
 };
 

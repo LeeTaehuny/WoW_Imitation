@@ -9,6 +9,8 @@
 #include "Objects/Character_/MarksmanshipHunter.h"
 #include "Objects/Character_/ArmsWarrior.h"
 #include "Objects/Character_/HolyPriest.h"
+#include "Objects/Character_/FireMage.h"
+#include "Objects/Character_/ProtectionWarrior.h"
 
 TestScene::TestScene()
 {
@@ -36,7 +38,9 @@ TestScene::TestScene()
 	//shop->AddItem(new Potion("potion", PotionType::Hp));
 	//shop->AddItem(new Potion("potionMp", PotionType::Mp));
 
-	player = new HolyPriest(CreatureType::Player);
+	player = new ProtectionWarrior(CreatureType::Player);
+
+	CAM->SetTarget(player);
 }
 
 TestScene::~TestScene()
@@ -113,7 +117,7 @@ void TestScene::Render()
 {
 	//weapon->Render();
 	//potion->Render();
-	//shop->Render();
+	shop->Render();
 	player->Render();
 }
 

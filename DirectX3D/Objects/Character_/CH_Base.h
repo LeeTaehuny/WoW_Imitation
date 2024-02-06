@@ -38,22 +38,31 @@ public:
 	class Inventory* GetInventory() { return inventory; }
 	Collider* GetCollider() { return collider; }
 
-protected:
-	void SetState(int state);
-
 // Member Variable
 protected:
 	CreatureType creatureType;
 	ProfessionType professionType;
 
-	int INTstate = 0;
-	Vector3 velocity;
-	bool isJump = false;
-	bool isCasting = false;
 	Collider* collider;
 
 	class Inventory* inventory;
 
+protected:
+	Vector3 velocity;
+	bool isCasting = false;
+	float moveSpeed = 10.0f;
+	float deceleration = 10;
+	float turnSpeed = 2;
+
+	float jumpVelocity = 0;
+	float jumpForce = 0.15f;
+	float gravityMult = 0.5f;
+	bool isJump = false;
+
+	float curheight = 0.0f;
+
+protected:
+	// 임시 코드.
 	float Max_hp = 0;
 	float cur_hp = Max_hp;
 };

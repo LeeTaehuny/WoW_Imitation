@@ -18,7 +18,6 @@ HolyPriest::HolyPriest(CreatureType type)
 
 	GetClip((int)ATTACK1)->SetEvent(bind(&HolyPriest::EndATK, this), 0.7f);
 	GetClip((int)ATTACK2)->SetEvent(bind(&HolyPriest::EndATK, this), 0.7f);
-	GetClip((int)JUMP)->SetEvent(bind(&HolyPriest::EndJUMP, this), 0.6f);
 
 	GetClip((int)HIT)->SetEvent(bind(&HolyPriest::EndHit, this), 0.6f);
 	GetClip((int)DIE)->SetEvent(bind(&HolyPriest::EndDie, this), 0.9f);
@@ -64,10 +63,8 @@ void HolyPriest::Render()
 
 void HolyPriest::PlayerUpdate()
 {
-	Moving();
-	Jump();
-	Attack();
-	Casting();
+	Control();
+	//Casting();
 
 	// 충돌체 업데이트
 	collider->UpdateWorld();
@@ -77,78 +74,105 @@ void HolyPriest::AIUpdate()
 {
 }
 
+void HolyPriest::Control()
+{
+	Moving();
+
+	if (KEY_DOWN(VK_SPACE) && !isJump)
+	{
+		if (curState == IDLE1 || curState == IDLE2 || curState == IDLE3 || curState == WALK_F || curState == WALK_B || curState == WALK_L || curState == WALK_R)
+		{
+			SetState(JUMP);
+			jumpVelocity = jumpForce;
+			isJump = true;
+		}
+	}
+
+	Attack();
+	Jump();
+}
+
 void HolyPriest::Moving()
 {
-	// 점프, 공격 죽일때 움직이지 않음
-	if (isJump) return;
-	if (INTstate == (int)ATTACK1) return;
-	if (INTstate == (int)ATTACK2) return;
-	if (INTstate == (int)DIE) return;
+	// 점프, 공격, 맞을 때, 죽었을 경우 움직이지 않기
+	if (curState == ATTACK1 || curState == ATTACK2 || curState == DIE || curState == HIT) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
-	float deceleration = 10;
 
-	// 캐릭터 앞뒤좌우 이동입니다
-	if (KEY_PRESS('W'))
+	// 캐릭터 기본 이동 : W(앞), S(뒤), Q(좌), E(우)
 	{
-		velocity.z += DELTA;
-		isMoveZ = true;
-	}
-	if (KEY_PRESS('S'))
-	{
-		velocity.z -= DELTA;
-		isMoveZ = true;
-	}
-	if (KEY_PRESS('Q'))
-	{
-		velocity.x -= DELTA;
-		isMoveX = true;
-	}
-	if (KEY_PRESS('E'))
-	{
-		velocity.x += DELTA;
-		isMoveX = true;
-	}
-
-	// 마우스 우클릭시 
-	if (KEY_PRESS(VK_RBUTTON))
-	{
-		// 좌우 이동
-		if (KEY_PRESS('A'))
+		if (KEY_PRESS('W'))
+		{
+			velocity.z += DELTA;
+			isMoveZ = true;
+		}
+		if (KEY_PRESS('S'))
+		{
+			velocity.z -= DELTA;
+			isMoveZ = true;
+		}
+		if (KEY_PRESS('Q'))
 		{
 			velocity.x -= DELTA;
 			isMoveX = true;
 		}
-		if (KEY_PRESS('D'))
+		if (KEY_PRESS('E'))
 		{
 			velocity.x += DELTA;
 			isMoveX = true;
 		}
 	}
-	// 마우스 우클릭이 아닐때
-	else
+
+	// 캐릭터 마우스 우클릭에 따른 이동 변화
 	{
-		// 앞뒤로 이동 중이 아닐 때
-		if (KEY_PRESS('W') || KEY_PRESS('S'))
+		if (KEY_PRESS(VK_RBUTTON))
 		{
-			// 좌우 회전
-			float turnSpeed = 2;
+			// 좌우 이동
 			if (KEY_PRESS('A'))
 			{
-				Rot().y -= turnSpeed * DELTA;
+				velocity.x -= DELTA;
+				isMoveX = true;
 			}
 			if (KEY_PRESS('D'))
 			{
-				Rot().y += turnSpeed * DELTA;
+				velocity.x += DELTA;
+				isMoveX = true;
+			}
+		}
+		else
+		{
+			// 앞뒤로 이동 중이 아닐 때
+			if (KEY_PRESS('W') || KEY_PRESS('S'))
+			{
+				// 좌우 회전
+				if (KEY_PRESS('A'))
+				{
+					Rot().y -= turnSpeed * DELTA;
+				}
+				if (KEY_PRESS('D'))
+				{
+					Rot().y += turnSpeed * DELTA;
+				}
 			}
 		}
 	}
 
+	// 가속도 설정
 	if (velocity.Length() > 1) velocity.Normalize();
 	if (!isMoveZ) velocity.z = Lerp(velocity.z, 0, deceleration * DELTA);
 	if (!isMoveX) velocity.x = Lerp(velocity.x, 0, deceleration * DELTA);
 
+	Matrix rotY = XMMatrixRotationY(Rot().y);
+	Vector3 direction = XMVector3TransformCoord(velocity, rotY);
+
+	// 위치 이동
+	Pos() += direction * -1 * moveSpeed * DELTA;
+
+	// 점프인 경우라면 애니메이션 설정 X
+	if (curState == JUMP) return;
+
+	// 점프가 아닌 경우 속력값에 따라 애니메이션 설정
 	if (velocity.z > 0.1f)
 		SetState(WALK_F);
 	else if (velocity.z < -0.1f)
@@ -158,46 +182,35 @@ void HolyPriest::Moving()
 	else if (velocity.x > 0.1f)
 		SetState(WALK_R);
 	else
-	{
 		SetState(IDLE1);
-	}
 }
 
 void HolyPriest::Jump()
 {
-	if (INTstate == (int)DIE) return;
+	// 점프중이 아니라면 리턴
+	if (!isJump) return;
 
-	if (KEY_DOWN(VK_SPACE))
+	jumpVelocity -= 1.8f * gravityMult * DELTA;
+	Pos().y += jumpVelocity;
+
+	// 현재의 지정 높이보다 위치가 낮다면?
+	if (Pos().y < curheight)
 	{
-		SetState(JUMP);
-		isJump = true;
+		// 위치 초기화 및 상태 전환
+		Pos().y = curheight;
+		jumpVelocity = 0;
+		SetState(IDLE2);
+		isJump = false;
 	}
 }
 
 void HolyPriest::Attack()
 {
-	if (INTstate == (int)DIE) return;
+	// 점프, 사망, 피격, 공격 상태인 경우 리턴
+	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1 || curState == ATTACK2) return;
 
 	if (KEY_DOWN(VK_LBUTTON))
 	{
-		int atk_ran = Random(1, 4);
-
-		if (atk_ran == 1)
-		{
-			SetState(ATTACK1);
-		}
-		else if (atk_ran == 2)
-		{
-			SetState(ATTACK2);
-		}
-	}
-}
-
-void HolyPriest::Casting()
-{
-	if (isCasting)
-	{
-		isCasting = false;
 		int atk_ran = Random(1, 3);
 
 		if (atk_ran == 1)
@@ -210,6 +223,32 @@ void HolyPriest::Casting()
 		}
 	}
 }
+
+void HolyPriest::SetState(State state)
+{
+	if (curState == state) return;
+
+	curState = state;
+	PlayClip(state);
+}
+
+//void HolyPriest::Casting()
+//{
+//	if (isCasting)
+//	{
+//		isCasting = false;
+//		int atk_ran = Random(1, 3);
+//
+//		if (atk_ran == 1)
+//		{
+//			SetState(ATTACK1);
+//		}
+//		else if (atk_ran == 2)
+//		{
+//			SetState(ATTACK2);
+//		}
+//	}
+//}
 
 void HolyPriest::OnHit(Collider* collider)
 {
@@ -231,12 +270,6 @@ void HolyPriest::EndATK()
 	SetState(IDLE1);
 }
 
-void HolyPriest::EndJUMP()
-{
-	SetState(IDLE1);
-	isJump = false;
-}
-
 void HolyPriest::EndHit()
 {
 	if (cur_hp <= 0)
@@ -250,8 +283,8 @@ void HolyPriest::EndDie()
 	SetActive(false);
 }
 
-void HolyPriest::EndCasting()
-{
-	isCasting = false;
-	SetState(IDLE1);
-}
+//void HolyPriest::EndCasting()
+//{
+//	isCasting = false;
+//	SetState(IDLE1);
+//}

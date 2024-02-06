@@ -18,13 +18,13 @@ void CH_Base::Update()
 	ModelAnimator::Update();
 }
 
-void CH_Base::SetState(int state)
-{
-	if (state == INTstate) return;
-
-	INTstate = state;
-	PlayClip(state);
-}
+//void CH_Base::SetState(int state)
+//{
+//	if (state == INTstate) return;
+//
+//	INTstate = state;
+//	PlayClip(state);
+//}
 
 
 void CH_Base::Render()
