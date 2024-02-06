@@ -272,6 +272,7 @@
     <ClInclude Include="Objects\Landscape\TerrainLOD.h" />
     <ClInclude Include="Scenes\TerrainLODScene.h" />
     <ClInclude Include="Scenes\TessellationScene.h" />
+    <ClInclude Include="Scenes\MAP\TestDungeonScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Objects\MAP\Dungeon.cpp" />
@@ -396,6 +397,7 @@
     <ClCompile Include="Objects\Landscape\TerrainLOD.cpp" />
     <ClCompile Include="Scenes\TerrainLODScene.cpp" />
     <ClCompile Include="Scenes\TessellationScene.cpp" />
+    <ClCompile Include="Scenes\MAP\TestDungeonScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX3D.rc" />

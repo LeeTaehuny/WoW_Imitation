@@ -3,8 +3,8 @@
 Terrain::Terrain()
     : GameObject(L"Landscape/Terrain.hlsl"), width(60), height(60)
 {    
-    material->SetDiffuseMap(L"Textures/Landscape/Dirt2.png");
-    //material->SetSpecularMap(L"Textures/Landscape/Fieldstone_SM.tga");
+    //material->SetDiffuseMap(L"Textures/Landscape/Dirt2.png");
+    material->SetSpecularMap(L"Textures/Landscape/Fieldstone_SM.tga");
     //material->SetNormalMap(L"Textures/Landscape/Fieldstone_NM.tga");
       
     heightMap = Texture::Add(L"Textures/HeightMaps/AStarMap.png");

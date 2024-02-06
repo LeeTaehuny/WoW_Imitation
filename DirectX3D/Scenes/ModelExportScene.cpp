@@ -3,7 +3,7 @@
 
 ModelExportScene::ModelExportScene()
 {
-    //string name = "DungeonMap";
+    //string name = "Wall";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
     //exporter = new ModelExporter(name, file);

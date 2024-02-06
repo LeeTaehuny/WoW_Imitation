@@ -28,6 +28,7 @@
 
 #include "Scenes/MAP/LastBossMap_Scene.h"
 #include "Scenes/MAP/MapTestScene.h"
+#include "Scenes/MAP/TestDungeonScene.h"
 
 // 오늘 진행된 설명 : 궤적 파티클, 다른 특수 파티클(눈, 스파크)
 //                   + 궤적 파티클 적용 (휴먼 클래스에 추가함)
@@ -103,13 +104,11 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("LastBossMap", new LastBossMap_Scene());
     //SceneManager::Get()->Add("LastBossMap");
 
-    SceneManager::Get()->Create("BossMapTest", new MapTestScene());
-    SceneManager::Get()->Add("BossMapTest");
+    //SceneManager::Get()->Create("BossMapTest", new MapTestScene());
+    //SceneManager::Get()->Add("BossMapTest");
 
-
-    //SceneManager::Get()->Create("BossMap", new BossMap());
-    //SceneManager::Get()->Add("BossMap");
-
+    SceneManager::Get()->Create("TestDungeon", new TestDungeonScene());
+    SceneManager::Get()->Add("TestDungeon");
 }
 
 GameManager::~GameManager()

@@ -8,7 +8,22 @@ public:
 	void Update();
 	void Render();
 
+	bool OpenDoor(bool bol) { return open = bol; }
+
 private:
-	Model* m1;
-	vector<Model*> ms;
+	Terrain* terrain;
+
+	vector<Model*> Gates;
+
+	vector<Model*> Walls_L;
+	Model* Walls_LF;
+
+	vector<Model*> Walls_R;
+	Model* Walls_RF;
+
+	vector<Model*> Walls_B;
+
+	void DoorMove();
+
+	bool open = false;
 };
