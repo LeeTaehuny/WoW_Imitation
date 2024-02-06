@@ -430,6 +430,12 @@
     <ClInclude Include="Objects\Skills\FireBall.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_001_Avengers_Shield.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Monster\Scarecrow.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX3D.cpp">
@@ -811,6 +817,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Skills\FireBall.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_001_Avengers_Shield.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Monster\Scarecrow.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -27,6 +27,8 @@
 
 #define DIALOG ImGuiFileDialog::Instance()
 
+#define MONSTER MonsterManager::Get()
+
 #define FOR(n) for(int i = 0; i < n ; i++)
 
 #define SAFE_DEL(p) \
@@ -213,6 +215,7 @@ using namespace GameMath;
 #include "Objects/Monster/MonsterBase.h"
 #include "Objects/Monster/Skeleton.h"
 #include "Objects/Monster/Skeleton_Knight.h"
+#include "Objects/Monster/Scarecrow.h"
 #include "Objects/Monster/MonsterManager.h"
 
 // 스킬 배이스
@@ -222,6 +225,9 @@ using namespace GameMath;
 
 // 스킬
 #include "Objects/Skills/FireBall.h"
+
+// 보호 성기사 스킬
+#include "Objects/Skills/ProtectionWarrior_Skill/P_001_Avengers_Shield.h"
 
 #include "Objects/Test/TestLight.h"
 

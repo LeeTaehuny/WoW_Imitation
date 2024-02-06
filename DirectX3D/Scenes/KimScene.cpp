@@ -6,7 +6,7 @@
 #define RENDER(k) if (k != nullptr) k->Render()
 #define GUIRENDER(k) if (k != nullptr) k->GUIRender()
 
-#define MONSTER MonsterManager::Get()
+
 
 KimScene::KimScene()
 {
@@ -41,10 +41,11 @@ KimScene::KimScene()
 		MONSTER->SetTarget(coll[i]);
 	}
 
-	skill = new FireBall();
+	skill = new P_001_Avengers_Shield();
 
-	//par = new Spark(L"Textures/Effect/star.png");
-	//particleSystem = new ParticleSystem(L"Textures/Effect/star.png");
+	MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
+	MONSTER->SpawnScarecrow(Vector3(10));
+	MONSTER->SpawnScarecrow(Vector3(-10));
 }
 
 KimScene::~KimScene()
@@ -86,7 +87,8 @@ void KimScene::Update()
 
 			if (coll->IsRayCollision(ray, nullptr))
 			{
-				skill->SetEnemy(coll);
+				if (P_001_Avengers_Shield* t = dynamic_cast<P_001_Avengers_Shield*>(skill))
+					t->SetEnemy(coll);
 				break;
 			}
 		}
@@ -133,7 +135,6 @@ void KimScene::PostRender()
 
 void KimScene::GUIRender()
 {
-	skill->particle->GUIRender();
 	GUIRENDER(mainPlayer);
 	GUIRENDER(skel);
 	for (Collider* col : coll)

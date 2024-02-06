@@ -6,7 +6,8 @@ FireBall::FireBall()
 {
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);
-	particle = new Rain();
+
+	prevSkills.push_back("");
 }
 FireBall::~FireBall()
 {
@@ -17,17 +18,10 @@ void FireBall::Update()
 {
 	Target();
 
-	if (myCollider->Active())
-	{
-		particle->Play(myCollider->Pos());
-	}
-
-	particle->Update();
 	myCollider->UpdateWorld();
 }
 void FireBall::Render()
 {
-	particle->Render();
 	myCollider->Render();
 }
 

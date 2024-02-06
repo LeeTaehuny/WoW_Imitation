@@ -1,4 +1,6 @@
 ﻿#pragma once
+
+//  FlyingSpeed 속도 조절 필요
 class TargetSkill : public SkillBase
 {
 public:
@@ -12,9 +14,9 @@ public:
 	TargetSkill(Type type);
 	virtual ~TargetSkill();
 
-	virtual void Update() = 0;
-	virtual void Render() = 0;
-	virtual void UseSkill(Vector3 pos) = 0;
+	//virtual void Update() = 0;
+	//virtual void Render() = 0;
+	//virtual void UseSkill(Vector3 pos) = 0;
 
 	// 콜라이더를 날리는 함수
 	// 즉발성인가 투사체인가 판별도 알아서 해줍니다.
@@ -25,7 +27,7 @@ public:
 	void wing();
 
 	// 적 세팅
-	virtual void SetEnemy(Collider* enemy) { this->enemy = enemy; }
+	void SetEnemy(Collider* enemy) { this->enemy = enemy; }
 
 protected:
 	// 적의 콜라이더 정보
@@ -38,5 +40,7 @@ protected:
 	float FlyingSpeed = 10;
 	// 즉발성인가 투사체인가를 판별하기 위한 변수
 	Type type;
+	// 충돌 했는지를 판별하는 함수
+	bool impact = false;
 
 };

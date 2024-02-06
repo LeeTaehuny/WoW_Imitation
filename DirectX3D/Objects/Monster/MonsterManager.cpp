@@ -23,16 +23,23 @@ MonsterManager::MonsterManager()
 	skeletonKnight_body->ReadClip("Walking");
 	skeletonKnight_body->ReadClip("Death");
 	skeletonKnight_body->ReadClip("Hit");
+
+	scarecrow_body = new ModelAnimatorInstancing("Skeleton_Knight");
+	scarecrow_body->ReadClip("Idle");
+	scarecrow_body->ReadClip("Hit");
 }
 
 MonsterManager::~MonsterManager()
 {
 	delete skeleton_body;
 	delete skeletonKnight_body;
+	delete scarecrow_body;
 
 	for (Skeleton* skel : skeleton)
 		delete skel;
 	for (Skeleton_Knight* skel : skeleton_Knight)
+		delete skel;
+	for (Scarecrow* skel : scarecrow)
 		delete skel;
 
 	for (Collider* col : targets)
@@ -45,10 +52,13 @@ void MonsterManager::Update()
 {
 	skeleton_body->Update();
 	skeletonKnight_body->Update();
+	scarecrow_body->Update();
 
 	for (Skeleton* skel : skeleton)
 		UPDATE(skel);
 	for (Skeleton_Knight* skel : skeleton_Knight)
+		UPDATE(skel);
+	for (Scarecrow* skel : scarecrow)
 		UPDATE(skel);
 }
 
@@ -56,10 +66,13 @@ void MonsterManager::Render()
 {
 	skeleton_body->Render();
 	skeletonKnight_body->Render();
+	scarecrow_body->Render();
 
 	for (Skeleton* skel : skeleton)
 		RENDER(skel);
 	for (Skeleton_Knight* skel : skeleton_Knight)
+		RENDER(skel);
+	for (Scarecrow* skel : scarecrow)
 		RENDER(skel);
 }
 
@@ -92,7 +105,6 @@ void MonsterManager::SpawnSkeleton(Vector3 pos)
 	skeleton.push_back(skel);
 	skeleton[skeleton.size() - 1]->Spawn(pos);
 }
-
 void MonsterManager::SpawnSkeletonKnight(Vector3 pos)
 {
 	int curindex = 0;
@@ -116,4 +128,28 @@ void MonsterManager::SpawnSkeletonKnight(Vector3 pos)
 	monsterCollider.push_back(skel->collider);
 	skeleton_Knight.push_back(skel);
 	skeleton_Knight[skeleton_Knight.size() - 1]->Spawn(pos);
+}
+void MonsterManager::SpawnScarecrow(Vector3 pos)
+{
+	int curindex = 0;
+	if (scarecrow.size() == 0) {}
+	else
+	{
+		for (UINT i = 0; i < scarecrow.size(); ++i)
+		{
+			if (scarecrow[i]->GetmyNumber() == curindex)
+			{
+				curindex++;
+				continue;
+			}
+			else if (scarecrow[i]->GetmyNumber() != curindex) break;
+		}
+	}
+
+	Transform* transform = scarecrow_body->Add();
+	transform->Scale() *= 0.02f;
+	Scarecrow* skel = new Scarecrow(transform, scarecrow_body, curindex, targets);
+	monsterCollider.push_back(skel->collider);
+	scarecrow.push_back(skel);
+	scarecrow[scarecrow.size() - 1]->Spawn(pos);
 }

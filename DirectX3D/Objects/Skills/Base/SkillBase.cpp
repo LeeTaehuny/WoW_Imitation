@@ -8,6 +8,14 @@ SkillBase::SkillBase()
 SkillBase::~SkillBase()
 {
 	delete myCollider;
-	delete particle;
-	delete particleSystem;
+}
+
+void SkillBase::Cooldown()
+{
+	delay -= DELTA;
+	if (delay <= 0)
+	{
+		delay = MAX_delay;
+		isCooldown = false;
+	}
 }

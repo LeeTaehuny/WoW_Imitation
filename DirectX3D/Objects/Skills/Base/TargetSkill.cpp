@@ -13,6 +13,7 @@ TargetSkill::~TargetSkill()
 void TargetSkill::Target()
 {
 	if (!enemy) return;
+	if (!myCollider) return;
 	
 	switch (type)
 	{
@@ -44,5 +45,7 @@ void TargetSkill::wing()
 	if (enemy->IsCollision(myCollider))
 	{
 		myCollider->SetActive(false);
+		isRun = false;
+		impact = true; // 충돌했으니 변수 참으로 변경
 	}
 }
