@@ -22,5 +22,9 @@ private:
     class Item* potion;
     class Inventory* inv;
     class Shop* shop;
+
+    class CH_Base* player;
+
+    class SkillBase* skill;    
 };
 

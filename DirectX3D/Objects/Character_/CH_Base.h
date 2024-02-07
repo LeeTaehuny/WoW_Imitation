@@ -1,48 +1,74 @@
-#pragma once
+ï»¿#pragma once
+#include "Objects/Skills/Base/SkillBase.h"
+
+enum class CreatureType
+{
+	Player,
+	NonPlayer,
+};
+
+enum class ProfessionType
+{
+	ArmsWarrior,		// ì „ì‚¬[ë¬´ê¸°]
+	ProtectionWarrior,  // ì„±ê¸°ì‚¬[ë³´í˜¸]
+	MarksmanshipHunter, // ì‚¬ëƒ¥ê¾¼[ì‚¬ê²©]
+	FireMage,			// ë§ˆë²•ì‚¬[í™”ì—¼]
+	HolyPriest,			// ì‚¬ì œ[ì‹ ì„±]
+};
+
 class CH_Base : public ModelAnimator
 {
 public:
-	CH_Base(string name, int myNober) : ModelAnimator(name)
-	{ this->myNober = myNober; }
-	virtual ~CH_Base() = default;
+	CH_Base(string name, CreatureType creatureType, ProfessionType professionType);
+	virtual ~CH_Base();
 
-	// ÇÃ·¹ÀÌ¾î¿ë ¾÷µ¥ÀÌÆ®
-	void PlayerUpdate();
-	// NPC¿ë ¾÷µ¥ÀÌÆ®
-	void AIUpdate();
-	// ¸ğ¼Ç ¼³Á¤
-	void SetState(int state);
-	void Render();
+	virtual void Update();
+	virtual void Render();
+	void UIRender();
 
-	Collider* GetCollider() { return collider; }
-
-
-public: // °¡»ó ÇÔ¼ö
-
-	// Å°º¸µå Á¶ÀÛ¿ë ¿òÁ÷ÀÓ
-	virtual void Moving() = 0;
-	// Å°º¸µå Á¶ÀÛ¿ë ¿òÁ÷ÀÓ
-	virtual void Jump() = 0;
-	// °ø°İ ÇÔ¼ö
-	virtual void Attack() = 0;
-	// Ä³½ºÆÃ ÇÔ¼ö
-	virtual void Casting() = 0;
-
-	// ´Ù¸¥ Äİ¶óÀÌ´õ¿Í Ãæµ¹ÇßÀ» ¶§
+public:
+	// í”Œë ˆì´ì–´ìš© ì—…ë°ì´íŠ¸
+	virtual void PlayerUpdate() = 0;
+	// NPCìš© ì—…ë°ì´íŠ¸
+	virtual void AIUpdate() = 0;
+	// ë‹¤ë¥¸ ì½œë¼ì´ë”ì™€ ì¶©ëŒí–ˆì„ ë•Œ
 	virtual void OnHit(Collider* collider) = 0;
 
-	bool isCasting = false;
-	int myNober = 0;
+	virtual void LearnSkill(class SkillBase* skill) {};
+
+// Getter & Setter
+public:
+	class Inventory* GetInventory() { return inventory; }
+	Collider* GetCollider() { return collider; }
+
+// Member Variable
 protected:
-	int INTstate = 0;
-	Vector3 velocity;
-	bool isJump = false;
+	CreatureType creatureType;
+	ProfessionType professionType;
 
 	Collider* collider;
 
+	class Inventory* inventory;
 
-protected: // ½ºÅÈ °ü·Ã
+	// ìŠ¤í‚¬
+	vector<class SkillBase> skillList;
 
+protected:
+	Vector3 velocity;
+	bool isCasting = false;
+	float moveSpeed = 10.0f;
+	float deceleration = 10;
+	float turnSpeed = 2;
+
+	float jumpVelocity = 0;
+	float jumpForce = 0.15f;
+	float gravityMult = 0.5f;
+	bool isJump = false;
+
+	float curheight = 0.0f;
+
+protected:
+	// ì„ì‹œ ì½”ë“œ.
 	float Max_hp = 0;
 	float cur_hp = Max_hp;
 };

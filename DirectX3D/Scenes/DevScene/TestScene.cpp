@@ -5,6 +5,12 @@
 #include "Objects/Inventory/Inventory.h"
 #include "Objects/Shop/Shop.h"
 #include "Objects/Inventory/Slot.h"
+#include "Objects/Character_/CH_Base.h"
+#include "Objects/Character_/MarksmanshipHunter.h"
+#include "Objects/Character_/ArmsWarrior.h"
+#include "Objects/Character_/HolyPriest.h"
+#include "Objects/Character_/FireMage.h"
+#include "Objects/Character_/ProtectionWarrior.h"
 
 TestScene::TestScene()
 {
@@ -13,40 +19,44 @@ TestScene::TestScene()
 
 	//potion->Pos() = { 1, 0, 0 };
 
-	inv = new Inventory();
+	//inv = new Inventory();
 	//inv->AddItem(potion);
 	//inv->AddItem(potion);
 	//inv->AddItem(weapon);
 	//inv->AddItem(weapon);
 
 	shop = new Shop();
-	shop->AddItem(new Weapon("sword_1", WeaponType::Sword));
-	shop->AddItem(new Weapon("sword_2", WeaponType::Sword));
-	shop->AddItem(new Weapon("staff_1", WeaponType::Staff));
-	shop->AddItem(new Weapon("staff_2", WeaponType::Staff));
-	shop->AddItem(new Weapon("staff_3", WeaponType::Staff));
-	shop->AddItem(new Weapon("bow_1", WeaponType::Bow));
-	shop->AddItem(new Weapon("bow_2", WeaponType::Bow));
-	shop->AddItem(new Weapon("hammer_1", WeaponType::Hammer));
-	shop->AddItem(new Weapon("hammer_2", WeaponType::Hammer));
-	shop->AddItem(new Potion("potion", PotionType::Hp));
-	shop->AddItem(new Potion("potionMp", PotionType::Mp));
+	//shop->AddItem(new Weapon("sword_1", WeaponType::Sword));
+	//shop->AddItem(new Weapon("sword_2", WeaponType::Sword));
+	//shop->AddItem(new Weapon("staff_1", WeaponType::Staff));
+	//shop->AddItem(new Weapon("staff_2", WeaponType::Staff));
+	//shop->AddItem(new Weapon("staff_3", WeaponType::Staff));
+	//shop->AddItem(new Weapon("bow_1", WeaponType::Bow));
+	//shop->AddItem(new Weapon("bow_2", WeaponType::Bow));
+	//shop->AddItem(new Weapon("hammer_1", WeaponType::Hammer));
+	//shop->AddItem(new Weapon("hammer_2", WeaponType::Hammer));
+	//shop->AddItem(new Potion("potion", PotionType::Hp));
+	//shop->AddItem(new Potion("potionMp", PotionType::Mp));
+
+	player = new ProtectionWarrior(CreatureType::Player);
+
+	CAM->SetTarget(player);
 }
 
 TestScene::~TestScene()
 {
-	delete weapon;
+	//delete weapon;
 }
 
 void TestScene::Update()
 {
 	//weapon->Update();
 	//potion->Update();
-	inv->Update();
-
+	//inv->Update();
+	//
 	shop->Update();
-
-	if ((CAM->GlobalPos() - shop->GlobalPos()).Length() < 10.0f)
+	
+	if ((player->GlobalPos() - shop->GlobalPos()).Length() < 10.0f)
 	{
 		shop->SetActive(true);
 	}
@@ -54,17 +64,17 @@ void TestScene::Update()
 	{
 		shop->SetActive(false);
 	}
-
+	
 	if (shop->Active())
 	{
 		const vector<Slot*> slots = shop->GetItemSlots();
-		const vector<Slot*> items = inv->GetInvSlots();
+		const vector<Slot*> items = player->GetInventory()->GetInvSlots();
 		
 		int idx = 0;
 		for (Slot* slot : slots)
 		{
-			if (mousePos.x <= slot->GlobalPos().x + 33.0f && mousePos.x >= slot->GlobalPos().x - 33.0f &&
-				mousePos.y <= slot->GlobalPos().y + 33.0f && mousePos.y >= slot->GlobalPos().y - 33.0f)
+			if (mousePos.x <= slot->GlobalPos().x + slot->GetSize().x && mousePos.x >= slot->GlobalPos().x - slot->GetSize().x &&
+				mousePos.y <= slot->GlobalPos().y + slot->GetSize().y && mousePos.y >= slot->GlobalPos().y - slot->GetSize().y)
 			{
 				if (KEY_DOWN(VK_RBUTTON))
 				{
@@ -72,14 +82,14 @@ void TestScene::Update()
 					
 					if (tmpName.size())
 					{
-						shop->PurchaseItem(tmpName, inv);
+						shop->PurchaseItem(tmpName, player->GetInventory());
 					}
 				}
 			}
-
+	
 			idx++;
 		}
-
+	
 		idx = 0;
 		for (Slot* item : items)
 		{
@@ -88,13 +98,15 @@ void TestScene::Update()
 			{
 				if (KEY_DOWN(VK_RBUTTON))
 				{
-					shop->SellItem(idx, inv);
+					shop->SellItem(idx, player->GetInventory());
 				}
 			}
-
+	
 			idx++;
 		}
 	}
+
+	player->Update();
 }
 
 void TestScene::PreRender()
@@ -106,11 +118,12 @@ void TestScene::Render()
 	//weapon->Render();
 	//potion->Render();
 	shop->Render();
+	player->Render();
 }
 
 void TestScene::PostRender()
 {
-	inv->UIRender();
+	player->UIRender();
 	shop->UIRender();
 }
 

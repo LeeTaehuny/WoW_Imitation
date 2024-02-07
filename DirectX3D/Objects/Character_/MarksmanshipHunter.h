@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 class MarksmanshipHunter : public CH_Base
 {
 private:
@@ -12,22 +12,39 @@ private:
 	};
 
 public:
-	MarksmanshipHunter(int myNober);
+	MarksmanshipHunter(CreatureType type);
 	~MarksmanshipHunter();
 
-	virtual void Moving() override;
-	virtual void Jump() override;
-	virtual void Attack() override;
-	virtual void Casting() override;
+	virtual void Update() override;
+	virtual void Render() override;
 
+private:
+	// 플레이어용 업데이트
+	virtual void PlayerUpdate() override;
+	// NPC용 업데이트
+	virtual void AIUpdate() override;
+	// 충돌 판정 함수
 	virtual void OnHit(Collider* collider) override;
 
+	// 컨트롤 관련 함수
+private:
+	void Control();
+	void Moving();
+	void Jump();
+	void Attack();
+	//void Casting();
+
+	// 상태 변경용 함수
+	void SetState(State state);
+
+	// 이벤트 함수
+private:
 	void EndATK();
-	void EndJUMP();
 	void EndHit();
 	void EndDie();
-	void EndCasting();
+	//void EndCasting();
 
 private:
 	State curState = IDLE1;
+
 };

@@ -1,6 +1,7 @@
 ﻿#include "Framework.h"
 
-ProtectionWarrior::ProtectionWarrior(int myNober) : CH_Base("ProtectionWarrior", myNober)
+ProtectionWarrior::ProtectionWarrior(CreatureType type) 
+	: CH_Base("ProtectionWarrior", type, ProfessionType::ProtectionWarrior)
 {
 	ReadClip("Idle_1");
 	ReadClip("Idle_2");
@@ -17,12 +18,8 @@ ProtectionWarrior::ProtectionWarrior(int myNober) : CH_Base("ProtectionWarrior",
 
 	GetClip((int)ATTACK1)->SetEvent(bind(&ProtectionWarrior::EndATK, this), 0.7f);
 
-	GetClip((int)JUMP)->SetEvent(bind(&ProtectionWarrior::EndJUMP, this), 0.6f);
-
 	GetClip((int)HIT)->SetEvent(bind(&ProtectionWarrior::EndHit, this), 0.6f);
 	GetClip((int)DIE)->SetEvent(bind(&ProtectionWarrior::EndDie, this), 0.9f);
-
-	GetClip((int)SKILL1)->SetEvent(bind(&ProtectionWarrior::EndCasting, this), 0.4f);
 
 	collider = new CapsuleCollider(0.5f, 1.0f);
 	collider->SetParent(this);
@@ -34,70 +31,145 @@ ProtectionWarrior::~ProtectionWarrior()
 	delete collider;
 }
 
+void ProtectionWarrior::Update()
+{
+	// 액티브 상태가 아니라면 업데이트하지 않음
+	if (!Active()) return;
+
+	// 플레이어 타입에 따라 업데이트 수행
+	switch (creatureType)
+	{
+	case CreatureType::Player:
+		PlayerUpdate();
+		break;
+
+	case CreatureType::NonPlayer:
+		AIUpdate();
+		break;
+	}
+
+	CH_Base::Update();
+}
+
+void ProtectionWarrior::Render()
+{
+	// 액티브 상태가 아니라면 업데이트하지 않음
+	if (!Active()) return;
+
+	collider->Render();
+	CH_Base::Render();
+}
+
+void ProtectionWarrior::PlayerUpdate()
+{
+	Control();
+	//Casting();
+
+	// 충돌체 업데이트
+	collider->UpdateWorld();
+}
+
+void ProtectionWarrior::AIUpdate()
+{
+}
+
+void ProtectionWarrior::Control()
+{
+	Moving();
+
+	if (KEY_DOWN(VK_SPACE) && !isJump)
+	{
+		if (curState == IDLE1 || curState == IDLE2 || curState == IDLE3 || curState == WALK_F || curState == WALK_B || curState == WALK_L || curState == WALK_R)
+		{
+			SetState(JUMP);
+			jumpVelocity = jumpForce;
+			isJump = true;
+		}
+	}
+
+	Attack();
+	Jump();
+}
+
 void ProtectionWarrior::Moving()
 {
-	if (isJump) return;
-	if (INTstate == (int)ATTACK1) return;
-	if (INTstate == (int)DIE) return;
-	if (INTstate == (int)SKILL1) return;
+	// 점프, 공격, 맞을 때, 죽었을 경우 움직이지 않기
+	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
-	float deceleration = 10;
 
-	if (KEY_PRESS('W'))
+	// 캐릭터 기본 이동 : W(앞), S(뒤), Q(좌), E(우)
 	{
-		velocity.z += DELTA;
-		isMoveZ = true;
-	}
-	if (KEY_PRESS('S'))
-	{
-		velocity.z -= DELTA;
-		isMoveZ = true;
-	}
-	if (KEY_PRESS('Q'))
-	{
-		velocity.x -= DELTA;
-		isMoveX = true;
-	}
-	if (KEY_PRESS('E'))
-	{
-		velocity.x += DELTA;
-		isMoveX = true;
-	}
-
-	if (KEY_PRESS(VK_RBUTTON))
-	{
-		if (KEY_PRESS('A'))
+		if (KEY_PRESS('W'))
+		{
+			velocity.z += DELTA;
+			isMoveZ = true;
+		}
+		if (KEY_PRESS('S'))
+		{
+			velocity.z -= DELTA;
+			isMoveZ = true;
+		}
+		if (KEY_PRESS('Q'))
 		{
 			velocity.x -= DELTA;
 			isMoveX = true;
 		}
-		if (KEY_PRESS('D'))
+		if (KEY_PRESS('E'))
 		{
 			velocity.x += DELTA;
 			isMoveX = true;
 		}
 	}
-	else
+
+	// 캐릭터 마우스 우클릭에 따른 이동 변화
 	{
-		if (KEY_PRESS('W') || KEY_PRESS('S'))
+		if (KEY_PRESS(VK_RBUTTON))
 		{
-			float turnSpeed = 2;
+			// 좌우 이동
 			if (KEY_PRESS('A'))
 			{
-				Rot().y -= turnSpeed * DELTA;
+				velocity.x -= DELTA;
+				isMoveX = true;
 			}
 			if (KEY_PRESS('D'))
 			{
-				Rot().y += turnSpeed * DELTA;
+				velocity.x += DELTA;
+				isMoveX = true;
 			}
-		}		
+		}
+		else
+		{
+			// 앞뒤로 이동 중이 아닐 때
+			if (KEY_PRESS('W') || KEY_PRESS('S'))
+			{
+				// 좌우 회전
+				if (KEY_PRESS('A'))
+				{
+					Rot().y -= turnSpeed * DELTA;
+				}
+				if (KEY_PRESS('D'))
+				{
+					Rot().y += turnSpeed * DELTA;
+				}
+			}
+		}
 	}
 
+	// 가속도 설정
 	if (velocity.Length() > 1) velocity.Normalize();
 	if (!isMoveZ) velocity.z = Lerp(velocity.z, 0, deceleration * DELTA);
 	if (!isMoveX) velocity.x = Lerp(velocity.x, 0, deceleration * DELTA);
+
+	Matrix rotY = XMMatrixRotationY(Rot().y);
+	Vector3 direction = XMVector3TransformCoord(velocity, rotY);
+
+	// 위치 이동
+	Pos() += direction * -1 * moveSpeed * DELTA;
+
+	// 점프인 경우라면 애니메이션 설정 X
+	if (curState == JUMP) return;
 
 	if (velocity.z > 0.1f)
 		SetState(WALK_F);
@@ -108,37 +180,56 @@ void ProtectionWarrior::Moving()
 	else if (velocity.x > 0.1f)
 		SetState(WALK_R);
 	else
-	{
 		SetState(IDLE2);
-	}
 }
 
 void ProtectionWarrior::Jump()
 {
-	if (KEY_DOWN(VK_SPACE))
+	// 점프중이 아니라면 리턴
+	if (!isJump) return;
+
+	jumpVelocity -= 1.8f * gravityMult * DELTA;
+	Pos().y += jumpVelocity;
+
+	// 현재의 지정 높이보다 위치가 낮다면?
+	if (Pos().y < curheight)
 	{
-		SetState(JUMP);
-		isJump = true;
+		// 위치 초기화 및 상태 전환
+		Pos().y = curheight;
+		jumpVelocity = 0;
+		SetState(IDLE2);
+		isJump = false;
 	}
 }
 
 void ProtectionWarrior::Attack()
 {
+	// 점프, 사망, 피격, 공격 상태인 경우 리턴
+	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
+
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		SetState(ATTACK1);
 	}
 }
 
-void ProtectionWarrior::Casting()
+void ProtectionWarrior::SetState(State state)
 {
-	// 현재 스킬을 사용했다면
-	if (isCasting)
-	{
-		isCasting = false;
-		SetState(SKILL1);
-	}
+	if (curState == state) return;
+
+	curState = state;
+	PlayClip(state);
 }
+
+//void ProtectionWarrior::Casting()
+//{
+//	// 현재 스킬을 사용했다면
+//	if (isCasting)
+//	{
+//		isCasting = false;
+//		SetState(SKILL1);
+//	}
+//}
 
 void ProtectionWarrior::OnHit(Collider* collider)
 {
@@ -160,30 +251,6 @@ void ProtectionWarrior::EndATK()
 	SetState(IDLE1);
 }
 
-void ProtectionWarrior::EndJUMP()
-{
-	SetState(IDLE1);
-	isJump = false;
-}
-
-void ProtectionWarrior::EndIDLE()
-{
-	int idleChange = Random(1, 4);
-
-	if (idleChange == 1)
-	{
-		SetState(IDLE1);
-	}
-	else if (idleChange == 2)
-	{
-		SetState(IDLE2);
-	}
-	else if (idleChange == 3)
-	{
-		SetState(IDLE3);
-	}
-}
-
 void ProtectionWarrior::EndHit()
 {
 	if (cur_hp <= 0)
@@ -197,7 +264,7 @@ void ProtectionWarrior::EndDie()
 	SetActive(false);
 }
 
-void ProtectionWarrior::EndCasting()
-{
-	SetState(IDLE1);
-}
+//void ProtectionWarrior::EndCasting()
+//{
+//	SetState(IDLE1);
+//}
