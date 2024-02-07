@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 class Scarecrow : public MonsterBase
 {
 public:
@@ -13,18 +13,15 @@ public:
     Scarecrow(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<Collider*> target);
     ~Scarecrow();
 
-    void Update();
-    void Render();
-    void PostRender();
+    virtual void Update() override;
+    virtual void Render() override;
+    virtual void PostRender() override;
 
-    // µ¥¹ÌÁö¸¦ ¹Ş±â À§ÇÑ ÇÔ¼ö
-    void Hit(float amount = 1, int targetNumber = 0);
-    // ÇìÀÌÆ®º¤ÅÍÀÇ ¼ø¹øÀ» ÁöÁ¤ÇÏ±â À§ÇÑ ÀÓ½Ãº¯¼ö
+    // ë°ë¯¸ì§€ë¥¼ ë°›ê¸° ìœ„í•œ í•¨ìˆ˜
+    virtual void Hit(float amount = 1, int targetNumber = 0) override;
+    // í—¤ì´íŠ¸ë²¡í„°ì˜ ìˆœë²ˆì„ ì§€ì •í•˜ê¸° ìœ„í•œ ì„ì‹œë³€ìˆ˜
     int targetNumber = 0;
-    void Spawn(Vector3 pos);
-
-    int GetmyNumber() { return index; }
-    CapsuleCollider* GetCollider() { return collider; }
+    virtual void Spawn(Vector3 pos) override;
 
 public:
     void SetEvent(int clip, Event event, float timeRatio);

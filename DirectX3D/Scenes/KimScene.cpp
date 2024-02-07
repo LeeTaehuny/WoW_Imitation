@@ -41,7 +41,7 @@ KimScene::KimScene()
 		MONSTER->SetTarget(coll[i]);
 	}
 
-	skill = new P_001_Avengers_Shield();
+	//skill = new P_001_Avengers_Shield();
 
 	MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
 	MONSTER->SpawnScarecrow(Vector3(10));
@@ -77,23 +77,23 @@ void KimScene::Update()
 	}
 
 	if (KEY_DOWN(VK_SPACE))
-		skill->UseSkill(CAM->Pos());
+	//	skill->UseSkill(CAM->Pos());
 
 	if (KEY_DOWN(VK_LBUTTON))
 	{
-		for (Collider* coll : MONSTER->monsterCollider)
-		{
-			Ray ray = CAM->ScreenPointToRay(mousePos);
-
-			if (coll->IsRayCollision(ray, nullptr))
-			{
-				if (P_001_Avengers_Shield* t = dynamic_cast<P_001_Avengers_Shield*>(skill))
-					t->SetEnemy(coll);
-				break;
-			}
-		}
+		//for (Collider* coll : MONSTER->monsterCollider)
+		//{
+		//	Ray ray = CAM->ScreenPointToRay(mousePos);
+		//
+		//	if (coll->IsRayCollision(ray, nullptr))
+		//	{
+		//		if (P_001_Avengers_Shield* t = dynamic_cast<P_001_Avengers_Shield*>(skill))
+		//			t->SetEnemy(coll);
+		//		break;
+		//	}
+		//}
 	}
-	skill->Update();
+	//skill->Update();
 
 	//if (KEY_DOWN('A'))
 	//	particleSystem->Play(Vector3());
@@ -124,7 +124,7 @@ void KimScene::Render()
 	for (Collider* col : coll)
 		col->Render();
 
-	skill->Render();
+	//skill->Render();
 	RENDER(par);
 	RENDER(particleSystem);
 }

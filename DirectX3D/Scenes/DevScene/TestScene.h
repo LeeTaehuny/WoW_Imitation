@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Scenes/Scene.h"
 
 class TestScene : public Scene
@@ -25,6 +25,10 @@ private:
 
     class CH_Base* player;
 
-    class SkillBase* skill;    
+    class SkillBase* skill;
+
+    vector<Collider*> coll;
+
+    MonsterBase* targetMonster;
 };
 

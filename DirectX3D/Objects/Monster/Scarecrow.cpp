@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 Scarecrow::Scarecrow(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<Collider*> target)
 {
@@ -17,7 +17,7 @@ Scarecrow::Scarecrow(Transform* transform, ModelAnimatorInstancing* instancing, 
 	totalEvents.resize(instancing->GetClipSize());
 	eventIters.resize(instancing->GetClipSize());
 
-	// ¾Ö´Ï¸ÞÀÌ¼Ç ¼¼ÆÃ
+	// ì• ë‹ˆë©”ì´ì…˜ ì„¸íŒ…
 	SetEvent(HIT, bind(&Scarecrow::EndHit, this), 0.9f);
 
 	FOR(totalEvents.size())
@@ -45,14 +45,14 @@ void Scarecrow::Update()
 	//if (curState == SCREAM) return;
 	//if (curState == HIT) return;
 
-	if (KEY_DOWN('1')) targetNumber = 0;
-	if (KEY_DOWN('2')) targetNumber = 1;
-	if (KEY_DOWN('3')) targetNumber = 2;
-	if (KEY_DOWN('4')) targetNumber = 3;
+	//if (KEY_DOWN('1')) targetNumber = 0;
+	//if (KEY_DOWN('2')) targetNumber = 1;
+	//if (KEY_DOWN('3')) targetNumber = 2;
+	//if (KEY_DOWN('4')) targetNumber = 3;
 
 	ExecuteEvent();
 	//UpdateUI();
-	Hit(1, targetNumber);
+	//Hit(1, targetNumber);
 
 	root->SetWorld(instancing->GetTransformByNode(index, 3));
 	collider->UpdateWorld();
@@ -60,7 +60,7 @@ void Scarecrow::Update()
 
 void Scarecrow::Render()
 {
-	//collider->Render();
+	collider->Render();
 	//attackRange->Render();
 	//attackBumwe->Render();
 }
@@ -71,14 +71,18 @@ void Scarecrow::PostRender()
 
 void Scarecrow::Hit(float amount, int targetNumber)
 {
-	if (KEY_DOWN(VK_LBUTTON))
-	{
-		Ray ray = CAM->ScreenPointToRay(mousePos);
-		if (collider->IsRayCollision(ray, nullptr))
-		{
-			SetState(HIT);
-		}
-	}
+	//targetHate[targetNumber] += amount;
+
+	SetState(HIT);
+
+	//if (KEY_DOWN(VK_LBUTTON))
+	//{
+	//	Ray ray = CAM->ScreenPointToRay(mousePos);
+	//	if (collider->IsRayCollision(ray, nullptr))
+	//	{
+	//		SetState(HIT);
+	//	}
+	//}
 }
 
 void Scarecrow::Spawn(Vector3 pos)
