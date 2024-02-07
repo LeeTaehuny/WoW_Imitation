@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "Objects/Skills/Base/SkillBase.h"
 
 enum class CreatureType
 {
@@ -33,6 +34,8 @@ public:
 	// 다른 콜라이더와 충돌했을 때
 	virtual void OnHit(Collider* collider) = 0;
 
+	virtual void LearnSkill(class SkillBase* skill) {};
+
 // Getter & Setter
 public:
 	class Inventory* GetInventory() { return inventory; }
@@ -46,6 +49,9 @@ protected:
 	Collider* collider;
 
 	class Inventory* inventory;
+
+	// 스킬
+	vector<class SkillBase> skillList;
 
 protected:
 	Vector3 velocity;
