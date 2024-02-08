@@ -1,43 +1,49 @@
-ï»¿#pragma once
-class FireMage : public CH_Base
+#pragma once
+class FireMage_in : public CH_Base_ver2
 {
+private:
+
 	enum State
 	{
 		IDLE1, IDLE2,
 		ATTACK1, ATTACK2, ATTACK3,
 		WALK_F, WALK_B, WALK_L, WALK_R,
-		DIE1, DIE2, HIT1, HIT2, JUMP,
+		DIE, HIT, JUMP,
 	};
 
 public:
-	FireMage(CreatureType type);
-	~FireMage();
+
+	FireMage_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index);
+	~FireMage_in();
 
 	virtual void Update() override;
 	virtual void Render() override;
 
 private:
-	// í”Œë ˆì´ì–´ìš© ì—…ë°ì´íŠ¸
+	// ÇÃ·¹ÀÌ¾î¿ë ¾÷µ¥ÀÌÆ®
 	virtual void PlayerUpdate() override;
-	// NPCìš© ì—…ë°ì´íŠ¸
+	// NPC¿ë ¾÷µ¥ÀÌÆ®
 	virtual void AIUpdate() override;
-	// ì¶©ëŒ íŒì • í•¨ìˆ˜
+	// Ãæµ¹ ÆÇÁ¤ ÇÔ¼ö
 	virtual void OnHit(Collider* collider) override;
 
 	virtual void AI_animation_Moving() override;
 
-	// ì»¨íŠ¸ë¡¤ ê´€ë ¨ í•¨ìˆ˜
+	// ÄÁÆ®·Ñ °ü·Ã ÇÔ¼ö
 private:
+	void SetEvent(int clip, Event event, float timeRatio);
+	void ExecuteEvent();
+
 	void Control();
 	void Moving();
 	void Jump();
 	void Attack();
 	//void Casting();
 
-	// ìƒíƒœ ë³€ê²½ìš© í•¨ìˆ˜
+	// »óÅÂ º¯°æ¿ë ÇÔ¼ö
 	void SetState(State state);
 
-	// ì´ë²¤íŠ¸ í•¨ìˆ˜
+	// ÀÌº¥Æ® ÇÔ¼ö
 private:
 	void EndATK();
 	void EndHit();
@@ -46,5 +52,5 @@ private:
 
 private:
 	State curState = IDLE1;
-
 };
+

@@ -16,8 +16,8 @@ public:
 // Getter & Setter
 public:
 	vector<string> GetPrevSkills() { return prevSkills; }
-	void SetOwner(class CH_Base* owner) { this->owner = owner; }
-	class CH_Base* GetOwner() { return owner; }
+	void SetOwner(class CH_Base_ver2* owner) { this->owner = owner; }
+	class CH_Base_ver2* GetOwner() { return owner; }
 
 protected:
 	// 본인의 콜라이더
@@ -27,7 +27,7 @@ protected:
 	vector<string> prevSkills;
 
 	// 해당 스킬을 가지는 플레이어에 대한 정보
-	class CH_Base* owner;
+	class CH_Base_ver2* owner;
 
 	// 일단 스킵
 	Quad* icon;

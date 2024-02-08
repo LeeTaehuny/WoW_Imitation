@@ -5,67 +5,40 @@
 #include "Objects/Inventory/Inventory.h"
 #include "Objects/Shop/Shop.h"
 #include "Objects/Inventory/Slot.h"
-#include "Objects/Character_/CH_Base.h"
-#include "Objects/Character_/MarksmanshipHunter.h"
-#include "Objects/Character_/ArmsWarrior.h"
-#include "Objects/Character_/HolyPriest.h"
-#include "Objects/Character_/FireMage.h"
-#include "Objects/Character_/ProtectionWarrior.h"
 
 //#include "Objects/Character_ver2/CH_Base_ver2.h"
 //#include "Objects/Character_ver2/ProtectionWarrior_in.h"
 
-// #define UPDATE(k) if (k != nullptr) k->Update()
-// #define UPDATEWORLD(k) if (k != nullptr) k->UpdateWorld()
-// #define RENDER(k) if (k != nullptr) k->Render()
-// #define GUIRENDER(k) if (k != nullptr) k->GUIRender()
+#define UPDATE(k) if (k != nullptr) k->Update()
+#define UPDATEWORLD(k) if (k != nullptr) k->UpdateWorld()
+#define RENDER(k) if (k != nullptr) k->Render()
+#define GUIRENDER(k) if (k != nullptr) k->GUIRender()
 
 KimScene::KimScene()
 {
-	pl = new ModelAnimatorInstancing("ProtectionWarrior");
-	pl->ReadClip("Idle_1");
-	pl->ReadClip("Attack_1");
-	pl->ReadClip("Walk_F");
-	pl->ReadClip("Walk_B");
-	pl->ReadClip("Walk_L");
-	pl->ReadClip("Walk_R");
-	pl->ReadClip("Die");
-	pl->ReadClip("Hit");
-	pl->ReadClip("Jump");
-	pl->ReadClip("S_Casting");
-
-	pol = new ModelAnimatorInstancing("FireMage");
-	pol->ReadClip("Idle_1");
-	pol->ReadClip("Attack_1");
-	pol->ReadClip("Walk_F");
-	pol->ReadClip("Walk_B");
-	pol->ReadClip("Walk_L");
-	pol->ReadClip("Walk_R");
+	instacning01(); // 팔라딘
+	instacning02(); // 화염 법사
+	instacning03(); // 사제
+	instacning04(); // 무기 전사
+	instacning05(); // 사냥꾼
 
 
-	pal = new ModelAnimatorInstancing("HolyPriest");
-	pal->ReadClip("Idle_1");
-	pal->ReadClip("Attack_1");
-	pal->ReadClip("Walk_F");
-	pal->ReadClip("Walk_B");
-	pal->ReadClip("Walk_L");
-	pal->ReadClip("Walk_R");
 
-	Transform* transform = pl->Add();
-	player = new ProtectionWarrior_in(CreatureType::Player, transform, pl, count);
-	count++;
+	Transform* transform = firemage->Add();
+	player = new FireMage_in(CreatureType::Player, transform, firemage, count);
 	CAM->SetTarget(player);
-	//MONSTER->SetTarget(mainPlayer->GetCollider());
+	count++;
+	//MONSTER->SetTarget(mainholypriestadinayer->GetCollider());
 
-	spawn(pl);
-	spawn(pl);
-	spawn(pl);
-	spawn(pol);
-	spawn(pol);
-	spawn(pol);
-	spawn(pal);
-	spawn(pal);
-	spawn(pal);
+	spawn(holypriest);
+	spawn(firemage);
+	spawn(firemage);
+	spawn(holypriest);
+	spawn(armswarrior);
+	spawn(armswarrior);
+	spawn(marksmanshiphunter);
+	spawn(marksmanshiphunter);
+	spawn(holypriest);
 	//MONSTER;
 
 	//int pop = 20;
@@ -86,13 +59,16 @@ KimScene::KimScene()
 
 KimScene::~KimScene()
 {
-	//delete mainPlayer;
-	delete pl;
-	delete pol;
-	delete pal;
+	//delete mainholypriestadinayer;
+	delete paladin;
+	delete firemage;
+	delete holypriest;
+	delete armswarrior;
+	delete marksmanshiphunter;
+
 	delete player;
 
-	for (ProtectionWarrior_in* ch : NPC)
+	for (CH_Base_ver2* ch : NPC)
 		delete ch;
 }
 
@@ -112,11 +88,15 @@ void KimScene::Update()
 	//	spawn();
 	//}
 
-	pl->Update();
-	pol->Update();
-	pal->Update();
+	UPDATE(paladin);
+	UPDATE(firemage);
+	UPDATE(holypriest);
+	UPDATE(armswarrior);
+	UPDATE(marksmanshiphunter);
+
 	player->Update();
-	for (ProtectionWarrior_in* ch : NPC)
+
+	for (CH_Base_ver2* ch : NPC)
 		if (ch != nullptr) ch->Update();
 }
 
@@ -127,11 +107,14 @@ void KimScene::PreRender()
 
 void KimScene::Render()
 {
-	pl->Render();
-	pol->Render();
-	pal->Render();
+	RENDER(paladin);
+	RENDER(firemage);
+	RENDER(holypriest);
+	RENDER(armswarrior);
+	RENDER(marksmanshiphunter);
+
 	player->Render();
-	for (ProtectionWarrior_in* ch : NPC)
+	for (CH_Base_ver2* ch : NPC)
 		if (ch != nullptr) ch->Render();
 }
 
@@ -142,14 +125,119 @@ void KimScene::PostRender()
 
 void KimScene::GUIRender()
 {
-	
+
 }
 
-void KimScene::spawn(ModelAnimatorInstancing* pol)
+void KimScene::spawn(ModelAnimatorInstancing* firemage)
 {
-	Transform* transform1 = pol->Add();
-	ProtectionWarrior_in* ppp = new ProtectionWarrior_in(CreatureType::NonPlayer, transform1, pol, 0);
-	ppp->SetPlayer(player);
+	Transform* transform1 = firemage->Add();
+
+	CH_Base_ver2* ppp;
+	ppp = new ProtectionWarrior_in(CreatureType::NonPlayer, transform1, firemage, count);
+	if (firemage == this->firemage) 
+	{
+		ppp = nullptr;
+		ppp = new FireMage_in(CreatureType::NonPlayer, transform1, firemage, count);
+	}
+	if (firemage == holypriest) 
+	{
+		ppp = nullptr;
+		ppp = new HolyPriest_in(CreatureType::NonPlayer, transform1, firemage, count);
+	}
+	if (firemage == armswarrior) 
+	{
+		ppp = nullptr;
+		ppp = new ArmsWarrior_in(CreatureType::NonPlayer, transform1, firemage, count);
+	}
+	if (firemage == marksmanshiphunter) 
+	{
+		ppp = nullptr;
+		ppp = new MarksmanshipHunter_in(CreatureType::NonPlayer, transform1, firemage, count);
+	}
+	
+	if (ppp != nullptr)
+		ppp->SetPlayer(player);
 	NPC.push_back(ppp);
 	count++;
+}
+
+void KimScene::instacning01()
+{
+	paladin = new ModelAnimatorInstancing("ProtectionWarrior");
+	paladin->ReadClip("Idle_1");
+	paladin->ReadClip("Attack_1");
+	paladin->ReadClip("Walk_F");
+	paladin->ReadClip("Walk_B");
+	paladin->ReadClip("Walk_L");
+	paladin->ReadClip("Walk_R");
+	paladin->ReadClip("Die");
+	paladin->ReadClip("Hit");
+	paladin->ReadClip("Jump");
+	paladin->ReadClip("S_Casting");
+}
+
+void KimScene::instacning02()
+{
+	firemage = new ModelAnimatorInstancing("FireMage");
+	firemage->ReadClip("Idle_1");
+	firemage->ReadClip("Idle_2");
+	firemage->ReadClip("Attack_1");
+	firemage->ReadClip("Attack_2");
+	firemage->ReadClip("Attack_3");
+	firemage->ReadClip("Walk_F");
+	firemage->ReadClip("Walk_B");
+	firemage->ReadClip("Walk_L");
+	firemage->ReadClip("Walk_R");
+	firemage->ReadClip("Die_1");
+	firemage->ReadClip("Hit_1");
+	firemage->ReadClip("Jump");
+}
+
+void KimScene::instacning03()
+{
+	holypriest = new ModelAnimatorInstancing("HolyPriest");
+	holypriest->ReadClip("Idle_1");
+	holypriest->ReadClip("Idle_2");
+	holypriest->ReadClip("Idle_3");
+	holypriest->ReadClip("Attack_1");
+	holypriest->ReadClip("Attack_2");
+	holypriest->ReadClip("Walk_F");
+	holypriest->ReadClip("Walk_B");
+	holypriest->ReadClip("Walk_L");
+	holypriest->ReadClip("Walk_R");
+	holypriest->ReadClip("Die");
+	holypriest->ReadClip("Hit");
+	holypriest->ReadClip("Jump");
+}
+
+void KimScene::instacning04()
+{
+	armswarrior = new ModelAnimatorInstancing("armswarrior");
+	armswarrior->ReadClip("Idle_1");
+	armswarrior->ReadClip("Idle_2");
+	armswarrior->ReadClip("Attack_1");
+	armswarrior->ReadClip("Attack_2");
+	armswarrior->ReadClip("Walk_F");
+	armswarrior->ReadClip("Walk_B");
+	armswarrior->ReadClip("Walk_L");
+	armswarrior->ReadClip("Walk_R");
+	armswarrior->ReadClip("Die");
+	armswarrior->ReadClip("Hit");
+	armswarrior->ReadClip("Jump");
+}
+
+void KimScene::instacning05()
+{
+	marksmanshiphunter = new ModelAnimatorInstancing("MarksmanshipHunter");
+	marksmanshiphunter->ReadClip("Idle");
+	marksmanshiphunter->ReadClip("Attack_1");
+	marksmanshiphunter->ReadClip("Walk_F");
+	marksmanshiphunter->ReadClip("Walk_B");
+	marksmanshiphunter->ReadClip("Walk_L");
+	marksmanshiphunter->ReadClip("Walk_R");
+	marksmanshiphunter->ReadClip("Die");
+	marksmanshiphunter->ReadClip("Hit");
+	marksmanshiphunter->ReadClip("Jump");
+	marksmanshiphunter->ReadClip("S_Dive");
+	marksmanshiphunter->ReadClip("S_Shooting");
 }

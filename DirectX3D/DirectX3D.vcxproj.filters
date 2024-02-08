@@ -409,6 +409,21 @@
     <ClInclude Include="Scenes\MAP\TestDungeonScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Monster\MonsterManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Character_\ArmsWarrior_in.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Character_\FireMage_in.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Character_\HolyPriest_in.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Character_\MarksmanshipHunter_in.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX3D.cpp">
@@ -774,6 +789,18 @@
     <ClCompile Include="Scenes\MAP\TestDungeonScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Character_\ArmsWarrior_in.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Character_\FireMage_in.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Character_\HolyPriest_in.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Character_\MarksmanshipHunter_in.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX3D.rc">
@@ -825,23 +852,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Objects\Skills\FireBall.cpp" />
-    <ClCompile Include="Objects\Character_\ArmsWarrior.cpp" />
-    <ClCompile Include="Objects\Character_\FireMage.cpp" />
-    <ClCompile Include="Objects\Character_\HolyPriest.cpp" />
-    <ClCompile Include="Objects\Character_\ProtectionWarrior.cpp" />
-    <ClCompile Include="Objects\Skills\Base\NonTargetSkill.cpp" />
     <ClCompile Include="Objects\Monster\MonsterManager.cpp" />
-    <ClCompile Include="Objects\Character_\MarksmanshipHunter.cpp" />
     <ClCompile Include="Objects\Inventory\Slot.cpp" />
     <ClCompile Include="Objects\UI\Button.cpp" />
     <ClCompile Include="Framework\Environment\Reflection.cpp" />
     <ClCompile Include="Framework\Environment\Refraction.cpp" />
     <ClCompile Include="Framework\Shader\DomainShader.cpp" />
     <ClCompile Include="Framework\Shader\HullShader.cpp" />
-    <ClCompile Include="Objects\Character_\CH_Base.cpp" />
     <ClCompile Include="Objects\Monster\Skeleton.cpp" />
     <ClCompile Include="Objects\Skills\Base\SkillBase.cpp" />
-    <ClCompile Include="Objects\Skills\Base\TargetSkill.cpp" />
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_001_Avengers_Shield.cpp" />
     <ClCompile Include="Objects\Monster\Scarecrow.cpp" />
     <ClCompile Include="Scenes\KimScene.cpp" />
@@ -961,26 +980,19 @@
     <ClCompile Include="Objects\Item\Weapon.cpp" />
     <ClCompile Include="Objects\Shop\Shop.cpp" />
     <ClCompile Include="Objects\Monster\Skeleton_Knight.cpp" />
-    <ClCompile Include="Objects\Character_ver2\ProtectionWarrior_in.cpp" />
-    <ClCompile Include="Objects\Character_ver2\CH_Base_ver2.cpp" />
+    <ClCompile Include="Objects\Character_\ProtectionWarrior_in.cpp" />
+    <ClCompile Include="Objects\Character_\CH_Base_ver2.cpp" />
     <ClCompile Include="Objects\Skills\Base\ActiveSkill.cpp" />
     <ClCompile Include="Objects\Skills\Base\PassiveSkill.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\FireBall.h" />
-    <ClInclude Include="Objects\Character_\ArmsWarrior.h" />
-    <ClInclude Include="Objects\Character_\FireMage.h" />
-    <ClInclude Include="Objects\Character_\HolyPriest.h" />
-    <ClInclude Include="Objects\Character_\ProtectionWarrior.h" />
-    <ClInclude Include="Objects\Skills\Base\NonTargetSkill.h" />
     <ClInclude Include="Objects\Monster\MonsterBase.h" />
     <ClInclude Include="Objects\Monster\Skeleton.h" />
     <ClInclude Include="Objects\Skills\Base\SkillBase.h" />
-    <ClInclude Include="Objects\Skills\Base\TargetSkill.h" />
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_001_Avengers_Shield.h" />
     <ClInclude Include="Objects\Monster\Scarecrow.h" />
     <ClInclude Include="Scenes\KimScene.h" />
-    <ClInclude Include="Objects\Character_\CH_Base.h" />
     <ClInclude Include="Objects\Inventory\Slot.h" />
     <ClInclude Include="Objects\UI\Button.h" />
     <ClInclude Include="Framework\Environment\Reflection.h" />
@@ -1113,8 +1125,8 @@
     <ClInclude Include="Scenes\TessellationScene.h" />
     <ClInclude Include="Scenes\DevScene\TestScene.h" />
     <ClInclude Include="Objects\Item\Weapon.h" />
-    <ClInclude Include="Objects\Character_ver2\ProtectionWarrior_in.h" />
-    <ClInclude Include="Objects\Character_ver2\CH_Base_ver2.h" />
+    <ClInclude Include="Objects\Character_\ProtectionWarrior_in.h" />
+    <ClInclude Include="Objects\Character_\CH_Base_ver2.h" />
     <ClInclude Include="Objects\Skills\Base\ActiveSkill.h" />
     <ClInclude Include="Objects\Skills\Base\PassiveSkill.h" />
   </ItemGroup>

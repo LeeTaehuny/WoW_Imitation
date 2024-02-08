@@ -199,17 +199,13 @@ using namespace GameMath;
 #include "Objects/Character/Robot.h"
 #include "Objects/Character/Fox.h"
 
-// 캐릭터
-#include "Objects/Character_/CH_Base.h"
-#include "Objects/Character_/ProtectionWarrior.h"
-#include "Objects/Character_/ArmsWarrior.h"
-#include "Objects/Character_/FireMage.h"
-#include "Objects/Character_/HolyPriest.h"
-#include "Objects/Character_/MarksmanshipHunter.h"
-
 // 캐릭터 인스턴싱 버전
-#include "Objects/Character_ver2/CH_Base_ver2.h"
-#include "Objects/Character_ver2/ProtectionWarrior_in.h"
+#include "Objects/Character_/CH_Base_ver2.h"
+#include "Objects/Character_/ArmsWarrior_in.h"
+#include "Objects/Character_/FireMage_in.h"
+#include "Objects/Character_/HolyPriest_in.h"
+#include "Objects/Character_/MarksmanshipHunter_in.h"
+#include "Objects/Character_/ProtectionWarrior_in.h"
 
 #include "Objects/Manager/BlockManager.h"
 #include "Objects/Manager/KunaiManager.h"

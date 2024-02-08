@@ -1,19 +1,19 @@
 #pragma once
 
-//enum class CreatureType
-//{
-//	Player,
-//	NonPlayer,
-//};
-//
-//enum class ProfessionType
-//{
-//	ArmsWarrior,		// 전사[무기]
-//	ProtectionWarrior,  // 성기사[보호]
-//	MarksmanshipHunter, // 사냥꾼[사격]
-//	FireMage,			// 마법사[화염]
-//	HolyPriest,			// 사제[신성]
-//};
+enum class CreatureType
+{
+	Player,
+	NonPlayer,
+};
+
+enum class ProfessionType
+{
+	ArmsWarrior,		// 전사[무기]
+	ProtectionWarrior,  // 성기사[보호]
+	MarksmanshipHunter, // 사냥꾼[사격]
+	FireMage,			// 마법사[화염]
+	HolyPriest,			// 사제[신성]
+};
 
 class CH_Base_ver2 : public Transform
 {

@@ -1,13 +1,13 @@
 #include "Framework.h"
 
-ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
+MarksmanshipHunter_in::MarksmanshipHunter_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::ProtectionWarrior)
 {
 	transform->SetParent(this);
 	this->instancing = instancing;
 	this->index = index;
 
-	myCollider= new CapsuleCollider(0.5f, 1.0f);
+	myCollider = new CapsuleCollider(0.5f, 1.0f);
 	myCollider->SetParent(this);
 	myCollider->Pos() = Vector3(0, 1.0f, 0);
 
@@ -15,9 +15,9 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 	totalEvents.resize(instancing->GetClipSize());
 	eventIters.resize(instancing->GetClipSize());
 
-	//SetEvent(ATTACK1, bind(&ProtectionWarrior_in::EndATK, this), 0.7f);
-	//SetEvent(HIT, bind(&ProtectionWarrior_in::EndHit, this), 0.9f);
-	//SetEvent(DIE, bind(&ProtectionWarrior_in::EndDie, this), 1);
+	SetEvent(ATTACK1, bind(&MarksmanshipHunter_in::EndATK, this), 0.7f);
+	SetEvent(HIT, bind(&MarksmanshipHunter_in::EndHit, this), 0.9f);
+	SetEvent(DIE, bind(&MarksmanshipHunter_in::EndDie, this), 1);
 
 	// 자신의 타입에 따라 
 	switch (creatureType)
@@ -39,7 +39,7 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 	this->SetActive(true);
 }
 
-ProtectionWarrior_in::~ProtectionWarrior_in()
+MarksmanshipHunter_in::~MarksmanshipHunter_in()
 {
 	delete instancing;
 	delete motion;
@@ -47,7 +47,7 @@ ProtectionWarrior_in::~ProtectionWarrior_in()
 	delete range;
 }
 
-void ProtectionWarrior_in::Update()
+void MarksmanshipHunter_in::Update()
 {
 	// 액티브 상태가 아니라면 업데이트하지 않음
 	if (!Active()) return;
@@ -69,7 +69,7 @@ void ProtectionWarrior_in::Update()
 	Transform::UpdateWorld();
 }
 
-void ProtectionWarrior_in::Render()
+void MarksmanshipHunter_in::Render()
 {
 	// 액티브 상태가 아니라면 업데이트하지 않음
 	if (!Active()) return;
@@ -79,7 +79,7 @@ void ProtectionWarrior_in::Render()
 	CH_Base_ver2::Render();
 }
 
-void ProtectionWarrior_in::PlayerUpdate()
+void MarksmanshipHunter_in::PlayerUpdate()
 {
 	Control();
 	//Casting();
@@ -89,7 +89,7 @@ void ProtectionWarrior_in::PlayerUpdate()
 	range->UpdateWorld();
 }
 
-void ProtectionWarrior_in::AIUpdate()
+void MarksmanshipHunter_in::AIUpdate()
 {
 	if (!myPlayer) return;
 	AI_animation_Moving();
@@ -98,7 +98,7 @@ void ProtectionWarrior_in::AIUpdate()
 	range->UpdateWorld();
 }
 
-void ProtectionWarrior_in::OnHit(Collider* collider)
+void MarksmanshipHunter_in::OnHit(Collider* collider)
 {
 	if (this->myCollider->IsCollision(collider))
 	{
@@ -113,38 +113,38 @@ void ProtectionWarrior_in::OnHit(Collider* collider)
 	}
 }
 
-void ProtectionWarrior_in::AI_animation_Moving()
+void MarksmanshipHunter_in::AI_animation_Moving()
 {
-	//// 내가 플레이어의 주위에 있다면
-	//if (myPlayer->GetRange()->IsCollision(myCollider))
-	//{
-	//	randomHangdong -= DELTA;
-	//	if (randomHangdong <= 0)
-	//	{
-	//		randomHangdong = MAX_randomHangdong;
-	//		randomVelocity = Vector3(Random(-1, 2), 0, Random(-1, 2));
-	//	}
-	//
-	//	this->Pos() += randomVelocity * (moveSpeed / 10) * DELTA;
-	//	this->Rot().y = atan2(randomVelocity.x, randomVelocity.z) + XM_PI;
-	//
-	//	SetState(WALK_F);
-	//}
-	//// 플레이어의 주변이 아니라면
-	//else
-	//{
-	//	Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
-	//	randomVelocity = velo;
-	//	randomHangdong = 2.0f;
-	//
-	//	this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
-	//
-	//	this->Pos() += velo * moveSpeed * DELTA;
-	//	SetState(WALK_F);
-	//}
+	// 내가 플레이어의 주위에 있다면
+	if (myPlayer->GetRange()->IsCollision(myCollider))
+	{
+		randomHangdong -= DELTA;
+		if (randomHangdong <= 0)
+		{
+			randomHangdong = MAX_randomHangdong;
+			randomVelocity = Vector3(Random(-1, 2), 0, Random(-1, 2));
+		}
+
+		this->Pos() += randomVelocity * (moveSpeed / 10) * DELTA;
+		this->Rot().y = atan2(randomVelocity.x, randomVelocity.z) + XM_PI;
+
+		SetState(WALK_F);
+	}
+	// 플레이어의 주변이 아니라면
+	else
+	{
+		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
+		randomVelocity = velo;
+		randomHangdong = 2.0f;
+
+		this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
+
+		this->Pos() += velo * moveSpeed * DELTA;
+		SetState(WALK_F);
+	}
 }
 
-void ProtectionWarrior_in::Control()
+void MarksmanshipHunter_in::Control()
 {
 	Moving();
 
@@ -162,7 +162,7 @@ void ProtectionWarrior_in::Control()
 	Jump();
 }
 
-void ProtectionWarrior_in::Moving()
+void MarksmanshipHunter_in::Moving()
 {
 	// 점프, 공격, 맞을 때, 죽었을 경우 움직이지 않기
 	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
@@ -254,7 +254,7 @@ void ProtectionWarrior_in::Moving()
 		SetState(IDLE1);
 }
 
-void ProtectionWarrior_in::Jump()
+void MarksmanshipHunter_in::Jump()
 {
 	// 점프중이 아니라면 리턴
 	if (!isJump) return;
@@ -273,7 +273,7 @@ void ProtectionWarrior_in::Jump()
 	}
 }
 
-void ProtectionWarrior_in::Attack()
+void MarksmanshipHunter_in::Attack()
 {
 	// 점프, 사망, 피격, 공격 상태인 경우 리턴
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
@@ -284,7 +284,7 @@ void ProtectionWarrior_in::Attack()
 	}
 }
 
-void ProtectionWarrior_in::SetState(State state)
+void MarksmanshipHunter_in::SetState(State state)
 {
 	if (state == curState) return;
 	curState = state;
@@ -292,12 +292,12 @@ void ProtectionWarrior_in::SetState(State state)
 	eventIters[state] = totalEvents[state].begin();
 }
 
-void ProtectionWarrior_in::EndATK()
+void MarksmanshipHunter_in::EndATK()
 {
 	SetState(IDLE1);
 }
 
-void ProtectionWarrior_in::EndHit()
+void MarksmanshipHunter_in::EndHit()
 {
 	if (cur_hp <= 0)
 	{
@@ -305,18 +305,18 @@ void ProtectionWarrior_in::EndHit()
 	}
 }
 
-void ProtectionWarrior_in::EndDie()
+void MarksmanshipHunter_in::EndDie()
 {
 	SetActive(false);
 }
 
-void ProtectionWarrior_in::SetEvent(int clip, Event event, float timeRatio)
+void MarksmanshipHunter_in::SetEvent(int clip, Event event, float timeRatio)
 {
 	if (totalEvents[clip].count(timeRatio) > 0) return;
 	totalEvents[clip][timeRatio] = event;
 }
 
-void ProtectionWarrior_in::ExecuteEvent()
+void MarksmanshipHunter_in::ExecuteEvent()
 {
 	int index = curState;
 

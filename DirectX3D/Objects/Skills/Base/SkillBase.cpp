@@ -1,5 +1,5 @@
 ﻿#include "Framework.h"
-#include "Objects/Character_/CH_Base.h"
+#include "Objects/Character_/CH_Base_ver2.h"
 
 SkillBase::SkillBase()
 {
