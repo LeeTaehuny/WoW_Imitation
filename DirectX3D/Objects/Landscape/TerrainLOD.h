@@ -32,6 +32,4 @@ private:
 
     UINT width, height;
     UINT patchWidth, patchHeight;
-
-    Model* model;
 };

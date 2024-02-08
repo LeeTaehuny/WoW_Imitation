@@ -31,12 +31,12 @@
 #include "Scenes/MAP/MapTestScene.h"
 #include "Scenes/MAP/TestDungeonScene.h"
 
-// ¿À´Ã ÁøÇàµÈ ¼³¸í : ±ËÀû ÆÄÆ¼Å¬, ´Ù¸¥ Æ¯¼ö ÆÄÆ¼Å¬(´«, ½ºÆÄÅ©)
-//                   + ±ËÀû ÆÄÆ¼Å¬ Àû¿ë (ÈŞ¸Õ Å¬·¡½º¿¡ Ãß°¡ÇÔ)
-//                   + ÆÄÆ¼Å¬ ÆÄÀÏ ¼³Á¤¿ë ¾À
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼Å¬, ï¿½Ù¸ï¿½ Æ¯ï¿½ï¿½ ï¿½ï¿½Æ¼Å¬(ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½Å©)
+//                   + ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼Å¬ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ş¸ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½)
+//                   + ï¿½ï¿½Æ¼Å¬ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
-// * ÆÄÆ¼Å¬ ¼³Á¤ ¾À -> Æ¯¼öÈ¿°ú°¡ Ãß°¡·Î ÇÊ¿äÇÏ°Å³ª, È¤Àº ±×³É º¹½ÀÇÏ½Ç ºĞÀÌ¶óµµ...
-//                    ±×·± °æ¿ì¿¡ ÇØ´çÇÏ´Â ºĞµéÀº ¹Ù·Î ÇÑ¹ø ½áº¾½Ã´Ù.
+// * ï¿½ï¿½Æ¼Å¬ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ -> Æ¯ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Ï°Å³ï¿½, È¤ï¿½ï¿½ ï¿½×³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½...
+//                    ï¿½×·ï¿½ ï¿½ï¿½ì¿¡ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½Ğµï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½Ñ¹ï¿½ ï¿½áº¾ï¿½Ã´ï¿½.
 
 GameManager::GameManager()
 {
@@ -48,8 +48,8 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
     //SceneManager::Get()->Add("ModelExport");
 
-    SceneManager::Get()->Create("KIM", new KimScene());
-    SceneManager::Get()->Add("KIM");
+    //SceneManager::Get()->Create("KIM", new KimScene());
+    //SceneManager::Get()->Add("KIM");
 
     //SceneManager::Get()->Create("Cube", new CubeScene());
     //SceneManager::Get()->Create("Sphere", new SphereScene());
@@ -73,7 +73,27 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("QuadTree", new QuadTreeScene());
     //SceneManager::Get()->Create("Tessellation", new TessellationScene());
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
-    SceneManager::Get()->Create("TestScene", new TestScene());
+    //SceneManager::Get()->Create("TestScene", new TestScene());
+
+
+    /////////////////////////////////////////////////////////////////// Choi
+    // Test Scenes
+    //SceneManager::Get()->Create("BossMap", new MapTestScene());
+    //SceneManager::Get()->Add("BossMap");
+    SceneManager::Get()->Create("TestDungeon", new TestDungeonScene());
+    SceneManager::Get()->Add("TestDungeon");
+
+    // ModelExport
+    //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
+    //SceneManager::Get()->Add("ModelExport");
+
+    // Terrains
+    //SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
+    //SceneManager::Get()->Add("Terrain");
+    //SceneManager::Get()->Create("Terrain", new TerrainScene());
+    //SceneManager::Get()->Add("Terrain");
+    //SceneManager::Get()->Create("Terrain", new TerrainLODScene());
+    //SceneManager::Get()->Create("LOD", new TerrainLODScene());
 }
 
 GameManager::~GameManager()

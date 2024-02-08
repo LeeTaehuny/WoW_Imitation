@@ -15,5 +15,10 @@ public:
 private:
     Dungeon* dungeon;
     SphereCollider* TestSize;
+
+    //ModelAnimatorInstancing* instaning;
+    //CH_Base_ver2* player;
+    //
+    //Model* PLAYER;
 };
 

@@ -2,8 +2,8 @@
 #include "ModelExportScene.h"
 
 ModelExportScene::ModelExportScene()
-
-    //string name = "Wall";
+{
+    //string name = "Pillar_G";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
 	

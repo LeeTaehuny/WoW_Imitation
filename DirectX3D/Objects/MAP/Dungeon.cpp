@@ -1,10 +1,12 @@
 #include "Framework.h"
 #include "Dungeon.h"
 
-Dungeon::Dungeon()
+Dungeon::Dungeon() //: Transform()
 {
 	terrain = new Terrain();
-
+	terrain->Rot().x = 0.0f;
+	terrain->Rot().y = 0.0f;
+	terrain->Rot().z = 0.0f;
 
 	Gates.resize(6);
 	Gates[0] = new Model("Gate");
@@ -27,7 +29,7 @@ Dungeon::Dungeon()
 	Gates[4]->Rot().y += 3.15f;
 	Gates[4]->Pos().y -= 70.0f;
 	Gates[4]->Pos().x += 140.0f;
-	
+
 	Gates[5] = new Model("Gate_Door");
 	Gates[5]->Scale() *= 9.0f;
 	Gates[5]->Pos().y -= 20.5f; // close
@@ -43,7 +45,7 @@ Dungeon::Dungeon()
 		Walls_L[i]->Rot().y += 1.575f;
 		Walls_L[i]->Pos().y += 10.0f;
 		Walls_L[i]->Pos().z += 130.0f;
-	}	
+	}
 	float gap = 117.5f;
 	float currentX = 0.0f;
 	for (int i = 0; i < Walls_L.size(); ++i)
@@ -99,17 +101,65 @@ Dungeon::Dungeon()
 		currentX -= gap;
 		Walls_B[i]->Pos().z += 180.0f;
 	}
+
+
+	InGates.resize(7);
+	//for (int i = 0; i < InGates.size(); ++i);
+	InGates[0] = new Model("InGate");
+	InGates[0]->Pos().x += 460.0f;
+	InGates[0]->Pos().y += 10.0f;
+	
+	InGates[1] = new Model("Wall"); // L
+	InGates[1]->Pos().x += 460.0f;
+	InGates[1]->Pos().y += 10.0f;
+	InGates[1]->Pos().z += 90.0f;
+	
+	InGates[2] = new Model("Wall"); // R
+	InGates[2]->Pos().x += 460.0f;
+	InGates[2]->Pos().y += 10.0f;
+	InGates[2]->Pos().z -= 95.0f;
+	
+	InGates[3] = new Model("InGateDoor_R");
+	InGates[3]->Pos().x += 450.0f;
+	InGates[3]->Pos().z -= 36.5f;
+	InGates[3]->Pos().y -= 12.5f;
+	InGates[3]->Scale() *= 2.0f;
+	//InGates[3]->Rot().y -= 1.575f;
+	
+	InGates[4] = new Model("InGateDoor_L");
+	InGates[4]->Pos().x += 450.0f;
+	InGates[4]->Pos().z += 36.5f;
+	InGates[4]->Pos().y -= 12.5f;
+	InGates[4]->Scale() *= 2.0f;
+	//InGates[4]->Rot().y += 1.575f;
+	
+	InGates[5] = new Model("Pillar_G"); // R
+	InGates[5]->Rot().y += 3.15f;
+	InGates[5]->Pos().x += 430.0f;
+	InGates[5]->Pos().z -= 56.5f;
+	InGates[5]->Scale() *= 2.0f;
+	//InGates[5]->Pos().y -= 12.5f;
+	
+	InGates[6] = new Model("Pillar_G"); // L
+	InGates[6]->Rot().y += 3.15f;
+	InGates[6]->Pos().x += 430.0f;
+	InGates[6]->Pos().z += 56.5f;
+	InGates[6]->Scale() *= 2.0f;
 }
 
 Dungeon::~Dungeon()
 {
-	for(int i = 0 ; i < 4; ++i) delete Gates[i];
+	delete terrain;
+
+	for (int i = 0; i < 4; ++i) delete Gates[i];
 
 	for (int i = 0; i < Walls_L.size(); ++i) delete Walls_L[i];
 	delete Walls_LF;
 	for (int i = 0; i < Walls_R.size(); ++i) delete Walls_R[i];
 	delete Walls_RF;
 	for (int i = 0; i < Walls_R.size(); ++i) delete Walls_B[i];
+
+	for (int i = 0; i < InGates.size(); ++i) delete InGates[i];
 }
 
 void Dungeon::Update()
@@ -118,12 +168,27 @@ void Dungeon::Update()
 
 	for (int i = 0; i < Gates.size(); ++i) Gates[i]->UpdateWorld();
 	if (open) DoorMove();
+	if (open_I) DoorMove_I();
 
 	for (int i = 0; i < Walls_L.size(); ++i) Walls_L[i]->UpdateWorld();
 	Walls_LF->UpdateWorld();
 	for (int i = 0; i < Walls_R.size(); ++i) Walls_R[i]->UpdateWorld();
 	Walls_RF->UpdateWorld();
 	for (int i = 0; i < Walls_B.size(); ++i) Walls_B[i]->UpdateWorld();
+
+	for (int i = 0; i < InGates.size(); ++i) InGates[i]->UpdateWorld();
+
+	Transform::UpdateWorld();
+
+
+
+	if (!KEY_PRESS(VK_RBUTTON))
+	{
+		if (KEY_PRESS(VK_LEFT)) terrain->Pos().z += 50 * DELTA;
+		if (KEY_PRESS(VK_RIGHT)) terrain->Pos().z -= 50 * DELTA;
+		if (KEY_PRESS(VK_UP)) terrain->Pos().x += 50 * DELTA;
+		if (KEY_PRESS(VK_DOWN)) terrain->Pos().x -= 50 * DELTA;
+	}
 }
 
 void Dungeon::Render()
@@ -137,6 +202,8 @@ void Dungeon::Render()
 	for (int i = 0; i < Walls_R.size(); ++i) Walls_R[i]->Render();
 	Walls_RF->Render();
 	for (int i = 0; i < Walls_B.size(); ++i) Walls_B[i]->Render();
+
+	for (int i = 0; i < InGates.size(); ++i) InGates[i]->Render();
 }
 
 void Dungeon::DoorMove()
@@ -148,4 +215,30 @@ void Dungeon::DoorMove()
 		Gates[5]->Pos().y = 95.5f;
 		open = true;
 	}
+	return;
+}
+
+void Dungeon::DoorMove_I()
+{
+	for (int i = 3; i < Gates.size(); ++i)
+	{
+		if (InGates[3]->Pos().z >= -40.0f)
+		{
+			InGates[3]->Pos().z -= 5.0f * DELTA;
+		}
+		if (InGates[3]->Rot().y < 1.575f)
+		{
+			InGates[3]->Rot().y += 0.5f * DELTA;
+		}
+		
+		if (InGates[4]->Pos().z <= 40.0f)
+		{
+			InGates[4]->Pos().z += 5.0f * DELTA;
+		}
+		if (InGates[4]->Rot().y > -1.575f)
+		{
+			InGates[4]->Rot().y -= 0.5f * DELTA;
+		}
+	}
+	return;
 }
