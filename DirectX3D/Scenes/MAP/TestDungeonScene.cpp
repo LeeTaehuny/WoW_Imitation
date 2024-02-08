@@ -59,6 +59,7 @@ void TestDungeonScene::Update()
 
 
 		if (KEY_DOWN('F')) dungeon->OpenDoor(true);
+		if (KEY_PRESS(VK_RIGHT)) dungeon->OpenDoor_I(true);
 	}
 
 	if (KEY_PRESS(VK_DOWN)) dungeon->Pos().x -= 100 * DELTA;
