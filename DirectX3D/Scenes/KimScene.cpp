@@ -17,29 +17,27 @@
 KimScene::KimScene()
 {
 	instacning01(); // 팔라딘
-	instacning02(); // 화염 법사
-	instacning03(); // 사제
-	instacning04(); // 무기 전사
-	instacning05(); // 사냥꾼
+	//instacning02(); // 화염 법사
+	//instacning03(); // 사제
+	//instacning04(); // 무기 전사
+	//instacning05(); // 사냥꾼
 
-
-
-	Transform* transform = firemage->Add();
-	player = new FireMage_in(CreatureType::Player, transform, firemage, count);
+	Transform* transform = paladin->Add();
+	player = new ProtectionWarrior_in(CreatureType::Player, transform, paladin, count);
 	CAM->SetTarget(player);
 	count++;
 	//MONSTER->SetTarget(mainholypriestadinayer->GetCollider());
 
-	spawn(holypriest);
-	spawn(firemage);
-	spawn(firemage);
-	spawn(holypriest);
-	spawn(armswarrior);
-	spawn(armswarrior);
-	spawn(marksmanshiphunter);
-	spawn(marksmanshiphunter);
-	spawn(holypriest);
-	//MONSTER;
+	//spawn(holypriest);
+	//spawn(firemage);
+	//spawn(firemage);
+	//spawn(holypriest);
+	//spawn(armswarrior);
+	//spawn(armswarrior);
+	//spawn(marksmanshiphunter);
+	//spawn(marksmanshiphunter);
+	//spawn(holypriest);
+	MONSTER;
 
 	//int pop = 20;
 	//coll[0]->Pos() = Vector3(pop);
@@ -52,9 +50,9 @@ KimScene::KimScene()
 	//	MONSTER->SetTarget(coll[i]);
 	//}
 
-	//MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
-	//MONSTER->SpawnScarecrow(Vector3(10));
-	//MONSTER->SpawnScarecrow(Vector3(-10));
+	MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
+	MONSTER->SpawnScarecrow(Vector3(10));
+	MONSTER->SpawnScarecrow(Vector3(-10));
 }
 
 KimScene::~KimScene()
@@ -95,6 +93,7 @@ void KimScene::Update()
 	UPDATE(marksmanshiphunter);
 
 	player->Update();
+	MONSTER->Update();
 
 	for (CH_Base_ver2* ch : NPC)
 		if (ch != nullptr) ch->Update();
@@ -114,6 +113,7 @@ void KimScene::Render()
 	RENDER(marksmanshiphunter);
 
 	player->Render();
+	MONSTER->Render();
 	for (CH_Base_ver2* ch : NPC)
 		if (ch != nullptr) ch->Render();
 }
