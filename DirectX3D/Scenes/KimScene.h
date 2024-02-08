@@ -29,8 +29,10 @@ private:
     ModelAnimatorInstancing* armswarrior;
     ModelAnimatorInstancing* marksmanshiphunter;
     CH_Base_ver2* player;
-
     int count = 0;
+
+    MonsterBase* targetMonster;
+    class SkillBase* skill;
 
     vector<CH_Base_ver2*> NPC;
 };

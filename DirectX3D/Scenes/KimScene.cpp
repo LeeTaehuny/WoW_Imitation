@@ -28,6 +28,9 @@ KimScene::KimScene()
 	count++;
 	//MONSTER->SetTarget(mainholypriestadinayer->GetCollider());
 
+	skill = new P_001_Avengers_Shield();
+	skill->SetOwner(player);
+
 	//spawn(holypriest);
 	//spawn(firemage);
 	//spawn(firemage);
@@ -38,17 +41,6 @@ KimScene::KimScene()
 	//spawn(marksmanshiphunter);
 	//spawn(holypriest);
 	MONSTER;
-
-	//int pop = 20;
-	//coll[0]->Pos() = Vector3(pop);
-	//coll[1]->Pos() = Vector3(-pop);
-	//coll[2]->Pos() = Vector3(0, 0, pop);
-	//coll[3]->Pos() = Vector3(0, 0, -pop);
-
-	//FOR(coll.size())
-	//{
-	//	MONSTER->SetTarget(coll[i]);
-	//}
 
 	MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
 	MONSTER->SpawnScarecrow(Vector3(10));
@@ -92,7 +84,36 @@ void KimScene::Update()
 	UPDATE(armswarrior);
 	UPDATE(marksmanshiphunter);
 
+	{
+		if (KEY_DOWN(VK_LBUTTON))
+		{
+			// 마우스 위치의 Ray 생성
+			Ray ray = CAM->ScreenPointToRay(mousePos);
+			Contact contact;
+
+			// 몬스터 배열 받기
+			vector<MonsterBase*> monsters = MONSTER->GetScarecrow();
+
+			// 몬스터 순회하며 Ray 충돌 연산
+			for (MonsterBase* monster : monsters)
+			{
+				if (monster->GetCollider()->IsRayCollision(ray, &contact))
+				{
+					// 충돌했다면 해당 몬스터를 내 타겟으로 설정
+					targetMonster = monster;
+				}
+			}
+		}
+
+		if (KEY_DOWN('K'))
+		{
+			if (targetMonster != nullptr)
+				skill->UseSkill(targetMonster->GetCollider());
+		}
+	}
+
 	player->Update();
+	skill->Update();
 	MONSTER->Update();
 
 	for (CH_Base_ver2* ch : NPC)
@@ -113,6 +134,7 @@ void KimScene::Render()
 	RENDER(marksmanshiphunter);
 
 	player->Render();
+	skill->Render();
 	MONSTER->Render();
 	for (CH_Base_ver2* ch : NPC)
 		if (ch != nullptr) ch->Render();
@@ -134,27 +156,27 @@ void KimScene::spawn(ModelAnimatorInstancing* firemage)
 
 	CH_Base_ver2* ppp;
 	ppp = new ProtectionWarrior_in(CreatureType::NonPlayer, transform1, firemage, count);
-	if (firemage == this->firemage) 
+	if (firemage == this->firemage)
 	{
 		ppp = nullptr;
 		ppp = new FireMage_in(CreatureType::NonPlayer, transform1, firemage, count);
 	}
-	if (firemage == holypriest) 
+	if (firemage == holypriest)
 	{
 		ppp = nullptr;
 		ppp = new HolyPriest_in(CreatureType::NonPlayer, transform1, firemage, count);
 	}
-	if (firemage == armswarrior) 
+	if (firemage == armswarrior)
 	{
 		ppp = nullptr;
 		ppp = new ArmsWarrior_in(CreatureType::NonPlayer, transform1, firemage, count);
 	}
-	if (firemage == marksmanshiphunter) 
+	if (firemage == marksmanshiphunter)
 	{
 		ppp = nullptr;
 		ppp = new MarksmanshipHunter_in(CreatureType::NonPlayer, transform1, firemage, count);
 	}
-	
+
 	if (ppp != nullptr)
 		ppp->SetPlayer(player);
 	NPC.push_back(ppp);

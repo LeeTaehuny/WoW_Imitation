@@ -55,7 +55,6 @@ void FireBall::Update()
 			endEdge->UpdateWorld();
 			trail->Update();
 		}
-		
 	}
 	else
 	{
@@ -87,7 +86,13 @@ void FireBall::UseSkill(Collider* targetCollider)
 		target = targetCollider;
 
 		myCollider->Pos() = owner->GlobalPos();
+		myCollider->UpdateWorld();
 		myCollider->SetActive(true);
+
+		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 3.0f;
+		endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back() * 3.0f;
+		startEdge->UpdateWorld();
+		endEdge->UpdateWorld();
 		
 		isRun = true;
 		isCooldown = true;
