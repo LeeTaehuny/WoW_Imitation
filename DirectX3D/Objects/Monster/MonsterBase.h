@@ -14,6 +14,7 @@ public:
     virtual void Hit(float amount = 1, int targetNumber = 0) = 0;
 
     CapsuleCollider* GetCollider() { return collider; }
+    Transform* GetTransform() { return transform; }
 
 protected:
 

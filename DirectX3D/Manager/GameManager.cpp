@@ -31,12 +31,7 @@
 #include "Scenes/MAP/MapTestScene.h"
 #include "Scenes/MAP/TestDungeonScene.h"
 
-// 오늘 진행된 설명 : 궤적 파티클, 다른 특수 파티클(눈, 스파크)
-//                   + 궤적 파티클 적용 (휴먼 클래스에 추가함)
-//                   + 파티클 파일 설정용 씬
 
-// * 파티클 설정 씬 -> 특수효과가 추가로 필요하거나, 혹은 그냥 복습하실 분이라도...
-//                    그런 경우에 해당하는 분들은 바로 한번 써봅시다.
 
 GameManager::GameManager()
 {
@@ -48,8 +43,8 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
     //SceneManager::Get()->Add("ModelExport");
 
-    SceneManager::Get()->Create("KIM", new KimScene());
-    SceneManager::Get()->Add("KIM");
+    //SceneManager::Get()->Create("KIM", new KimScene());
+    //SceneManager::Get()->Add("KIM");
 
     //SceneManager::Get()->Create("Cube", new CubeScene());
     //SceneManager::Get()->Create("Sphere", new SphereScene());
@@ -73,7 +68,9 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("QuadTree", new QuadTreeScene());
     //SceneManager::Get()->Create("Tessellation", new TessellationScene());
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
+
     SceneManager::Get()->Create("TestScene", new TestScene());
+    SceneManager::Get()->Add("TestScene");
 }
 
 GameManager::~GameManager()
