@@ -27,6 +27,14 @@ FireBall::FireBall() : ActiveSkill(SkillType::Target)
 
 	// * 선행스킬이 없으면 않넣어도 됨.
 	//prevSkills.push_back("");
+
+	// 이펙트 추가
+	hitParticleSystem = new ParticleSystem("TextData/Particles/Fire/fireHit.fx");
+
+	startEdge = new Transform();
+	endEdge = new Transform();
+
+	trail = new Trail(L"Textures/Effect/Trail.png", startEdge, endEdge, 10, 10.0f);
 }
 FireBall::~FireBall()
 {
@@ -36,11 +44,38 @@ FireBall::~FireBall()
 
 void FireBall::Update()
 {
+	if (!impact)
+	{
+		if (isRun)
+		{
+			startEdge->Pos() = myCollider->GlobalPos() + myCollider->Left() * 10.0f;
+			endEdge->Pos() = myCollider->GlobalPos() - myCollider->Right() * 10.0f;
+
+			startEdge->UpdateWorld();
+			endEdge->UpdateWorld();
+			trail->Update();
+		}
+		
+	}
+	else
+	{
+		hitParticleSystem->Play(hitCollider->Pos());
+		impact = false;
+	}
+
+
 	ActiveSkill::Update();
+
+	hitParticleSystem->Update();
+
 }
 void FireBall::Render()
 {
 	ActiveSkill::Render();
+
+	hitParticleSystem->Render();
+
+	trail->Render();
 }
 
 void FireBall::UseSkill(Collider* targetCollider)

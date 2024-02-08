@@ -31,12 +31,6 @@
 #include "Scenes/MAP/MapTestScene.h"
 #include "Scenes/MAP/TestDungeonScene.h"
 
-// ���� ����� ���� : ���� ��ƼŬ, �ٸ� Ư�� ��ƼŬ(��, ����ũ)
-//                   + ���� ��ƼŬ ���� (�޸� Ŭ������ �߰���)
-//                   + ��ƼŬ ���� ������ ��
-
-// * ��ƼŬ ���� �� -> Ư��ȿ���� �߰��� �ʿ��ϰų�, Ȥ�� �׳� �����Ͻ� ���̶�...
-//                    �׷� ��쿡 �ش��ϴ� �е��� �ٷ� �ѹ� �Ế�ô�.
 
 GameManager::GameManager()
 {
@@ -48,8 +42,8 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
     //SceneManager::Get()->Add("ModelExport");
 
-    SceneManager::Get()->Create("KIM", new KimScene());
-    SceneManager::Get()->Add("KIM");
+    //SceneManager::Get()->Create("KIM", new KimScene());
+    //SceneManager::Get()->Add("KIM");
 
     //SceneManager::Get()->Create("Cube", new CubeScene());
     //SceneManager::Get()->Create("Sphere", new SphereScene());

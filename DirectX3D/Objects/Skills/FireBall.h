@@ -13,5 +13,11 @@ public:
 	virtual void UseSkill(Vector3 direction) {}
 
 private:
+	ParticleSystem* hitParticleSystem;
+	Transform* startEdge;
+	Transform* endEdge;
 
+	Trail* trail;
+
+	bool particlePlay = false;
 };
