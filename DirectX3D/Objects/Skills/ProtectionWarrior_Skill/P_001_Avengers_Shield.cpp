@@ -16,7 +16,7 @@ P_001_Avengers_Shield::P_001_Avengers_Shield() : TargetSkill(BB)
 	Yad->UpdateWorld();
 
 	// 날아가는 속도 설정
-	FlyingSpeed = 10;
+	FlyingSpeed = 70;
 
 	shielD = new Model("shield");
 	shielD->Scale() *= 2;

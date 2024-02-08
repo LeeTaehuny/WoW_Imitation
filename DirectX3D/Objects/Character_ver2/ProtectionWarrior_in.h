@@ -1,45 +1,50 @@
-ï»¿#pragma once
-class MarksmanshipHunter : public CH_Base
+#pragma once
+class ProtectionWarrior_in : public CH_Base_ver2
 {
 private:
+
 	enum State
 	{
 		IDLE1,
 		ATTACK1,
 		WALK_F, WALK_B, WALK_L, WALK_R,
 		DIE, HIT, JUMP,
-		SKILL1, SKILL2
+		SKILL1,
 	};
 
 public:
-	MarksmanshipHunter(CreatureType type);
-	~MarksmanshipHunter();
+
+    ProtectionWarrior_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index);
+    ~ProtectionWarrior_in();
 
 	virtual void Update() override;
 	virtual void Render() override;
 
 private:
-	// í”Œë ˆì´ì–´ìš© ì—…ë°ì´íŠ¸
+	// ÇÃ·¹ÀÌ¾î¿ë ¾÷µ¥ÀÌÆ®
 	virtual void PlayerUpdate() override;
-	// NPCìš© ì—…ë°ì´íŠ¸
+	// NPC¿ë ¾÷µ¥ÀÌÆ®
 	virtual void AIUpdate() override;
-	// ì¶©ëŒ íŒì • í•¨ìˆ˜
+	// Ãæµ¹ ÆÇÁ¤ ÇÔ¼ö
 	virtual void OnHit(Collider* collider) override;
 
 	virtual void AI_animation_Moving() override;
 
-	// ì»¨íŠ¸ë¡¤ ê´€ë ¨ í•¨ìˆ˜
+	// ÄÁÆ®·Ñ °ü·Ã ÇÔ¼ö
 private:
+	void SetEvent(int clip, Event event, float timeRatio);
+	void ExecuteEvent();
+
 	void Control();
 	void Moving();
 	void Jump();
 	void Attack();
 	//void Casting();
 
-	// ìƒíƒœ ë³€ê²½ìš© í•¨ìˆ˜
+	// »óÅÂ º¯°æ¿ë ÇÔ¼ö
 	void SetState(State state);
 
-	// ì´ë²¤íŠ¸ í•¨ìˆ˜
+	// ÀÌº¥Æ® ÇÔ¼ö
 private:
 	void EndATK();
 	void EndHit();
@@ -48,5 +53,4 @@ private:
 
 private:
 	State curState = IDLE1;
-
 };

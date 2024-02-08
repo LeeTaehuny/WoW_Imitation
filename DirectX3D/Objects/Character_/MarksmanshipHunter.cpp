@@ -258,6 +258,10 @@ void MarksmanshipHunter::OnHit(Collider* collider)
 	}
 }
 
+void MarksmanshipHunter::AI_animation_Moving()
+{
+}
+
 void MarksmanshipHunter::EndATK()
 {
 	SetState(IDLE1);

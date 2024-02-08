@@ -32,8 +32,13 @@ GameManager::GameManager()
     Create();
 
     SceneManager::Get()->Create("Grid", new GridScene());
+    SceneManager::Get()->Add("Grid");
+
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
+    //SceneManager::Get()->Add("ModelExport");
+
     SceneManager::Get()->Create("KIM", new KimScene());
+    SceneManager::Get()->Add("KIM");
 
     //SceneManager::Get()->Create("Cube", new CubeScene());
     //SceneManager::Get()->Create("Sphere", new SphereScene());
@@ -59,9 +64,6 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
     //SceneManager::Get()->Create("TestScene", new TestScene());
 
-    SceneManager::Get()->Add("Grid");
-    //SceneManager::Get()->Add("ModelExport");
-    SceneManager::Get()->Add("KIM");
         
     //SceneManager::Get()->Add("HumanTest");
     //SceneManager::Get()->Add("Game");
@@ -78,9 +80,8 @@ GameManager::GameManager()
     //SceneManager::Get()->Add("QuadTree");
     //SceneManager::Get()->Add("Tessellation");
     //SceneManager::Get()->Add("LOD");
-
     
-    SceneManager::Get()->Add("TestScene");
+    //SceneManager::Get()->Add("TestScene");
 }
 
 GameManager::~GameManager()

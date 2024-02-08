@@ -265,6 +265,10 @@ void HolyPriest::OnHit(Collider* collider)
 	}
 }
 
+void HolyPriest::AI_animation_Moving()
+{
+}
+
 void HolyPriest::EndATK()
 {
 	SetState(IDLE1);

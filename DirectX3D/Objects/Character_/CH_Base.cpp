@@ -1,20 +1,28 @@
 ﻿#include "Framework.h"
 #include "Objects/Inventory/Inventory.h"
 
-CH_Base::CH_Base(string name, CreatureType creatureType, ProfessionType professionType) 
+CH_Base::CH_Base(string name, CreatureType creatureType, ProfessionType professionType)
 	: ModelAnimator(name), creatureType(creatureType), professionType(professionType)
 {
-	inventory = new Inventory();
+	switch (creatureType)
+	{
+	case CreatureType::Player:
+		inventory = new Inventory();
+		break;
+	case CreatureType::NonPlayer:
+		break;
+	}
 }
 
 CH_Base::~CH_Base()
 {
 	SAFE_DEL(inventory);
+	SAFE_DEL(myPlayer);
 }
 
 void CH_Base::Update()
 {
-	inventory->Update();
+	if (inventory != nullptr) inventory->Update();
 	ModelAnimator::Update();
 }
 
@@ -26,7 +34,6 @@ void CH_Base::Update()
 //	PlayClip(state);
 //}
 
-
 void CH_Base::Render()
 {
 	ModelAnimator::Render();
@@ -35,5 +42,5 @@ void CH_Base::Render()
 void CH_Base::UIRender()
 {
 	if (!Active()) return;
-	inventory->UIRender();
+	if (inventory != nullptr) inventory->UIRender();
 }

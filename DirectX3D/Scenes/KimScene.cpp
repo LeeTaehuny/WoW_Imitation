@@ -1,112 +1,123 @@
 ﻿#include "Framework.h"
 #include "KimScene.h"
+#include "Objects/Item/Weapon.h"
+#include "Objects/Item/Potion.h"
+#include "Objects/Inventory/Inventory.h"
+#include "Objects/Shop/Shop.h"
+#include "Objects/Inventory/Slot.h"
+#include "Objects/Character_/CH_Base.h"
+#include "Objects/Character_/MarksmanshipHunter.h"
+#include "Objects/Character_/ArmsWarrior.h"
+#include "Objects/Character_/HolyPriest.h"
+#include "Objects/Character_/FireMage.h"
+#include "Objects/Character_/ProtectionWarrior.h"
 
-#define UPDATE(k) if (k != nullptr) k->Update()
-#define UPDATEWORLD(k) if (k != nullptr) k->UpdateWorld()
-#define RENDER(k) if (k != nullptr) k->Render()
-#define GUIRENDER(k) if (k != nullptr) k->GUIRender()
+//#include "Objects/Character_ver2/CH_Base_ver2.h"
+//#include "Objects/Character_ver2/ProtectionWarrior_in.h"
 
-
+// #define UPDATE(k) if (k != nullptr) k->Update()
+// #define UPDATEWORLD(k) if (k != nullptr) k->UpdateWorld()
+// #define RENDER(k) if (k != nullptr) k->Render()
+// #define GUIRENDER(k) if (k != nullptr) k->GUIRender()
 
 KimScene::KimScene()
 {
-	//mainPlayer = new ProtectionWarrior();
-	//skel = new ModelAnimator("Skeleton");
-	//
-	//skel->ReadClip("Attack_1");
-	//skel->ReadClip("Attack_2");
-	//skel->ReadClip("Death");
-	//skel->ReadClip("Hit");
-	//skel->ReadClip("Idle");
-	//skel->ReadClip("Running");
-	//skel->ReadClip("Scream");
-	//skel->ReadClip("Walking_F");
-	//
-	//skel->PlayClip(3);
-	MONSTER;
+	pl = new ModelAnimatorInstancing("ProtectionWarrior");
+	pl->ReadClip("Idle_1");
+	pl->ReadClip("Attack_1");
+	pl->ReadClip("Walk_F");
+	pl->ReadClip("Walk_B");
+	pl->ReadClip("Walk_L");
+	pl->ReadClip("Walk_R");
+	pl->ReadClip("Die");
+	pl->ReadClip("Hit");
+	pl->ReadClip("Jump");
+	pl->ReadClip("S_Casting");
 
-	coll.push_back(new BoxCollider());
-	coll.push_back(new BoxCollider());
-	coll.push_back(new BoxCollider());
-	coll.push_back(new BoxCollider());
+	pol = new ModelAnimatorInstancing("FireMage");
+	pol->ReadClip("Idle_1");
+	pol->ReadClip("Attack_1");
+	pol->ReadClip("Walk_F");
+	pol->ReadClip("Walk_B");
+	pol->ReadClip("Walk_L");
+	pol->ReadClip("Walk_R");
 
-	int pop = 20;
-	coll[0]->Pos() = Vector3(pop);
-	coll[1]->Pos() = Vector3(-pop);
-	coll[2]->Pos() = Vector3(0, 0, pop);
-	coll[3]->Pos() = Vector3(0, 0, -pop);
 
-	FOR(coll.size())
-	{
-		MONSTER->SetTarget(coll[i]);
-	}
+	pal = new ModelAnimatorInstancing("HolyPriest");
+	pal->ReadClip("Idle_1");
+	pal->ReadClip("Attack_1");
+	pal->ReadClip("Walk_F");
+	pal->ReadClip("Walk_B");
+	pal->ReadClip("Walk_L");
+	pal->ReadClip("Walk_R");
 
-	skill = new P_001_Avengers_Shield();
+	Transform* transform = pl->Add();
+	player = new ProtectionWarrior_in(CreatureType::Player, transform, pl, count);
+	count++;
+	CAM->SetTarget(player);
+	//MONSTER->SetTarget(mainPlayer->GetCollider());
 
-	MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
-	MONSTER->SpawnScarecrow(Vector3(10));
-	MONSTER->SpawnScarecrow(Vector3(-10));
+	spawn(pl);
+	spawn(pl);
+	spawn(pl);
+	spawn(pol);
+	spawn(pol);
+	spawn(pol);
+	spawn(pal);
+	spawn(pal);
+	spawn(pal);
+	//MONSTER;
+
+	//int pop = 20;
+	//coll[0]->Pos() = Vector3(pop);
+	//coll[1]->Pos() = Vector3(-pop);
+	//coll[2]->Pos() = Vector3(0, 0, pop);
+	//coll[3]->Pos() = Vector3(0, 0, -pop);
+
+	//FOR(coll.size())
+	//{
+	//	MONSTER->SetTarget(coll[i]);
+	//}
+
+	//MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
+	//MONSTER->SpawnScarecrow(Vector3(10));
+	//MONSTER->SpawnScarecrow(Vector3(-10));
 }
 
 KimScene::~KimScene()
 {
-	delete mainPlayer;
+	//delete mainPlayer;
+	delete pl;
+	delete pol;
+	delete pal;
+	delete player;
 
-	for (Collider* col : coll)
-		delete col;
-	delete skel;
-	delete skill;
-	delete par;
-	delete particleSystem;
+	for (ProtectionWarrior_in* ch : NPC)
+		delete ch;
 }
 
 void KimScene::Update()
 {
-	if (KEY_DOWN('1')) dlatl = coll[0];
-	if (KEY_DOWN('2')) dlatl = coll[1];
-	if (KEY_DOWN('3')) dlatl = coll[2];
-	if (KEY_DOWN('4')) dlatl = coll[3];
+	//if (KEY_DOWN(VK_LEFT))
+	//{
+	//	MONSTER->SpawnSkeleton(Vector3());
+	//}
+	//if (KEY_DOWN(VK_RIGHT))
+	//{
+	//	MONSTER->SpawnSkeletonKnight(Vector3());
+	//}
 
-	if (KEY_DOWN(VK_LEFT))
-	{
-		MONSTER->SpawnSkeleton(Vector3());
-	}
-	if (KEY_DOWN(VK_RIGHT))
-	{
-		MONSTER->SpawnSkeletonKnight(Vector3());
-	}
+	//if (KEY_DOWN('P'))
+	//{
+	//	spawn();
+	//}
 
-	if (KEY_DOWN(VK_SPACE))
-		skill->UseSkill(CAM->Pos());
-
-	if (KEY_DOWN(VK_LBUTTON))
-	{
-		for (Collider* coll : MONSTER->monsterCollider)
-		{
-			Ray ray = CAM->ScreenPointToRay(mousePos);
-
-			if (coll->IsRayCollision(ray, nullptr))
-			{
-				if (P_001_Avengers_Shield* t = dynamic_cast<P_001_Avengers_Shield*>(skill))
-					t->SetEnemy(coll);
-				break;
-			}
-		}
-	}
-	skill->Update();
-
-	//if (KEY_DOWN('A'))
-	//	particleSystem->Play(Vector3());
-
-	MONSTER->Update();
-	UPDATE(mainPlayer);
-	UPDATE(skel);
-	UPDATE(particleSystem);
-
-	UPDATE(par);
-
-	for (Collider* col : coll)
-		col->UpdateWorld();
+	pl->Update();
+	pol->Update();
+	pal->Update();
+	player->Update();
+	for (ProtectionWarrior_in* ch : NPC)
+		if (ch != nullptr) ch->Update();
 }
 
 void KimScene::PreRender()
@@ -116,27 +127,29 @@ void KimScene::PreRender()
 
 void KimScene::Render()
 {
-	MONSTER->Render();
-
-	RENDER(mainPlayer);
-	RENDER(skel);
-
-	for (Collider* col : coll)
-		col->Render();
-
-	skill->Render();
-	RENDER(par);
-	RENDER(particleSystem);
+	pl->Render();
+	pol->Render();
+	pal->Render();
+	player->Render();
+	for (ProtectionWarrior_in* ch : NPC)
+		if (ch != nullptr) ch->Render();
 }
 
 void KimScene::PostRender()
 {
+	player->UIRender();
 }
 
 void KimScene::GUIRender()
 {
-	GUIRENDER(mainPlayer);
-	GUIRENDER(skel);
-	for (Collider* col : coll)
-		col->GUIRender();
+	
+}
+
+void KimScene::spawn(ModelAnimatorInstancing* pol)
+{
+	Transform* transform1 = pol->Add();
+	ProtectionWarrior_in* ppp = new ProtectionWarrior_in(CreatureType::NonPlayer, transform1, pol, 0);
+	ppp->SetPlayer(player);
+	NPC.push_back(ppp);
+	count++;
 }

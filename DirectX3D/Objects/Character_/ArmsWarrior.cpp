@@ -266,6 +266,10 @@ void ArmsWarrior::OnHit(Collider* collider)
 	}
 }
 
+void ArmsWarrior::AI_animation_Moving()
+{
+}
+
 void ArmsWarrior::EndATK()
 {
 	SetState(IDLE2);

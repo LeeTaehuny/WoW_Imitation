@@ -25,6 +25,8 @@ private:
 	// 충돌 판정 함수
 	virtual void OnHit(Collider* collider) override;
 
+	virtual void AI_animation_Moving() override;
+
 	// 컨트롤 관련 함수
 private:
 	void Control();

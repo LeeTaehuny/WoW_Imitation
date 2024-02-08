@@ -4,8 +4,6 @@ ProtectionWarrior::ProtectionWarrior(CreatureType type)
 	: CH_Base("ProtectionWarrior", type, ProfessionType::ProtectionWarrior)
 {
 	ReadClip("Idle_1");
-	ReadClip("Idle_2");
-	ReadClip("Idle_3");
 	ReadClip("Attack_1");
 	ReadClip("Walk_F");
 	ReadClip("Walk_B");
@@ -24,11 +22,25 @@ ProtectionWarrior::ProtectionWarrior(CreatureType type)
 	collider = new CapsuleCollider(0.5f, 1.0f);
 	collider->SetParent(this);
 	collider->Pos() = Vector3(0, 1.0f, 0);
+
+	// 자신의 타입에 따라 
+	switch (creatureType)
+	{
+	case CreatureType::Player:
+		range = new SphereCollider(10);
+		break;
+
+	case CreatureType::NonPlayer:
+		range = new SphereCollider(20);
+		break;
+	}
+	range->SetParent(this);
 }
 
 ProtectionWarrior::~ProtectionWarrior()
 {
 	delete collider;
+	delete range;
 }
 
 void ProtectionWarrior::Update()
@@ -57,6 +69,7 @@ void ProtectionWarrior::Render()
 	if (!Active()) return;
 
 	collider->Render();
+	range->Render();
 	CH_Base::Render();
 }
 
@@ -67,10 +80,17 @@ void ProtectionWarrior::PlayerUpdate()
 
 	// 충돌체 업데이트
 	collider->UpdateWorld();
+	range->UpdateWorld();
 }
 
 void ProtectionWarrior::AIUpdate()
 {
+	if (!myPlayer) return;
+	AI_animation_Moving();
+
+	collider->UpdateWorld();
+	range->UpdateWorld();
+	ModelAnimator::Update();
 }
 
 void ProtectionWarrior::Control()
@@ -79,7 +99,7 @@ void ProtectionWarrior::Control()
 
 	if (KEY_DOWN(VK_SPACE) && !isJump)
 	{
-		if (curState == IDLE1 || curState == IDLE2 || curState == IDLE3 || curState == WALK_F || curState == WALK_B || curState == WALK_L || curState == WALK_R)
+		if (curState == IDLE1 || curState == WALK_F || curState == WALK_B || curState == WALK_L || curState == WALK_R)
 		{
 			SetState(JUMP);
 			jumpVelocity = jumpForce;
@@ -180,7 +200,7 @@ void ProtectionWarrior::Moving()
 	else if (velocity.x > 0.1f)
 		SetState(WALK_R);
 	else
-		SetState(IDLE2);
+		SetState(IDLE1);
 }
 
 void ProtectionWarrior::Jump()
@@ -197,7 +217,7 @@ void ProtectionWarrior::Jump()
 		// 위치 초기화 및 상태 전환
 		Pos().y = curheight;
 		jumpVelocity = 0;
-		SetState(IDLE2);
+		SetState(IDLE1);
 		isJump = false;
 	}
 }
@@ -243,6 +263,37 @@ void ProtectionWarrior::OnHit(Collider* collider)
 		{
 			SetState(DIE);
 		}
+	}
+}
+
+void ProtectionWarrior::AI_animation_Moving()
+{
+	// 내가 플레이어의 주위에 있다면
+	if (myPlayer->GetRange()->IsCollision(collider))
+	{
+		randomHangdong -= DELTA;
+		if (randomHangdong <= 0)
+		{
+			randomHangdong = MAX_randomHangdong;
+			randomVelocity = Vector3(Random(-1, 2), 0, Random(-1, 2));
+		}
+
+		this->Pos() += randomVelocity * (moveSpeed/10) *DELTA;
+		this->Rot().y = atan2(randomVelocity.x, randomVelocity.z) + XM_PI;
+
+		SetState(WALK_F);
+	}
+	// 플레이어의 주변이 아니라면
+	else
+	{
+		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
+		randomVelocity = velo;
+		randomHangdong = 2.0f;
+
+		this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
+
+		this->Pos() += velo * moveSpeed * DELTA;
+		SetState(WALK_F);
 	}
 }
 

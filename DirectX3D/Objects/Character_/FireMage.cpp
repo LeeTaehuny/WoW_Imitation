@@ -287,6 +287,10 @@ void FireMage::OnHit(Collider* collider)
 	}
 }
 
+void FireMage::AI_animation_Moving()
+{
+}
+
 void FireMage::EndATK()
 {
 	SetState(IDLE1);

@@ -207,6 +207,10 @@ using namespace GameMath;
 #include "Objects/Character_/HolyPriest.h"
 #include "Objects/Character_/MarksmanshipHunter.h"
 
+// 캐릭터 인스턴싱 버전
+#include "Objects/Character_ver2/CH_Base_ver2.h"
+#include "Objects/Character_ver2/ProtectionWarrior_in.h"
+
 #include "Objects/Manager/BlockManager.h"
 #include "Objects/Manager/KunaiManager.h"
 #include "Objects/Manager/RobotManager.h"

@@ -11,20 +11,18 @@ public:
     virtual void PostRender() override;
     virtual void GUIRender() override;
 
+    void spawn(ModelAnimatorInstancing* pol);
+
 private:
     // 캐릭터 배이스
-    CH_Base* mainPlayer;
+    //class CH_Base* mainPlayer;
 
-    vector<Collider*> coll;
-    Collider* dlatl;
+    ModelAnimatorInstancing* pl;
+    ModelAnimatorInstancing* pol;
+    ModelAnimatorInstancing* pal;
+    ProtectionWarrior_in* player;
 
-    //Model* skel;
-    ModelAnimator* skel;
+    int count = 0;
 
-    int value = 0;
-
-    SkillBase* skill;
-
-    Particle* par;
-    ParticleSystem* particleSystem;
+    vector<ProtectionWarrior_in*> NPC;
 };
