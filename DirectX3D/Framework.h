@@ -224,8 +224,6 @@ using namespace GameMath;
 
 // 스킬 배이스
 #include "Objects/Skills/Base/SkillBase.h"
-#include "Objects/Skills/Base/NonTargetSkill.h"
-#include "Objects/Skills/Base/TargetSkill.h"
 
 // 스킬
 #include "Objects/Skills/FireBall.h"

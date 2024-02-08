@@ -5,6 +5,16 @@ public:
     // 몬스터의 피격 콜라이더
     CapsuleCollider* collider;
 
+    int GetmyNumber() { return index; }
+
+    virtual void Update() = 0;
+    virtual void Spawn(Vector3 pos) = 0;
+    virtual void Render() = 0;
+    virtual void PostRender() = 0;
+    virtual void Hit(float amount = 1, int targetNumber = 0) = 0;
+
+    CapsuleCollider* GetCollider() { return collider; }
+
 protected:
 
     // 타겟의 콜라이더를 받아옴 (나중에 변경 가능)

@@ -55,16 +55,16 @@ void Skeleton::Update()
 	//if (curState == SCREAM) return;
 	//if (curState == HIT) return;
 
-	if (KEY_DOWN('1')) targetNumber = 0;
-	if (KEY_DOWN('2')) targetNumber = 1;
-	if (KEY_DOWN('3')) targetNumber = 2;
-	if (KEY_DOWN('4')) targetNumber = 3;
+	//if (KEY_DOWN('1')) targetNumber = 0;
+	//if (KEY_DOWN('2')) targetNumber = 1;
+	//if (KEY_DOWN('3')) targetNumber = 2;
+	//if (KEY_DOWN('4')) targetNumber = 3;
 
 	Move();
 	targetAttack();
 	ExecuteEvent();
 	//UpdateUI();
-	Hit(1, targetNumber);
+	//Hit(1, targetNumber);
 
 	root->SetWorld(instancing->GetTransformByNode(index, 3));
 	collider->UpdateWorld();
@@ -85,12 +85,26 @@ void Skeleton::PostRender()
 
 void Skeleton::Hit(float amount, int targetNumber)
 {
-	if (KEY_DOWN(VK_LBUTTON))
+	targetHate[targetNumber] += amount;
+
+	curHP -= amount;
+
+	if (curHP <= 0)
+	{
+		SetState(DEATH);
+		curHP = 0.0f;
+	}
+	else
+	{
+		SetState(HIT);
+	}
+
+	/*if (KEY_DOWN(VK_LBUTTON))
 	{
 		Ray ray = CAM->ScreenPointToRay(mousePos);
 		if (collider->IsRayCollision(ray, nullptr))
 		{
-			targetHate[targetNumber] += 1;
+			targetHate[targetNumber] += amount;
 
 			if (curHP <= 0)
 			{
@@ -101,7 +115,7 @@ void Skeleton::Hit(float amount, int targetNumber)
 				SetState(HIT);
 			}
 		}
-	}
+	}*/
 	
 	//curHP = curHP - amount;
 	//hpBar->SetAmount(curHP / maxHP);	

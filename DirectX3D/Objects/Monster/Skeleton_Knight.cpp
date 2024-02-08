@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 Skeleton_Knight::Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<Collider*> target)
 {
@@ -19,7 +19,7 @@ Skeleton_Knight::Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* 
 	totalEvents.resize(instancing->GetClipSize());
 	eventIters.resize(instancing->GetClipSize());
 
-	// ¾Ö´Ï¸ÞÀÌ¼Ç ¼¼ÆÃ
+	// ì• ë‹ˆë©”ì´ì…˜ ì„¸íŒ…
 	SetEvent(ATTACK1, bind(&Skeleton_Knight::EndAttack, this), 0.7f);
 	SetEvent(HIT, bind(&Skeleton_Knight::EndHit, this), 0.9f);
 	SetEvent(DEATH, bind(&Skeleton_Knight::EndDeath, this), 1);
@@ -30,7 +30,7 @@ Skeleton_Knight::Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* 
 	}
 	velocity = Vector3();
 
-	// ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍÀÇ ¼ö¸¸Å­ ÇØÀÌÆ® Á¤º¸ È®Àå
+	// í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ ìˆ˜ë§Œí¼ í•´ì´íŠ¸ ì •ë³´ í™•ìž¥
 	targetHate.resize(this->target.size());
 	attackBumwe = new BoxCollider(Vector3(50, 200, 150));
 	attackBumwe->SetParent(root);
@@ -54,16 +54,16 @@ void Skeleton_Knight::Update()
 	//if (curState == SCREAM) return;
 	//if (curState == HIT) return;
 
-	if (KEY_DOWN('1')) targetNumber = 0;
-	if (KEY_DOWN('2')) targetNumber = 1;
-	if (KEY_DOWN('3')) targetNumber = 2;
-	if (KEY_DOWN('4')) targetNumber = 3;
+	//if (KEY_DOWN('1')) targetNumber = 0;
+	//if (KEY_DOWN('2')) targetNumber = 1;
+	//if (KEY_DOWN('3')) targetNumber = 2;
+	//if (KEY_DOWN('4')) targetNumber = 3;
 
 	Move();
 	targetAttack();
 	ExecuteEvent();
 	//UpdateUI();
-	Hit(1, targetNumber);
+	//Hit(1, targetNumber);
 
 	root->SetWorld(instancing->GetTransformByNode(index, 3));
 	collider->UpdateWorld();
@@ -84,12 +84,26 @@ void Skeleton_Knight::PostRender()
 
 void Skeleton_Knight::Hit(float amount, int targetNumber)
 {
-	if (KEY_DOWN(VK_LBUTTON))
+	targetHate[targetNumber] += amount;
+
+	curHP -= amount;
+
+	if (curHP <= 0)
+	{
+		SetState(DEATH);
+		curHP = 0.0f;
+	}
+	else
+	{
+		SetState(HIT);
+	}
+
+	/*if (KEY_DOWN(VK_LBUTTON))
 	{
 		Ray ray = CAM->ScreenPointToRay(mousePos);
 		if (collider->IsRayCollision(ray, nullptr))
 		{
-			targetHate[targetNumber] += 1;
+			targetHate[targetNumber] += amount;
 
 			if (curHP <= 0)
 			{
@@ -100,7 +114,7 @@ void Skeleton_Knight::Hit(float amount, int targetNumber)
 				SetState(HIT);
 			}
 		}
-	}
+	}*/
 
 	//curHP = curHP - amount;
 	//hpBar->SetAmount(curHP / maxHP);	

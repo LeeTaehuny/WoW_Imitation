@@ -62,7 +62,7 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("QuadTree", new QuadTreeScene());
     //SceneManager::Get()->Create("Tessellation", new TessellationScene());
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
-    //SceneManager::Get()->Create("TestScene", new TestScene());
+    SceneManager::Get()->Create("TestScene", new TestScene());
 
         
     //SceneManager::Get()->Add("HumanTest");

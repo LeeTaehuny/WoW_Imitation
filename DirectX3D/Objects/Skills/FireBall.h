@@ -1,13 +1,16 @@
-#pragma once
-class FireBall : public TargetSkill
+﻿#pragma once
+#include "Objects/Skills/Base/ActiveSkill.h"
+
+class FireBall : public ActiveSkill
 {
 public:
 	FireBall();
-	~FireBall();
+	virtual ~FireBall() override;
 
 	virtual void Update() override;
 	virtual void Render() override;
-	virtual void UseSkill(Vector3 pos) override;
+	virtual void UseSkill(Collider* targetCollider);
+	virtual void UseSkill(Vector3 direction) {}
 
 private:
 

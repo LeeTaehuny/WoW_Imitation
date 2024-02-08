@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "TestScene.h"
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
@@ -19,28 +19,25 @@ TestScene::TestScene()
 
 	//potion->Pos() = { 1, 0, 0 };
 
-	//inv = new Inventory();
+	inv = new Inventory();
 	//inv->AddItem(potion);
 	//inv->AddItem(potion);
 	//inv->AddItem(weapon);
 	//inv->AddItem(weapon);
 
 	shop = new Shop();
-	//shop->AddItem(new Weapon("sword_1", WeaponType::Sword));
-	//shop->AddItem(new Weapon("sword_2", WeaponType::Sword));
-	//shop->AddItem(new Weapon("staff_1", WeaponType::Staff));
-	//shop->AddItem(new Weapon("staff_2", WeaponType::Staff));
-	//shop->AddItem(new Weapon("staff_3", WeaponType::Staff));
-	//shop->AddItem(new Weapon("bow_1", WeaponType::Bow));
-	//shop->AddItem(new Weapon("bow_2", WeaponType::Bow));
-	//shop->AddItem(new Weapon("hammer_1", WeaponType::Hammer));
-	//shop->AddItem(new Weapon("hammer_2", WeaponType::Hammer));
-	//shop->AddItem(new Potion("potion", PotionType::Hp));
-	//shop->AddItem(new Potion("potionMp", PotionType::Mp));
 
 	player = new ProtectionWarrior(CreatureType::Player);
 
 	CAM->SetTarget(player);
+
+	MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
+	MONSTER->SpawnScarecrow(Vector3(10));
+	MONSTER->SpawnScarecrow(Vector3(-10));
+
+	skill = new FireBall();
+	skill->SetOwner(player);
+	MONSTER->SetTarget(player->GetCollider());
 }
 
 TestScene::~TestScene()
@@ -56,57 +53,92 @@ void TestScene::Update()
 	//
 	shop->Update();
 	
-	if ((player->GlobalPos() - shop->GlobalPos()).Length() < 10.0f)
+	// 상점 - 플레이어 상호작용
 	{
-		shop->SetActive(true);
-	}
-	else
-	{
-		shop->SetActive(false);
-	}
-	
-	if (shop->Active())
-	{
-		const vector<Slot*> slots = shop->GetItemSlots();
-		const vector<Slot*> items = player->GetInventory()->GetInvSlots();
-		
-		int idx = 0;
-		for (Slot* slot : slots)
+		if ((player->GlobalPos() - shop->GlobalPos()).Length() < 10.0f)
 		{
-			if (mousePos.x <= slot->GlobalPos().x + slot->GetSize().x && mousePos.x >= slot->GlobalPos().x - slot->GetSize().x &&
-				mousePos.y <= slot->GlobalPos().y + slot->GetSize().y && mousePos.y >= slot->GlobalPos().y - slot->GetSize().y)
+			shop->SetActive(true);
+		}
+		else
+		{
+			shop->SetActive(false);
+		}
+
+		if (shop->Active())
+		{
+			const vector<Slot*> slots = shop->GetItemSlots();
+			const vector<Slot*> items = player->GetInventory()->GetInvSlots();
+
+			int idx = 0;
+			for (Slot* slot : slots)
 			{
-				if (KEY_DOWN(VK_RBUTTON))
+				if (mousePos.x <= slot->GlobalPos().x + slot->GetSize().x && mousePos.x >= slot->GlobalPos().x - slot->GetSize().x &&
+					mousePos.y <= slot->GlobalPos().y + slot->GetSize().y && mousePos.y >= slot->GlobalPos().y - slot->GetSize().y)
 				{
-					string tmpName = shop->GetItemName(idx);
-					
-					if (tmpName.size())
+					if (KEY_DOWN(VK_RBUTTON))
 					{
-						shop->PurchaseItem(tmpName, player->GetInventory());
+						string tmpName = shop->GetItemName(idx);
+
+						if (tmpName.size())
+						{
+							shop->PurchaseItem(tmpName, player->GetInventory());
+						}
 					}
 				}
+
+				idx++;
 			}
-	
-			idx++;
-		}
-	
-		idx = 0;
-		for (Slot* item : items)
-		{
-			if (mousePos.x <= item->GlobalPos().x + 33.0f && mousePos.x >= item->GlobalPos().x - 33.0f &&
-				mousePos.y <= item->GlobalPos().y + 33.0f && mousePos.y >= item->GlobalPos().y - 33.0f)
+
+			idx = 0;
+			for (Slot* item : items)
 			{
-				if (KEY_DOWN(VK_RBUTTON))
+				if (mousePos.x <= item->GlobalPos().x + 33.0f && mousePos.x >= item->GlobalPos().x - 33.0f &&
+					mousePos.y <= item->GlobalPos().y + 33.0f && mousePos.y >= item->GlobalPos().y - 33.0f)
 				{
-					shop->SellItem(idx, player->GetInventory());
+					if (KEY_DOWN(VK_RBUTTON))
+					{
+						shop->SellItem(idx, player->GetInventory());
+					}
 				}
+
+				idx++;
 			}
-	
-			idx++;
 		}
 	}
+	
+	// 임시 스킬 사용 테스트 (좌클릭 타겟 설정, K : 스킬 사용)
+	{
+		if (KEY_DOWN(VK_LBUTTON))
+		{
+			// 마우스 위치의 Ray 생성
+			Ray ray = CAM->ScreenPointToRay(mousePos);
+			Contact contact;
+
+			// 몬스터 배열 받기
+			vector<MonsterBase*> monsters = MONSTER->GetScarecrow();
+
+			// 몬스터 순회하며 Ray 충돌 연산
+			for (MonsterBase* monster : monsters)
+			{
+				if (monster->GetCollider()->IsRayCollision(ray, &contact))
+				{
+					// 충돌했다면 해당 몬스터를 내 타겟으로 설정
+					targetMonster = monster;
+				}
+			}
+		}
+
+		if (KEY_DOWN('K'))
+		{
+			if (targetMonster != nullptr)
+			skill->UseSkill(targetMonster->GetCollider());
+		}
+	}
+	
 
 	player->Update();
+	MONSTER->Update();
+	skill->Update();
 }
 
 void TestScene::PreRender()
@@ -117,8 +149,10 @@ void TestScene::Render()
 {
 	//weapon->Render();
 	//potion->Render();
-	shop->Render();
+	//shop->Render();
 	player->Render();
+	MONSTER->Render();
+	skill->Render();
 }
 
 void TestScene::PostRender()

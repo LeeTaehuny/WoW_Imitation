@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 class Skeleton_Knight : public MonsterBase
 {
 public:
@@ -15,18 +15,15 @@ public:
     Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<Collider*> target);
     ~Skeleton_Knight();
 
-    void Update();
-    void Render();
-    void PostRender();
+    virtual void Update() override;
+    virtual void Render() override;
+    virtual void PostRender() override;
 
-    // µ¥¹ÌÁö¸¦ ¹Ş±â À§ÇÑ ÇÔ¼ö
-    void Hit(float amount = 1, int targetNumber = 0);
-    // ÇìÀÌÆ®º¤ÅÍÀÇ ¼ø¹øÀ» ÁöÁ¤ÇÏ±â À§ÇÑ ÀÓ½Ãº¯¼ö
+    // ë°ë¯¸ì§€ë¥¼ ë°›ê¸° ìœ„í•œ í•¨ìˆ˜
+    virtual void Hit(float amount = 1, int targetNumber = 0) override;
+    // í—¤ì´íŠ¸ë²¡í„°ì˜ ìˆœë²ˆì„ ì§€ì •í•˜ê¸° ìœ„í•œ ì„ì‹œë³€ìˆ˜
     int targetNumber = 0;
-    void Spawn(Vector3 pos);
-
-    int GetmyNumber() { return index; }
-    CapsuleCollider* GetCollider() { return collider; }
+    virtual void Spawn(Vector3 pos) override;
 
 public:
     void SetEvent(int clip, Event event, float timeRatio);
@@ -39,9 +36,9 @@ public:
 
     void SetState(State state);
 
-    // ÀûÀ» Ãß°İÇÏ´Â ÇÔ¼ö
+    // ì ì„ ì¶”ê²©í•˜ëŠ” í•¨ìˆ˜
     void Move();
-    // °ø°İ¹üÀ§ Äİ¶óÀÌ´õ¿¡ Ãæµ¹ÇÑ ÀûÀ» °ø°İÀ» ´ã´çÇÏ´Â ÇÔ¼ö
+    // ê³µê²©ë²”ìœ„ ì½œë¼ì´ë”ì— ì¶©ëŒí•œ ì ì„ ê³µê²©ì„ ë‹´ë‹¹í•˜ëŠ” í•¨ìˆ˜
     void targetAttack();
 
 private:

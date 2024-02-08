@@ -1,4 +1,5 @@
-#include "Framework.h"
+﻿#include "Framework.h"
+#include "Objects/Character_/CH_Base.h"
 
 SkillBase::SkillBase()
 {
@@ -7,15 +8,15 @@ SkillBase::SkillBase()
 
 SkillBase::~SkillBase()
 {
-	delete myCollider;
+	//delete myCollider;
 }
 
-void SkillBase::Cooldown()
-{
-	delay -= DELTA;
-	if (delay <= 0)
-	{
-		delay = MAX_delay;
-		isCooldown = false;
-	}
-}
+//void SkillBase::Cooldown()
+//{
+//	delay -= DELTA;
+//	if (delay <= 0)
+//	{
+//		delay = MAX_delay;
+//		isCooldown = false;
+//	}
+//}
