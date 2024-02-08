@@ -1,0 +1,174 @@
+#include "Framework.h"
+#include "BossMap.h"
+
+BossMap::BossMap()
+{
+	Phase1 = new Model("LastBossMap1");		// 1페이즈의 땅 입니다
+
+	Phase2.resize(10);
+	Phase2[0] = new Model("LastBossMap2");  // 2페이즈의 땅 입니다
+
+	Phase2[1] = new Model("IceEdge1");		// 떨어져나갈 땅의 모서리부분입니다
+	Phase2[2] = new Model("IceEdge2");
+	Phase2[3] = new Model("IceEdge3");
+	Phase2[4] = new Model("IceEdge4");
+	
+	Phase2[5] = new Model("Ice_debris1");	// 얼음파편 입니다
+	Phase2[6] = new Model("Ice_debris2");
+	Phase2[7] = new Model("Ice_debris3");
+	Phase2[8] = new Model("Ice_debris4");
+
+	Phase2[9] = new Model("IceBreak");		// 얼음이 깨지는 바닥 이펙트? 입니다
+
+	Phase2[5]->Pos().y = 295.0f;			// 얼음 파편의 초기 위치를 설정합니다
+	Phase2[6]->Pos().y = 295.0f;
+	Phase2[7]->Pos().y = 295.0f;
+	Phase2[8]->Pos().y = 295.0f;
+	
+
+
+	fixeds.resize(2);							// 페이즈가 바뀌어도 변화하지 않는 것들
+	fixeds[0] = new Model("LastBossMap1_B");    // 땅을 받치고 있는 기둥 입니다
+	fixeds[1] = new Model("LastBossMap1_O2");   // 계단쪽에있는 사슬 기둥입니다
+
+	fixeds[1]->Pos().y += 22.5f;                // 사슬 기둥의 초기 위치를 설정합니다
+	fixeds[1]->Pos().x += 75;
+
+
+
+	disappears.resize(4);							// 1페이즈 이후에 사라지는 얼음기둥(갈비뼈모양) 입니다
+	for (int i = 0; i < disappears.size(); i++)
+	{
+		disappears[i] = new Model("LastBossMap1_O");
+	}
+	disappears[0]->Pos().x += 30;					// 초기위치 설정
+	disappears[0]->Pos().z -= 30;
+	disappears[1]->Pos().x -= 30;
+	disappears[1]->Pos().z -= 30;
+	disappears[1]->Rot().y += 1.575f;
+	disappears[2]->Pos().x -= 30;
+	disappears[2]->Pos().z += 30;
+	disappears[2]->Rot().y += 3.15f;
+	disappears[3]->Pos().x += 30;
+	disappears[3]->Pos().z += 30;
+	disappears[3]->Rot().y -= 1.575f;
+}
+
+BossMap::~BossMap()
+{
+	delete Phase1;
+
+	for (int i = 0; i < Phase2.size(); i++) delete Phase2[i];
+	for (int i = 0; i < fixeds.size(); i++) delete fixeds[i];
+	for (int i = 0; i < disappears.size(); i++) delete disappears[i];
+}
+
+void BossMap::Update()
+{
+	//if(KEY_DOWN(VK_RIGHT))
+	//{
+	//	PhaseNum += 1;
+	//}
+
+
+	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->UpdateWorld();	// 페이즈가 넘어가도 변화하지 않는것들은 그냥 업데이트 합니다
+
+	switch (PhaseNum) // 페이즈 넘버에따라 엑티브와 업데이트 여부를 판단하여 수행합니다
+	{
+	case 0:
+		Phase1->SetActive(true);
+		for (int i = 0; i < disappears.size(); i++) disappears[i]->UpdateWorld();
+		break;
+	case 1:
+		for (int i = 0; i < Phase2.size(); i++) Phase2[i]->SetActive(true);
+		Phase1->SetActive(false);
+		Fall();
+		break;
+	case 2:
+		Phase1->SetActive(true);
+		for (int i = 0; i < Phase2.size(); i++) Phase2[i]->SetActive(false);
+		ZeroSet();
+		break;
+	case 3:
+		for (int i = 0; i < Phase2.size(); i++) Phase2[i]->SetActive(true);
+		Phase1->SetActive(false);
+		Fall();
+		break;
+	}
+}
+
+void BossMap::Render()
+{
+	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->Render(); // 페이즈가 넘어가도 변화하지 않는것들은 그냥 랜더 합니다
+
+	switch (PhaseNum) // 페이즈 넘버에따라 랜더 여부를 판단하여 수행합니다
+	{
+	case 0:
+		Phase1->Render();
+		for (int i = 0; i < disappears.size(); i++) disappears[i]->Render();
+		break;
+	case 1:
+		Phase2[0]->Render(); // 2페이즈는 일단 땅만 랜더 합니다
+		NoneRender();
+		break;
+	case 2:
+		Phase1->Render();
+		break;
+	case 3:
+		Phase2[0]->Render();
+		NoneRender();
+	}
+}
+
+void BossMap::Fall() // 얼음 바닥이 떨어지는 함수 입니다
+{
+
+	for (int i = 0; i < Phase2.size(); i++) Phase2[i]->UpdateWorld();
+
+	for (int i = 1; i <= 4; ++i)
+	{
+		if (Phase2[i]->Pos().y > -150.0f)
+		{
+			Phase2[i]->Pos().y -= 100 * DELTA;
+		}
+	}
+	for (int j = 5; j <= 8; ++j)
+	{
+		if (Phase2[j]->Pos().y > -150.0f)
+		{
+			Phase2[j]->Pos().y -= 50 * DELTA;
+		}
+	}
+}
+
+void BossMap::ZeroSet() // 떨어진 얼음 바닥 위치를 리셋시킵니다
+{
+	for (int k = 1; k <= 8; ++k)
+	{
+		if (Phase2[1]->Pos().y <= -150.0f)
+		{
+			Phase2[1]->Pos().y = 0;
+			Phase2[2]->Pos().y = 0;
+			Phase2[3]->Pos().y = 0;
+			Phase2[4]->Pos().y = 0;
+
+			Phase2[5]->Pos().y = 295.0f;
+			Phase2[6]->Pos().y = 295.0f;
+			Phase2[7]->Pos().y = 295.0f;
+			Phase2[8]->Pos().y = 295.0f;
+
+			Phase2[k]->SetActive(false);
+		}
+	}
+}
+
+void BossMap::NoneRender() // 얼음바닥이 다 떨어지기 전까지 랜더 합니다 (다떨어지면 랜더하지않습니다)
+{
+	for (int k = 1; k <= 9; ++k)
+	{
+		if (Phase2[1]->Pos().y > -150.0f)
+		{
+			Phase2[k]->Render();
+		}
+	}
+}

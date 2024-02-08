@@ -16,9 +16,9 @@ private:
     typedef VertexUVNormalTangentAlpha VertexType;
 
     const float MIN_HEIGHT = 0.0f;
-    const float MAX_HEIGHT = 20.0f;
+    const float MAX_HEIGHT = 250.0f;
 
-    const UINT MAX_SIZE = 256;
+    const UINT MAX_SIZE = 500;
 
     class BrushBuffer : public ConstBuffer
     {
@@ -129,6 +129,8 @@ private:
     vector<OutputDesc> outputs;
     
     Texture* heightMap;
+    Texture* zeroMap;
+    Texture* firstMap;
     Texture* secondMap;
     Texture* thirdMap;
 

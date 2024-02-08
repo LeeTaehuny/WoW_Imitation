@@ -3,7 +3,7 @@
 class GridScene : public Scene
 {
 private:
-    const int MAX_VALUE = 100;
+    const int MAX_VALUE = 1000;
 
 public:
     GridScene();

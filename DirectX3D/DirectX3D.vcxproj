@@ -162,6 +162,9 @@
     <ClInclude Include="Objects\Character_\CH_Base.h" />
     <ClInclude Include="Objects\Inventory\Slot.h" />
     <ClInclude Include="Objects\UI\Button.h" />
+    <ClInclude Include="Objects\MAP\Dungeon.h" />
+    <ClInclude Include="Scenes\MAP\MapTestScene.h" />
+    <ClInclude Include="Objects\MAP\BossMap.h" />
     <ClInclude Include="Framework\Environment\Reflection.h" />
     <ClInclude Include="Framework\Environment\Refraction.h" />
     <ClInclude Include="Framework\Shader\DomainShader.h" />
@@ -169,6 +172,10 @@
     <ClInclude Include="Objects\Inventory\Inventory.h" />
     <ClInclude Include="Objects\Item\Item.h" />
     <ClInclude Include="Objects\Item\Potion.h" />
+    <ClInclude Include="Scenes\MAP\IceEdges.h" />
+    <ClInclude Include="Scenes\MAP\LastBossMap_Phase2.h" />
+    <ClInclude Include="Scenes\MAP\LastBossMap_Phase1.h" />
+    <ClInclude Include="Scenes\MAP\LastBossMap_Scene.h" />
     <ClInclude Include="Scenes\MirrorScene.h" />
     <ClInclude Include="Objects\Algorithm\AStar.h" />
     <ClInclude Include="Objects\Particle\ParticleSystem.h" />
@@ -305,6 +312,12 @@
     <ClCompile Include="Objects\Character_\MarksmanshipHunter.cpp" />
     <ClCompile Include="Objects\Inventory\Slot.cpp" />
     <ClCompile Include="Objects\UI\Button.cpp" />
+    <ClInclude Include="Scenes\MAP\TestDungeonScene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Objects\MAP\Dungeon.cpp" />
+    <ClCompile Include="Scenes\MAP\MapTestScene.cpp" />
+    <ClCompile Include="Objects\MAP\BossMap.cpp" />
     <ClCompile Include="Framework\Environment\Reflection.cpp" />
     <ClCompile Include="Framework\Environment\Refraction.cpp" />
     <ClCompile Include="Framework\Shader\DomainShader.cpp" />
@@ -320,6 +333,10 @@
     <ClCompile Include="Objects\Inventory\Inventory.cpp" />
     <ClCompile Include="Objects\Item\Item.cpp" />
     <ClCompile Include="Objects\Item\Potion.cpp" />
+    <ClCompile Include="Scenes\MAP\IceEdges.cpp" />
+    <ClCompile Include="Scenes\MAP\LastBossMap_Phase2.cpp" />
+    <ClCompile Include="Scenes\MAP\LastBossMap_Phase1.cpp" />
+    <ClCompile Include="Scenes\MAP\LastBossMap_Scene.cpp" />
     <ClCompile Include="Scenes\MirrorScene.cpp" />
     <ClCompile Include="Objects\Algorithm\AStar.cpp" />
     <ClCompile Include="Objects\Particle\ParticleSystem.cpp" />
@@ -435,6 +452,7 @@
     <ClCompile Include="Objects\Item\Weapon.cpp" />
     <ClCompile Include="Objects\Shop\Shop.cpp" />
     <ClCompile Include="Objects\Monster\Skeleton_Knight.cpp" />
+    <ClCompile Include="Scenes\MAP\TestDungeonScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX3D.rc" />

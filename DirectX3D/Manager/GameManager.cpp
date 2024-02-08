@@ -4,6 +4,7 @@
 #include "Scenes/GridScene.h"
 #include "Scenes/SphereScene.h"
 #include "Scenes/TerrainEditorScene.h"
+#include "Scenes/TerrainScene.h"
 #include "Scenes/CollisionScene.h"
 #include "Scenes/ModelExportScene.h"
 #include "Scenes/ModelRenderScene.h"
@@ -26,6 +27,16 @@
 #include "Scenes/TerrainLODScene.h"
 #include "Scenes/KimScene.h"
 #include "Scenes/DevScene/TestScene.h"
+#include "Scenes/MAP/LastBossMap_Scene.h"
+#include "Scenes/MAP/MapTestScene.h"
+#include "Scenes/MAP/TestDungeonScene.h"
+
+// 오늘 진행된 설명 : 궤적 파티클, 다른 특수 파티클(눈, 스파크)
+//                   + 궤적 파티클 적용 (휴먼 클래스에 추가함)
+//                   + 파티클 파일 설정용 씬
+
+// * 파티클 설정 씬 -> 특수효과가 추가로 필요하거나, 혹은 그냥 복습하실 분이라도...
+//                    그런 경우에 해당하는 분들은 바로 한번 써봅시다.
 
 GameManager::GameManager()
 {
@@ -63,25 +74,6 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("Tessellation", new TessellationScene());
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
     SceneManager::Get()->Create("TestScene", new TestScene());
-
-        
-    //SceneManager::Get()->Add("HumanTest");
-    //SceneManager::Get()->Add("Game");
-    //SceneManager::Get()->Add("RenderTarget");
-    //SceneManager::Get()->Add("GeometryBuffer");
-    //SceneManager::Get()->Add("ShadowScene");
-    //SceneManager::Get()->Add("AStar");
-    //SceneManager::Get()->Add("LightTest");
-    //SceneManager::Get()->Add("Billboard");
-    //SceneManager::Get()->Add("Particle");
-    //SceneManager::Get()->Add("ParticleConfig");
-    //SceneManager::Get()->Add("MirrorScene");
-    //SceneManager::Get()->Add("WaterScene");
-    //SceneManager::Get()->Add("QuadTree");
-    //SceneManager::Get()->Add("Tessellation");
-    //SceneManager::Get()->Add("LOD");
-    
-    //SceneManager::Get()->Add("TestScene");
 }
 
 GameManager::~GameManager()

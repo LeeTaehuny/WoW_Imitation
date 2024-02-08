@@ -18,9 +18,9 @@ private:
 private:
     FloatValueBuffer* terrainBuffer;
     FloatValueBuffer* heightBuffer;
-
+    
     Mesh<VertexType>* mesh;
-
+    
     HullShader* hullShader;
     DomainShader* domainShader;
 
@@ -32,4 +32,6 @@ private:
 
     UINT width, height;
     UINT patchWidth, patchHeight;
+
+    Model* model;
 };

@@ -2,20 +2,16 @@
 #include "ModelExportScene.h"
 
 ModelExportScene::ModelExportScene()
-{
-    string name = "Ice";
+
+    //string name = "Wall";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
-    //string clipName;
-    Model_MER_MESH(name);
-    //AnimationClip(name, "Attack_2");
-    //AnimationClip(name, "Attack_3");
-
+	
     //exporter = new ModelExporter(name, file);
     //exporter->ExportMaterial();
     //exporter->ExportMesh();
-    //delete exporter;    
-    
+    //delete exporter;   
+   
     //clipName = "Dying";
     //file = "Models/Animations/" + name + "/" + clipName + ".fbx";
     //exporter = new ModelExporter(name, file);
@@ -74,7 +70,42 @@ void ModelExportScene::AnimationClip(string name, string clipName)
     ModelExporter* exporter;
     exporter = new ModelExporter(name, file);
     exporter->ExportClip(clipName);
-    delete exporter;
+    delete exporter; 
+	
+    //string name = "Robot";
+    //string file = "Models/FBX/" + name + ".fbx";
+    //ModelExporter* exporter;
+    //string clipName;
+
+    //clipName = "Dying";
+    //file = "Models/Animations/" + name + "/" + clipName + ".fbx";
+    //exporter = new ModelExporter(name, file);
+    //exporter->ExportClip(clipName);    
+    //delete exporter;
+    //
+    //clipName = "Run";
+    //file = "Models/Animations/" + name + "/" + clipName + ".fbx";
+    //exporter = new ModelExporter(name, file);
+    //exporter->ExportClip(clipName);
+    //delete exporter;
+    //
+    //clipName = "Walk";
+    //file = "Models/Animations/" + name + "/" + clipName + ".fbx";
+    //exporter = new ModelExporter(name, file);
+    //exporter->ExportClip(clipName);
+    //delete exporter;
+    //
+    //clipName = "Hit";
+    //file = "Models/Animations/" + name + "/" + clipName + ".fbx";
+    //exporter = new ModelExporter(name, file);
+    //exporter->ExportClip(clipName);
+    //delete exporter;
+    //
+    //clipName = "StandUp";
+    //file = "Models/Animations/" + name + "/" + clipName + ".fbx";
+    //exporter = new ModelExporter(name, file);
+    //exporter->ExportClip(clipName);
+    //delete exporter;
 }
 
 ModelExportScene::~ModelExportScene()

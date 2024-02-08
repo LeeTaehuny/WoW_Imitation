@@ -14,4 +14,9 @@ public:
 
 private:
     Model* model;
+    Model* model2;
+    Model* model3;
+    Model* model4[4];
+    Model* model5;
+    Model* model6;
 };
