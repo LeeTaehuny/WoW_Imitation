@@ -206,6 +206,7 @@ using namespace GameMath;
 #include "Objects/Character_/HolyPriest_in.h"
 #include "Objects/Character_/MarksmanshipHunter_in.h"
 #include "Objects/Character_/ProtectionWarrior_in.h"
+#include "Objects/Character_/CH_Manager.h"
 
 #include "Objects/Manager/BlockManager.h"
 #include "Objects/Manager/KunaiManager.h"
@@ -227,6 +228,7 @@ using namespace GameMath;
 // 보호 성기사 스킬
 #include "Objects/Skills/ProtectionWarrior_Skill/P_001_Avengers_Shield.h"
 #include "Objects/Skills/ProtectionWarrior_Skill/P_004_HOTR.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_014_Blessing_of_Spellwarding.h"
 
 #include "Objects/Test/TestLight.h"
 

@@ -16,30 +16,11 @@
 
 KimScene::KimScene()
 {
-	instacning01(); // 팔라딘
-	//instacning02(); // 화염 법사
-	//instacning03(); // 사제
-	//instacning04(); // 무기 전사
-	//instacning05(); // 사냥꾼
+	CH->PlayerSpawn(1);
 
-	Transform* transform = paladin->Add();
-	player = new ProtectionWarrior_in(CreatureType::Player, transform, paladin, count);
-	//CAM->SetTarget(player);
-	count++;
-	//MONSTER->SetTarget(mainholypriestadinayer->GetCollider());
+	skill = new P_014_Blessing_of_Spellwarding();
+	skill->SetOwner(CH->GetPlayerData());
 
-	skill = new P_004_HOTR();
-	skill->SetOwner(player);
-
-	//spawn(holypriest);
-	//spawn(firemage);
-	//spawn(firemage);
-	//spawn(holypriest);
-	//spawn(armswarrior);
-	//spawn(armswarrior);
-	//spawn(marksmanshiphunter);
-	//spawn(marksmanshiphunter);
-	//spawn(holypriest);
 	MONSTER;
 
 	MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
@@ -52,18 +33,8 @@ KimScene::KimScene()
 
 KimScene::~KimScene()
 {
-	//delete mainholypriestadinayer;
-	delete paladin;
-	delete firemage;
-	delete holypriest;
-	delete armswarrior;
-	delete marksmanshiphunter;
 	delete particle;
-
-	delete player;
-
-	for (CH_Base_ver2* ch : NPC)
-		delete ch;
+	
 }
 
 void KimScene::Update()
@@ -76,19 +47,12 @@ void KimScene::Update()
 	//{
 	//	MONSTER->SpawnSkeletonKnight(Vector3());
 	//}
-
-	//if (KEY_DOWN('P'))
-	//{
-	//	spawn();
-	//}
-
-	UPDATE(paladin);
-	UPDATE(firemage);
-	UPDATE(holypriest);
-	UPDATE(armswarrior);
-	UPDATE(marksmanshiphunter);
 	
-	UPDATE(particle);
+	if (KEY_DOWN('P'))
+	{
+		int gang = Random(1, 6);
+		CH->NonPlayerSpawn(gang);
+	}
 
 	if (KEY_DOWN('1'))
 	{
@@ -114,164 +78,53 @@ void KimScene::Update()
 					targetMonster = monster;
 				}
 			}
+
+			for (Collider* play : MONSTER->targets)
+			{
+				if (play->IsRayCollision(ray, &contact))
+				{
+					targetNPC = play;
+				}
+			}
 		}
 
-		if (KEY_PRESS('K'))
+		if (KEY_DOWN('K'))
 		{
-			if (targetMonster != nullptr)
-				skill->UseSkill(targetMonster->GetCollider());
+			//if (targetMonster != nullptr)
+			//	skill->UseSkill(targetMonster->GetCollider());
+
+			// 플레이어 캐릭터에게 사용하기 위한 함수
+			if (targetNPC != nullptr)
+				skill->UseSkill(targetNPC);
 		}
 	}
 
-	player->Update();
+	UPDATE(particle);
+	CH->Update();
 	skill->Update();
 	MONSTER->Update();
-
-	for (CH_Base_ver2* ch : NPC)
-		if (ch != nullptr) ch->Update();
 }
 
 void KimScene::PreRender()
 {
-
+	CH->PreRender();
 }
 
 void KimScene::Render()
 {
-	RENDER(paladin);
-	RENDER(firemage);
-	RENDER(holypriest);
-	RENDER(armswarrior);
-	RENDER(marksmanshiphunter);
 	RENDER(particle);
 
-	//player->Render();
+	CH->Render();
 	skill->Render();
 	MONSTER->Render();
-	for (CH_Base_ver2* ch : NPC)
-		if (ch != nullptr) ch->Render();
 }
 
 void KimScene::PostRender()
 {
-	player->UIRender();
+	CH->PostRender();
 }
 
 void KimScene::GUIRender()
 {
-
-}
-
-void KimScene::spawn(ModelAnimatorInstancing* firemage)
-{
-	Transform* transform1 = firemage->Add();
-
-	CH_Base_ver2* ppp;
-	ppp = new ProtectionWarrior_in(CreatureType::NonPlayer, transform1, firemage, count);
-	if (firemage == this->firemage)
-	{
-		ppp = nullptr;
-		ppp = new FireMage_in(CreatureType::NonPlayer, transform1, firemage, count);
-	}
-	if (firemage == holypriest)
-	{
-		ppp = nullptr;
-		ppp = new HolyPriest_in(CreatureType::NonPlayer, transform1, firemage, count);
-	}
-	if (firemage == armswarrior)
-	{
-		ppp = nullptr;
-		ppp = new ArmsWarrior_in(CreatureType::NonPlayer, transform1, firemage, count);
-	}
-	if (firemage == marksmanshiphunter)
-	{
-		ppp = nullptr;
-		ppp = new MarksmanshipHunter_in(CreatureType::NonPlayer, transform1, firemage, count);
-	}
-
-	if (ppp != nullptr)
-		ppp->SetPlayer(player);
-	NPC.push_back(ppp);
-	count++;
-}
-
-void KimScene::instacning01()
-{
-	paladin = new ModelAnimatorInstancing("ProtectionWarrior");
-	paladin->ReadClip("Idle_1");
-	paladin->ReadClip("Attack_1");
-	paladin->ReadClip("Walk_F");
-	paladin->ReadClip("Walk_B");
-	paladin->ReadClip("Walk_L");
-	paladin->ReadClip("Walk_R");
-	paladin->ReadClip("Die");
-	paladin->ReadClip("Hit");
-	paladin->ReadClip("Jump");
-	paladin->ReadClip("S_Casting");
-}
-
-void KimScene::instacning02()
-{
-	firemage = new ModelAnimatorInstancing("FireMage");
-	firemage->ReadClip("Idle_1");
-	firemage->ReadClip("Idle_2");
-	firemage->ReadClip("Attack_1");
-	firemage->ReadClip("Attack_2");
-	firemage->ReadClip("Attack_3");
-	firemage->ReadClip("Walk_F");
-	firemage->ReadClip("Walk_B");
-	firemage->ReadClip("Walk_L");
-	firemage->ReadClip("Walk_R");
-	firemage->ReadClip("Die_1");
-	firemage->ReadClip("Hit_1");
-	firemage->ReadClip("Jump");
-}
-
-void KimScene::instacning03()
-{
-	holypriest = new ModelAnimatorInstancing("HolyPriest");
-	holypriest->ReadClip("Idle_1");
-	holypriest->ReadClip("Idle_2");
-	holypriest->ReadClip("Idle_3");
-	holypriest->ReadClip("Attack_1");
-	holypriest->ReadClip("Attack_2");
-	holypriest->ReadClip("Walk_F");
-	holypriest->ReadClip("Walk_B");
-	holypriest->ReadClip("Walk_L");
-	holypriest->ReadClip("Walk_R");
-	holypriest->ReadClip("Die");
-	holypriest->ReadClip("Hit");
-	holypriest->ReadClip("Jump");
-}
-
-void KimScene::instacning04()
-{
-	armswarrior = new ModelAnimatorInstancing("armswarrior");
-	armswarrior->ReadClip("Idle_1");
-	armswarrior->ReadClip("Idle_2");
-	armswarrior->ReadClip("Attack_1");
-	armswarrior->ReadClip("Attack_2");
-	armswarrior->ReadClip("Walk_F");
-	armswarrior->ReadClip("Walk_B");
-	armswarrior->ReadClip("Walk_L");
-	armswarrior->ReadClip("Walk_R");
-	armswarrior->ReadClip("Die");
-	armswarrior->ReadClip("Hit");
-	armswarrior->ReadClip("Jump");
-}
-
-void KimScene::instacning05()
-{
-	marksmanshiphunter = new ModelAnimatorInstancing("MarksmanshipHunter");
-	marksmanshiphunter->ReadClip("Idle");
-	marksmanshiphunter->ReadClip("Attack_1");
-	marksmanshiphunter->ReadClip("Walk_F");
-	marksmanshiphunter->ReadClip("Walk_B");
-	marksmanshiphunter->ReadClip("Walk_L");
-	marksmanshiphunter->ReadClip("Walk_R");
-	marksmanshiphunter->ReadClip("Die");
-	marksmanshiphunter->ReadClip("Hit");
-	marksmanshiphunter->ReadClip("Jump");
-	marksmanshiphunter->ReadClip("S_Dive");
-	marksmanshiphunter->ReadClip("S_Shooting");
+	CH->GUIRender();
 }

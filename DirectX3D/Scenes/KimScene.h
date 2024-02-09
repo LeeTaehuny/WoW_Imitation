@@ -22,19 +22,11 @@ public:
 private:
     // 캐릭터 배이스
     //class CH_Base* mainPlayer;
-
-    ModelAnimatorInstancing* paladin;
-    ModelAnimatorInstancing* firemage;
-    ModelAnimatorInstancing* holypriest;
-    ModelAnimatorInstancing* armswarrior;
-    ModelAnimatorInstancing* marksmanshiphunter;
-    CH_Base_ver2* player;
     int count = 0;
 
     MonsterBase* targetMonster;
+    Collider* targetNPC;
     class SkillBase* skill;
 
     ParticleSystem* particle;
-
-    vector<CH_Base_ver2*> NPC;
 };

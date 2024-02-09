@@ -427,6 +427,12 @@
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_004_HOTR.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_014_Blessing_of_Spellwarding.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Character_\CH_Manager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX3D.cpp">
@@ -805,6 +811,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_004_HOTR.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_014_Blessing_of_Spellwarding.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Character_\CH_Manager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

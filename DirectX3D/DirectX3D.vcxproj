@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Character_\CH_Manager.h" />
     <ClInclude Include="Objects\Character_\ArmsWarrior_in.h" />
     <ClInclude Include="Objects\Character_\FireMage_in.h" />
     <ClInclude Include="Objects\Character_\HolyPriest_in.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Objects\Character_\ProtectionWarrior_in.h" />
     <ClInclude Include="Objects\Skills\Base\PassiveSkill.h" />
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_004_HOTR.h" />
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_014_Blessing_of_Spellwarding.h" />
     <ClInclude Include="Scenes\KimScene.h" />
     <ClInclude Include="Objects\Inventory\Slot.h" />
     <ClInclude Include="Objects\UI\Button.h" />
@@ -300,6 +302,7 @@
     <ClInclude Include="Objects\Item\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Character_\CH_Manager.cpp" />
     <ClCompile Include="Objects\Character_\ArmsWarrior_in.cpp" />
     <ClCompile Include="Objects\Character_\FireMage_in.cpp" />
     <ClCompile Include="Objects\Character_\HolyPriest_in.cpp" />
@@ -315,6 +318,7 @@
   <ItemGroup>
     <ClCompile Include="Objects\MAP\Dungeon.cpp" />
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_004_HOTR.cpp" />
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_014_Blessing_of_Spellwarding.cpp" />
     <ClCompile Include="Scenes\MAP\MapTestScene.cpp" />
     <ClCompile Include="Objects\MAP\BossMap.cpp" />
     <ClCompile Include="Framework\Environment\Reflection.cpp" />

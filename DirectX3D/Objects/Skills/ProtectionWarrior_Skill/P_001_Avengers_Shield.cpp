@@ -111,7 +111,7 @@ void P_001_Avengers_Shield::Render()
 
 void P_001_Avengers_Shield::UseSkill(Collider* targetCollider)
 {
-	if (targetCollider == nullptr) return;
+	if (!isCooldown && targetCollider == nullptr) return;
 	three[0] = targetCollider;
 	target = three[0];
 

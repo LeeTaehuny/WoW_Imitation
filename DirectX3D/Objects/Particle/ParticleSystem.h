@@ -82,6 +82,7 @@ public:
     bool IsPlay() { return isPlay; } // 현재 파티클이 재생중인지를 판별하는 함수
 
     void SetPos(Vector3 pos) { quad->Pos(); }
+    ParticleData Getdata() { return data; }
 
 private:
     void UpdatePhysical(); //실체를 업데이트하는 함수

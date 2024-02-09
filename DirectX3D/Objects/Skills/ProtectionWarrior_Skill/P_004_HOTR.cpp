@@ -1,6 +1,6 @@
 ﻿#include "Framework.h"
 
-P_004_HOTR::P_004_HOTR() : ActiveSkill(SkillType::NonTarget)
+P_004_HOTR::P_004_HOTR() : ActiveSkill(SkillType::Target)
 {
 	myCollider = new SphereCollider(2.5f);
 	myCollider->SetActive(false);
@@ -29,13 +29,17 @@ P_004_HOTR::P_004_HOTR() : ActiveSkill(SkillType::NonTarget)
 
 	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/004.jpg");
 	holy_wave = new Quad(L"Textures/Effect/alpha_gold_snow.png");
-	//holy_wave = new Quad(Vector2(1, 1));
 	holy_wave->Rot().x = 1.7f;
 	holy_wave->Scale() *= 0.05f;
 	holy_wave->SetParent(hitCollider);
 
 	FOR(2) blendState[i] = new BlendState();
 	blendState[1]->Alpha(true); //알파 적용 (반투명 설정 있으면 적용)
+
+	// 선행 스킬의 이름은 번호로 지정 
+	// 001 : 응징의 방패를 선행 스킬로 필요로 한다는 의미
+	prevSkills.resize(1);
+	prevSkills[0] = "001";
 }
 
 P_004_HOTR::~P_004_HOTR()
@@ -91,7 +95,8 @@ void P_004_HOTR::Update()
 				monster->Hit(skillDamage);
 			}
 		}
-	
+		
+		// 히트 범위가 일정 수준을 넘어가면 액티브를 끄면서 동작 정지
 		if (hitCollider->Scale().x >= 7)
 		{
 			hitCollider->SetActive(false);
@@ -108,23 +113,24 @@ void P_004_HOTR::Update()
 	myCollider->UpdateWorld();
 	hitCollider->UpdateWorld();
 	holy_wave->UpdateWorld();
+
+	ActiveSkill::Cooldown();
 }
 
 void P_004_HOTR::Render()
 {
-	myCollider->Render();
-	hitCollider->Render();
+	//myCollider->Render();
+	//hitCollider->Render();
 
 	blendState[1]->SetState();
 	if (hitCollider->Active())
 		holy_wave->Render();
-
 	blendState[0]->SetState();
 }
 
 void P_004_HOTR::UseSkill(Collider* targetCollider)
 {
-	if (targetCollider == nullptr) return;
+	if (!isCooldown && targetCollider == nullptr) return;
 	target = targetCollider;
 
 	myCollider->SetActive(true);
@@ -136,7 +142,8 @@ void P_004_HOTR::UseSkill(Collider* targetCollider)
 	{
 		hitCollider->SetActive(true);
 		hitCollider->Pos() = target->GlobalPos();
-		hitCollider->Pos().y = 0;
+		hitCollider->Pos().y = target->GlobalScale().y * 0.5f;
+		hitCollider->UpdateWorld();
 		isRun = true;
 		isCooldown = true;
 	}
