@@ -424,6 +424,9 @@
     <ClInclude Include="Objects\Character_\MarksmanshipHunter_in.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_004_HOTR.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX3D.cpp">
@@ -799,6 +802,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Character_\MarksmanshipHunter_in.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_004_HOTR.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -61,7 +61,10 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("LightTest", new LightScene());
     //SceneManager::Get()->Create("Billboard", new BillboardScene());
     //SceneManager::Get()->Create("Particle", new ParticleScene());
+
     //SceneManager::Get()->Create("ParticleConfig", new ParticleConfigScene());
+    //SceneManager::Get()->Add("ParticleConfig");
+
     // * 작업중. //SceneManager::Get()->Create("MirrorScene", new MirrorScene());
     //SceneManager::Get()->Create("WaterScene", new WaterScene());
     //SceneManager::Get()->Create("QuadTree", new QuadTreeScene());

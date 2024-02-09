@@ -44,6 +44,9 @@ public:
 
 	void SetPlayer(CH_Base_ver2* myPlayer) { this->myPlayer = myPlayer; };
 
+	ModelAnimatorInstancing* GetInstancing() { return instancing; }
+	UINT GetIndex() { return index; }
+
 	// Member Variable
 protected:
 	CreatureType creatureType;

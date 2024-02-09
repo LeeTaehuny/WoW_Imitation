@@ -226,6 +226,7 @@ using namespace GameMath;
 
 // 보호 성기사 스킬
 #include "Objects/Skills/ProtectionWarrior_Skill/P_001_Avengers_Shield.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_004_HOTR.h"
 
 #include "Objects/Test/TestLight.h"
 

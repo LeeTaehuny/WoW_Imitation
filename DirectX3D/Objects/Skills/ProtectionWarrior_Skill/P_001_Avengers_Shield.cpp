@@ -16,7 +16,7 @@ P_001_Avengers_Shield::P_001_Avengers_Shield() : ActiveSkill(SkillType::Target)
 	Yad->UpdateWorld();
 
 	// 스킬 속도
-	speed = 10.0f;
+	speed = 30.0f;
 
 	// 스킬 데미지
 	skillDamage = 100.0f;
@@ -34,6 +34,13 @@ P_001_Avengers_Shield::P_001_Avengers_Shield() : ActiveSkill(SkillType::Target)
 	shielD->SetParent(myCollider);
 
 	three.resize(3);
+
+	startEdge = new Transform();
+	endEdge = new Transform();
+	trail = new Trail(L"Textures/Effect/alpha_white.png", startEdge, endEdge, 50, 125.0f);
+
+	// 스킬 아이콘 이미지 저장
+	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/001.jpg");
 }
 P_001_Avengers_Shield::~P_001_Avengers_Shield()
 {
@@ -42,6 +49,9 @@ P_001_Avengers_Shield::~P_001_Avengers_Shield()
 	delete myCollider;
 	delete hitCollider;
 	delete icon;
+	delete startEdge;
+	delete endEdge;
+	delete trail;
 	for (Collider* col : three)
 		delete col;
 }
@@ -61,7 +71,22 @@ void P_001_Avengers_Shield::Update()
 		shielD->UpdateWorld();
 		myCollider->UpdateWorld();
 		hitCollider->UpdateWorld();
+
+		{
+			startEdge->Pos() = myCollider->GlobalPos() + myCollider->Left() * 0.5f;
+			endEdge->Pos() = myCollider->GlobalPos() + myCollider->Right() * 0.5f;
+
+		}
 	}
+	else
+	{
+		startEdge->Pos() = owner->GlobalPos();
+		endEdge->Pos() = owner->GlobalPos();
+	}
+
+	startEdge->UpdateWorld();
+	endEdge->UpdateWorld();
+	trail->Update();
 	Impact();
 
 	// 작동중인 상태와 쿨타임을 분리하여 던져지자 마자 쿨이 돌도록 수정
@@ -80,24 +105,32 @@ void P_001_Avengers_Shield::Render()
 	if (myCollider->Active())
 	{
 		shielD->Render();
+		trail->Render();
 	}
 }
 
 void P_001_Avengers_Shield::UseSkill(Collider* targetCollider)
 {
+	if (targetCollider == nullptr) return;
 	three[0] = targetCollider;
 	target = three[0];
 
 	Yad->SetActive(true);
 	Yad->Pos() = owner->Pos();
+	Yad->UpdateWorld();
 	if (Yad->IsCollision(target))
 	{
 		if (!isCooldown)
 		{
 			myCollider->SetActive(true);
-			myCollider->Pos() = owner->Pos();
+			myCollider->Pos() = owner->GlobalPos();
 			isRun = true;
 			isCooldown = true;
+
+			startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 1.0f;
+			endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back() * 1.0f;
+			startEdge->UpdateWorld();
+			endEdge->UpdateWorld();
 		}
 	}
 }

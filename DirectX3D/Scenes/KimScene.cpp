@@ -24,11 +24,11 @@ KimScene::KimScene()
 
 	Transform* transform = paladin->Add();
 	player = new ProtectionWarrior_in(CreatureType::Player, transform, paladin, count);
-	CAM->SetTarget(player);
+	//CAM->SetTarget(player);
 	count++;
 	//MONSTER->SetTarget(mainholypriestadinayer->GetCollider());
 
-	skill = new P_001_Avengers_Shield();
+	skill = new P_004_HOTR();
 	skill->SetOwner(player);
 
 	//spawn(holypriest);
@@ -45,6 +45,9 @@ KimScene::KimScene()
 	MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
 	MONSTER->SpawnScarecrow(Vector3(10));
 	MONSTER->SpawnScarecrow(Vector3(-10));
+	MONSTER->SpawnScarecrow(Vector3(-5));
+
+	particle = new ParticleSystem("TextData/Particles/fire.fx");
 }
 
 KimScene::~KimScene()
@@ -55,6 +58,7 @@ KimScene::~KimScene()
 	delete holypriest;
 	delete armswarrior;
 	delete marksmanshiphunter;
+	delete particle;
 
 	delete player;
 
@@ -83,6 +87,13 @@ void KimScene::Update()
 	UPDATE(holypriest);
 	UPDATE(armswarrior);
 	UPDATE(marksmanshiphunter);
+	
+	UPDATE(particle);
+
+	if (KEY_DOWN('1'))
+	{
+		particle->Play(Vector3());
+	}
 
 	{
 		if (KEY_DOWN(VK_LBUTTON))
@@ -105,7 +116,7 @@ void KimScene::Update()
 			}
 		}
 
-		if (KEY_DOWN('K'))
+		if (KEY_PRESS('K'))
 		{
 			if (targetMonster != nullptr)
 				skill->UseSkill(targetMonster->GetCollider());
@@ -132,8 +143,9 @@ void KimScene::Render()
 	RENDER(holypriest);
 	RENDER(armswarrior);
 	RENDER(marksmanshiphunter);
+	RENDER(particle);
 
-	player->Render();
+	//player->Render();
 	skill->Render();
 	MONSTER->Render();
 	for (CH_Base_ver2* ch : NPC)

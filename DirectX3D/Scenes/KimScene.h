@@ -34,5 +34,7 @@ private:
     MonsterBase* targetMonster;
     class SkillBase* skill;
 
+    ParticleSystem* particle;
+
     vector<CH_Base_ver2*> NPC;
 };

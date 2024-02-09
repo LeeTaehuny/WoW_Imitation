@@ -49,7 +49,7 @@ void FireBall::Update()
 		if (isRun)
 		{
 			startEdge->Pos() = myCollider->GlobalPos() + myCollider->Left() * 10.0f;
-			endEdge->Pos() = myCollider->GlobalPos() - myCollider->Right() * 10.0f;
+			endEdge->Pos() = myCollider->GlobalPos() + myCollider->Right() * 10.0f;
 
 			startEdge->UpdateWorld();
 			endEdge->UpdateWorld();
