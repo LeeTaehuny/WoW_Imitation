@@ -7,9 +7,7 @@ public:
 
 	virtual void Update() override;
 	virtual void Render() override;
-	virtual void UseSkill() {}
-	virtual void UseSkill(Collider* targetCollider) override;
-	virtual void UseSkill(Vector3 direction) {}
+	virtual void UseSkill(CH_Base_ver2* chbase) override;
 
 private:
 	// 캐릭터의 데이터를 받아오기 위한 변수

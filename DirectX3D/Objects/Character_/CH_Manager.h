@@ -49,6 +49,7 @@ public:
 
 	// 플레이어의 데이터를 받아오기 위한 겟터
 	CH_Base_ver2* GetPlayerData() { return character[0]; }
+	vector<CH_Base_ver2*> GetCharcterData() { return character; }
 
 private:
 	ModelAnimatorInstancing* armswarrior;

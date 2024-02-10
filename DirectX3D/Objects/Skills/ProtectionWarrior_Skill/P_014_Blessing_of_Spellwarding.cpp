@@ -4,6 +4,12 @@
 //
 P_014_Blessing_of_Spellwarding::P_014_Blessing_of_Spellwarding() : ActiveSkill(SkillType::Target)
 {
+	/*
+	스킬의 효과
+
+	대상 파티원에게 10초동안 모든 마법 피해 및 해로운 효과의 면역을 줍니다.
+	*/
+
 	myCollider = new SphereCollider(2.5f);
 	myCollider->SetActive(false);
 
@@ -29,7 +35,7 @@ P_014_Blessing_of_Spellwarding::P_014_Blessing_of_Spellwarding() : ActiveSkill(S
 	prevSkills[0] = "001";
 	prevSkills[1] = "005";
 
-	particle = new ParticleSystem(L"Textures/Effect/alpha_gold_snow.png");
+	particle = new ParticleSystem("TextData/Particles/holy/Heal.fx");
 	//particle->Getdata().count = particle->Getdata().count;
 }
 
@@ -51,10 +57,14 @@ void P_014_Blessing_of_Spellwarding::Update()
 		myCollider->UpdateWorld();
 	}
 
+	// 회복이나 버프 관련은 이곳에서 추가해주면 될 듯
 	if (isRun)
 	{
 		isRun = false;
-		particle->Play(target->GlobalPos());
+
+		Vector3 im = target->GlobalPos();
+		im.y += target->GlobalScale().y;
+		particle->Play(im);
 	}
 
 	particle->Update();
@@ -63,18 +73,18 @@ void P_014_Blessing_of_Spellwarding::Update()
 
 void P_014_Blessing_of_Spellwarding::Render()
 {
-	if (target != nullptr)
-		myCollider->Render();
+	//if (target != nullptr)
+	//	myCollider->Render();
 	particle->Render();
 }
 
 // 해당 스킬이 회복스킬인지 아니면 공격 스킬인지 구분하여
 // 공격 스킬이라면 적의 정보를 받아오고
 // 회복 스킬이면 아군의 정보를 받아오게 하는 함수를 따로 만들 필요가 있어보임
-void P_014_Blessing_of_Spellwarding::UseSkill(Collider* targetCollider)
+void P_014_Blessing_of_Spellwarding::UseSkill(CH_Base_ver2* chbase)
 {
-	if (isCooldown && targetCollider == nullptr) return;
-	target = targetCollider;
+	if (isCooldown && chbase == nullptr) return;
+	target = chbase->GetCollider();
 	myCollider->SetActive(true);
 	isCooldown = true;
 	isRun = true;

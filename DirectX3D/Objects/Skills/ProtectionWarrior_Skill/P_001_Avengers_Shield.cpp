@@ -2,6 +2,12 @@
 
 P_001_Avengers_Shield::P_001_Avengers_Shield() : ActiveSkill(SkillType::Target)
 {
+	/*
+	스킬의 효과
+
+	적에게 방패를 던짐
+	*/
+
 	// 콜라이더 생성 후 바로 비활성화
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);

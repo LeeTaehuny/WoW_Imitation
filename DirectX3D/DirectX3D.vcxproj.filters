@@ -433,6 +433,18 @@
     <ClInclude Include="Objects\Character_\CH_Manager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_034_Moment_Of_Glory.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_032_Eye_Of_Tyr.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_009_Ardent_Defender.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_024_Guardian_Of_Ancient_Kings.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX3D.cpp">
@@ -817,6 +829,18 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Character_\CH_Manager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_034_Moment_Of_Glory.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_032_Eye_Of_Tyr.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_009_Ardent_Defender.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_024_Guardian_Of_Ancient_Kings.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

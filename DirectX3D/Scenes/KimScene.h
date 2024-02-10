@@ -25,7 +25,7 @@ private:
     int count = 0;
 
     MonsterBase* targetMonster;
-    Collider* targetNPC;
+    CH_Base_ver2* targetNPC;
     class SkillBase* skill;
 
     ParticleSystem* particle;

@@ -2,6 +2,12 @@
 
 P_004_HOTR::P_004_HOTR() : ActiveSkill(SkillType::Target)
 {
+	/*
+	스킬의 효과
+
+	적 한 명을 공격하고 그 적으로부터 파동의 형태로 주변의 적들에게도 피해를 준다
+	*/
+
 	myCollider = new SphereCollider(2.5f);
 	myCollider->SetActive(false);
 	hitCollider = new SphereCollider();

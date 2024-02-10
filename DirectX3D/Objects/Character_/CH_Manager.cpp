@@ -162,7 +162,7 @@ void CH_Manager::PlayerSpawn(int value)
 			InstancingDataProtection();
 		}
 		Transform* transform1 = paladin->Add();
-		CH_Base_ver2* un = new ArmsWarrior_in(CreatureType::Player, transform1, paladin, 0);
+		CH_Base_ver2* un = new ProtectionWarrior_in(CreatureType::Player, transform1, paladin, 0);
 		character.push_back(un);
 	}
 	else if (value == 3)
@@ -172,7 +172,7 @@ void CH_Manager::PlayerSpawn(int value)
 			InstancingDataFire();
 		}
 		Transform* transform1 = firemage->Add();
-		CH_Base_ver2* un = new ArmsWarrior_in(CreatureType::Player, transform1, firemage, 0);
+		CH_Base_ver2* un = new FireMage_in(CreatureType::Player, transform1, firemage, 0);
 		character.push_back(un);
 	}
 	else if (value == 4)
@@ -182,7 +182,7 @@ void CH_Manager::PlayerSpawn(int value)
 			InstancingDataMarksmanship();
 		}
 		Transform* transform1 = marksmanshiphunter->Add();
-		CH_Base_ver2* un = new ArmsWarrior_in(CreatureType::Player, transform1, marksmanshiphunter, 0);
+		CH_Base_ver2* un = new MarksmanshipHunter_in(CreatureType::Player, transform1, marksmanshiphunter, 0);
 		character.push_back(un);
 	}
 	else if (value == 5)
@@ -192,7 +192,7 @@ void CH_Manager::PlayerSpawn(int value)
 			InstancingDataHoly();
 		}
 		Transform* transform1 = holypriest->Add();
-		CH_Base_ver2* un = new ArmsWarrior_in(CreatureType::Player, transform1, holypriest, 0);
+		CH_Base_ver2* un = new HolyPriest_in(CreatureType::Player, transform1, holypriest, 0);
 		character.push_back(un);
 	}
 	else
@@ -200,7 +200,7 @@ void CH_Manager::PlayerSpawn(int value)
 		return;
 	}
 
-	CAM->SetTarget(character[0]);
+	//CAM->SetTarget(character[0]);
 	MONSTER->SetTarget(character[0]->GetCollider());
 }
 
@@ -223,7 +223,7 @@ void CH_Manager::NonPlayerSpawn(int value)
 			InstancingDataProtection();
 		}
 		Transform* transform1 = paladin->Add();
-		CH_Base_ver2* un = new ArmsWarrior_in(CreatureType::NonPlayer, transform1, paladin, nonCount);
+		CH_Base_ver2* un = new ProtectionWarrior_in(CreatureType::NonPlayer, transform1, paladin, nonCount);
 		character.push_back(un);
 	}
 	else if (value == 3)
@@ -233,7 +233,7 @@ void CH_Manager::NonPlayerSpawn(int value)
 			InstancingDataFire();
 		}
 		Transform* transform1 = firemage->Add();
-		CH_Base_ver2* un = new ArmsWarrior_in(CreatureType::NonPlayer, transform1, firemage, nonCount);
+		CH_Base_ver2* un = new FireMage_in(CreatureType::NonPlayer, transform1, firemage, nonCount);
 		character.push_back(un);
 	}
 	else if (value == 4)
@@ -243,7 +243,7 @@ void CH_Manager::NonPlayerSpawn(int value)
 			InstancingDataMarksmanship();
 		}
 		Transform* transform1 = marksmanshiphunter->Add();
-		CH_Base_ver2* un = new ArmsWarrior_in(CreatureType::NonPlayer, transform1, marksmanshiphunter, nonCount);
+		CH_Base_ver2* un = new MarksmanshipHunter_in(CreatureType::NonPlayer, transform1, marksmanshiphunter, nonCount);
 		character.push_back(un);
 	}
 	else if (value == 5)
@@ -253,7 +253,7 @@ void CH_Manager::NonPlayerSpawn(int value)
 			InstancingDataHoly();
 		}
 		Transform* transform1 = holypriest->Add();
-		CH_Base_ver2* un = new ArmsWarrior_in(CreatureType::NonPlayer, transform1, holypriest, nonCount);
+		CH_Base_ver2* un = new HolyPriest_in(CreatureType::NonPlayer, transform1, holypriest, nonCount);
 		character.push_back(un);
 	}
 	else

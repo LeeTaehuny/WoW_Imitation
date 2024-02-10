@@ -16,9 +16,9 @@
 
 KimScene::KimScene()
 {
-	CH->PlayerSpawn(1);
+	CH->PlayerSpawn(2);
 
-	skill = new P_014_Blessing_of_Spellwarding();
+	skill = new P_032_Eye_Of_Tyr();
 	skill->SetOwner(CH->GetPlayerData());
 
 	MONSTER;
@@ -79,9 +79,9 @@ void KimScene::Update()
 				}
 			}
 
-			for (Collider* play : MONSTER->targets)
+			for (CH_Base_ver2* play : CH->GetCharcterData())
 			{
-				if (play->IsRayCollision(ray, &contact))
+				if (play->GetCollider()->IsRayCollision(ray, &contact))
 				{
 					targetNPC = play;
 				}
@@ -94,8 +94,8 @@ void KimScene::Update()
 			//	skill->UseSkill(targetMonster->GetCollider());
 
 			// 플레이어 캐릭터에게 사용하기 위한 함수
-			if (targetNPC != nullptr)
-				skill->UseSkill(targetNPC);
+			//if (targetNPC != nullptr)
+			skill->UseSkill();
 		}
 	}
 

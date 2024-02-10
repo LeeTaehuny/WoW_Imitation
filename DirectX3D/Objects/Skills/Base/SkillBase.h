@@ -10,6 +10,8 @@ public:
 	virtual void UseSkill() {}
 	virtual void UseSkill(Collider* targetCollider) {}
 	virtual void UseSkill(Vector3 direction) {}
+	virtual void UseSkill(CH_Base_ver2* chbase) {}
+	virtual void UseSkill(MonsterBase* monsterbase) {}
 
 	//void Cooldown();
 
