@@ -26,12 +26,14 @@ P_034_Moment_Of_Glory::P_034_Moment_Of_Glory() : ActiveSkill(SkillType::Target)
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
 		isRun = false;
 		isCooldown = false;
+
+		// // 마나 소모 불명 : 0.5%
 	}
 
 	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/034.jpg");
 	prevSkills.resize(2);
-	prevSkills[0] = "013";
-	prevSkills[1] = "024";
+	prevSkills[0] = "P_013_Bulwark_Of_Order";
+	prevSkills[1] = "P_024_Guardian_Of_Ancient_Kings";
 }
 
 P_034_Moment_Of_Glory::~P_034_Moment_Of_Glory()

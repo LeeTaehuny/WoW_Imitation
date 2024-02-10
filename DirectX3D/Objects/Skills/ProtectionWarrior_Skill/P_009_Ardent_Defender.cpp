@@ -27,11 +27,13 @@ P_009_Ardent_Defender::P_009_Ardent_Defender() : ActiveSkill(SkillType::Target)
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
 		isRun = false;
 		isCooldown = false;
+
+		// // 마나 소모 불명 : 약 1.0%
 	}
 
 	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/009.jpg");
 	prevSkills.resize(1);
-	prevSkills[0] = "005";
+	prevSkills[0] = "P_005_Grand_Crusader";
 }
 
 P_009_Ardent_Defender::~P_009_Ardent_Defender()

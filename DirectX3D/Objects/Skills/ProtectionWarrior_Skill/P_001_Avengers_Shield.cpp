@@ -21,19 +21,23 @@ P_001_Avengers_Shield::P_001_Avengers_Shield() : ActiveSkill(SkillType::Target)
 	Yad->SetActive(false);
 	Yad->UpdateWorld();
 
-	// 스킬 속도
-	speed = 30.0f;
+	{
+		// 스킬 속도
+		speed = 30.0f;
 
-	// 스킬 데미지
-	skillDamage = 100.0f;
+		// 스킬 데미지
+		skillDamage = 100.0f;
 
-	// 쿨타임 설정 (5초)
-	MAX_delay = 5.0f;
-	coolTime = MAX_delay;
+		// 쿨타임 설정 (5초)
+		MAX_delay = 5.0f;
+		coolTime = MAX_delay;
 
-	// 처음은 스킬 실행중인 상태가 아니도록 설정
-	isRun = false;
-	isCooldown = false;
+		// 처음은 스킬 실행중인 상태가 아니도록 설정
+		isRun = false;
+		isCooldown = false;
+
+		// 마나 소모 불명 : 약 1.5%정도
+	}
 
 	shielD = new Model("shield");
 	shielD->Scale() *= 2;

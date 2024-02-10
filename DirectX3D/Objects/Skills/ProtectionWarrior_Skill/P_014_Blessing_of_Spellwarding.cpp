@@ -28,12 +28,14 @@ P_014_Blessing_of_Spellwarding::P_014_Blessing_of_Spellwarding() : ActiveSkill(S
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
 		isRun = false;
 		isCooldown = false;
+
+		// // 마나 소모 3%
 	}
 
 	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/014.jpg");
 	prevSkills.resize(2);
-	prevSkills[0] = "001";
-	prevSkills[1] = "005";
+	prevSkills[0] = "P_001_Avengers_Shield";
+	prevSkills[1] = "P_005_Grand_Crusader";
 
 	particle = new ParticleSystem("TextData/Particles/holy/Heal.fx");
 	//particle->Getdata().count = particle->Getdata().count;

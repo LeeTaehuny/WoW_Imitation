@@ -24,12 +24,14 @@ P_024_Guardian_Of_Ancient_Kings::P_024_Guardian_Of_Ancient_Kings() : ActiveSkill
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
 		isRun = false;
 		isCooldown = false;
+
+		// // 마나 소모 불명 : 5%
 	}
 	
 	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/0024.jpg");
 	prevSkills.resize(2);
-	prevSkills[0] = "013";
-	prevSkills[1] = "014";
+	prevSkills[0] = "P_013_Bulwark_Of_Order";
+	prevSkills[1] = "P_014_Blessing_of_Spellwarding";
 }
 
 P_024_Guardian_Of_Ancient_Kings::~P_024_Guardian_Of_Ancient_Kings()

@@ -28,6 +28,8 @@ P_032_Eye_Of_Tyr::P_032_Eye_Of_Tyr() : ActiveSkill(SkillType::NonTarget)
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
 		isRun = false;
 		isCooldown = false;
+
+		// // 마나 소모 불명 : 0.5%
 	}
 
 	// 이펙트를 위한 변수?
@@ -43,7 +45,7 @@ P_032_Eye_Of_Tyr::P_032_Eye_Of_Tyr() : ActiveSkill(SkillType::NonTarget)
 
 	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/032.jpg");
 	prevSkills.resize(1);
-	prevSkills[0] = "024";
+	prevSkills[0] = "P_024_Guardian_Of_Ancient_Kings";
 }
 
 P_032_Eye_Of_Tyr::~P_032_Eye_Of_Tyr()

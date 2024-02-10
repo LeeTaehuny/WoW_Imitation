@@ -31,6 +31,8 @@ P_004_HOTR::P_004_HOTR() : ActiveSkill(SkillType::Target)
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
 		isRun = false;
 		isCooldown = false;
+
+		// // 마나 소모 : 0.32%
 	}
 
 	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/004.jpg");
@@ -45,7 +47,7 @@ P_004_HOTR::P_004_HOTR() : ActiveSkill(SkillType::Target)
 	// 선행 스킬의 이름은 번호로 지정 
 	// 001 : 응징의 방패를 선행 스킬로 필요로 한다는 의미
 	prevSkills.resize(1);
-	prevSkills[0] = "001";
+	prevSkills[0] = "P_001_Avengers_Shield";
 }
 
 P_004_HOTR::~P_004_HOTR()
