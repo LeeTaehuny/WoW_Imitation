@@ -7,26 +7,33 @@ TestDungeonScene::TestDungeonScene()
 
 	TestSize = new SphereCollider(2);
 
-	//instaning = new ModelAnimatorInstancing("ProtectionWarrior");
-	//instaning->ReadClip("Idle_1");
-	//instaning->ReadClip("Attack_1");
-	//instaning->ReadClip("Walk_F");
-	//instaning->ReadClip("Walk_B");
-	//instaning->ReadClip("Walk_L");
-	//instaning->ReadClip("Walk_R");
-	//instaning->ReadClip("Die");
-	//instaning->ReadClip("Hit");
-	//instaning->ReadClip("Jump");
-	//instaning->ReadClip("S_Casting");
-	//
-	//Transform* transform = instaning->Add();
-	//player = new ProtectionWarrior_in(CreatureType::Player, transform, instaning, 0);
-	//
-	//PLAYER = new Model("ProtectionWarrior");
-	//
-	//dungeon->SetParent(TestSize);
+	instaning = new ModelAnimatorInstancing("ProtectionWarrior");
+	instaning->ReadClip("Idle_1");
+	instaning->ReadClip("Attack_1");
+	instaning->ReadClip("Walk_F");
+	instaning->ReadClip("Walk_B");
+	instaning->ReadClip("Walk_L");
+	instaning->ReadClip("Walk_R");
+	instaning->ReadClip("Die");
+	instaning->ReadClip("Hit");
+	instaning->ReadClip("Jump");
+	instaning->ReadClip("S_Casting");
 	
+	Transform* transform = instaning->Add();
+	player = new ProtectionWarrior_in(CreatureType::Player, transform, instaning, 0);
+	player->Rot().y += 3.15f;
+	
+	PLAYER = new Model("ProtectionWarrior");
 
+	TestSize->Pos() = dungeon->GetSpawnPoint_P();
+	PLAYER->Pos() = dungeon->GetSpawnPoint_P();
+	//instaning->Pos() = dungeon->GetSpawnPoint_P();
+	player->Pos() = dungeon->GetSpawnPoint_P();
+
+
+
+	//dungeon->Rot().y += 3.15f;
+	//dungeon->Scale() *= 6.0f;
 }
 
 TestDungeonScene::~TestDungeonScene()
@@ -40,22 +47,22 @@ TestDungeonScene::~TestDungeonScene()
 void TestDungeonScene::Update()
 {
 	dungeon->Update();
-	//instaning->Update();
-	//player->Update();
+	instaning->Update();
+	player->Update();
 	TestSize->UpdateWorld();
-	//PLAYER->UpdateWorld();
+	PLAYER->UpdateWorld();
 
 	if (!KEY_PRESS(VK_RBUTTON))
 	{
-		//if (KEY_PRESS('W')) PLAYER->Pos().x += 100 * DELTA;
-		//if (KEY_PRESS('S')) PLAYER->Pos().x -= 100 * DELTA;
-		//if (KEY_PRESS('D')) PLAYER->Pos().z -= 100 * DELTA;
-		//if (KEY_PRESS('A')) PLAYER->Pos().z += 100 * DELTA;
+		if (KEY_PRESS('W')) PLAYER->Pos().z += 100 * DELTA;
+		if (KEY_PRESS('S')) PLAYER->Pos().z -= 100 * DELTA;
+		if (KEY_PRESS('D')) PLAYER->Pos().x += 100 * DELTA;
+		if (KEY_PRESS('A')) PLAYER->Pos().x -= 100 * DELTA;
 
-		if (KEY_PRESS('W')) TestSize->Pos().x += 100 * DELTA;
-		if (KEY_PRESS('S')) TestSize->Pos().x -= 100 * DELTA;
-		if (KEY_PRESS('D')) TestSize->Pos().z -= 100 * DELTA;
-		if (KEY_PRESS('A')) TestSize->Pos().z += 100 * DELTA;
+		if (KEY_PRESS('W')) TestSize->Pos().z += 100 * DELTA;
+		if (KEY_PRESS('S')) TestSize->Pos().z -= 100 * DELTA;
+		if (KEY_PRESS('D')) TestSize->Pos().x += 100 * DELTA;
+		if (KEY_PRESS('A')) TestSize->Pos().x -= 100 * DELTA;
 
 
 		if (KEY_DOWN('F')) dungeon->OpenDoor(true);
@@ -67,12 +74,12 @@ void TestDungeonScene::Update()
 
 void TestDungeonScene::Render()
 {
-	//instaning->Render();
-	//player->Render();
+	instaning->Render();
+	player->Render();
 
 	dungeon->Render();
 	TestSize->Render();
-	//PLAYER->Render();
+	PLAYER->Render();
 }
 
 void TestDungeonScene::PreRender()

@@ -13,12 +13,12 @@ public:
     virtual void GUIRender() override;
 
 private:
-    Dungeon* dungeon;
+    Dungeon* dungeon;                                                    
     SphereCollider* TestSize;
 
-    //ModelAnimatorInstancing* instaning;
-    //CH_Base_ver2* player;
-    //
-    //Model* PLAYER;
+    ModelAnimatorInstancing* instaning;
+    CH_Base_ver2* player;
+    
+    Model* PLAYER;
 };
 

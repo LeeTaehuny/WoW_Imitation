@@ -3,10 +3,10 @@
 
 Dungeon::Dungeon() //: Transform()
 {
-	terrain = new Terrain();
-	terrain->Rot().x = 0.0f;
-	terrain->Rot().y = 0.0f;
-	terrain->Rot().z = 0.0f;
+	//terrain = new Terrain();
+	//terrain->Rot().x = 0.0f;
+	//terrain->Rot().y = 0.0f;
+	//terrain->Rot().z = 0.0f;
 
 	Gates.resize(6);
 	Gates[0] = new Model("Gate");
@@ -34,10 +34,7 @@ Dungeon::Dungeon() //: Transform()
 	Gates[5]->Scale() *= 9.0f;
 	Gates[5]->Pos().y -= 20.5f; // close
 
-	for (int i = 0; i < Gates.size(); ++i) Gates[i]->Pos().y += 75.0f;
-
-
-
+	
 	Walls_L.resize(8);
 	for (int i = 0; i < Walls_L.size(); ++i) Walls_L[i] = new Model("Wall");
 	for (int i = 0; i < Walls_L.size(); ++i)
@@ -104,7 +101,6 @@ Dungeon::Dungeon() //: Transform()
 
 
 	InGates.resize(7);
-	//for (int i = 0; i < InGates.size(); ++i);
 	InGates[0] = new Model("InGate");
 	InGates[0]->Pos().x += 460.0f;
 	InGates[0]->Pos().y += 10.0f;
@@ -145,11 +141,35 @@ Dungeon::Dungeon() //: Transform()
 	InGates[6]->Pos().x += 430.0f;
 	InGates[6]->Pos().z += 56.5f;
 	InGates[6]->Scale() *= 2.0f;
+
+
+
+	for (int i = 1; i < Gates.size(); ++i) Gates[i]->SetParent(Gates[0]);
+	for (int i = 0; i < Walls_L.size(); ++i) Walls_L[i]->SetParent(Gates[0]);
+	Walls_LF->SetParent(Gates[0]);
+	for (int i = 0; i < Walls_R.size(); ++i) Walls_R[i]->SetParent(Gates[0]);
+	Walls_RF->SetParent(Gates[0]);
+	for (int i = 0; i < Walls_B.size(); ++i) Walls_B[i]->SetParent(Gates[0]);
+	for (int i = 0; i < InGates.size(); ++i) InGates[i]->SetParent(Gates[0]);
+
+	Gates[0]->Pos().y += 75.0f;
+	for (int i = 0; i < Walls_L.size(); ++i) Walls_L[i]->Pos().y -= 75.0f;
+	Walls_LF->Pos().y -= 75.0f;
+	for (int i = 0; i < Walls_R.size(); ++i) Walls_R[i]->Pos().y -= 75.0f;
+	Walls_RF->Pos().y -= 75.0f;
+	for (int i = 0; i < Walls_B.size(); ++i) Walls_B[i]->Pos().y -= 75.0f;
+	for (int i = 0; i < InGates.size(); ++i) InGates[i]->Pos().y -= 75.0f;
+
+	Gates[0]->Scale() *= 0.166f;
+	Gates[0]->Pos().y -= 62.5f;
+	Gates[0]->Pos().x += 45.0f;
+	Gates[0]->Pos().z += 50.0f;
+	Gates[0]->Rot().y -= 1.575f;
 }
 
 Dungeon::~Dungeon()
 {
-	delete terrain;
+	//delete terrain;
 
 	for (int i = 0; i < 4; ++i) delete Gates[i];
 
@@ -164,7 +184,7 @@ Dungeon::~Dungeon()
 
 void Dungeon::Update()
 {
-	terrain->UpdateWorld();
+	//terrain->UpdateWorld();
 
 	for (int i = 0; i < Gates.size(); ++i) Gates[i]->UpdateWorld();
 	if (open) DoorMove();
@@ -178,22 +198,21 @@ void Dungeon::Update()
 
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->UpdateWorld();
 
-	Transform::UpdateWorld();
-
-
-
 	if (!KEY_PRESS(VK_RBUTTON))
 	{
-		if (KEY_PRESS(VK_LEFT)) terrain->Pos().z += 50 * DELTA;
-		if (KEY_PRESS(VK_RIGHT)) terrain->Pos().z -= 50 * DELTA;
-		if (KEY_PRESS(VK_UP)) terrain->Pos().x += 50 * DELTA;
-		if (KEY_PRESS(VK_DOWN)) terrain->Pos().x -= 50 * DELTA;
+		//if (KEY_PRESS(VK_LEFT)) terrain->Pos().z += 50 * DELTA;
+		//if (KEY_PRESS(VK_RIGHT)) terrain->Pos().z -= 50 * DELTA;
+		//if (KEY_PRESS(VK_UP)) terrain->Pos().x += 50 * DELTA;
+		//if (KEY_PRESS(VK_DOWN)) terrain->Pos().x -= 50 * DELTA;
+
 	}
+
+	this->UpdateWorld();
 }
 
 void Dungeon::Render()
 {
-	terrain->Render();
+	//terrain->Render();
 
 	for (int i = 0; i < Gates.size(); ++i) Gates[i]->Render();
 
