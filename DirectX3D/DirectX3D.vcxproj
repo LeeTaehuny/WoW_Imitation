@@ -142,6 +142,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Skills\HolyPriest\H_004_Holy_Word_Chastise.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest\H_003_Guardian_Spirit.h" />
     <ClInclude Include="Objects\Skills\HolyPriest\H_002_Holy_Word_Sanctify.h" />
     <ClInclude Include="Objects\Skills\HolyPriest\H_001_Holy_Word_Serenity.h" />
     <ClInclude Include="Objects\Character_\CH_Manager.h" />
@@ -308,6 +310,8 @@
     <ClInclude Include="Objects\Item\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Skills\HolyPriest\H_004_Holy_Word_Chastise.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest\H_003_Guardian_Spirit.cpp" />
     <ClCompile Include="Objects\Skills\HolyPriest\H_002_Holy_Word_Sanctify.cpp" />
     <ClCompile Include="Objects\Skills\HolyPriest\H_001_Holy_Word_Serenity.cpp" />
     <ClCompile Include="Objects\Character_\CH_Manager.cpp" />

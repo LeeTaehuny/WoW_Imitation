@@ -237,6 +237,8 @@ using namespace GameMath;
 // 신성 사제 스킬
 #include "Objects/Skills/HolyPriest/H_001_Holy_Word_Serenity.h"
 #include "Objects/Skills/HolyPriest/H_002_Holy_Word_Sanctify.h"
+#include "Objects/Skills/HolyPriest/H_003_Guardian_Spirit.h"
+#include "Objects/Skills/HolyPriest/H_004_Holy_Word_Chastise.h"
 
 #include "Objects/Test/TestLight.h"
 

@@ -81,7 +81,7 @@ public:
     bool IsActive() { return quad->Active(); } //이 파티클이 활성화 중인가? -> 사각형에서 변수 참조
     bool IsPlay() { return isPlay; } // 현재 파티클이 재생중인지를 판별하는 함수
 
-    void SetPos(Vector3 pos) { quad->Pos(); }
+    void SetPos(Vector3 pos) { quad->Pos() = pos; }
 
 private:
     void UpdatePhysical(); //실체를 업데이트하는 함수

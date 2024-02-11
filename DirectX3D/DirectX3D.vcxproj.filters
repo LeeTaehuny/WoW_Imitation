@@ -451,6 +451,12 @@
     <ClInclude Include="Objects\Skills\HolyPriest\H_002_Holy_Word_Sanctify.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Skills\HolyPriest\H_003_Guardian_Spirit.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\HolyPriest\H_004_Holy_Word_Chastise.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX3D.cpp">
@@ -853,6 +859,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Skills\HolyPriest\H_002_Holy_Word_Sanctify.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\HolyPriest\H_003_Guardian_Spirit.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\HolyPriest\H_004_Holy_Word_Chastise.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

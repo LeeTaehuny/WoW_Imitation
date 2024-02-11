@@ -10,7 +10,6 @@ public:
 	virtual void UseSkill() override;
 
 private:
-
 	// 파티클의 정보를 저장하기 위한 벡터 (사이즈는 5개 고정)
 	vector<ParticleSystem*> particles;
 

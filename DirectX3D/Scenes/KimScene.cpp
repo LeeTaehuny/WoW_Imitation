@@ -19,10 +19,10 @@ KimScene::KimScene()
 	CH->PlayerSpawn(5);
 
 	CH->NonPlayerSpawn(1);
-	CH->NonPlayerSpawn(1);
-	CH->NonPlayerSpawn(1);
+	//CH->NonPlayerSpawn(1);
+	//CH->NonPlayerSpawn(1);
 
-	skill = new H_002_Holy_Word_Sanctify();
+	skill = new H_004_Holy_Word_Chastise();
 	skill->SetOwner(CH->GetPlayerData());
 
 	MONSTER;
@@ -98,8 +98,8 @@ void KimScene::Update()
 			//	skill->UseSkill(targetMonster->GetCollider());
 
 			// 플레이어 캐릭터에게 사용하기 위한 함수
-			//if (targetNPC != nullptr)
-			skill->UseSkill();
+			if (targetMonster != nullptr)
+				skill->UseSkill(targetMonster);
 		}
 	}
 
