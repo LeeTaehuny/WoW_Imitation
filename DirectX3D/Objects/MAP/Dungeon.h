@@ -12,6 +12,7 @@ public:
 	bool OpenDoor_I(bool bol) { return open_I = bol; }
 	//Vector3 terrainpos() { return terrain->Pos(); }
 	Vector3 GetSpawnPoint_P() { return SpawnPoint_P; }
+	bool IsCollision(Collider* c);
 
 private:
 	//Terrain* terrain;
@@ -39,4 +40,21 @@ private:
 	void DoorMove_I();
 	bool open = false;
 	bool open_I = false;
+
+	BoxCollider* boxCollider_G;
+	BoxCollider* boxCollider_GP;
+	BoxCollider* boxCollider_GPI;
+	BoxCollider* boxCollider_S;
+	BoxCollider* boxCollider_SI;
+	BoxCollider* boxCollider_SIC;
+	BoxCollider* boxCollider_SIL;
+	BoxCollider* boxCollider_SIR;
+
+	BoxCollider* boxCollider_WLF;
+	BoxCollider* boxCollider_WRF;
+	BoxCollider* boxCollider_WGL;
+	BoxCollider* boxCollider_WGR;
+	vector<BoxCollider*> boxColliders_WL;
+	vector<BoxCollider*> boxColliders_WR;
+	vector<BoxCollider*> boxColliders_WB;
 };
