@@ -227,3 +227,30 @@ public:
 private:
     Data data;
 };
+
+class BuffBuffer : public ConstBuffer
+{
+private:
+    struct Data
+    {
+        Float3 velocity = { 0, -1, 0 };
+        float distance = 500.0f;
+
+        Float4 color = { 1, 1, 1, 1 };
+
+        Float3 origin = {};
+        float time = 0.0f;
+
+        Float3 size = { 10, 10, 10 };
+        float turbulence = 5.0f;
+    };
+public:
+    BuffBuffer() : ConstBuffer(&data, sizeof(Data))
+    {
+    }
+
+    Data& Get() { return data; }
+
+private:
+    Data data;
+};

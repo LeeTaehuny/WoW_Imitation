@@ -12,6 +12,13 @@ CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionT
 	case CreatureType::NonPlayer:
 		break;
 	}
+
+	// 스탯 설정 (임시)
+	stat.maxHp = 1000.0f;
+	stat.hp = stat.maxHp;
+	stat.mp = 1000;
+	stat.damage = 100.0f;
+	stat.defence = 100;
 }
 
 CH_Base_ver2::~CH_Base_ver2()

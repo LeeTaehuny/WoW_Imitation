@@ -1,4 +1,6 @@
 #include "Framework.h"
+#include "Objects/Item/Weapon.h"
+#include "Objects/Item/Potion.h"
 
 ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::ProtectionWarrior)
@@ -102,11 +104,11 @@ void ProtectionWarrior_in::OnHit(Collider* collider)
 {
 	if (this->myCollider->IsCollision(collider))
 	{
-		if (cur_hp > 0)
+		if (stat.hp > 0)
 		{
 			SetState(HIT);
 		}
-		else if (cur_hp <= 0)
+		else if (stat.hp <= 0)
 		{
 			SetState(DIE);
 		}
@@ -281,6 +283,14 @@ void ProtectionWarrior_in::Attack()
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		SetState(ATTACK1);
+
+		// 무기가 존재하는 경우
+		if (weapon)
+		{
+			// 무기의 콜라이더를 켜주고, 플레이어의 데미지를 전달
+			weapon->GetCollider()->SetActive(true);
+			weapon->SetDamage(stat.damage);
+		}
 	}
 }
 
@@ -295,11 +305,17 @@ void ProtectionWarrior_in::SetState(State state)
 void ProtectionWarrior_in::EndATK()
 {
 	SetState(IDLE1);
+
+	if (weapon)
+	{
+		// 공격이 끝났으므로 무기의 충돌체 정보를 꺼주기
+		weapon->GetCollider()->SetActive(false);
+	}
 }
 
 void ProtectionWarrior_in::EndHit()
 {
-	if (cur_hp <= 0)
+	if (stat.hp <= 0)
 	{
 		SetState(DIE);
 	}

@@ -8,11 +8,21 @@ enum class CreatureType
 
 enum class ProfessionType
 {
-	ArmsWarrior,		// Àü»ç[¹«±â]
-	ProtectionWarrior,  // ¼º±â»ç[º¸È£]
-	MarksmanshipHunter, // »ç³É²Û[»ç°Ý]
-	FireMage,			// ¸¶¹ý»ç[È­¿°]
-	HolyPriest,			// »çÁ¦[½Å¼º]
+	ArmsWarrior,		// ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½]
+	ProtectionWarrior,  // ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½È£]
+	MarksmanshipHunter, // ï¿½ï¿½É²ï¿½[ï¿½ï¿½ï¿½]
+	FireMage,			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½[È­ï¿½ï¿½]
+	HolyPriest,			// ï¿½ï¿½ï¿½ï¿½[ï¿½Å¼ï¿½]
+};
+
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼
+struct Status
+{
+	float maxHp;	// ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½
+	float hp;		// ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½
+	int mp;			// ï¿½ï¿½ï¿½ï¿½
+	int defence;	// ï¿½ï¿½ï¿½ï¿½
+	float damage;	// ï¿½ï¿½ï¿½Ý·ï¿½
 };
 
 class CH_Base_ver2 : public Transform
@@ -25,18 +35,18 @@ public:
 	virtual void Render();
 	void UIRender();
 
-	// ÇÃ·¹ÀÌ¾î¿ë ¾÷µ¥ÀÌÆ®
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 	virtual void PlayerUpdate() = 0;
-	// NPC¿ë ¾÷µ¥ÀÌÆ®
+	// NPCï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 	virtual void AIUpdate() = 0;
-	// ´Ù¸¥ ÄÝ¶óÀÌ´õ¿Í Ãæµ¹ÇßÀ» ¶§
+	// ï¿½Ù¸ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½æµ¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	virtual void OnHit(Collider* collider) = 0;
 
 	virtual void LearnSkill(class SkillBase* skill) {};
 
 	virtual void AI_animation_Moving() = 0;
 
-	// Getter & Setter
+// Getter & Setter
 public:
 	class Inventory* GetInventory() { return inventory; }
 	Collider* GetCollider() { return myCollider; }
@@ -47,24 +57,32 @@ public:
 	ModelAnimatorInstancing* GetInstancing() { return instancing; }
 	UINT GetIndex() { return index; }
 
-	// Member Variable
+	// ï¿½ï¿½ï¿½ï¿½
+	void SetStat(Status stat) { this->stat = stat; }
+	Status& GetStat() { return stat; }
+
+	// ï¿½ï¿½Å³
+	vector<class SkillBase*>& GetSkillList() { return skillList; }
+
+// Member Variable
 protected:
 	CreatureType creatureType;
 	ProfessionType professionType;
 
-	// ÇÃ·¹ÀÌ¾î º»ÀÎÀÇ Ãæµ¹ ÄÝ¶óÀÌ´õ
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½
 	Collider* myCollider;
 
 	class Inventory* inventory;
 
-	// ½ºÅ³
-	vector<class SkillBase> skillList;
+	// ï¿½ï¿½Å³
+	vector<class SkillBase*> skillList;
 
-protected: // ÀÎ½ºÅÏ½Ì¿¡ ÇÊ¿äÇÑ Á¤º¸µé
-	// ÀÎ½ºÅÏ½Ì Á¤º¸
+// ï¿½Î½ï¿½ï¿½Ï½Ì¿ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+protected: 
+	// ï¿½Î½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	ModelAnimatorInstancing* instancing;
 	ModelAnimatorInstancing::Motion* motion;
-	UINT index; // ÇöÀç Àç»ýÁßÀÎ ¾Ö´Ï¸ÞÀÌ¼Ç
+	UINT index; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
 
 	vector<map<float, Event>> totalEvents;
 	vector<map<float, Event>::iterator> eventIters;
@@ -85,21 +103,20 @@ protected:
 	float curheight = 0.0f;
 
 protected:
-	// ÀÓ½Ã ÄÚµå.
-	float Max_hp = 0;
-	float cur_hp = Max_hp;
+	Status stat;
+	class Weapon* weapon;
 
-protected: // NPC Ä³¸¯ÅÍ¸¦ ±¸ÇöÇÏ±â À§ÇÑ º¯¼ö ¹× ÇÔ¼ö
+protected: // NPC Ä³ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ô¼ï¿½
 
-	// ÇÃ·¹ÀÌ¾î·Î ¼±¾ðµÈ´Ù¸é NPCµéÀÇ È°µ¿ ¹üÀ§
-	// NPC·Î ¼±¾ðÀÌ µÈµÇ¸é ÆòÅ¸ »ç°Å¸®°¡ µÈ´Ù.
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È´Ù¸ï¿½ NPCï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// NPCï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ÈµÇ¸ï¿½ ï¿½ï¿½Å¸ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½È´ï¿½.
 	Collider* range;
 
-	// ÇÃ·¹ÀÌ¾îÀÇ Á¤º¸¸¦ ¹Þ¾Æ¿À±â À§ÇÑ Á¤º¸
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	CH_Base_ver2* myPlayer;
 
-	// ÇÃ·¹ÀÌ¾îÀÇ ÁÖº¯¿¡ NPC°¡ ÀÖÀ» °æ¿ì ·£´ýÀ¸·Î ¿òÁ÷ÀÌ°Ô ÇÏ±â À§ÇÑ º¯¼öµé
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Öºï¿½ï¿½ï¿½ NPCï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	float MAX_randomHangdong = 5;
-	float randomHangdong = -1; // -1À» ÁÖ´Â ÀÌÀ¯´Â Ã¹ ¾÷µ¥ÀÌÆ® ¹®¿¡¼­ ÀÌÇÁ¹®À» ÀÛµ¿½ÃÅ°±â À§ÇØ
+	float randomHangdong = -1; // -1ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¹ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ûµï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	Vector3 randomVelocity;
 };

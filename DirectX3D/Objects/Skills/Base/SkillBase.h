@@ -1,8 +1,16 @@
 ﻿#pragma once
+
+// 스킬의 타입을 구분하기 위한 열거형
+enum class SkillBaseType
+{
+	Active,
+	Passive,
+};
+
 class SkillBase
 {
 public:
-	SkillBase();
+	SkillBase(SkillBaseType skillBaseType);
 	virtual ~SkillBase();
 
 	virtual void Update() {}
@@ -33,6 +41,8 @@ protected:
 
 	// 일단 스킵
 	Quad* icon;
+
+	SkillBaseType skillBaseType;
 
 	// 쿨타임
 	//float MAX_delay = 5.0f;

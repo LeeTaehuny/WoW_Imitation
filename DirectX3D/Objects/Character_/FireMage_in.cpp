@@ -1,4 +1,6 @@
 #include "Framework.h"
+#include "Objects/Item/Weapon.h"
+#include "Objects/Item/Potion.h"
 
 FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::ProtectionWarrior)
@@ -104,11 +106,11 @@ void FireMage_in::OnHit(Collider* collider)
 {
 	if (this->myCollider->IsCollision(collider))
 	{
-		if (cur_hp > 0)
+		if (stat.hp > 0)
 		{
 			SetState(HIT);
 		}
-		else if (cur_hp <= 0)
+		else if (stat.hp <= 0)
 		{
 			SetState(DIE);
 		}
@@ -283,6 +285,8 @@ void FireMage_in::Attack()
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		SetState(ATTACK1);
+
+		// TODO : 원거리 공격 만들기
 	}
 }
 
@@ -301,7 +305,7 @@ void FireMage_in::EndATK()
 
 void FireMage_in::EndHit()
 {
-	if (cur_hp <= 0)
+	if (stat.hp <= 0)
 	{
 		SetState(DIE);
 	}

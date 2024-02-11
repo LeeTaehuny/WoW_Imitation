@@ -53,5 +53,8 @@ protected:
 
 	// 스킬 데미지 양
 	float skillDamage;
+
+	// 사용 마나량
+	int requiredMp;
 };
 

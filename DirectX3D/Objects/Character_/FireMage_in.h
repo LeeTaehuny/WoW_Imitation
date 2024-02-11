@@ -19,6 +19,9 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+public:
+	void SetDoubleDamage(bool value) { isDouble = value; }
+
 private:
 	// 플레이어용 업데이트
 	virtual void PlayerUpdate() override;
@@ -29,7 +32,7 @@ private:
 
 	virtual void AI_animation_Moving() override;
 
-	// 컨트롤 관련 함수
+// 컨트롤 관련 함수
 private:
 	void SetEvent(int clip, Event event, float timeRatio);
 	void ExecuteEvent();
@@ -43,7 +46,7 @@ private:
 	// 상태 변경용 함수
 	void SetState(State state);
 
-	// 이벤트 함수
+// 이벤트 함수
 private:
 	void EndATK();
 	void EndHit();
@@ -51,6 +54,9 @@ private:
 	//void EndCasting();
 
 private:
+	// 버프용 변수 (데미지 2배)
+	bool isDouble = false;
+
 	State curState = IDLE1;
 };
 

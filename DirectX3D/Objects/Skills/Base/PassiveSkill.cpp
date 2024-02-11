@@ -1,7 +1,7 @@
 ﻿#include "Framework.h"
 #include "PassiveSkill.h"
 
-PassiveSkill::PassiveSkill()
+PassiveSkill::PassiveSkill() : SkillBase(SkillBaseType::Passive)
 {
 }
 
