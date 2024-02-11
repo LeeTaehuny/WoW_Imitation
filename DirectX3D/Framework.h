@@ -234,6 +234,10 @@ using namespace GameMath;
 #include "Objects/Skills/ProtectionWarrior_Skill/P_032_Eye_Of_Tyr.h"
 #include "Objects/Skills/ProtectionWarrior_Skill/P_034_Moment_Of_Glory.h"
 
+// 신성 사제 스킬
+#include "Objects/Skills/HolyPriest/H_001_Holy_Word_Serenity.h"
+#include "Objects/Skills/HolyPriest/H_002_Holy_Word_Sanctify.h"
+
 #include "Objects/Test/TestLight.h"
 
 #include "Scenes/MAP/LastBossMap_Phase1.h"

@@ -445,6 +445,12 @@
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_024_Guardian_Of_Ancient_Kings.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Skills\HolyPriest\H_001_Holy_Word_Serenity.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\HolyPriest\H_002_Holy_Word_Sanctify.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX3D.cpp">
@@ -841,6 +847,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_024_Guardian_Of_Ancient_Kings.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\HolyPriest\H_001_Holy_Word_Serenity.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\HolyPriest\H_002_Holy_Word_Sanctify.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

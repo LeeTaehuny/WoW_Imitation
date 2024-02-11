@@ -7,9 +7,7 @@ public:
 
 	virtual void Update() override;
 	virtual void Render() override;
-	virtual void UseSkill() {}
 	virtual void UseSkill(Collider* targetCollider) override;
-	virtual void UseSkill(Vector3 direction) {}
 
 	// 임펙트 함수
 	void Impact();

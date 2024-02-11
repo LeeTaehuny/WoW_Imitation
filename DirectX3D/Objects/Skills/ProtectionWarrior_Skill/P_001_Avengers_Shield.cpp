@@ -62,6 +62,7 @@ P_001_Avengers_Shield::~P_001_Avengers_Shield()
 	delete startEdge;
 	delete endEdge;
 	delete trail;
+	delete target;
 	for (Collider* col : three)
 		delete col;
 }

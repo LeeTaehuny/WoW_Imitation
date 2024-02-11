@@ -11,7 +11,7 @@ P_004_HOTR::P_004_HOTR() : ActiveSkill(SkillType::Target)
 	myCollider = new SphereCollider(2.5f);
 	myCollider->SetActive(false);
 	hitCollider = new SphereCollider();
-	hitCollider->SetActive(true);
+	hitCollider->SetActive(false);
 
 	root = new Transform();
 	myCollider->SetParent(root);
