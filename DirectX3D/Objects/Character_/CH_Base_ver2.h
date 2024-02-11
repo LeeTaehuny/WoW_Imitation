@@ -15,6 +15,16 @@ enum class ProfessionType
 	HolyPriest,			// 사제[신성]
 };
 
+// 스탯을 저장하기 위한 구조체
+struct Status
+{
+	float maxHp;	// 최대 체력
+	float hp;		// 현재 체력
+	int mp;			// 마나
+	int defence;	// 방어력
+	float damage;	// 공격력
+};
+
 class CH_Base_ver2 : public Transform
 {
 public:
@@ -36,7 +46,7 @@ public:
 
 	virtual void AI_animation_Moving() = 0;
 
-	// Getter & Setter
+// Getter & Setter
 public:
 	class Inventory* GetInventory() { return inventory; }
 	Collider* GetCollider() { return myCollider; }
@@ -44,7 +54,14 @@ public:
 
 	void SetPlayer(CH_Base_ver2* myPlayer) { this->myPlayer = myPlayer; };
 
-	// Member Variable
+	// 스탯
+	void SetStat(Status stat) { this->stat = stat; }
+	Status& GetStat() { return stat; }
+
+	// 스킬
+	vector<class SkillBase*>& GetSkillList() { return skillList; }
+
+// Member Variable
 protected:
 	CreatureType creatureType;
 	ProfessionType professionType;
@@ -55,9 +72,10 @@ protected:
 	class Inventory* inventory;
 
 	// 스킬
-	vector<class SkillBase> skillList;
+	vector<class SkillBase*> skillList;
 
-protected: // 인스턴싱에 필요한 정보들
+// 인스턴싱에 필요한 정보들
+protected: 
 	// 인스턴싱 정보
 	ModelAnimatorInstancing* instancing;
 	ModelAnimatorInstancing::Motion* motion;
@@ -82,9 +100,8 @@ protected:
 	float curheight = 0.0f;
 
 protected:
-	// 임시 코드.
-	float Max_hp = 0;
-	float cur_hp = Max_hp;
+	Status stat;
+	class Weapon* weapon;
 
 protected: // NPC 캐릭터를 구현하기 위한 변수 및 함수
 

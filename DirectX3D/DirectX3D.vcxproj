@@ -142,6 +142,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_008_FlameOn.h" />
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_007_SearingTouch.h" />
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_006_SurgingBlaze.h" />
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_003_Pyrotechnics.h" />
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_010_Meteor.h" />
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_002_FireBlast.h" />
+    <ClInclude Include="Objects\Particle\BuffParticle.h" />
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_009_Combustion.h" />
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_004_Scorch.h" />
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_005_PhoenixFlame.h" />
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_001_Pyroblast.h" />
     <ClInclude Include="Objects\Character_\ArmsWarrior_in.h" />
     <ClInclude Include="Objects\Character_\FireMage_in.h" />
     <ClInclude Include="Objects\Character_\HolyPriest_in.h" />
@@ -299,6 +310,17 @@
     <ClInclude Include="Objects\Item\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_008_FlameOn.cpp" />
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_007_SearingTouch.cpp" />
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_006_SurgingBlaze.cpp" />
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_003_Pyrotechnics.cpp" />
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_010_Meteor.cpp" />
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_002_FireBlast.cpp" />
+    <ClCompile Include="Objects\Particle\BuffParticle.cpp" />
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_009_Combustion.cpp" />
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_004_Scorch.cpp" />
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_005_PhoenixFlame.cpp" />
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_001_Pyroblast.cpp" />
     <ClCompile Include="Objects\Character_\ArmsWarrior_in.cpp" />
     <ClCompile Include="Objects\Character_\FireMage_in.cpp" />
     <ClCompile Include="Objects\Character_\HolyPriest_in.cpp" />

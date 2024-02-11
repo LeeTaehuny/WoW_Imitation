@@ -15,6 +15,9 @@ public:
     virtual void Play(Vector3 pos);
     void Stop();
 
+    void SetPosition(Vector3 pos) { position = pos; }
+    bool GetActive() { return isActive; }
+
 protected:
     bool isActive = false; //활성화 여부 따로 설정 (기본값 : 처음에는 재생 안 함)
     UINT particleCount = 0; //생성시 파티클 개수 없음

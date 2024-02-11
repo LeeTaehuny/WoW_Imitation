@@ -11,7 +11,7 @@ FireBall::FireBall() : ActiveSkill(SkillType::Target)
 	hitCollider->SetActive(false);
 
 	// 스킬 속도
-	speed = 10.0f;
+	speed = 20.0f;
 
 	// 스킬 데미지
 	skillDamage = 100.0f;
@@ -34,7 +34,7 @@ FireBall::FireBall() : ActiveSkill(SkillType::Target)
 	startEdge = new Transform();
 	endEdge = new Transform();
 
-	trail = new Trail(L"Textures/Effect/Trail.png", startEdge, endEdge, 10, 10.0f);
+	trail = new Trail(L"Textures/Effect/fireTrail.png", startEdge, endEdge, 5, 10.0f);
 }
 FireBall::~FireBall()
 {
@@ -48,14 +48,18 @@ void FireBall::Update()
 	{
 		if (isRun)
 		{
-			startEdge->Pos() = myCollider->GlobalPos() + myCollider->Left() * 10.0f;
-			endEdge->Pos() = myCollider->GlobalPos() - myCollider->Right() * 10.0f;
-
-			startEdge->UpdateWorld();
-			endEdge->UpdateWorld();
-			trail->Update();
+			startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward();
+			endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back();
+		}
+		else
+		{
+			startEdge->Pos() = owner->GlobalPos();
+			endEdge->Pos() = owner->GlobalPos();
+			
 		}
 		
+		startEdge->UpdateWorld();
+		endEdge->UpdateWorld();
 	}
 	else
 	{
@@ -65,7 +69,7 @@ void FireBall::Update()
 
 
 	ActiveSkill::Update();
-
+	trail->Update();
 	hitParticleSystem->Update();
 
 }
@@ -75,7 +79,8 @@ void FireBall::Render()
 
 	hitParticleSystem->Render();
 
-	trail->Render();
+	if (isRun)
+		trail->Render();
 }
 
 void FireBall::UseSkill(Collider* targetCollider)
@@ -87,7 +92,13 @@ void FireBall::UseSkill(Collider* targetCollider)
 		target = targetCollider;
 
 		myCollider->Pos() = owner->GlobalPos();
+		myCollider->UpdateWorld();
 		myCollider->SetActive(true);
+
+		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 3.0f;
+		endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back() * 3.0f;
+		startEdge->UpdateWorld();
+		endEdge->UpdateWorld();
 		
 		isRun = true;
 		isCooldown = true;

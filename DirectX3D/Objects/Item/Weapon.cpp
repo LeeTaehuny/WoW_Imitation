@@ -17,6 +17,45 @@ void Weapon::Update()
 {
 	Item::Update();
 	collider->UpdateWorld();
+
+	// 무기의 충돌체 정보가 켜져있는 경우
+	if (collider->Active())
+	{
+		// 몬스터와의 충돌 판정 실시
+		vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
+		vector<MonsterBase*> cols2 = MONSTER->GetSkeleton();
+		vector<MonsterBase*> cols3 = MONSTER->GetSkeleton_Knight();
+
+		for (MonsterBase* monster : cols1)
+		{
+			if (collider->IsCollision(monster->GetCollider()))
+			{
+				// 충돌한 몬스터들에게 데미지 주기
+				// TODO : 플레이어 인덱스 정보 추가하기
+				monster->Hit(damage + playerDamage);
+			}
+		}
+
+		for (MonsterBase* monster : cols2)
+		{
+			if (collider->IsCollision(monster->GetCollider()))
+			{
+				// 충돌한 몬스터들에게 데미지 주기
+				// TODO : 플레이어 인덱스 정보 추가하기
+				monster->Hit(damage + playerDamage);
+			}
+		}
+
+		for (MonsterBase* monster : cols3)
+		{
+			if (collider->IsCollision(monster->GetCollider()))
+			{
+				// 충돌한 몬스터들에게 데미지 주기
+				// TODO : 플레이어 인덱스 정보 추가하기
+				monster->Hit(damage + playerDamage);
+			}
+		}
+	}
 }
 
 void Weapon::Render()

@@ -424,6 +424,39 @@
     <ClInclude Include="Objects\Character_\MarksmanshipHunter_in.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_001_Pyroblast.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_005_PhoenixFlame.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_004_Scorch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_009_Combustion.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Particle\BuffParticle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_002_FireBlast.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_010_Meteor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_003_Pyrotechnics.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_006_SurgingBlaze.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_007_SearingTouch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_008_FlameOn.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX3D.cpp">
@@ -801,6 +834,39 @@
     <ClCompile Include="Objects\Character_\MarksmanshipHunter_in.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_001_Pyroblast.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_005_PhoenixFlame.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_004_Scorch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_009_Combustion.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Particle\BuffParticle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_002_FireBlast.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_010_Meteor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_003_Pyrotechnics.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_006_SurgingBlaze.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_007_SearingTouch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_008_FlameOn.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX3D.rc">
@@ -936,7 +1002,6 @@
     <ClCompile Include="Objects\Basic\Cylinder.cpp" />
     <ClCompile Include="Objects\Basic\GameObject.cpp" />
     <ClCompile Include="Objects\Basic\Quad.cpp" />
-    <ClCompile Include="Objects\Basic\Sphere.cpp" />
     <ClCompile Include="Objects\Character\Human.cpp" />
     <ClCompile Include="Objects\Character\Naruto.cpp" />
     <ClCompile Include="Objects\Character\Robot.cpp" />

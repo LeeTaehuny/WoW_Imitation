@@ -1,7 +1,7 @@
 ﻿#include "Framework.h"
 #include "ActiveSkill.h"
 
-ActiveSkill::ActiveSkill(SkillType type) : skillType(type)
+ActiveSkill::ActiveSkill(SkillType type) : SkillBase(SkillBaseType::Active), skillType(type)
 {
 	// 멤버 변수 초기화
 	coolTime = MAX_delay;
@@ -52,13 +52,13 @@ void ActiveSkill::TargetUpdate()
 	if (!target) return;
 
 	// 방향 정보 갱신
-	Vector3 tmpDir = (target->GlobalPos() - myCollider->GlobalPos()).GetNormalized();
+	direction = (target->GlobalPos() - myCollider->GlobalPos()).GetNormalized();
 
 	// 갱신된 방향으로 스킬 위치 업데이트
-	myCollider->Pos() += tmpDir * speed * DELTA;
+	myCollider->Pos() += direction * speed * DELTA;
 
 	// 방향에 맞게 회전값 수정
-	//myCollider->Rot().y = atan2(direction.x, direction.z) + XM_PI;
+	myCollider->Rot().y = atan2(direction.x, direction.z) + XM_PI;
 
 	if (myCollider->IsCollision(target))
 	{
@@ -108,7 +108,6 @@ void ActiveSkill::TargetUpdate()
 		}
 
 		hitCollider->SetActive(false);
-		myCollider->Pos() = Vector3(0.0f, -50.0f, 0.0f);
 	}
 }
 
