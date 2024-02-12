@@ -19,6 +19,9 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+public:
+	virtual void EquipWeapon(class Weapon* weapon) override;
+
 private:
 	// 플레이어용 업데이트
 	virtual void PlayerUpdate() override;

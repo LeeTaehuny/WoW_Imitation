@@ -40,5 +40,7 @@ private:
     Transform* startEdge;
     Transform* endEdge;
     Trail* trail;
+
+    class Item* weapon;
 };
 

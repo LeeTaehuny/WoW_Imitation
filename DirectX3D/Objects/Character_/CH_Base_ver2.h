@@ -46,6 +46,8 @@ public:
 
 	virtual void AI_animation_Moving() = 0;
 
+	virtual void EquipWeapon(class Weapon* weapon) {};
+
 // Getter & Setter
 public:
 	class Inventory* GetInventory() { return inventory; }
@@ -83,6 +85,7 @@ protected:
 	ModelAnimatorInstancing* instancing;
 	ModelAnimatorInstancing::Motion* motion;
 	UINT index; // ���� ������� �ִϸ��̼�
+	UINT mainHandBoneIndex;
 
 	vector<map<float, Event>> totalEvents;
 	vector<map<float, Event>::iterator> eventIters;
@@ -105,6 +108,8 @@ protected:
 protected:
 	Status stat;
 	class Weapon* weapon;
+
+	Transform* mainHand;
 
 protected: // NPC ĳ���͸� �����ϱ� ���� ���� �� �Լ�
 

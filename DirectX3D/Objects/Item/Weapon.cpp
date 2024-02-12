@@ -28,31 +28,49 @@ void Weapon::Update()
 
 		for (MonsterBase* monster : cols1)
 		{
+			if (find(hit.begin(), hit.end(), monster) != hit.end())
+			{
+				continue;
+			}
+
 			if (collider->IsCollision(monster->GetCollider()))
 			{
 				// 충돌한 몬스터들에게 데미지 주기
 				// TODO : 플레이어 인덱스 정보 추가하기
 				monster->Hit(damage + playerDamage);
+				hit.push_back(monster);
 			}
 		}
 
 		for (MonsterBase* monster : cols2)
 		{
+			if (find(hit.begin(), hit.end(), monster) != hit.end())
+			{
+				continue;
+			}
+
 			if (collider->IsCollision(monster->GetCollider()))
 			{
 				// 충돌한 몬스터들에게 데미지 주기
 				// TODO : 플레이어 인덱스 정보 추가하기
 				monster->Hit(damage + playerDamage);
+				hit.push_back(monster);
 			}
 		}
 
 		for (MonsterBase* monster : cols3)
 		{
+			if (find(hit.begin(), hit.end(), monster) != hit.end())
+			{
+				continue;
+			}
+
 			if (collider->IsCollision(monster->GetCollider()))
 			{
 				// 충돌한 몬스터들에게 데미지 주기
 				// TODO : 플레이어 인덱스 정보 추가하기
 				monster->Hit(damage + playerDamage);
+				hit.push_back(monster);
 			}
 		}
 	}
@@ -91,6 +109,7 @@ void Weapon::InitWeapon(string name)
 		icon = new Quad(L"Textures/UI/Items/sword_" + to_wstring(num) + L".png");
 
 		collider->Pos() = { 1.0f, 0.0f, 0.0f };
+		collider->Scale() *= 1.7f;
 		damage = 1000;
 		break;
 	case WeaponType::Bow:

@@ -22,6 +22,8 @@ public:
 public:
 	void SetDoubleDamage(bool value) { isDouble = value; }
 
+	virtual void EquipWeapon(class Weapon* weapon) override;
+
 private:
 	// 플레이어용 업데이트
 	virtual void PlayerUpdate() override;

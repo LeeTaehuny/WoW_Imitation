@@ -41,6 +41,8 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 		eventIters[i] = totalEvents[i].begin();
 	}
 	this->SetActive(true);
+
+	mainHandBoneIndex = 23;
 }
 
 FireMage_in::~FireMage_in()
@@ -81,6 +83,16 @@ void FireMage_in::Render()
 	myCollider->Render();
 	range->Render();
 	CH_Base_ver2::Render();
+}
+
+void FireMage_in::EquipWeapon(Weapon* weapon)
+{
+	if (weapon == nullptr) return;
+
+	this->weapon = weapon;
+	weapon->Scale() *= 100.0f;
+	weapon->Rot() = Vector3(0.0f, 11.0f, 0.0f);
+	weapon->SetParent(mainHand);
 }
 
 void FireMage_in::PlayerUpdate()

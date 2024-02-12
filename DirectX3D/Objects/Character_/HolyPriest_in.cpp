@@ -42,6 +42,8 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 		eventIters[i] = totalEvents[i].begin();
 	}
 	this->SetActive(true);
+
+	mainHandBoneIndex = 37;
 }
 
 HolyPriest_in::~HolyPriest_in()
@@ -82,6 +84,15 @@ void HolyPriest_in::Render()
 	myCollider->Render();
 	range->Render();
 	CH_Base_ver2::Render();
+}
+
+void HolyPriest_in::EquipWeapon(Weapon* weapon)
+{
+	if (weapon == nullptr) return;
+
+	this->weapon = weapon;
+	//weapon->Rot() = Vector3(0.0f, 21.0f, 20.0f);
+	weapon->SetParent(mainHand);
 }
 
 void HolyPriest_in::PlayerUpdate()

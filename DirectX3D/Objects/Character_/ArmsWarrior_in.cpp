@@ -39,6 +39,8 @@ ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAni
 		eventIters[i] = totalEvents[i].begin();
 	}
 	this->SetActive(true);
+
+	mainHandBoneIndex = 37;
 }
 
 ArmsWarrior_in::~ArmsWarrior_in()
@@ -79,6 +81,14 @@ void ArmsWarrior_in::Render()
 	myCollider->Render();
 	range->Render();
 	CH_Base_ver2::Render();
+}
+
+void ArmsWarrior_in::EquipWeapon(Weapon* weapon)
+{
+	if (weapon == nullptr) return;
+
+	this->weapon = weapon;
+	weapon->SetParent(mainHand);
 }
 
 void ArmsWarrior_in::PlayerUpdate()
@@ -310,6 +320,7 @@ void ArmsWarrior_in::EndATK()
 	{
 		// 공격이 끝났으므로 무기의 충돌체 정보를 꺼주기
 		weapon->GetCollider()->SetActive(false);
+		weapon->ClearHit();
 	}
 }
 

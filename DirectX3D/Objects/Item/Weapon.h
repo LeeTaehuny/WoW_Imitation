@@ -31,6 +31,8 @@ public:
 	void SetDamage(int damage) { this->playerDamage = damage; }
 	void SetOwner(CH_Base_ver2* owner) { this->owner = owner; }
 
+	void ClearHit() { hit.clear(); }
+
 private:
 	// 무기의 타입에 따라 초기화를 위한 함수
 	void InitWeapon(string name);
@@ -44,5 +46,7 @@ private:
 
 	SphereCollider* collider;
 	WeaponType weaponType;
+
+	vector<MonsterBase*> hit;
 };
 
