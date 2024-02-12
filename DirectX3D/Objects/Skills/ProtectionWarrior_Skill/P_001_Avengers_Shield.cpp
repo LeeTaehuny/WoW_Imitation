@@ -23,11 +23,11 @@ P_001_Avengers_Shield::P_001_Avengers_Shield()
 		// 스킬 속도
 		speed = 30.0f;
 
-		// 스킬 데미지
-		skillDamage = 100.0f;
+		// 스킬 데미지 (유즈 부분에서 플레이어의 공격력을 받아올 것임)
+		skillDamage = 0.0f;
 
-		// 쿨타임 설정 (5초)
-		MAX_delay = 5.0f;
+		// 쿨타임 설정 (기본 15초)
+		MAX_delay = 15.0f;
 		coolTime = MAX_delay;
 
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
@@ -80,14 +80,13 @@ void P_001_Avengers_Shield::Update()
 		shielD->Rot().z += 20 * DELTA;
 		shielD->UpdateWorld();
 		myCollider->UpdateWorld();
-
-		{
-			startEdge->Pos() = myCollider->GlobalPos() + myCollider->Left() * 0.5f;
-			endEdge->Pos() = myCollider->GlobalPos() + myCollider->Right() * 0.5f;
-		}
-
+		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Left() * 0.5f;
+		endEdge->Pos() = myCollider->GlobalPos() + myCollider->Right() * 0.5f;
+		
 		if (targetMonster->GetCollider()->IsCollision(myCollider))
 		{
+			targetMonster->Hit(skillDamage);
+
 			hitCollider->Pos() = myCollider->Pos();
 			hitCollider->UpdateWorld();
 
@@ -290,7 +289,7 @@ void P_001_Avengers_Shield::UseSkill(MonsterBase* monsterbase)
 	three[0] = monsterbase;
 	targetMonster = three[0];
 
-	skillDamage = owner->GetStat().damage;
+	skillDamage = owner->GetStat().damage * 0.66f;
 
 	Yad->SetActive(true);
 	Yad->Pos() = owner->Pos();

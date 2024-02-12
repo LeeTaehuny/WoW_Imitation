@@ -1,5 +1,7 @@
 ﻿#pragma once
-class P_007_Blessing_of_Spellwarding : public ActiveSkill
+#include "Objects/Skills/Base/PassiveSkill.h"
+
+class P_007_Blessing_of_Spellwarding : public PassiveSkill
 {
 public:
 	P_007_Blessing_of_Spellwarding();
@@ -7,17 +9,5 @@ public:
 
 	virtual void Update() override;
 	virtual void Render() override;
-	virtual void UseSkill(CH_Base_ver2* chbase) override;
-
-private:
-	// 캐릭터의 데이터를 받아오기 위한 변수
-	CH_Base_ver2* characterData;
-
-	// 나중에 이펙트 추가 필요
-	// 파티클시스템을 통해 위로 날아가는 듯한 파티클
-	ParticleSystem* particle;
-
-	int nut = 0;
-	//
-
+	virtual void UseSkill() override;
 };

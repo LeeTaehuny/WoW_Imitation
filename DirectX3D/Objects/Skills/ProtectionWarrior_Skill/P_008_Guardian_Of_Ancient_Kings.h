@@ -1,5 +1,7 @@
 ﻿#pragma once
-class P_008_Guardian_Of_Ancient_Kings : public ActiveSkill
+#include "Objects/Skills/Base/PassiveSkill.h"
+
+class P_008_Guardian_Of_Ancient_Kings : public PassiveSkill
 {
 public:
 	P_008_Guardian_Of_Ancient_Kings();
@@ -8,8 +10,4 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 	virtual void UseSkill() override;
-
-private:
-	float Max_runTime;
-	float runTime;
 };

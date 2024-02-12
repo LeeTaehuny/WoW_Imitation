@@ -24,8 +24,8 @@ P_002_HOTR::P_002_HOTR() : ActiveSkill(SkillType::Target)
 		// 스킬 데미지
 		skillDamage = 100.0f;
 
-		// 쿨타임 설정 (5초)
-		MAX_delay = 5.0f;
+		// 쿨타임 설정 (기본 6초)
+		MAX_delay = 6.0f;
 		coolTime = MAX_delay;
 
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
@@ -149,7 +149,7 @@ void P_002_HOTR::UseSkill(MonsterBase* monsterbase)
 	if (isCooldown || monsterbase == nullptr) return;
 	targetMonster = monsterbase;
 
-	skillDamage = owner->GetStat().damage;
+	skillDamage = owner->GetStat().damage * 0.85f;
 	myCollider->SetActive(true);
 	root->SetWorld(owner->GetInstancing()->GetTransformByNode(owner->GetIndex(), 38));
 	myCollider->UpdateWorld();
