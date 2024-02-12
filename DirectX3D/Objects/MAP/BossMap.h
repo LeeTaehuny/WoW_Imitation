@@ -28,6 +28,13 @@ private:
 	vector<Model*> fixeds;		// 고정된(없어지지 않는것)
 	vector<Model*> disappears;  // 사라짐(1페 이후로 없어짐)
 
+	Cylinder* GroundColider1;
+	Cylinder* GroundColider2;
+	vector<Cylinder*> disappears_C;
+	BoxCollider* StairCollider;
+	BoxCollider* Chair_Ground;
+	BoxCollider* Chair;
+
 	void Fall();
 	void ZeroSet();
 	void NoneRender();

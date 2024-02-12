@@ -78,10 +78,10 @@ GameManager::GameManager()
 
     /////////////////////////////////////////////////////////////////// Choi
     // Test Scenes
-    //SceneManager::Get()->Create("BossMap", new MapTestScene());
-    //SceneManager::Get()->Add("BossMap");
-    SceneManager::Get()->Create("TestDungeon", new TestDungeonScene());
-    SceneManager::Get()->Add("TestDungeon");
+    SceneManager::Get()->Create("BossMap", new MapTestScene());
+    SceneManager::Get()->Add("BossMap");
+    //SceneManager::Get()->Create("TestDungeon", new TestDungeonScene());
+    //SceneManager::Get()->Add("TestDungeon");
 
     // ModelExport
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
