@@ -27,7 +27,6 @@
 #include "Scenes/TerrainLODScene.h"
 #include "Scenes/KimScene.h"
 #include "Scenes/DevScene/TestScene.h"
-#include "Scenes/MAP/LastBossMap_Scene.h"
 #include "Scenes/MAP/MapTestScene.h"
 #include "Scenes/MAP/TestDungeonScene.h"
 
@@ -78,10 +77,10 @@ GameManager::GameManager()
 
     /////////////////////////////////////////////////////////////////// Choi
     // Test Scenes
-    SceneManager::Get()->Create("BossMap", new MapTestScene());
-    SceneManager::Get()->Add("BossMap");
-    //SceneManager::Get()->Create("TestDungeon", new TestDungeonScene());
-    //SceneManager::Get()->Add("TestDungeon");
+    //SceneManager::Get()->Create("BossMap", new MapTestScene());
+    //SceneManager::Get()->Add("BossMap");
+    SceneManager::Get()->Create("TestDungeon", new TestDungeonScene());
+    SceneManager::Get()->Add("TestDungeon");
 
     // ModelExport
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());

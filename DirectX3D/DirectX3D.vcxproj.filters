@@ -385,9 +385,6 @@
     <ClInclude Include="Scenes\MirrorScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\MAP\LastBossMap_Scene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Objects\MAP\BossMap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -745,9 +742,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\MirrorScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\MAP\LastBossMap_Scene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\MAP\BossMap.cpp">

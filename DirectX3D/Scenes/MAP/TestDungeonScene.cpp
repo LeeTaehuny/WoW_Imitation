@@ -71,7 +71,8 @@ void TestDungeonScene::Update()
 
 	if (KEY_PRESS(VK_DOWN)) dungeon->Pos().x -= 100 * DELTA;
 
-
+	if (player->Pos().y < 0) player->Pos().y = 0;
+	//if (player->Pos().y > 0) player->Pos().y = 0;
 	if (dungeon->IsCollision(TestSize));
 	if (dungeon->IsCollision(player->GetCollider()));
 }

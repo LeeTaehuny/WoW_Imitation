@@ -222,12 +222,20 @@ Dungeon::Dungeon() //: Transform()
 	InGates[5]->Pos().x += 430.0f;
 	InGates[5]->Pos().z -= 56.5f;
 	InGates[5]->Scale() *= 2.0f;
+	boxCollider_PR = new BoxCollider(Vector3(14.5, 37.5, 15));
+	boxCollider_PR->SetParent(InGates[5]);
+	boxCollider_PR->Pos().x -= 2.0f;
+	boxCollider_PR->Pos().y += 17.5f;
 	
 	InGates[6] = new Model("Pillar_G"); // L
 	InGates[6]->Rot().y += 3.15f;
 	InGates[6]->Pos().x += 430.0f;
 	InGates[6]->Pos().z += 56.5f;
 	InGates[6]->Scale() *= 2.0f;
+	boxCollider_PL = new BoxCollider(Vector3(14.5, 37.5, 15));
+	boxCollider_PL->SetParent(InGates[6]);
+	boxCollider_PL->Pos().x -= 2.0f;
+	boxCollider_PL->Pos().y += 17.5f;
 
 
 
@@ -319,12 +327,13 @@ void Dungeon::Update()
 
 	boxCollider_DL->UpdateWorld();
 	boxCollider_DR->UpdateWorld();
+	boxCollider_PR->UpdateWorld();
+	boxCollider_PL->UpdateWorld();
 
 	boxCollider_WLF->UpdateWorld();
 	boxCollider_WRF->UpdateWorld();
 	boxCollider_WGL->UpdateWorld();
 	boxCollider_WGR->UpdateWorld();
-	
 }
 
 void Dungeon::Render()
@@ -367,22 +376,51 @@ void Dungeon::Render()
 	
 	boxCollider_DL->Render();
 	boxCollider_DR->Render();
+	boxCollider_PR->Render();
+	boxCollider_PL->Render();
+	boxCollider_WGL->Render();
+	boxCollider_WGR->Render();
 
 	boxCollider_WLF->Render();
 	boxCollider_WRF->Render();
-	boxCollider_WGL->Render();
-	boxCollider_WGR->Render();
 }
 
 bool Dungeon::IsCollision(Collider* c)
 {
+	if (boxCollider_G->PushCollision(c)) return true;
 	if (boxCollider_GP->PushCollision(c)) return true;
+	if (boxCollider_GPI->PushCollision(c)) return true;
+	if (boxCollider_GR->PushCollision(c)) return true;
+	if (boxCollider_GL->PushCollision(c)) return true;
+	if (boxCollider_GD->PushCollision(c)) return true;
 	if (boxCollider_S->PushCollision(c)) return true;
 	if (boxCollider_SI->PushCollision(c)) return true;
 	if (boxCollider_SIC->PushCollision(c)) return true;
 	if (boxCollider_SIL->PushCollision(c)) return true;
 	if (boxCollider_SIR->PushCollision(c)) return true;
+	
+	if (boxCollider_WGL->PushCollision(c)) return true;
+	if (boxCollider_WGR->PushCollision(c)) return true;
+	if (boxCollider_DL->PushCollision(c)) return true;
+	if (boxCollider_DR->PushCollision(c)) return true;
+	if (boxCollider_PR->PushCollision(c)) return true;
+	if (boxCollider_PL->PushCollision(c)) return true;
 
+	for (int i = 0; i < Walls_L.size(); ++i)
+	{
+		if (boxColliders_WL[i]->PushCollision(c)) return true;
+	}
+	if (boxCollider_WLF->PushCollision(c)) return true;
+	for (int i = 0; i < Walls_R.size(); ++i)
+	{
+		if (boxColliders_WR[i]->PushCollision(c)) return true;
+	}
+	if (boxCollider_WRF->PushCollision(c)) return true;
+	for (int i = 0; i < Walls_B.size(); ++i)
+	{
+		if (boxColliders_WB[i]->PushCollision(c)) return true;
+	}
+	
 	return false;
 }
 

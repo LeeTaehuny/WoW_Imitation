@@ -55,6 +55,8 @@ private:
 
 	BoxCollider* boxCollider_DL;
 	BoxCollider* boxCollider_DR;
+	BoxCollider* boxCollider_PR;
+	BoxCollider* boxCollider_PL;
 
 	BoxCollider* boxCollider_WLF;
 	BoxCollider* boxCollider_WRF;
