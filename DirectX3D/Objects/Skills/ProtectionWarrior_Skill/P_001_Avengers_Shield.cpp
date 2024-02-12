@@ -82,7 +82,7 @@ void P_001_Avengers_Shield::Update()
 		myCollider->UpdateWorld();
 		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Left() * 0.5f;
 		endEdge->Pos() = myCollider->GlobalPos() + myCollider->Right() * 0.5f;
-		
+
 		if (targetMonster->GetCollider()->IsCollision(myCollider))
 		{
 			targetMonster->Hit(skillDamage);
@@ -289,24 +289,27 @@ void P_001_Avengers_Shield::UseSkill(MonsterBase* monsterbase)
 	three[0] = monsterbase;
 	targetMonster = three[0];
 
-	skillDamage = owner->GetStat().damage * 0.66f;
-
 	Yad->SetActive(true);
 	Yad->Pos() = owner->Pos();
 	Yad->UpdateWorld();
 	if (Yad->IsCollision(targetMonster->GetCollider()))
 	{
-		if (!isCooldown)
+		if (ProtectionWarrior_in* c = dynamic_cast<ProtectionWarrior_in*>(owner))
 		{
-			myCollider->SetActive(true);
-			myCollider->Pos() = owner->GlobalPos();
-			isRun = true;
-			isCooldown = true;
-
-			startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 1.0f;
-			endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back() * 1.0f;
-			startEdge->UpdateWorld();
-			endEdge->UpdateWorld();
+			c->SetState(ProtectionWarrior_in::State::SKILL1);
 		}
+
+		myCollider->SetActive(true);
+		myCollider->Pos() = owner->GlobalPos();
+		isRun = true;
+		isCooldown = true;
+
+		skillDamage = owner->GetStat().damage * 0.66f;
+		owner->GetStat().mp -= 15;
+
+		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 1.0f;
+		endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back() * 1.0f;
+		startEdge->UpdateWorld();
+		endEdge->UpdateWorld();
 	}
 }

@@ -16,4 +16,7 @@ private:
 
 	// 힐 수치를 적용할 대상 캐릭터의 정보를 저장하기 위한 변수
 	CH_Base_ver2* healingTarget;
+
+	float Max_animStart = 0.9f;
+	float animStart = 0;
 };

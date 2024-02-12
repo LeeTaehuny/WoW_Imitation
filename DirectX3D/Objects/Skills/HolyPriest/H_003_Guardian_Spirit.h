@@ -23,4 +23,7 @@ private:
 
 	float Max_healingTick;
 	float healingTick;
+
+	float Max_animStart = 0.9f;
+	float animStart = 0;
 };

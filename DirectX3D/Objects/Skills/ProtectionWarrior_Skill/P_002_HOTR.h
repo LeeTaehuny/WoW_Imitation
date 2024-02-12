@@ -16,4 +16,7 @@ private:
 	MonsterBase* targetMonster;
 
 	BlendState* blendState[2];
+
+	float Max_animStart = 0.9f;
+	float animStart = 0;
 };

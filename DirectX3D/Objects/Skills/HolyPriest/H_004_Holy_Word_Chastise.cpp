@@ -44,6 +44,9 @@ void H_004_Holy_Word_Chastise::Update()
 {
 	if (isRun)
 	{
+		animStart += DELTA;
+		if (animStart <= Max_animStart) return;
+
 		if (isOne == 0)
 		{
 			particle->Play(Vector3());
@@ -81,6 +84,8 @@ void H_004_Holy_Word_Chastise::Render()
 {
 	if (isRun)
 	{
+		if (animStart <= Max_animStart) return;
+
 		particle->Render();
 	}
 }
@@ -90,7 +95,14 @@ void H_004_Holy_Word_Chastise::UseSkill(MonsterBase* monsterbase)
 	if (isCooldown || monsterbase == nullptr) return;
 
 	skillDamage = owner->GetStat().damage * 2.45f;
+	owner->GetStat().mp -= 20;
 
+	if (HolyPriest_in* c = dynamic_cast<HolyPriest_in*>(owner))
+	{
+		c->SetState(HolyPriest_in::State::ATTACK1);
+	}
+
+	animStart = 0;
 	targetMonster = monsterbase;
 	isRun = true;
 	isCooldown = true;

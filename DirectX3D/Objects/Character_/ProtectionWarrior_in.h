@@ -1,8 +1,7 @@
-#pragma once
+ï»¿#pragma once
 class ProtectionWarrior_in : public CH_Base_ver2
 {
-private:
-
+public:
 	enum State
 	{
 		IDLE1,
@@ -20,17 +19,19 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+	void SetState(State state);
+
 private:
-	// ÇÃ·¹ÀÌ¾î¿ë ¾÷µ¥ÀÌÆ®
+	// í”Œë ˆì´ì–´ìš© ì—…ë°ì´íŠ¸
 	virtual void PlayerUpdate() override;
-	// NPC¿ë ¾÷µ¥ÀÌÆ®
+	// NPCìš© ì—…ë°ì´íŠ¸
 	virtual void AIUpdate() override;
-	// Ãæµ¹ ÆÇÁ¤ ÇÔ¼ö
+	// ì¶©ëŒ íŒì • í•¨ìˆ˜
 	virtual void OnHit(Collider* collider) override;
 
 	virtual void AI_animation_Moving() override;
 
-	// ÄÁÆ®·Ñ °ü·Ã ÇÔ¼ö
+	// ì»¨íŠ¸ë¡¤ ê´€ë ¨ í•¨ìˆ˜
 private:
 	void SetEvent(int clip, Event event, float timeRatio);
 	void ExecuteEvent();
@@ -41,15 +42,15 @@ private:
 	void Attack();
 	//void Casting();
 
-	// »óÅÂ º¯°æ¿ë ÇÔ¼ö
-	void SetState(State state);
+	// ìƒíƒœ ë³€ê²½ìš© í•¨ìˆ˜
+	
 
-	// ÀÌº¥Æ® ÇÔ¼ö
+	// ì´ë²¤íŠ¸ í•¨ìˆ˜
 private:
 	void EndATK();
 	void EndHit();
 	void EndDie();
-	//void EndCasting();
+	void EndCasting();
 
 private:
 	State curState = IDLE1;

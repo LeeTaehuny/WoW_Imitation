@@ -23,7 +23,7 @@ P_009_Eye_Of_Tyr::P_009_Eye_Of_Tyr() : ActiveSkill(SkillType::NonTarget)
 		skillDamage = 100.0f;
 
 		// 쿨타임 설정 (기본 60초)
-		MAX_delay = 60.0f;
+		MAX_delay = 5.0f;
 		coolTime = MAX_delay;
 
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
@@ -144,7 +144,14 @@ void P_009_Eye_Of_Tyr::UseSkill()
 {
 	if (isCooldown) return;
 
+	if (ProtectionWarrior_in* c = dynamic_cast<ProtectionWarrior_in*>(owner))
+	{
+		c->SetState(ProtectionWarrior_in::State::SKILL1);
+	}
+
 	skillDamage = owner->GetStat().damage * 0.56f;
+	owner->GetStat().mp -= 5;
+
 	hitCollider->SetActive(true);
 	isRun = true;
 	isCooldown = true;

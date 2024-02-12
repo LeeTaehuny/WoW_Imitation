@@ -22,7 +22,7 @@ KimScene::KimScene()
 	CH->NonPlayerSpawn(1);
 	CH->NonPlayerSpawn(1);
 
-	skill = new H_004_Holy_Word_Chastise();
+	skill = new H_008_Divine_Hymn();
 	skill->SetOwner(CH->GetPlayerData());
 
 	MONSTER;

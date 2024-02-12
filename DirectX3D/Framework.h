@@ -228,7 +228,10 @@ using namespace GameMath;
 // 보호 성기사 스킬
 #include "Objects/Skills/ProtectionWarrior_Skill/P_001_Avengers_Shield.h"
 #include "Objects/Skills/ProtectionWarrior_Skill/P_002_HOTR.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_003_Grand_Crusader.h"
 #include "Objects/Skills/ProtectionWarrior_Skill/P_004_Ardent_Defender.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_005_Barricade_Of_Faith.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_006_Bulwark_Of_Order.h"
 #include "Objects/Skills/ProtectionWarrior_Skill/P_007_Blessing_of_Spellwarding.h"
 #include "Objects/Skills/ProtectionWarrior_Skill/P_008_Guardian_Of_Ancient_Kings.h"
 #include "Objects/Skills/ProtectionWarrior_Skill/P_009_Eye_Of_Tyr.h"
@@ -239,6 +242,12 @@ using namespace GameMath;
 #include "Objects/Skills/HolyPriest/H_002_Holy_Word_Sanctify.h"
 #include "Objects/Skills/HolyPriest/H_003_Guardian_Spirit.h"
 #include "Objects/Skills/HolyPriest/H_004_Holy_Word_Chastise.h"
+#include "Objects/Skills/HolyPriest/H_005_Censure.h"
+#include "Objects/Skills/HolyPriest/H_006_Circle_Of_Healing.h"
+#include "Objects/Skills/HolyPriest/H_007_Cosmic_Ripple.h"
+#include "Objects/Skills/HolyPriest/H_008_Divine_Hymn.h"
+#include "Objects/Skills/HolyPriest/H_009_Enlightenment.h"
+#include "Objects/Skills/HolyPriest/H_010_Everlasting_Light.h"
 
 #include "Objects/Test/TestLight.h"
 

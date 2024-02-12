@@ -13,14 +13,6 @@ P_003_Grand_Crusader::~P_003_Grand_Crusader()
 	delete icon;
 }
 
-void P_003_Grand_Crusader::Update()
-{
-}
-
-void P_003_Grand_Crusader::Render()
-{
-}
-
 void P_003_Grand_Crusader::UseSkill()
 {
 	// 공격력 20% 증가로 대체

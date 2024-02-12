@@ -57,6 +57,9 @@ void H_003_Guardian_Spirit::Update()
 {
 	if (isRun)
 	{
+		animStart += DELTA;
+		if (animStart <= Max_animStart) return;
+
 		runTime -= DELTA;
 		if (runTime <= 0)
 		{
@@ -93,6 +96,8 @@ void H_003_Guardian_Spirit::Render()
 {
 	if (isRun)
 	{
+		if (animStart <= Max_animStart) return;
+
 		blendState[1]->SetState();
 		depthState[1]->SetState();
 
@@ -108,7 +113,14 @@ void H_003_Guardian_Spirit::UseSkill(CH_Base_ver2* chbase)
 	if (isRun || isCooldown || chbase == nullptr) return;
 
 	skillDamage = owner->GetStat().damage * 0.0291f;
+	owner->GetStat().mp -= 9;
 
+	if (HolyPriest_in* c = dynamic_cast<HolyPriest_in*>(owner))
+	{
+		c->SetState(HolyPriest_in::State::ATTACK1);
+	}
+
+	animStart = 0;
 	healingTarget = chbase;
 	runTime = Max_runTime;
 	isRun = true;

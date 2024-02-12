@@ -7,5 +7,5 @@ public:
 
 	virtual void Update() override;
 	virtual void Render() override;
-	virtual void UseSkill(CH_Base_ver2* chbase) override;
+	virtual void UseSkill() override;
 };

@@ -12,7 +12,7 @@ H_001_Holy_Word_Serenity::H_001_Holy_Word_Serenity() : ActiveSkill(SkillType::Ta
 		skillDamage = 0.0f;
 
 		// 쿨타임 설정 기본 쿨타임은 : (60초)
-		MAX_delay = 60.0f;
+		MAX_delay = 5.0f;
 		coolTime = MAX_delay;
 
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
@@ -41,6 +41,9 @@ void H_001_Holy_Word_Serenity::Update()
 {
 	if (isRun)
 	{
+		animStart += DELTA;
+		if (animStart <= Max_animStart) return;
+
 		Vector3 im = healingTarget->GlobalPos();
 		im.y = healingTarget->GlobalScale().y * 0.5f;
 
@@ -78,6 +81,8 @@ void H_001_Holy_Word_Serenity::Render()
 {
 	if (particle->IsPlay())
 	{
+		if (animStart <= Max_animStart) return;
+
 		particle->Render();
 	}
 }
@@ -86,8 +91,15 @@ void H_001_Holy_Word_Serenity::UseSkill(CH_Base_ver2* chbase)
 {
 	if (isCooldown || chbase == nullptr) return;
 
-	skillDamage = owner->GetStat().damage * 0.86f;
+	if (HolyPriest_in* c = dynamic_cast<HolyPriest_in*>(owner))
+	{
+		c->SetState(HolyPriest_in::State::ATTACK1);
+	}
 
+	skillDamage = owner->GetStat().damage * 0.86f;
+	owner->GetStat().mp -= 25;
+
+	animStart = 0;
 	healingTarget = chbase;
 	isRun = true;
 	isCooldown = true;

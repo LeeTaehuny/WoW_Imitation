@@ -68,6 +68,9 @@ void P_002_HOTR::Update()
 {
 	if (isRun)
 	{
+		animStart += DELTA;
+		if (animStart <= Max_animStart) return;
+
 		// 무기를 든 손으로 콜라이더를 지정
 		if (hitCollider->Active())
 		{
@@ -137,6 +140,8 @@ void P_002_HOTR::Render()
 {
 	if (isRun)
 	{
+		if (animStart <= Max_animStart) return;
+
 		blendState[1]->SetState();
 		if (hitCollider->Active())
 			holy_wave->Render();
@@ -150,6 +155,8 @@ void P_002_HOTR::UseSkill(MonsterBase* monsterbase)
 	targetMonster = monsterbase;
 
 	skillDamage = owner->GetStat().damage * 0.85f;
+	owner->GetStat().mp -= 3.2f;
+
 	myCollider->SetActive(true);
 	root->SetWorld(owner->GetInstancing()->GetTransformByNode(owner->GetIndex(), 38));
 	myCollider->UpdateWorld();
@@ -158,11 +165,17 @@ void P_002_HOTR::UseSkill(MonsterBase* monsterbase)
 	// 나중에는 공격 모션이 끝나면 정보를 받는 것으로 변경 해야 함
 	if (targetMonster->GetCollider()->IsCollision(myCollider))
 	{
+		if (ProtectionWarrior_in* c = dynamic_cast<ProtectionWarrior_in*>(owner))
+		{
+			c->SetState(ProtectionWarrior_in::State::ATTACK1);
+		}
+
 		hitCollider->SetActive(true);
 		hitCollider->Pos() = targetMonster->GetCollider()->GlobalPos();
 		hitCollider->Pos().y = targetMonster->GetCollider()->GlobalScale().y * 0.5f;
 		hitCollider->UpdateWorld();
 		isRun = true;
 		isCooldown = true;
+		animStart = 0;
 	}
 }

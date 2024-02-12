@@ -203,6 +203,12 @@
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_003_Grand_Crusader.cpp" />
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_005_Barricade_Of_Faith.cpp" />
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_006_Bulwark_Of_Order.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest\H_005_Censure.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest\H_006_Circle_Of_Healing.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest\H_007_Cosmic_Ripple.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest\H_008_Divine_Hymn.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest\H_009_Enlightenment.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest\H_010_Everlasting_Light.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest\H_004_Holy_Word_Chastise.h" />
@@ -386,6 +392,12 @@
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_003_Grand_Crusader.h" />
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_005_Barricade_Of_Faith.h" />
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_006_Bulwark_Of_Order.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest\H_005_Censure.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest\H_006_Circle_Of_Healing.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest\H_007_Cosmic_Ripple.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest\H_008_Divine_Hymn.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest\H_009_Enlightenment.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest\H_010_Everlasting_Light.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX3D.rc" />

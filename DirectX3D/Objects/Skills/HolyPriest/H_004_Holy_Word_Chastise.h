@@ -14,4 +14,7 @@ private:
 	int isOne = 0;
 
 	MonsterBase* targetMonster;
+
+	float Max_animStart = 0.9f;
+	float animStart = 0;
 };

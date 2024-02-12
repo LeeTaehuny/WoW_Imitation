@@ -20,6 +20,7 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 	SetEvent(ATTACK1, bind(&ProtectionWarrior_in::EndATK, this), 0.7f);
 	SetEvent(HIT, bind(&ProtectionWarrior_in::EndHit, this), 0.9f);
 	SetEvent(DIE, bind(&ProtectionWarrior_in::EndDie, this), 1);
+	SetEvent(SKILL1, bind(&ProtectionWarrior_in::EndCasting, this), 1);
 
 	// 자신의 타입에 따라 
 	switch (creatureType)
@@ -167,7 +168,7 @@ void ProtectionWarrior_in::Control()
 void ProtectionWarrior_in::Moving()
 {
 	// 점프, 공격, 맞을 때, 죽었을 경우 움직이지 않기
-	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
+	if (curState == ATTACK1 || curState == DIE || curState == HIT || curState == SKILL1) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
@@ -324,6 +325,11 @@ void ProtectionWarrior_in::EndHit()
 void ProtectionWarrior_in::EndDie()
 {
 	SetActive(false);
+}
+
+void ProtectionWarrior_in::EndCasting()
+{
+	SetState(IDLE1);
 }
 
 void ProtectionWarrior_in::SetEvent(int clip, Event event, float timeRatio)
