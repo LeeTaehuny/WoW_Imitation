@@ -41,22 +41,37 @@ void H_001_Holy_Word_Serenity::Update()
 {
 	if (isRun)
 	{
-		isRun = false;
-
 		Vector3 im = healingTarget->GlobalPos();
 		im.y = healingTarget->GlobalScale().y * 0.5f;
-		particle->Play(im);
 
-		// 이 부분에서 해당 캐릭터의
-		// 체력을 회복시키는 부분을 추가하면 될 것 같습니다.
+		if (isOne == 0)
+		{
+			particle->Play(im);
+			isOne++;
+
+			// 체력을 회복시키고
+			owner->GetStat().hp += skillDamage;
+			// 체력이 오버를 했다면 조정
+			if (owner->GetStat().hp >= owner->GetStat().maxHp)
+			{
+				owner->GetStat().hp = owner->GetStat().maxHp;
+			}
+		}
+
+		if (particle->IsPlay())
+		{
+			particle->SetPos(healingTarget->Pos());
+			particle->Update();
+		}
+		else
+		{
+			isRun = false;
+			isOne = 0;
+		}
 	}
 
-	if (particle->IsPlay())
-	{
-		particle->SetPos(healingTarget->Pos());
-		particle->Update();
-	}
-	ActiveSkill::Cooldown();
+	if (isCooldown)
+		ActiveSkill::Cooldown();
 }
 
 void H_001_Holy_Word_Serenity::Render()
@@ -70,6 +85,8 @@ void H_001_Holy_Word_Serenity::Render()
 void H_001_Holy_Word_Serenity::UseSkill(CH_Base_ver2* chbase)
 {
 	if (isCooldown || chbase == nullptr) return;
+
+	skillDamage = owner->GetStat().damage * 0.86f;
 
 	healingTarget = chbase;
 	isRun = true;

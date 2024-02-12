@@ -20,4 +20,7 @@ private:
 
 	float Max_runTime;
 	float runTime;
+
+	float Max_healingTick;
+	float healingTick;
 };

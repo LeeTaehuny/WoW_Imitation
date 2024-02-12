@@ -11,6 +11,7 @@ public:
 
 private:
 	ParticleSystem* particle;
+	int isOne = 0;
 
 	MonsterBase* targetMonster;
 };

@@ -12,7 +12,7 @@ H_003_Guardian_Spirit::H_003_Guardian_Spirit() : ActiveSkill(SkillType::Target)
 		skillDamage = 0.0f;
 
 		// 쿨타임 설정 기본은 (180초)
-		MAX_delay = 180.0f;
+		MAX_delay = 10.0f;
 		coolTime = MAX_delay;
 
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
@@ -26,6 +26,8 @@ H_003_Guardian_Spirit::H_003_Guardian_Spirit() : ActiveSkill(SkillType::Target)
 	// 작동하고 있는 시간 (기본은 10초)
 	Max_runTime = 10;
 	runTime = Max_runTime;
+
+	Max_healingTick = Max_runTime * 0.1f;
 
 	spirit = new Quad(L"Textures/Effect/Emerald_Snow.png");
 	spirit->Scale() *= 0.05f;
@@ -62,6 +64,18 @@ void H_003_Guardian_Spirit::Update()
 			isRun = false;
 		}
 
+		healingTick -= DELTA;
+		if (healingTick >= Max_healingTick)
+		{
+			healingTick = Max_healingTick;
+
+			healingTarget->GetStat().hp += skillDamage;
+			if (healingTarget->GetStat().hp >= healingTarget->GetStat().maxHp)
+			{
+				healingTarget->GetStat().hp = healingTarget->GetStat().maxHp;
+			}
+		}
+
 		// 스탯이 추가되면 이곳에 추가 효과를 주면 됩니다.
 
 		Vector3 lll = healingTarget->GlobalPos();
@@ -71,7 +85,8 @@ void H_003_Guardian_Spirit::Update()
 		spirit->UpdateWorld();
 	}
 
-	ActiveSkill::Cooldown();
+	if (isCooldown)
+		ActiveSkill::Cooldown();
 }
 
 void H_003_Guardian_Spirit::Render()
@@ -91,6 +106,8 @@ void H_003_Guardian_Spirit::Render()
 void H_003_Guardian_Spirit::UseSkill(CH_Base_ver2* chbase)
 {
 	if (isRun || isCooldown || chbase == nullptr) return;
+
+	skillDamage = owner->GetStat().damage * 0.0291f;
 
 	healingTarget = chbase;
 	runTime = Max_runTime;

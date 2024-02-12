@@ -12,6 +12,7 @@ public:
 private:
 	// 파티클의 정보를 저장하기 위한 벡터 (사이즈는 5개 고정)
 	vector<ParticleSystem*> particles;
+	vector<int> isOne;
 
 	// 회복할 캐릭터의 정보를 저장하기 위한 벡터 (사이즈는 5개 고정
 	vector<CH_Base_ver2*> healingTargets;

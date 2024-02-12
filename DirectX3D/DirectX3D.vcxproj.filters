@@ -200,6 +200,9 @@
     <ClCompile Include="Objects\Shop\Shop.cpp" />
     <ClCompile Include="Objects\Monster\Skeleton_Knight.cpp" />
     <ClCompile Include="Scenes\MAP\TestDungeonScene.cpp" />
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_003_Grand_Crusader.cpp" />
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_005_Barricade_Of_Faith.cpp" />
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_006_Bulwark_Of_Order.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest\H_004_Holy_Word_Chastise.h" />
@@ -380,6 +383,9 @@
     <ClInclude Include="Scenes\DevScene\TestScene.h" />
     <ClInclude Include="Objects\Item\Weapon.h" />
     <ClInclude Include="Scenes\MAP\TestDungeonScene.h" />
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_003_Grand_Crusader.h" />
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_005_Barricade_Of_Faith.h" />
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_006_Bulwark_Of_Order.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX3D.rc" />

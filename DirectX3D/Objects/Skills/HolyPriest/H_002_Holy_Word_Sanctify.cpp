@@ -40,6 +40,11 @@ H_002_Holy_Word_Sanctify::H_002_Holy_Word_Sanctify() : ActiveSkill(SkillType::No
 	icon = new Quad(L"Textures/Character_Skill_Icon/HolyPriest/002.jpg");
 	prevSkills.resize(1);
 	prevSkills[0] = "H_001_Holy_Word_Serenity";
+
+	FOR(particles.size())
+	{
+		isOne.push_back(0);
+	}
 }
 
 H_002_Holy_Word_Sanctify::~H_002_Holy_Word_Sanctify()
@@ -57,8 +62,6 @@ void H_002_Holy_Word_Sanctify::Update()
 {
 	if (isRun)
 	{
-		isRun = false;
-
 		int imsiValue = 0;
 		for (CH_Base_ver2* ch : CH->GetCharcterData())
 		{
@@ -81,38 +84,54 @@ void H_002_Holy_Word_Sanctify::Update()
 		FOR(healingTargets.size())
 		{
 			if (healingTargets[i] == nullptr) continue;
-			particles[i]->Play(healingTargets[i]->Pos());
+			
+			if (particles[i]->IsPlay())
+			{
+				particles[i]->SetPos(healingTargets[i]->Pos());
+				particles[i]->Update();
+			}
+			else
+			{
+				if (isOne[i] >= 1)
+				{
+					// 이 부분이 2번째 작동하는 것이라면
+					// 일단 이 함수 자체를 종료하고 isRun도 거짓으로 변경
+					isRun = false;
+					isOne[i] = 0;
+
+					healingTargets[i]->GetStat().hp += skillDamage;
+					if (owner->GetStat().hp >= owner->GetStat().maxHp)
+					{
+						owner->GetStat().hp = owner->GetStat().maxHp;
+					}
+
+					healingTargets[i] = nullptr;
+					continue;
+				}
+				isOne[i]++;
+				particles[i]->Play(Vector3());
+			}
 		}
 
 		hitCollider->SetActive(false);
-
-		// 회복을 시킬거라면 이 반복문 전에 회복을 시켜야 함
-		FOR(healingTargets.size())
-			healingTargets[i] = nullptr;
 	}
 
-	FOR(particles.size())
-	{
-		if (particles[i]->IsPlay())
-		{
-			particles[i]->Update();
-		}
-	}
-
-	ActiveSkill::Cooldown();
+	if (isCooldown)
+		ActiveSkill::Cooldown();
 }
 
 void H_002_Holy_Word_Sanctify::Render()
 {
-	//hitCollider->Render();
-
-	FOR(particles.size())
+	if (isRun)
 	{
-		if (particles[i]->IsPlay())
+		FOR(particles.size())
 		{
-			particles[i]->Render();
+			if (particles[i]->IsPlay())
+			{
+				particles[i]->Render();
+			}
 		}
-	}
+	}	
 }
 
 void H_002_Holy_Word_Sanctify::UseSkill()
@@ -123,6 +142,7 @@ void H_002_Holy_Word_Sanctify::UseSkill()
 	hitCollider->Pos() = owner->GlobalPos();
 	hitCollider->UpdateWorld();
 
+	skillDamage = owner->GetStat().damage * 0.291f;
 
 	isRun = true;
 	isCooldown = true;

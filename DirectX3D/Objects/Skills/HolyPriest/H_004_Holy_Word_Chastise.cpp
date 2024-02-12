@@ -44,8 +44,26 @@ void H_004_Holy_Word_Chastise::Update()
 {
 	if (isRun)
 	{
-		isRun = false;
-		particle->Play(Vector3());
+		if (isOne == 0)
+		{
+			particle->Play(Vector3());
+			targetMonster->Hit(skillDamage);
+			isOne++;
+		}
+
+		if (particle->IsPlay())
+		{
+			Vector3 lll = targetMonster->GetCollider()->GlobalPos();
+			lll.y += targetMonster->GetCollider()->GlobalScale().y * 2;
+
+			particle->SetPos(lll);
+			particle->Update();
+		}
+		else 
+		{
+			isOne = 0;
+			isRun = false;
+		}
 
 		// 몬스터에게 데미지를 주고 상태이상 상태를 주려면
 		// 여기서 추가를 하시면 됩니다.
@@ -53,21 +71,15 @@ void H_004_Holy_Word_Chastise::Update()
 		// 불신임 특성이 찍혀 있다면 원래 행동불능 상태를 주는 것이
 		// 기절로 바뀝니다.
 	}
-	if (particle->IsPlay())
-	{
-		Vector3 lll = targetMonster->GetCollider()->GlobalPos();
-		lll.y += targetMonster->GetCollider()->GlobalScale().y * 2;
+	
 
-		particle->SetPos(lll);
-		particle->Update();
-	}
-
-	ActiveSkill::Cooldown();
+	if (isCooldown)
+		ActiveSkill::Cooldown();
 }
 
 void H_004_Holy_Word_Chastise::Render()
 {
-	if (particle->IsPlay())
+	if (isRun)
 	{
 		particle->Render();
 	}
@@ -76,6 +88,8 @@ void H_004_Holy_Word_Chastise::Render()
 void H_004_Holy_Word_Chastise::UseSkill(MonsterBase* monsterbase)
 {
 	if (isCooldown || monsterbase == nullptr) return;
+
+	skillDamage = owner->GetStat().damage * 2.45f;
 
 	targetMonster = monsterbase;
 	isRun = true;

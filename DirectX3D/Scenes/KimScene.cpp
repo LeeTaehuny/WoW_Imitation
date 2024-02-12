@@ -22,7 +22,7 @@ KimScene::KimScene()
 	CH->NonPlayerSpawn(1);
 	CH->NonPlayerSpawn(1);
 
-	skill = new P_009_Eye_Of_Tyr();
+	skill = new H_004_Holy_Word_Chastise();
 	skill->SetOwner(CH->GetPlayerData());
 
 	MONSTER;
