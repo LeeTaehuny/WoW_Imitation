@@ -19,10 +19,10 @@ KimScene::KimScene()
 	CH->PlayerSpawn(5);
 
 	CH->NonPlayerSpawn(1);
-	//CH->NonPlayerSpawn(1);
-	//CH->NonPlayerSpawn(1);
+	CH->NonPlayerSpawn(1);
+	CH->NonPlayerSpawn(1);
 
-	skill = new H_004_Holy_Word_Chastise();
+	skill = new P_009_Eye_Of_Tyr();
 	skill->SetOwner(CH->GetPlayerData());
 
 	MONSTER;
@@ -94,12 +94,25 @@ void KimScene::Update()
 
 		if (KEY_DOWN('K'))
 		{
-			//if (targetMonster != nullptr)
-			//	skill->UseSkill(targetMonster->GetCollider());
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skill))
+			{
+				if (UseType::character_Data == c->GetUsing())
+				{
+					c->UseSkill(targetNPC);
+				}
+				else if (UseType::collider_Data == c->GetUsing())
+				{
 
-			// 플레이어 캐릭터에게 사용하기 위한 함수
-			if (targetMonster != nullptr)
-				skill->UseSkill(targetMonster);
+				}
+				else if (UseType::monster_Data == c->GetUsing())
+				{
+					c->UseSkill(targetMonster);
+				}
+				else if (UseType::NON_Data == c->GetUsing())
+				{
+					c->UseSkill();
+				}
+			}
 		}
 	}
 

@@ -1,7 +1,8 @@
 ﻿#include "Framework.h"
 #include "ActiveSkill.h"
 
-ActiveSkill::ActiveSkill(SkillType type) : SkillBase(SkillBaseType::Active), skillType(type)
+ActiveSkill::ActiveSkill(SkillType type)
+	: SkillBase(SkillBaseType::Active), skillType(type)
 {
 	// 멤버 변수 초기화
 	coolTime = MAX_delay;

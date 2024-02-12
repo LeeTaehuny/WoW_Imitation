@@ -1,7 +1,7 @@
 #include "Framework.h"
-#include "P_032_Eye_Of_Tyr.h"
+#include "P_009_Eye_Of_Tyr.h"
 
-P_032_Eye_Of_Tyr::P_032_Eye_Of_Tyr() : ActiveSkill(SkillType::NonTarget)
+P_009_Eye_Of_Tyr::P_009_Eye_Of_Tyr() : ActiveSkill(SkillType::NonTarget)
 {
 	/*
 	스킬의 효과
@@ -30,6 +30,7 @@ P_032_Eye_Of_Tyr::P_032_Eye_Of_Tyr() : ActiveSkill(SkillType::NonTarget)
 		isCooldown = false;
 
 		// // 마나 소모 불명 : 0.5%
+		usingType = NON_Data;
 	}
 
 	// 이펙트를 위한 변수?
@@ -43,12 +44,12 @@ P_032_Eye_Of_Tyr::P_032_Eye_Of_Tyr() : ActiveSkill(SkillType::NonTarget)
 	donut->SetParent(hitCollider);
 	donut->Scale() *= 0.1;
 
-	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/032.jpg");
+	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/009.jpg");
 	prevSkills.resize(1);
-	prevSkills[0] = "P_024_Guardian_Of_Ancient_Kings";
+	prevSkills[0] = "P_008_Guardian_Of_Ancient_Kings";
 }
 
-P_032_Eye_Of_Tyr::~P_032_Eye_Of_Tyr()
+P_009_Eye_Of_Tyr::~P_009_Eye_Of_Tyr()
 {
 	delete donut;
 	delete myCollider;
@@ -61,10 +62,8 @@ P_032_Eye_Of_Tyr::~P_032_Eye_Of_Tyr()
 	FOR(2) delete depthState[i];
 }
 
-void P_032_Eye_Of_Tyr::Update()
+void P_009_Eye_Of_Tyr::Update()
 {
-	//ActiveSkill::Update();
-
 	if (isRun)
 	{
 		hitCollider->Pos() = owner->GlobalPos();
@@ -111,24 +110,22 @@ void P_032_Eye_Of_Tyr::Update()
 			hitCollider->SetActive(false);
 			//hitCollider->Scale() = Vector3(1, 1, 1);
 			isRun = false;
+			hitCollider->Scale() = Vector3(1, 1, 1);
+			hitCollider->Pos() = Vector3(0, -50, 0);
+			hitCollider->UpdateWorld();
+			donut->UpdateWorld();
 		}
 
 		donut->Rot() = CAM->Rot();
 		donut->UpdateWorld();
 		hitCollider->UpdateWorld();
 	}
-	else if (!isRun)
-	{
-		hitCollider->Scale() = Vector3(1, 1, 1);
-		hitCollider->Pos() = Vector3(0, -50, 0);
-		hitCollider->UpdateWorld();
-		donut->UpdateWorld();
-	}
 
-	ActiveSkill::Cooldown();
+	if (isCooldown)
+		ActiveSkill::Cooldown();
 }
 
-void P_032_Eye_Of_Tyr::Render()
+void P_009_Eye_Of_Tyr::Render()
 {
 	if (isRun)
 	{
@@ -139,12 +136,10 @@ void P_032_Eye_Of_Tyr::Render()
 
 		blendState[0]->SetState();
 		depthState[0]->SetState();
-
-		//hitCollider->Render();
 	}
 }
 
-void P_032_Eye_Of_Tyr::UseSkill()
+void P_009_Eye_Of_Tyr::UseSkill()
 {
 	if (isCooldown) return;
 

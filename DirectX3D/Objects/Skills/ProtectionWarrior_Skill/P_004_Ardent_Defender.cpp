@@ -1,7 +1,7 @@
 ﻿#include "Framework.h"
-#include "P_009_Ardent_Defender.h"
+#include "P_004_Ardent_Defender.h"
 
-P_009_Ardent_Defender::P_009_Ardent_Defender() : ActiveSkill(SkillType::Target)
+P_004_Ardent_Defender::P_004_Ardent_Defender() : ActiveSkill(SkillType::Target)
 {
 	/*
 	스킬의 효과
@@ -18,7 +18,7 @@ P_009_Ardent_Defender::P_009_Ardent_Defender() : ActiveSkill(SkillType::Target)
 		speed = 0.0f;
 
 		// 스킬 데미지 (회복으로 넣어야 함)
-		skillDamage = 100.0f;
+		skillDamage = 0.0f;
 
 		// 쿨타임 설정
 		MAX_delay = 120.0f;
@@ -28,15 +28,19 @@ P_009_Ardent_Defender::P_009_Ardent_Defender() : ActiveSkill(SkillType::Target)
 		isRun = false;
 		isCooldown = false;
 
+		Max_runTime = 8.0f;
+		runTime = Max_runTime;
+
 		// // 마나 소모 불명 : 약 1.0%
+		usingType = NON_Data;
 	}
 
-	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/009.jpg");
+	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/004.jpg");
 	prevSkills.resize(1);
-	prevSkills[0] = "P_005_Grand_Crusader";
+	prevSkills[0] = "P_003_Grand_Crusader";
 }
 
-P_009_Ardent_Defender::~P_009_Ardent_Defender()
+P_004_Ardent_Defender::~P_004_Ardent_Defender()
 {
 	delete myCollider;
 	delete hitCollider;
@@ -44,24 +48,33 @@ P_009_Ardent_Defender::~P_009_Ardent_Defender()
 	delete target;
 }
 
-void P_009_Ardent_Defender::Update()
+void P_004_Ardent_Defender::Update()
 {
-	if (owner == nullptr) return;
-
 	if (isRun)
 	{
-		isRun = false;
+		runTime -= DELTA;
+		if (runTime <= 0)
+		{
+			runTime = Max_runTime;
+			isRun = false;
+		}
+
+		owner->GetStat().defence += 20;
 	}
 
-	ActiveSkill::Cooldown();
+	if (isCooldown)
+		ActiveSkill::Cooldown();
 }
 
-void P_009_Ardent_Defender::Render()
+void P_004_Ardent_Defender::Render()
 {
 }
 
-void P_009_Ardent_Defender::UseSkill()
+void P_004_Ardent_Defender::UseSkill()
 {
+	if (isCooldown) nullptr;
+
+	skillDamage = owner->GetStat().damage;
 	isCooldown = true;
 	isRun = true;
 }

@@ -26,6 +26,7 @@ H_002_Holy_Word_Sanctify::H_002_Holy_Word_Sanctify() : ActiveSkill(SkillType::No
 		isCooldown = false;
 
 		// // 마나 소모 : 3.5%
+		usingType = NON_Data;
 	}
 
 	// 지금은 5개의 파티클을 생성하지만 나중에 너무 무겁다고 판단이 된다면

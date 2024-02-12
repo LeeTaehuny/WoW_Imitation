@@ -20,6 +20,7 @@ H_001_Holy_Word_Serenity::H_001_Holy_Word_Serenity() : ActiveSkill(SkillType::Ta
 		isCooldown = false;
 
 		// // 마나 소모 : 2.5%
+		usingType = character_Data;
 	}
 
 	icon = new Quad(L"Textures/Character_Skill_Icon/HolyPriest/001.jpg");

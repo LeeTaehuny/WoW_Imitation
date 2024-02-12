@@ -1,9 +1,9 @@
 #pragma once
-class P_032_Eye_Of_Tyr : public ActiveSkill
+class P_009_Eye_Of_Tyr : public ActiveSkill
 {
 public:
-	P_032_Eye_Of_Tyr();
-	~P_032_Eye_Of_Tyr();
+	P_009_Eye_Of_Tyr();
+	~P_009_Eye_Of_Tyr();
 
 	virtual void Update() override;
 	virtual void Render() override;

@@ -20,6 +20,7 @@ H_004_Holy_Word_Chastise::H_004_Holy_Word_Chastise() : ActiveSkill(SkillType::Ta
 		isCooldown = false;
 
 		// // 마나 소모 : 2.0%
+		usingType = monster_Data;
 	}
 
 	particle = new ParticleSystem("TextData/Particles/Priests/Skill04.fx");

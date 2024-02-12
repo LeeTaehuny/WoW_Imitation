@@ -227,12 +227,12 @@ using namespace GameMath;
 
 // 보호 성기사 스킬
 #include "Objects/Skills/ProtectionWarrior_Skill/P_001_Avengers_Shield.h"
-#include "Objects/Skills/ProtectionWarrior_Skill/P_004_HOTR.h"
-#include "Objects/Skills/ProtectionWarrior_Skill/P_009_Ardent_Defender.h"
-#include "Objects/Skills/ProtectionWarrior_Skill/P_014_Blessing_of_Spellwarding.h"
-#include "Objects/Skills/ProtectionWarrior_Skill/P_024_Guardian_Of_Ancient_Kings.h"
-#include "Objects/Skills/ProtectionWarrior_Skill/P_032_Eye_Of_Tyr.h"
-#include "Objects/Skills/ProtectionWarrior_Skill/P_034_Moment_Of_Glory.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_002_HOTR.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_004_Ardent_Defender.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_007_Blessing_of_Spellwarding.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_008_Guardian_Of_Ancient_Kings.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_009_Eye_Of_Tyr.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_010_Moment_Of_Glory.h"
 
 // 신성 사제 스킬
 #include "Objects/Skills/HolyPriest/H_001_Holy_Word_Serenity.h"

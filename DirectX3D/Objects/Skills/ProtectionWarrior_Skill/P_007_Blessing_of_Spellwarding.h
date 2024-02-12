@@ -1,9 +1,9 @@
 ﻿#pragma once
-class P_014_Blessing_of_Spellwarding : public ActiveSkill
+class P_007_Blessing_of_Spellwarding : public ActiveSkill
 {
 public:
-	P_014_Blessing_of_Spellwarding();
-	~P_014_Blessing_of_Spellwarding();
+	P_007_Blessing_of_Spellwarding();
+	~P_007_Blessing_of_Spellwarding();
 
 	virtual void Update() override;
 	virtual void Render() override;
@@ -17,6 +17,7 @@ private:
 	// 파티클시스템을 통해 위로 날아가는 듯한 파티클
 	ParticleSystem* particle;
 
+	int nut = 0;
 	//
 
 };

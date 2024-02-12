@@ -20,6 +20,7 @@ H_003_Guardian_Spirit::H_003_Guardian_Spirit() : ActiveSkill(SkillType::Target)
 		isCooldown = false;
 
 		// // 마나 소모 : 0.9%
+		usingType = character_Data;
 	}
 
 	// 작동하고 있는 시간 (기본은 10초)

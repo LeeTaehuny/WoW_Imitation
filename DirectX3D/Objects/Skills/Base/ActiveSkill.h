@@ -8,6 +8,14 @@ enum class SkillType
 	NonTarget,	// 논타겟 스킬
 };
 
+enum UseType
+{
+	monster_Data,
+	character_Data,
+	collider_Data,
+	NON_Data,
+};
+
 class ActiveSkill : public SkillBase
 {
 public:
@@ -16,6 +24,9 @@ public:
 
 	virtual void Update() override;
 	virtual void Render() override;
+
+
+	UseType GetUsing() { return usingType; }
 
 private:
 	void TargetUpdate();
@@ -40,6 +51,8 @@ protected:
 
 	// 스킬의 타입을 저장하기 위한 변수
 	SkillType skillType;
+	// 유싱 타입을 저장하기 위한 변수
+	UseType usingType;
 
 	// 방향을 저장하기 위한 변수
 	Vector3 direction;

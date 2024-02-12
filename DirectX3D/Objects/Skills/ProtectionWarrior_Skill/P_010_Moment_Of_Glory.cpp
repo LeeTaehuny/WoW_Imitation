@@ -1,7 +1,7 @@
 #include "Framework.h"
-#include "P_034_Moment_Of_Glory.h"
+#include "P_010_Moment_Of_Glory.h"
 
-P_034_Moment_Of_Glory::P_034_Moment_Of_Glory() : ActiveSkill(SkillType::Target)
+P_010_Moment_Of_Glory::P_010_Moment_Of_Glory() : ActiveSkill(SkillType::Target)
 {
 	/*
 	스킬의 효과
@@ -19,24 +19,28 @@ P_034_Moment_Of_Glory::P_034_Moment_Of_Glory() : ActiveSkill(SkillType::Target)
 		// 스킬 데미지
 		skillDamage = 0.0f;
 
-		// 쿨타임 설정
-		MAX_delay = 90.0f;
+		// 쿨타임 설정 (기본은 90초)
+		MAX_delay = 5.0f;
 		coolTime = MAX_delay;
+
+		maxRuntime = 15.0f;
+		curRuntime = maxRuntime;
 
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
 		isRun = false;
 		isCooldown = false;
 
 		// // 마나 소모 불명 : 0.5%
+		usingType = character_Data;
 	}
 
-	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/034.jpg");
+	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/010.jpg");
 	prevSkills.resize(2);
 	prevSkills[0] = "P_013_Bulwark_Of_Order";
 	prevSkills[1] = "P_024_Guardian_Of_Ancient_Kings";
 }
 
-P_034_Moment_Of_Glory::~P_034_Moment_Of_Glory()
+P_010_Moment_Of_Glory::~P_010_Moment_Of_Glory()
 {
 	delete myCollider;
 	delete hitCollider;
@@ -44,7 +48,7 @@ P_034_Moment_Of_Glory::~P_034_Moment_Of_Glory()
 	delete target;
 }
 
-void P_034_Moment_Of_Glory::Update()
+void P_010_Moment_Of_Glory::Update()
 {
 	if (isRun)
 	{
@@ -55,17 +59,21 @@ void P_034_Moment_Of_Glory::Update()
 			isRun = false;
 		}
 	}
+
+	if (isCooldown)
+		ActiveSkill::Cooldown();
 }
 
-void P_034_Moment_Of_Glory::Render()
+void P_010_Moment_Of_Glory::Render()
 {
 }
 
-void P_034_Moment_Of_Glory::UseSkill(CH_Base_ver2* chbase)
+void P_010_Moment_Of_Glory::UseSkill(CH_Base_ver2* chbase)
 {
 	if (chbase == nullptr) return;
 	targetCharcter = chbase;
 
+	skillDamage = owner->GetStat().damage;
 	isRun = true;
 	isCooldown = true;
 }

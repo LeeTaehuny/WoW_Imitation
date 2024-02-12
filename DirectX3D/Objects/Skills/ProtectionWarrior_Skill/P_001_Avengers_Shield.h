@@ -7,7 +7,7 @@ public:
 
 	virtual void Update() override;
 	virtual void Render() override;
-	virtual void UseSkill(Collider* targetCollider) override;
+	virtual void UseSkill(MonsterBase* monsterbase) override;
 
 	// 임펙트 함수
 	void Impact();
@@ -20,7 +20,9 @@ private:
 	Model* shielD;
 
 	// 공격 타겟 3마리 지정용 함수, 콜라이더를 저장해 놓을 것임
-	vector<Collider*> three;
+	vector<MonsterBase*> three;
+
+	MonsterBase* targetMonster;
 
 	Transform* startEdge;
 	Transform* endEdge;
