@@ -10,9 +10,15 @@ Dungeon::Dungeon() //: Transform()
 
 	Gates.resize(6);
 	Gates[0] = new Model("Gate");
-	boxCollider_G = new BoxCollider(Vector3(35, 100, 230));
+	boxCollider_G = new BoxCollider(Vector3(35, 120, 230));
 	boxCollider_G->SetParent(Gates[0]);
 	boxCollider_G->Pos().y -= 80;
+	boxCollider_GL = new BoxCollider(Vector3(35, 30, 95));
+	boxCollider_GL->SetParent(Gates[0]);
+	boxCollider_GL->Pos().z -= 65;
+	boxCollider_GR = new BoxCollider(Vector3(35, 30, 95));
+	boxCollider_GR->SetParent(Gates[0]);
+	boxCollider_GR->Pos().z += 65;
 
 	Gates[1] = new Model("Gate_Prop");
 	Gates[1]->Pos().y -= 75.0f;
@@ -71,6 +77,9 @@ Dungeon::Dungeon() //: Transform()
 	Gates[5] = new Model("Gate_Door");
 	Gates[5]->Scale() *= 9.0f;
 	Gates[5]->Pos().y -= 20.5f; // close
+	boxCollider_GD = new BoxCollider(Vector3(2, 5, 4));
+	boxCollider_GD->SetParent(Gates[5]);
+	boxCollider_GD->Pos().y += 2.5f;
 
 	//////////////////////////////////////////////
 
@@ -190,21 +199,29 @@ Dungeon::Dungeon() //: Transform()
 	InGates[3]->Pos().z -= 36.5f;
 	InGates[3]->Pos().y -= 12.5f;
 	InGates[3]->Scale() *= 2.0f;
-	//InGates[3]->Rot().y -= 1.575f;
+	boxCollider_DR = new BoxCollider(Vector3(9, 50, 17.5f));
+	boxCollider_DR->SetParent(InGates[3]);
+	boxCollider_DR->Pos().x += 0.0f;
+	boxCollider_DR->Pos().z += 10.0f;
+	boxCollider_DR->Pos().y += 22.5f;
 	
 	InGates[4] = new Model("InGateDoor_L");
 	InGates[4]->Pos().x += 450.0f;
 	InGates[4]->Pos().z += 36.5f;
 	InGates[4]->Pos().y -= 12.5f;
 	InGates[4]->Scale() *= 2.0f;
-	//InGates[4]->Rot().y += 1.575f;
+	boxCollider_DL = new BoxCollider(Vector3(9, 50, 17.5f));
+	boxCollider_DL->SetParent(InGates[4]);
+	boxCollider_DL->Pos().x += 0.0f;
+	boxCollider_DL->Pos().z -= 10.0f;
+	boxCollider_DL->Pos().y += 22.5f;
+
 	
 	InGates[5] = new Model("Pillar_G"); // R
 	InGates[5]->Rot().y += 3.15f;
 	InGates[5]->Pos().x += 430.0f;
 	InGates[5]->Pos().z -= 56.5f;
 	InGates[5]->Scale() *= 2.0f;
-	//InGates[5]->Pos().y -= 12.5f;
 	
 	InGates[6] = new Model("Pillar_G"); // L
 	InGates[6]->Rot().y += 3.15f;
@@ -289,6 +306,9 @@ void Dungeon::Update()
 	}
 
 	boxCollider_G->UpdateWorld();
+	boxCollider_GL->UpdateWorld();
+	boxCollider_GR->UpdateWorld();
+	boxCollider_GD->UpdateWorld();
 	boxCollider_GP->UpdateWorld();
 	boxCollider_GPI->UpdateWorld();
 	boxCollider_S->UpdateWorld();
@@ -297,10 +317,14 @@ void Dungeon::Update()
 	boxCollider_SIL->UpdateWorld();
 	boxCollider_SIR->UpdateWorld();
 
+	boxCollider_DL->UpdateWorld();
+	boxCollider_DR->UpdateWorld();
+
 	boxCollider_WLF->UpdateWorld();
 	boxCollider_WRF->UpdateWorld();
 	boxCollider_WGL->UpdateWorld();
 	boxCollider_WGR->UpdateWorld();
+	
 }
 
 void Dungeon::Render()
@@ -330,6 +354,9 @@ void Dungeon::Render()
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->Render();
 
 	boxCollider_G->Render();
+	boxCollider_GL->Render();
+	boxCollider_GR->Render();
+	boxCollider_GD->Render();
 	boxCollider_GP->Render();
 	boxCollider_GPI->Render();
 	boxCollider_S->Render();
@@ -337,6 +364,9 @@ void Dungeon::Render()
 	boxCollider_SIC->Render();
 	boxCollider_SIL->Render();
 	boxCollider_SIR->Render();
+	
+	boxCollider_DL->Render();
+	boxCollider_DR->Render();
 
 	boxCollider_WLF->Render();
 	boxCollider_WRF->Render();
@@ -356,11 +386,16 @@ bool Dungeon::IsCollision(Collider* c)
 
 void Dungeon::DoorMove()
 {
-	if (Gates[5]->Pos().y <= 95.5f) Gates[5]->Pos().y += 5 * DELTA;
-
-	if (Gates[5]->Pos().y > 95.5f)
+	if (Gates[5]->Pos().y <= 15.5f) 
 	{
-		Gates[5]->Pos().y = 95.5f;
+		Gates[5]->Pos().y += 5 * DELTA;
+		boxCollider_GD->Pos().y += 0.01 * DELTA;
+	} 
+
+	if (Gates[5]->Pos().y > 15.5f)
+	{
+		Gates[5]->Pos().y = 15.5f;
+		boxCollider_GD->Pos().y = 2.5f;
 		open = true;
 	}
 	return;

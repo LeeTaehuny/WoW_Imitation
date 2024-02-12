@@ -42,6 +42,9 @@ private:
 	bool open_I = false;
 
 	BoxCollider* boxCollider_G;
+	BoxCollider* boxCollider_GL;
+	BoxCollider* boxCollider_GR;
+	BoxCollider* boxCollider_GD;
 	BoxCollider* boxCollider_GP;
 	BoxCollider* boxCollider_GPI;
 	BoxCollider* boxCollider_S;
@@ -49,6 +52,9 @@ private:
 	BoxCollider* boxCollider_SIC;
 	BoxCollider* boxCollider_SIL;
 	BoxCollider* boxCollider_SIR;
+
+	BoxCollider* boxCollider_DL;
+	BoxCollider* boxCollider_DR;
 
 	BoxCollider* boxCollider_WLF;
 	BoxCollider* boxCollider_WRF;
