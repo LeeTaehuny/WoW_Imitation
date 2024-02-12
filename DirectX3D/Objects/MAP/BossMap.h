@@ -13,12 +13,13 @@ public:
 	float GetFallDead() { return FallDead; }
 	Vector3 GetSpawnpoint_P() { return Spawnpoint_P; }
 	Vector3 GetSpawnpoint_B() { return Spawnpoint_B; }
+	bool IsCollision(Collider* c);
 
 private:
-	float Height = 6.25f;
+	float Height = 4.25f;
 	float FallDead = -150.0f;
-	Vector3 Spawnpoint_P = { -60.0f, 7.0f, 0 };
-	Vector3 Spawnpoint_B = { 40.0f, 7.0f, 0 };
+	Vector3 Spawnpoint_P = { -60.0f, 4.25f, 0 };
+	Vector3 Spawnpoint_B = { 40.0f, 4.25f, 0 };
 	//Vector3 Spawnpoint_B = { 75.0f, 30.25f, 0 };
 
 	UINT PhaseNum = 0; 

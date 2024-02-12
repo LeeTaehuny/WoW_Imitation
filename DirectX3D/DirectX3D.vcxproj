@@ -172,9 +172,6 @@
     <ClInclude Include="Objects\Inventory\Inventory.h" />
     <ClInclude Include="Objects\Item\Item.h" />
     <ClInclude Include="Objects\Item\Potion.h" />
-    <ClInclude Include="Scenes\MAP\IceEdges.h" />
-    <ClInclude Include="Scenes\MAP\LastBossMap_Phase2.h" />
-    <ClInclude Include="Scenes\MAP\LastBossMap_Phase1.h" />
     <ClInclude Include="Scenes\MAP\LastBossMap_Scene.h" />
     <ClInclude Include="Scenes\MirrorScene.h" />
     <ClInclude Include="Objects\Algorithm\AStar.h" />
@@ -333,9 +330,6 @@
     <ClCompile Include="Objects\Inventory\Inventory.cpp" />
     <ClCompile Include="Objects\Item\Item.cpp" />
     <ClCompile Include="Objects\Item\Potion.cpp" />
-    <ClCompile Include="Scenes\MAP\IceEdges.cpp" />
-    <ClCompile Include="Scenes\MAP\LastBossMap_Phase2.cpp" />
-    <ClCompile Include="Scenes\MAP\LastBossMap_Phase1.cpp" />
     <ClCompile Include="Scenes\MAP\LastBossMap_Scene.cpp" />
     <ClCompile Include="Scenes\MirrorScene.cpp" />
     <ClCompile Include="Objects\Algorithm\AStar.cpp" />

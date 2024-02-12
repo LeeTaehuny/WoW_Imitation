@@ -382,6 +382,8 @@ bool Dungeon::IsCollision(Collider* c)
 	if (boxCollider_SIC->PushCollision(c)) return true;
 	if (boxCollider_SIL->PushCollision(c)) return true;
 	if (boxCollider_SIR->PushCollision(c)) return true;
+
+	return false;
 }
 
 void Dungeon::DoorMove()

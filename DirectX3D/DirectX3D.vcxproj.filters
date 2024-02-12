@@ -388,15 +388,6 @@
     <ClInclude Include="Scenes\MAP\LastBossMap_Scene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\MAP\LastBossMap_Phase1.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\MAP\LastBossMap_Phase2.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\MAP\IceEdges.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Objects\MAP\BossMap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -407,6 +398,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\MAP\TestDungeonScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Monster\MonsterManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Character_\MarksmanshipHunter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -753,15 +750,6 @@
     <ClCompile Include="Scenes\MAP\LastBossMap_Scene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\MAP\LastBossMap_Phase1.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\MAP\LastBossMap_Phase2.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\MAP\IceEdges.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Objects\MAP\BossMap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -829,7 +817,6 @@
     <ClCompile Include="Objects\Character_\FireMage.cpp" />
     <ClCompile Include="Objects\Character_\HolyPriest.cpp" />
     <ClCompile Include="Objects\Character_\ProtectionWarrior.cpp" />
-    <ClCompile Include="Objects\Skills\Base\NonTargetSkill.cpp" />
     <ClCompile Include="Objects\Monster\MonsterManager.cpp" />
     <ClCompile Include="Objects\Character_\MarksmanshipHunter.cpp" />
     <ClCompile Include="Objects\Inventory\Slot.cpp" />
@@ -841,7 +828,6 @@
     <ClCompile Include="Objects\Character_\CH_Base.cpp" />
     <ClCompile Include="Objects\Monster\Skeleton.cpp" />
     <ClCompile Include="Objects\Skills\Base\SkillBase.cpp" />
-    <ClCompile Include="Objects\Skills\Base\TargetSkill.cpp" />
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_001_Avengers_Shield.cpp" />
     <ClCompile Include="Objects\Monster\Scarecrow.cpp" />
     <ClCompile Include="Scenes\KimScene.cpp" />
@@ -972,11 +958,9 @@
     <ClInclude Include="Objects\Character_\FireMage.h" />
     <ClInclude Include="Objects\Character_\HolyPriest.h" />
     <ClInclude Include="Objects\Character_\ProtectionWarrior.h" />
-    <ClInclude Include="Objects\Skills\Base\NonTargetSkill.h" />
     <ClInclude Include="Objects\Monster\MonsterBase.h" />
     <ClInclude Include="Objects\Monster\Skeleton.h" />
     <ClInclude Include="Objects\Skills\Base\SkillBase.h" />
-    <ClInclude Include="Objects\Skills\Base\TargetSkill.h" />
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_001_Avengers_Shield.h" />
     <ClInclude Include="Objects\Monster\Scarecrow.h" />
     <ClInclude Include="Scenes\KimScene.h" />

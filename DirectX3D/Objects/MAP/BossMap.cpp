@@ -74,6 +74,10 @@ BossMap::BossMap()
 	disappears[3]->Pos().x += 30;
 	disappears[3]->Pos().z += 30;
 	disappears[3]->Rot().y -= 1.575f;
+
+
+
+	Phase1->Pos().y -= 100.0f;
 }
 
 BossMap::~BossMap()
@@ -165,6 +169,17 @@ void BossMap::Render()
 		GroundColider2->Render();
 		NoneRender();
 	}
+}
+
+bool BossMap::IsCollision(Collider* c)
+{
+	//if (GroundColider1->PushCollision(c)) return true;
+	//if (GroundColider2->PushCollision(c)) return true;
+	if (StairCollider->PushCollision(c)) return true;
+	if (Chair_Ground->PushCollision(c)) return true;
+	if (Chair->PushCollision(c)) return true;
+
+	//return false;
 }
 
 void BossMap::Fall() // 얼음 바닥이 떨어지는 함수 입니다
