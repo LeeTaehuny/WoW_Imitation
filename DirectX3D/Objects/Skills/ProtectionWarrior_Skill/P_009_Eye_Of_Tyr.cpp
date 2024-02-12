@@ -142,7 +142,7 @@ void P_009_Eye_Of_Tyr::Render()
 
 void P_009_Eye_Of_Tyr::UseSkill()
 {
-	if (isCooldown) return;
+	if (isCooldown || owner->GetStat().mp < 5) return;
 
 	if (ProtectionWarrior_in* c = dynamic_cast<ProtectionWarrior_in*>(owner))
 	{

@@ -16,13 +16,13 @@
 
 KimScene::KimScene()
 {
-	CH->PlayerSpawn(5);
+	CH->PlayerSpawn(4);
 
-	CH->NonPlayerSpawn(1);
-	CH->NonPlayerSpawn(1);
-	CH->NonPlayerSpawn(1);
+	//CH->NonPlayerSpawn(1);
+	//CH->NonPlayerSpawn(1);
+	//CH->NonPlayerSpawn(1);
 
-	skill = new H_008_Divine_Hymn();
+	skill = new M_001_Aimed_Shot();
 	skill->SetOwner(CH->GetPlayerData());
 
 	MONSTER;

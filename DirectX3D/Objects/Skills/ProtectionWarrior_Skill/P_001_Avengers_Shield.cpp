@@ -285,7 +285,8 @@ void P_001_Avengers_Shield::Render()
 
 void P_001_Avengers_Shield::UseSkill(MonsterBase* monsterbase)
 {
-	if (isCooldown || monsterbase == nullptr) return;
+	if (isCooldown || monsterbase == nullptr ||
+		owner->GetStat().mp < 15.0f) return;
 	three[0] = monsterbase;
 	targetMonster = three[0];
 
@@ -305,7 +306,7 @@ void P_001_Avengers_Shield::UseSkill(MonsterBase* monsterbase)
 		isCooldown = true;
 
 		skillDamage = owner->GetStat().damage * 0.66f;
-		owner->GetStat().mp -= 15;
+		owner->GetStat().mp -= 15.0f;
 
 		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 1.0f;
 		endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back() * 1.0f;

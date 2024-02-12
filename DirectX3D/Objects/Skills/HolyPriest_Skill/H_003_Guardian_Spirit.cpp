@@ -110,7 +110,8 @@ void H_003_Guardian_Spirit::Render()
 
 void H_003_Guardian_Spirit::UseSkill(CH_Base_ver2* chbase)
 {
-	if (isRun || isCooldown || chbase == nullptr) return;
+	if (isRun || isCooldown || chbase == nullptr ||
+		owner->GetStat().mp < 9) return;
 
 	skillDamage = owner->GetStat().damage * 0.0291f;
 	owner->GetStat().mp -= 9;

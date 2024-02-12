@@ -92,7 +92,8 @@ void H_004_Holy_Word_Chastise::Render()
 
 void H_004_Holy_Word_Chastise::UseSkill(MonsterBase* monsterbase)
 {
-	if (isCooldown || monsterbase == nullptr) return;
+	if (isCooldown || monsterbase == nullptr ||
+		owner->GetStat().mp < 20) return;
 
 	skillDamage = owner->GetStat().damage * 2.45f;
 	owner->GetStat().mp -= 20;

@@ -33,10 +33,10 @@
     <FxCompile Include="Shaders\UI\ProgressBar.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Objects\Skills\HolyPriest\H_004_Holy_Word_Chastise.cpp" />
-    <ClCompile Include="Objects\Skills\HolyPriest\H_003_Guardian_Spirit.cpp" />
-    <ClCompile Include="Objects\Skills\HolyPriest\H_002_Holy_Word_Sanctify.cpp" />
-    <ClCompile Include="Objects\Skills\HolyPriest\H_001_Holy_Word_Serenity.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_003_Guardian_Spirit.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_002_Holy_Word_Sanctify.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_001_Holy_Word_Serenity.cpp" />
     <ClCompile Include="Objects\Character_\CH_Manager.cpp" />
     <ClCompile Include="Objects\Skills\FireMage_Skill\F_008_FlameOn.cpp" />
     <ClCompile Include="Objects\Skills\FireMage_Skill\F_007_SearingTouch.cpp" />
@@ -203,18 +203,28 @@
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_003_Grand_Crusader.cpp" />
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_005_Barricade_Of_Faith.cpp" />
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_006_Bulwark_Of_Order.cpp" />
-    <ClCompile Include="Objects\Skills\HolyPriest\H_005_Censure.cpp" />
-    <ClCompile Include="Objects\Skills\HolyPriest\H_006_Circle_Of_Healing.cpp" />
-    <ClCompile Include="Objects\Skills\HolyPriest\H_007_Cosmic_Ripple.cpp" />
-    <ClCompile Include="Objects\Skills\HolyPriest\H_008_Divine_Hymn.cpp" />
-    <ClCompile Include="Objects\Skills\HolyPriest\H_009_Enlightenment.cpp" />
-    <ClCompile Include="Objects\Skills\HolyPriest\H_010_Everlasting_Light.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_005_Censure.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_006_Circle_Of_Healing.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_007_Cosmic_Ripple.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_008_Divine_Hymn.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_009_Enlightenment.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_010_Everlasting_Light.cpp" />
+    <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_001_Aimed_Shot.cpp" />
+    <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_002_Crack_Shot.cpp" />
+    <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_003_Rapid_Fire.cpp" />
+    <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_004_Lone_Wolf.cpp" />
+    <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_005_Chimaera_Shot.cpp" />
+    <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_006_Streamline.cpp" />
+    <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_007_Focused_Aim.cpp" />
+    <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_008_Multi_Shot.cpp" />
+    <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_009_Volley.cpp" />
+    <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_010_Wailing_Arrow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Objects\Skills\HolyPriest\H_004_Holy_Word_Chastise.h" />
-    <ClInclude Include="Objects\Skills\HolyPriest\H_003_Guardian_Spirit.h" />
-    <ClInclude Include="Objects\Skills\HolyPriest\H_002_Holy_Word_Sanctify.h" />
-    <ClInclude Include="Objects\Skills\HolyPriest\H_001_Holy_Word_Serenity.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_003_Guardian_Spirit.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_002_Holy_Word_Sanctify.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_001_Holy_Word_Serenity.h" />
     <ClInclude Include="Objects\Character_\CH_Manager.h" />
     <ClInclude Include="Objects\Skills\FireMage_Skill\F_008_FlameOn.h" />
     <ClInclude Include="Objects\Skills\FireMage_Skill\F_007_SearingTouch.h" />
@@ -392,12 +402,22 @@
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_003_Grand_Crusader.h" />
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_005_Barricade_Of_Faith.h" />
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_006_Bulwark_Of_Order.h" />
-    <ClInclude Include="Objects\Skills\HolyPriest\H_005_Censure.h" />
-    <ClInclude Include="Objects\Skills\HolyPriest\H_006_Circle_Of_Healing.h" />
-    <ClInclude Include="Objects\Skills\HolyPriest\H_007_Cosmic_Ripple.h" />
-    <ClInclude Include="Objects\Skills\HolyPriest\H_008_Divine_Hymn.h" />
-    <ClInclude Include="Objects\Skills\HolyPriest\H_009_Enlightenment.h" />
-    <ClInclude Include="Objects\Skills\HolyPriest\H_010_Everlasting_Light.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_005_Censure.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_006_Circle_Of_Healing.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_007_Cosmic_Ripple.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_008_Divine_Hymn.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_009_Enlightenment.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_010_Everlasting_Light.h" />
+    <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_001_Aimed_Shot.h" />
+    <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_002_Crack_Shot.h" />
+    <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_003_Rapid_Fire.h" />
+    <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_004_Lone_Wolf.h" />
+    <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_005_Chimaera_Shot.h" />
+    <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_006_Streamline.h" />
+    <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_007_Focused_Aim.h" />
+    <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_008_Multi_Shot.h" />
+    <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_009_Volley.h" />
+    <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_010_Wailing_Arrow.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX3D.rc" />

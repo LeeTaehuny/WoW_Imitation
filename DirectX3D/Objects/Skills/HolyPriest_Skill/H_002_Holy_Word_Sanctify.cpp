@@ -1,12 +1,13 @@
 ﻿#include "Framework.h"
-#include "H_006_Circle_Of_Healing.h"
+#include "H_002_Holy_Word_Sanctify.h"
 
-H_006_Circle_Of_Healing::H_006_Circle_Of_Healing() : ActiveSkill(SkillType::Target)
+H_002_Holy_Word_Sanctify::H_002_Holy_Word_Sanctify() : ActiveSkill(SkillType::NonTarget)
 {
 	hitCollider = new SphereCollider();
-	hitCollider->SetActive(false);
-	hitCollider->Scale().x *= 5;
-	hitCollider->Scale().z *= 5;
+	hitCollider->SetActive(true);
+	hitCollider->Scale().x += 8;
+	hitCollider->Scale().z += 8;
+	hitCollider->UpdateWorld();
 
 	// 기본 생성 요소
 	{
@@ -16,7 +17,7 @@ H_006_Circle_Of_Healing::H_006_Circle_Of_Healing() : ActiveSkill(SkillType::Targ
 		// 스킬 데미지
 		skillDamage = 0.0f;
 
-		// 쿨타임 설정 기본은 (15초)
+		// 쿨타임 설정 기본은 (60초)
 		MAX_delay = 5.0f;
 		coolTime = MAX_delay;
 
@@ -24,57 +25,44 @@ H_006_Circle_Of_Healing::H_006_Circle_Of_Healing() : ActiveSkill(SkillType::Targ
 		isRun = false;
 		isCooldown = false;
 
-		// // 마나 소모 : 3.3%
-		usingType = character_Data;
+		// // 마나 소모 : 3.5%
+		usingType = NON_Data;
 	}
 
-	magic_circle = new Quad(L"Textures/Effect/Emerald_Snow.png");
-	magic_circle->SetParent(hitCollider);
-	magic_circle->Scale() *= 0.1f;
-	magic_circle->Rot().x = 1.7f;
-	FOR(2) blendState[i] = new BlendState();
-	blendState[1]->Alpha(true);
-
-	icon = new Quad(L"Textures/Character_Skill_Icon/HolyPriest/006.jpg");
-	prevSkills.resize(1);
-	prevSkills[0] = "H_002_Holy_Word_Sanctify";
-
-	healingTargets.resize(5);
-	FOR(healingTargets.size())
+	// 지금은 5개의 파티클을 생성하지만 나중에 너무 무겁다고 판단이 된다면
+	// 장판 계열로 이펙트를 바꿔야 할 듯
+	FOR(5)
 	{
 		particles.push_back(new ParticleSystem("TextData/Particles/Priests/Skill02.fx"));
 	}
-	FOR(healingTargets.size())
+	FOR(particles.size())
 	{
 		isOne.push_back(0);
 	}
+
+	healingTargets.resize(5);
+	icon = new Quad(L"Textures/Character_Skill_Icon/HolyPriest/002.jpg");
+	prevSkills.resize(1);
+	prevSkills[0] = "H_001_Holy_Word_Serenity";
 }
 
-H_006_Circle_Of_Healing::~H_006_Circle_Of_Healing()
+H_002_Holy_Word_Sanctify::~H_002_Holy_Word_Sanctify()
 {
 	delete myCollider;
 	delete hitCollider;
 	delete icon;
 	delete target;
-	delete magic_circle;
 
-	FOR(2) delete blendState[i];
 	for (ParticleSystem* particle : particles)
 		delete particle;
 }
 
-void H_006_Circle_Of_Healing::Update()
+void H_002_Holy_Word_Sanctify::Update()
 {
 	if (isRun)
 	{
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
-
-		hitCollider->Pos() = healingTargets[0]->GlobalPos();
-		hitCollider->UpdateWorld();
-
-		magic_circle->Rot().y += 2 * DELTA;
-		magic_circle->UpdateWorld();
 
 		int imsiValue = 0;
 		for (CH_Base_ver2* ch : CH->GetCharcterData())
@@ -98,7 +86,7 @@ void H_006_Circle_Of_Healing::Update()
 		FOR(healingTargets.size())
 		{
 			if (healingTargets[i] == nullptr) continue;
-
+			
 			if (particles[i]->IsPlay())
 			{
 				particles[i]->SetPos(healingTargets[i]->Pos());
@@ -126,21 +114,19 @@ void H_006_Circle_Of_Healing::Update()
 				particles[i]->Play(Vector3());
 			}
 		}
+
+		hitCollider->SetActive(false);
 	}
 
 	if (isCooldown)
 		ActiveSkill::Cooldown();
 }
 
-void H_006_Circle_Of_Healing::Render()
+void H_002_Holy_Word_Sanctify::Render()
 {
 	if (isRun)
 	{
 		if (animStart <= Max_animStart) return;
-
-		blendState[1]->SetState();
-		magic_circle->Render();
-		blendState[0]->SetState();
 
 		FOR(particles.size())
 		{
@@ -149,24 +135,26 @@ void H_006_Circle_Of_Healing::Render()
 				particles[i]->Render();
 			}
 		}
-	}
+	}	
 }
 
-void H_006_Circle_Of_Healing::UseSkill(CH_Base_ver2* chbase)
+void H_002_Holy_Word_Sanctify::UseSkill()
 {
-	if (isCooldown || chbase == nullptr) return;
+	if (isCooldown || owner->GetStat().mp < 35) return;
 
-	skillDamage = owner->GetStat().damage * 0.99f;
-	owner->GetStat().mp -= 33;
+	hitCollider->SetActive(true);
+	hitCollider->Pos() = owner->GlobalPos();
+	hitCollider->UpdateWorld();
 
 	if (HolyPriest_in* c = dynamic_cast<HolyPriest_in*>(owner))
 	{
 		c->SetState(HolyPriest_in::State::ATTACK1);
 	}
 
+	skillDamage = owner->GetStat().damage * 0.291f;
+	owner->GetStat().mp -= 35;
+
 	animStart = 0;
-	hitCollider->SetActive(true);
-	healingTargets[0] = chbase;
 	isRun = true;
 	isCooldown = true;
 }

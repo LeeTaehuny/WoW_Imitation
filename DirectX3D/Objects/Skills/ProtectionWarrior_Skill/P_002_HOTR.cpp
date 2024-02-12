@@ -151,7 +151,8 @@ void P_002_HOTR::Render()
 
 void P_002_HOTR::UseSkill(MonsterBase* monsterbase)
 {
-	if (isCooldown || monsterbase == nullptr) return;
+	if (isCooldown || monsterbase == nullptr ||
+		owner->GetStat().mp < 3.2f) return;
 	targetMonster = monsterbase;
 
 	skillDamage = owner->GetStat().damage * 0.85f;

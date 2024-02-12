@@ -167,7 +167,8 @@ void MarksmanshipHunter_in::Control()
 void MarksmanshipHunter_in::Moving()
 {
 	// 점프, 공격, 맞을 때, 죽었을 경우 움직이지 않기
-	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
+	if (curState == ATTACK1 || curState == DIE || curState == HIT ||
+		curState == SKILL1 || curState == SKILL2) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
@@ -312,6 +313,11 @@ void MarksmanshipHunter_in::EndHit()
 void MarksmanshipHunter_in::EndDie()
 {
 	SetActive(false);
+}
+
+void MarksmanshipHunter_in::EndCasting()
+{
+	SetState(IDLE1);
 }
 
 void MarksmanshipHunter_in::SetEvent(int clip, Event event, float timeRatio)
