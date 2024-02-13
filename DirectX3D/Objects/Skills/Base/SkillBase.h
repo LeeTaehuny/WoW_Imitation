@@ -21,6 +21,8 @@ public:
 	virtual void UseSkill(CH_Base_ver2* chbase) {}
 	virtual void UseSkill(MonsterBase* monsterbase) {}
 
+	virtual void Init() {};
+
 	//void Cooldown();
 
 // Getter & Setter

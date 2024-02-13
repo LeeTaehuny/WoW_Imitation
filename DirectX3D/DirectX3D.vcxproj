@@ -142,6 +142,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_009_BluntInstruments.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_008_Massacre.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_006_FueledbyViolence.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_005_SharpenedBlades.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_003_MartialProwess.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_010_Bladestorm.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_007_ColossusSmash.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_004_DiebytheSword.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_002_Overpower.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_001_MortalStrike.h" />
     <ClInclude Include="Objects\Skills\HolyPriest\H_004_Holy_Word_Chastise.h" />
     <ClInclude Include="Objects\Skills\HolyPriest\H_003_Guardian_Spirit.h" />
     <ClInclude Include="Objects\Skills\HolyPriest\H_002_Holy_Word_Sanctify.h" />
@@ -321,6 +331,16 @@
     <ClInclude Include="Objects\Item\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_009_BluntInstruments.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_008_Massacre.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_006_FueledbyViolence.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_005_SharpenedBlades.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_003_MartialProwess.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_010_Bladestorm.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_007_ColossusSmash.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_004_DiebytheSword.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_002_Overpower.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_001_MortalStrike.cpp" />
     <ClCompile Include="Objects\Skills\HolyPriest\H_004_Holy_Word_Chastise.cpp" />
     <ClCompile Include="Objects\Skills\HolyPriest\H_003_Guardian_Spirit.cpp" />
     <ClCompile Include="Objects\Skills\HolyPriest\H_002_Holy_Word_Sanctify.cpp" />

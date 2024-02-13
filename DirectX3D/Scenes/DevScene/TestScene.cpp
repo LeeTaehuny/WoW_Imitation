@@ -16,6 +16,18 @@
 #include "Objects/Skills/FireMage_Skill/F_009_Combustion.h"
 #include "Objects/Skills/FireMage_Skill/F_010_Meteor.h"
 
+#include "Objects/Skills/ArmsWarrior_Skill/A_001_MortalStrike.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_002_Overpower.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_003_MartialProwess.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_004_DiebytheSword.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_005_SharpenedBlades.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_006_FueledbyViolence.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_007_ColossusSmash.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_008_Massacre.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_009_BluntInstruments.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_010_Bladestorm.h"
+
+
 TestScene::TestScene()
 {
 	//paladin = new ModelAnimatorInstancing("FireMage");
@@ -76,11 +88,11 @@ TestScene::TestScene()
 	//player->GetSkillList().push_back(skill9);
 	//player->GetSkillList().push_back(skill10);
 
-	CH->PlayerSpawn(2);
+	CH->PlayerSpawn(1);
 
 	MONSTER->SetTarget(CH->GetPlayerData()->GetCollider());
 
-	weapon = new Weapon("sword_1", WeaponType::Sword);
+	weapon = new Weapon("sword_1", WeaponType::Staff);
 
 	if (Weapon* w = dynamic_cast<Weapon*>(weapon))
 	{
@@ -88,6 +100,46 @@ TestScene::TestScene()
 		//player->EquipWeapon(w);
 		w->SetOwner(CH->GetPlayerData());
 	}
+
+	skill1 = new A_002_Overpower();
+	skill1->SetOwner(CH->GetPlayerData());
+	skill1->Init();
+
+	//skill2 = new F_002_FireBlast();
+	//skill2->SetOwner(CH->GetPlayerData());
+	//skill2->Init();
+	//
+	//skill3 = new F_003_Pyrotechnics();
+	//skill3->SetOwner(CH->GetPlayerData());
+	//skill3->Init();
+	//
+	//skill4 = new F_004_Scorch();
+	//skill4->SetOwner(CH->GetPlayerData());
+	//skill4->Init();
+	//
+	//skill5 = new F_005_PhoenixFlame();
+	//skill5->SetOwner(CH->GetPlayerData());
+	//skill5->Init();
+	//
+	//skill6 = new F_006_SurgingBlaze();
+	//skill6->SetOwner(CH->GetPlayerData());
+	//skill6->Init();
+	//
+	//skill7 = new F_007_SearingTouch();
+	//skill7->SetOwner(CH->GetPlayerData());
+	//skill7->Init();
+	//
+	//skill8 = new F_008_FlameOn();
+	//skill8->SetOwner(CH->GetPlayerData());
+	//skill8->Init();
+	//
+	//skill9 = new F_009_Combustion();
+	//skill9->SetOwner(CH->GetPlayerData());
+	//skill9->Init();
+	//
+	//skill10 = new F_010_Meteor();
+	//skill10->SetOwner(CH->GetPlayerData());
+	//skill10->Init();
 }
 
 TestScene::~TestScene()
@@ -153,24 +205,25 @@ void TestScene::Update()
 	//
 	//// 임시 스킬 사용 테스트 (좌클릭 타겟 설정, K : 스킬 사용)
 	//{
-	//	if (KEY_DOWN(VK_LBUTTON))
-	//	{
-	//		// 마우스 위치의 Ray 생성
-	//		Ray ray = CAM->ScreenPointToRay(mousePos);
-	//		Contact contact;
-	//
-	//		// 몬스터 배열 받기
-	//		vector<MonsterBase*> monsters = MONSTER->GetScarecrow();
-	//
-	//		// 몬스터 순회하며 Ray 충돌 연산
-	//		for (MonsterBase* monster : monsters)
-	//		{
-	//			if (monster->GetCollider()->IsRayCollision(ray, &contact))
-	//			{
-	//				// 충돌했다면 해당 몬스터를 내 타겟으로 설정
-	//				targetMonster = monster;
-	//			}
-	//		}
+	if (KEY_DOWN(VK_LBUTTON))
+	{
+		// 마우스 위치의 Ray 생성
+		Ray ray = CAM->ScreenPointToRay(mousePos);
+		Contact contact;
+
+		// 몬스터 배열 받기
+		vector<MonsterBase*> monsters = MONSTER->GetScarecrow();
+
+		// 몬스터 순회하며 Ray 충돌 연산
+		for (MonsterBase* monster : monsters)
+		{
+			if (monster->GetCollider()->IsRayCollision(ray, &contact))
+			{
+				// 충돌했다면 해당 몬스터를 내 타겟으로 설정
+				targetMonster = monster;
+			}
+		}
+	}
 	//	}
 	//
 	//	if (KEY_DOWN(VK_F1))
@@ -232,13 +285,48 @@ void TestScene::Update()
 	//paladin->Update();
 	//player->Update();
 	MONSTER->Update();
-	//skill1->Update();
+	skill1->Update();
 	//skill2->Update();
 	//skill4->Update();
 	//skill5->Update();
 	//skill9->Update();
 	//skill10->Update();
 
+	//skill2->Update();
+	//skill4->Update();
+	//skill5->Update();
+	//skill9->Update();
+	//skill10->Update();
+
+	if (KEY_DOWN('C'))
+	{
+		skill1->UseSkill();
+	}
+
+	//if (KEY_DOWN('V'))
+	//{
+	//	skill2->UseSkill(targetMonster);
+	//}
+	//
+	//if (KEY_DOWN('B'))
+	//{
+	//	skill4->UseSkill(targetMonster);
+	//}
+	//
+	//if (KEY_DOWN('N'))
+	//{
+	//	skill5->UseSkill(targetMonster);
+	//}
+	//
+	//if (KEY_DOWN('M'))
+	//{
+	//	skill9->UseSkill();
+	//}
+	//
+	//if (KEY_DOWN('L'))
+	//{
+	//	skill10->UseSkill(targetMonster);
+	//}
 	CH->Update();
 }
 
@@ -251,13 +339,15 @@ void TestScene::Render()
 	//paladin->Render();
 	//player->Render();
 	MONSTER->Render();
-	//skill1->Render();
+	
 	//skill2->Render();
 	//skill4->Render();
 	//skill5->Render();
+	////skill5->Render();
 	//skill9->Render();
 	//skill10->Render();
 	CH->Render();
+	skill1->Render();
 }
 
 void TestScene::PostRender()

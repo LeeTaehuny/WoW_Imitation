@@ -1,15 +1,15 @@
 ﻿#pragma once
 #include "Objects/Skills/Base/ActiveSkill.h"
 
-class F_010_Meteor : public ActiveSkill
+class A_001_MortalStrike : public ActiveSkill
 {
 public:
-	F_010_Meteor();
-	virtual ~F_010_Meteor() override;
+	A_001_MortalStrike();
+	virtual ~A_001_MortalStrike() override;
 
 	virtual void Update() override;
 	virtual void Render() override;
-	virtual void UseSkill(MonsterBase* monsterbase) override;
+	virtual void UseSkill() override;
 
 // Getter & Setter
 public:
@@ -19,19 +19,20 @@ public:
 	void SetDamage(float value) { additiveDamage += value; }
 	float GetDamage() { return additiveDamage; }
 
-
 public:
 	virtual void Init() override;
 
 private:
 	ParticleSystem* hitParticleSystem;
-	ParticleSystem* fireBallParticle;
-	Sphere* meteorSphere;
+	Transform* startEdge;
+	Transform* endEdge;
 
-	bool isPowerUp;
+	Trail* trail;
 
-	float delayTime;
-	float MAX_delayAnim;
+	float curTime;
+	float duration;
+
+	vector<MonsterBase*> hit;
 
 	float additiveDamage;
 };

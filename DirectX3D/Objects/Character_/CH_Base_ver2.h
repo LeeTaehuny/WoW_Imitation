@@ -46,7 +46,7 @@ public:
 
 	virtual void AI_animation_Moving() = 0;
 
-	virtual void EquipWeapon(class Weapon* weapon) {};
+	virtual void EquipWeapon(class Weapon* weapon) = 0;
 
 // Getter & Setter
 public:
@@ -65,6 +65,9 @@ public:
 
 	// ��ų
 	vector<class SkillBase*>& GetSkillList() { return skillList; }
+
+	// 무기
+	class Weapon* GetWeapon() { return weapon; }
 
 // Member Variable
 protected:

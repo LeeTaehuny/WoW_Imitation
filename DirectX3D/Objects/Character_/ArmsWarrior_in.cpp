@@ -91,6 +91,23 @@ void ArmsWarrior_in::EquipWeapon(Weapon* weapon)
 	weapon->SetParent(mainHand);
 }
 
+void ArmsWarrior_in::AddHp(float value)
+{
+	if (value > 0)
+	{
+		// 체력 회복
+		stat.hp += value;
+
+		// 만약 최대 체력량보다 많아졌다면?
+		if (stat.hp > stat.maxHp)
+		{
+			// 최대 체력양으로 설정
+			stat.hp = stat.maxHp;
+		}
+	}
+	
+}
+
 void ArmsWarrior_in::PlayerUpdate()
 {
 	Control();
@@ -110,6 +127,7 @@ void ArmsWarrior_in::AIUpdate()
 	range->UpdateWorld();
 }
 
+// TODO : isDefence 변수의 On, Off에 따라 받는 데미지 조정하기
 void ArmsWarrior_in::OnHit(Collider* collider)
 {
 	if (this->myCollider->IsCollision(collider))

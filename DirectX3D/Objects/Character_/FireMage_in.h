@@ -1,7 +1,7 @@
 #pragma once
 class FireMage_in : public CH_Base_ver2
 {
-private:
+public:
 
 	enum State
 	{
@@ -21,6 +21,11 @@ public:
 
 public:
 	void SetDoubleDamage(bool value) { isDouble = value; }
+	bool GetDoubleDamage() { return isDouble; }
+
+	// 상태 변경용 함수
+	void SetState(State state);
+	State GetState() { return curState; }
 
 	virtual void EquipWeapon(class Weapon* weapon) override;
 
@@ -44,9 +49,6 @@ private:
 	void Jump();
 	void Attack();
 	//void Casting();
-
-	// 상태 변경용 함수
-	void SetState(State state);
 
 // 이벤트 함수
 private:

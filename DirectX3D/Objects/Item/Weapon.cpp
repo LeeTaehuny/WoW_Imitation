@@ -1,5 +1,6 @@
 ﻿#include "Framework.h"
 #include "Weapon.h"
+#include "Objects/Character_/ArmsWarrior_in.h"
 
 Weapon::Weapon(string name, WeaponType type) : Item(ItemType::Weapon, name), weaponType(type)
 {
@@ -39,6 +40,16 @@ void Weapon::Update()
 				// TODO : 플레이어 인덱스 정보 추가하기
 				monster->Hit(damage + playerDamage);
 				hit.push_back(monster);
+
+				// 만약 플레이어가 전사고, isLifeDrain변수가 켜져있다면 피흡
+				if (ArmsWarrior_in* warrior = dynamic_cast<ArmsWarrior_in*>(owner))
+				{
+					if (warrior->GetBuffLifeDrain())
+					{
+						// 입힌 피해의 15% 회복
+						warrior->AddHp((damage + playerDamage) * 0.15f);
+					}
+				}
 			}
 		}
 
@@ -55,6 +66,16 @@ void Weapon::Update()
 				// TODO : 플레이어 인덱스 정보 추가하기
 				monster->Hit(damage + playerDamage);
 				hit.push_back(monster);
+
+				// 만약 플레이어가 전사고, isLifeDrain변수가 켜져있다면 피흡
+				if (ArmsWarrior_in* warrior = dynamic_cast<ArmsWarrior_in*>(owner))
+				{
+					if (warrior->GetBuffLifeDrain())
+					{
+						// 입힌 피해의 15% 회복
+						warrior->AddHp((damage + playerDamage) * 0.15f);
+					}
+				}
 			}
 		}
 
@@ -71,6 +92,16 @@ void Weapon::Update()
 				// TODO : 플레이어 인덱스 정보 추가하기
 				monster->Hit(damage + playerDamage);
 				hit.push_back(monster);
+
+				// 만약 플레이어가 전사고, isLifeDrain변수가 켜져있다면 피흡
+				if (ArmsWarrior_in* warrior = dynamic_cast<ArmsWarrior_in*>(owner))
+				{
+					if (warrior->GetBuffLifeDrain())
+					{
+						// 입힌 피해의 15% 회복
+						warrior->AddHp((damage + playerDamage) * 0.15f);
+					}
+				}
 			}
 		}
 	}

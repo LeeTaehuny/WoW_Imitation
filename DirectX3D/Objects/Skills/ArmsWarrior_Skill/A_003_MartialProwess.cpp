@@ -1,30 +1,30 @@
 ﻿#include "Framework.h"
-#include "F_006_SurgingBlaze.h"
-#include "F_001_Pyroblast.h"
-#include "F_002_FireBlast.h"
+#include "A_003_MartialProwess.h"
+#include "A_001_MortalStrike.h"
+#include "A_002_Overpower.h"
 
-F_006_SurgingBlaze::F_006_SurgingBlaze()
+A_003_MartialProwess::A_003_MartialProwess()
 {
 	// 선행 스킬
-	prevSkills.push_back("F_003_Pyrotechnics");
+	prevSkills.push_back("A_002_Overpower");
 
 	// 아이콘 추가
-	icon = new Quad(L"Textures/Character_Skill_Icon/FireMage/06_SurgingBlaze.png");
+	icon = new Quad(L"Textures/Character_Skill_Icon/ArmsWarrior/03_MartialProwess.png");
 }
 
-F_006_SurgingBlaze::~F_006_SurgingBlaze()
+A_003_MartialProwess::~A_003_MartialProwess()
 {
 	SAFE_DEL(icon);
 }
 
-void F_006_SurgingBlaze::UseSkill()
+void A_003_MartialProwess::UseSkill()
 {
 	vector<SkillBase*> tempSkills = owner->GetSkillList();
 
 	for (SkillBase* skill : tempSkills)
 	{
 		// 001 스킬인 경우
-		if (F_001_Pyroblast* tmpSkill = dynamic_cast<F_001_Pyroblast*>(skill))
+		if (A_001_MortalStrike* tmpSkill = dynamic_cast<A_001_MortalStrike*>(skill))
 		{
 			// 쿨타임 0.5초 감소
 			tmpSkill->SetCooltime(tmpSkill->GetCooltime() - 0.5f);
@@ -32,7 +32,7 @@ void F_006_SurgingBlaze::UseSkill()
 			tmpSkill->SetDamage(0.1f);
 		}
 		// 002 스킬인 경우
-		else if (F_002_FireBlast* tmpSkill = dynamic_cast<F_002_FireBlast*>(skill))
+		else if (A_002_Overpower* tmpSkill = dynamic_cast<A_002_Overpower*>(skill))
 		{
 			// 쿨타임 0.5초 감소
 			tmpSkill->SetCooltime(tmpSkill->GetCooltime() - 0.5f);

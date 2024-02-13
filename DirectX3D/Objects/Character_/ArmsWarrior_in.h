@@ -1,7 +1,7 @@
 #pragma once
 class ArmsWarrior_in : public CH_Base_ver2
 {
-private:
+public:
 
 	enum State
 	{
@@ -20,7 +20,16 @@ public:
 	virtual void Render() override;
 
 public:
+	void SetBuffDefence(bool value) { isDefence = value; }
+	void SetBuffLifeDrain(bool value) { isLifeDrain = value; }
+	bool GetBuffLifeDrain() { return isLifeDrain; }
+
 	virtual void EquipWeapon(class Weapon* weapon) override;
+	void AddHp(float value);
+
+	// 상태 변경용 함수
+	void SetState(State state);
+	State GetState() { return curState; }
 
 private:
 	// 플레이어용 업데이트
@@ -32,7 +41,7 @@ private:
 
 	virtual void AI_animation_Moving() override;
 
-	// 컨트롤 관련 함수
+// 컨트롤 관련 함수
 private:
 	void SetEvent(int clip, Event event, float timeRatio);
 	void ExecuteEvent();
@@ -43,10 +52,7 @@ private:
 	void Attack();
 	//void Casting();
 
-	// 상태 변경용 함수
-	void SetState(State state);
-
-	// 이벤트 함수
+// 이벤트 함수
 private:
 	void EndATK();
 	void EndHit();
@@ -54,5 +60,10 @@ private:
 	//void EndCasting();
 
 private:
+	// 버프용 변수 (방어력 1.3배)
+	bool isDefence = false;
+	// 버프용 변수 (피해 흡수)
+	bool isLifeDrain = false;
+
 	State curState = IDLE1;
 };

@@ -1,17 +1,17 @@
 ﻿#pragma once
 #include "Objects/Skills/Base/ActiveSkill.h"
 
-class F_010_Meteor : public ActiveSkill
+class A_007_ColossusSmash : public ActiveSkill
 {
 public:
-	F_010_Meteor();
-	virtual ~F_010_Meteor() override;
+	A_007_ColossusSmash();
+	virtual ~A_007_ColossusSmash() override;
 
 	virtual void Update() override;
 	virtual void Render() override;
 	virtual void UseSkill(MonsterBase* monsterbase) override;
 
-// Getter & Setter
+	// Getter & Setter
 public:
 	void SetCooltime(float value) { MAX_delay = value; coolTime = value; }
 	float GetCooltime() { return coolTime; }
@@ -19,16 +19,12 @@ public:
 	void SetDamage(float value) { additiveDamage += value; }
 	float GetDamage() { return additiveDamage; }
 
-
 public:
 	virtual void Init() override;
 
 private:
 	ParticleSystem* hitParticleSystem;
-	ParticleSystem* fireBallParticle;
-	Sphere* meteorSphere;
-
-	bool isPowerUp;
+	ParticleSystem* swordBallParticle;
 
 	float delayTime;
 	float MAX_delayAnim;
