@@ -17,9 +17,6 @@ F_005_PhoenixFlame::F_005_PhoenixFlame() : ActiveSkill(SkillType::Target)
 	// 스킬 속도
 	speed = 20.0f;
 
-	// 스킬 데미지
-	skillDamage = 100.0f;
-
 	// 쿨타임 설정 (25초)
 	MAX_delay = 25.0f;
 	coolTime = MAX_delay;
@@ -41,6 +38,12 @@ F_005_PhoenixFlame::F_005_PhoenixFlame() : ActiveSkill(SkillType::Target)
 
 	// 아이콘 추가
 	icon = new Quad(L"Textures/Character_Skill_Icon/FireMage/05_PhoenixFlame.png");
+
+	// 스킬 지연 발사
+	delayTime = 0.0f;
+	MAX_delayAnim = 1.0f;
+
+	additiveDamage = 1.0f;
 }
 
 F_005_PhoenixFlame::~F_005_PhoenixFlame()
@@ -56,32 +59,39 @@ F_005_PhoenixFlame::~F_005_PhoenixFlame()
 
 void F_005_PhoenixFlame::Update()
 {
-	if (!impact)
+	if (delayTime < MAX_delayAnim && isRun)
 	{
-		if (isRun)
-		{
-			startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward();
-			endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back();
-		}
-		else
-		{
-			startEdge->Pos() = owner->GlobalPos();
-			endEdge->Pos() = owner->GlobalPos();
-
-		}
-
-		startEdge->UpdateWorld();
-		endEdge->UpdateWorld();
+		delayTime += DELTA;
 	}
 	else
 	{
-		hitParticleSystem->Play(hitCollider->Pos());
-		impact = false;
-	}
+		if (!impact)
+		{
+			if (isRun)
+			{
+				startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward();
+				endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back();
+			}
+			else
+			{
+				startEdge->Pos() = owner->GlobalPos();
+				endEdge->Pos() = owner->GlobalPos();
 
-	ActiveSkill::Update();
-	trail->Update();
-	hitParticleSystem->Update();
+			}
+
+			startEdge->UpdateWorld();
+			endEdge->UpdateWorld();
+		}
+		else
+		{
+			hitParticleSystem->Play(hitCollider->Pos());
+			impact = false;
+		}
+
+		ActiveSkill::Update();
+		trail->Update();
+		hitParticleSystem->Update();
+	}
 }
 
 void F_005_PhoenixFlame::Render()
@@ -94,24 +104,58 @@ void F_005_PhoenixFlame::Render()
 		trail->Render();
 }
 
-void F_005_PhoenixFlame::UseSkill(Collider* targetCollider)
+void F_005_PhoenixFlame::UseSkill(MonsterBase* monsterbase)
 {
-	if (targetCollider == nullptr) return;
+	if (owner->GetWeapon() == nullptr) return;
 
-	if (!isRun && !isCooldown)
+	if (monsterbase == nullptr) return;
+
+	if (FireMage_in* player = dynamic_cast<FireMage_in*>(owner))
 	{
-		target = targetCollider;
+		if (!isRun && !isCooldown)
+		{
+			if (player->GetState() == player->State::ATTACK1) return;
 
-		myCollider->Pos() = owner->GlobalPos();
-		myCollider->UpdateWorld();
-		myCollider->SetActive(true);
+			target = monsterbase->GetCollider();
 
-		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 3.0f;
-		endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back() * 3.0f;
-		startEdge->UpdateWorld();
-		endEdge->UpdateWorld();
+			myCollider->Pos() = owner->GlobalPos();
+			myCollider->UpdateWorld();
+			myCollider->SetActive(true);
 
-		isRun = true;
-		isCooldown = true;
+			startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 3.0f;
+			endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back() * 3.0f;
+			startEdge->UpdateWorld();
+			endEdge->UpdateWorld();
+
+			player->SetState(player->State::ATTACK1);
+			owner->GetInstancing()->PlayClip(owner->GetIndex(), 3, 1.0f);
+
+			isRun = true;
+			isCooldown = true;
+
+			delayTime = 0.0f;
+
+			Init();
+		}
+	}
+
+	
+}
+
+void F_005_PhoenixFlame::Init()
+{
+	// 스킬 데미지 설정
+	int temp = owner->GetStat().damage;
+
+	if (FireMage_in* mage = dynamic_cast<FireMage_in*>(owner))
+	{
+		if (mage->GetDoubleDamage())
+		{
+			skillDamage = 2 * temp * 2.0f * additiveDamage;
+		}
+		else
+		{
+			skillDamage = temp * 2.0f * additiveDamage;
+		}
 	}
 }

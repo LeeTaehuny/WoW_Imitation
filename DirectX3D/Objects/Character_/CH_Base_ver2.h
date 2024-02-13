@@ -46,6 +46,8 @@ public:
 
 	virtual void AI_animation_Moving() = 0;
 
+	virtual void EquipWeapon(class Weapon* weapon) = 0;
+
 // Getter & Setter
 public:
 	class Inventory* GetInventory() { return inventory; }
@@ -63,6 +65,9 @@ public:
 
 	// ��ų
 	vector<class SkillBase*>& GetSkillList() { return skillList; }
+
+	// 무기
+	class Weapon* GetWeapon() { return weapon; }
 
 // Member Variable
 protected:
@@ -83,6 +88,7 @@ protected:
 	ModelAnimatorInstancing* instancing;
 	ModelAnimatorInstancing::Motion* motion;
 	UINT index; // ���� ������� �ִϸ��̼�
+	UINT mainHandBoneIndex;
 
 	vector<map<float, Event>> totalEvents;
 	vector<map<float, Event>::iterator> eventIters;
@@ -105,6 +111,8 @@ protected:
 protected:
 	Status stat;
 	class Weapon* weapon;
+
+	Transform* mainHand;
 
 protected: // NPC ĳ���͸� �����ϱ� ���� ���� �� �Լ�
 

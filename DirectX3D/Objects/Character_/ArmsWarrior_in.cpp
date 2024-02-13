@@ -21,7 +21,7 @@ ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAni
 	SetEvent(HIT, bind(&ArmsWarrior_in::EndHit, this), 0.9f);
 	SetEvent(DIE, bind(&ArmsWarrior_in::EndDie, this), 1);
 
-	// ÀÚ½ÅÀÇ Å¸ÀÔ¿¡ µû¶ó 
+	// ï¿½Ú½ï¿½ï¿½ï¿½ Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -39,6 +39,8 @@ ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAni
 		eventIters[i] = totalEvents[i].begin();
 	}
 	this->SetActive(true);
+
+	mainHandBoneIndex = 37;
 }
 
 ArmsWarrior_in::~ArmsWarrior_in()
@@ -51,10 +53,10 @@ ArmsWarrior_in::~ArmsWarrior_in()
 
 void ArmsWarrior_in::Update()
 {
-	// ¾×Æ¼ºê »óÅÂ°¡ ¾Æ´Ï¶ó¸é ¾÷µ¥ÀÌÆ®ÇÏÁö ¾ÊÀ½
+	// ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (!Active()) return;
 
-	// ÇÃ·¹ÀÌ¾î Å¸ÀÔ¿¡ µû¶ó ¾÷µ¥ÀÌÆ® ¼öÇà
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -73,7 +75,7 @@ void ArmsWarrior_in::Update()
 
 void ArmsWarrior_in::Render()
 {
-	// ¾×Æ¼ºê »óÅÂ°¡ ¾Æ´Ï¶ó¸é ¾÷µ¥ÀÌÆ®ÇÏÁö ¾ÊÀ½
+	// ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (!Active()) return;
 
 	myCollider->Render();
@@ -81,12 +83,37 @@ void ArmsWarrior_in::Render()
 	CH_Base_ver2::Render();
 }
 
+void ArmsWarrior_in::EquipWeapon(Weapon* weapon)
+{
+	if (weapon == nullptr) return;
+
+	this->weapon = weapon;
+	weapon->SetParent(mainHand);
+}
+
+void ArmsWarrior_in::AddHp(float value)
+{
+	if (value > 0)
+	{
+		// Ã¼ï¿½ï¿½ È¸ï¿½ï¿½
+		stat.hp += value;
+
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ Ã¼ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½?
+		if (stat.hp > stat.maxHp)
+		{
+			// ï¿½Ö´ï¿½ Ã¼ï¿½Â¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			stat.hp = stat.maxHp;
+		}
+	}
+	
+}
+
 void ArmsWarrior_in::PlayerUpdate()
 {
 	Control();
 	//Casting();
 
-	// Ãæµ¹Ã¼ ¾÷µ¥ÀÌÆ®
+	// ï¿½æµ¹Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
 }
@@ -116,7 +143,7 @@ void ArmsWarrior_in::OnHit(float damage)
 
 void ArmsWarrior_in::AI_animation_Moving()
 {
-	// ³»°¡ ÇÃ·¹ÀÌ¾îÀÇ ÁÖÀ§¿¡ ÀÖ´Ù¸é
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
 	if (myPlayer->GetRange()->IsCollision(myCollider))
 	{
 		randomHangdong -= DELTA;
@@ -131,7 +158,7 @@ void ArmsWarrior_in::AI_animation_Moving()
 
 		SetState(WALK_F);
 	}
-	// ÇÃ·¹ÀÌ¾îÀÇ ÁÖº¯ÀÌ ¾Æ´Ï¶ó¸é
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Öºï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½
 	else
 	{
 		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
@@ -165,13 +192,13 @@ void ArmsWarrior_in::Control()
 
 void ArmsWarrior_in::Moving()
 {
-	// Á¡ÇÁ, °ø°Ý, ¸ÂÀ» ¶§, Á×¾úÀ» °æ¿ì ¿òÁ÷ÀÌÁö ¾Ê±â
+	// ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½×¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½
 	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
 
-	// Ä³¸¯ÅÍ ±âº» ÀÌµ¿ : W(¾Õ), S(µÚ), Q(ÁÂ), E(¿ì)
+	// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½Ìµï¿½ : W(ï¿½ï¿½), S(ï¿½ï¿½), Q(ï¿½ï¿½), E(ï¿½ï¿½)
 	{
 		if (KEY_PRESS('W'))
 		{
@@ -195,11 +222,11 @@ void ArmsWarrior_in::Moving()
 		}
 	}
 
-	// Ä³¸¯ÅÍ ¸¶¿ì½º ¿ìÅ¬¸¯¿¡ µû¸¥ ÀÌµ¿ º¯È­
+	// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½È­
 	{
 		if (KEY_PRESS(VK_RBUTTON))
 		{
-			// ÁÂ¿ì ÀÌµ¿
+			// ï¿½Â¿ï¿½ ï¿½Ìµï¿½
 			if (KEY_PRESS('A'))
 			{
 				velocity.x -= DELTA;
@@ -213,10 +240,10 @@ void ArmsWarrior_in::Moving()
 		}
 		else
 		{
-			// ¾ÕµÚ·Î ÀÌµ¿ ÁßÀÌ ¾Æ´Ò ¶§
+			// ï¿½ÕµÚ·ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½
 			if (KEY_PRESS('W') || KEY_PRESS('S'))
 			{
-				// ÁÂ¿ì È¸Àü
+				// ï¿½Â¿ï¿½ È¸ï¿½ï¿½
 				if (KEY_PRESS('A'))
 				{
 					Rot().y -= turnSpeed * DELTA;
@@ -229,7 +256,7 @@ void ArmsWarrior_in::Moving()
 		}
 	}
 
-	// °¡¼Óµµ ¼³Á¤
+	// ï¿½ï¿½ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (velocity.Length() > 1) velocity.Normalize();
 	if (!isMoveZ) velocity.z = Lerp(velocity.z, 0, deceleration * DELTA);
 	if (!isMoveX) velocity.x = Lerp(velocity.x, 0, deceleration * DELTA);
@@ -237,10 +264,10 @@ void ArmsWarrior_in::Moving()
 	Matrix rotY = XMMatrixRotationY(Rot().y);
 	Vector3 direction = XMVector3TransformCoord(velocity, rotY);
 
-	// À§Ä¡ ÀÌµ¿
+	// ï¿½ï¿½Ä¡ ï¿½Ìµï¿½
 	this->Pos() += direction * -1 * moveSpeed * DELTA;
 
-	// Á¡ÇÁÀÎ °æ¿ì¶ó¸é ¾Ö´Ï¸ÞÀÌ¼Ç ¼³Á¤ X
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ X
 	if (curState == JUMP) return;
 
 	if (velocity.z > 0.1f)
@@ -257,16 +284,16 @@ void ArmsWarrior_in::Moving()
 
 void ArmsWarrior_in::Jump()
 {
-	// Á¡ÇÁÁßÀÌ ¾Æ´Ï¶ó¸é ¸®ÅÏ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (!isJump) return;
 
 	jumpVelocity -= 1.8f * gravityMult * DELTA;
 	Pos().y += jumpVelocity;
 
-	// ÇöÀçÀÇ ÁöÁ¤ ³ôÀÌº¸´Ù À§Ä¡°¡ ³·´Ù¸é?
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½?
 	if (Pos().y < curheight)
 	{
-		// À§Ä¡ ÃÊ±âÈ­ ¹× »óÅÂ ÀüÈ¯
+		// ï¿½ï¿½Ä¡ ï¿½Ê±ï¿½È­ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 		Pos().y = curheight;
 		jumpVelocity = 0;
 		SetState(IDLE1);
@@ -276,17 +303,17 @@ void ArmsWarrior_in::Jump()
 
 void ArmsWarrior_in::Attack()
 {
-	// Á¡ÇÁ, »ç¸Á, ÇÇ°Ý, °ø°Ý »óÅÂÀÎ °æ¿ì ¸®ÅÏ
+	// ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½, ï¿½Ç°ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		SetState(ATTACK1);
 
-		// ¹«±â°¡ Á¸ÀçÇÏ´Â °æ¿ì
+		// ï¿½ï¿½ï¿½â°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
 		if (weapon)
 		{
-			// ¹«±âÀÇ ÄÝ¶óÀÌ´õ¸¦ ÄÑÁÖ°í, ÇÃ·¹ÀÌ¾îÀÇ µ¥¹ÌÁö¸¦ Àü´Þ
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö°ï¿½, ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			weapon->GetCollider()->SetActive(true);
 			weapon->SetDamage(stat.damage);
 		}
@@ -307,8 +334,9 @@ void ArmsWarrior_in::EndATK()
 
 	if (weapon)
 	{
-		// °ø°ÝÀÌ ³¡³µÀ¸¹Ç·Î ¹«±âÀÇ Ãæµ¹Ã¼ Á¤º¸¸¦ ²¨ÁÖ±â
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö±ï¿½
 		weapon->GetCollider()->SetActive(false);
+		weapon->ClearHit();
 	}
 }
 

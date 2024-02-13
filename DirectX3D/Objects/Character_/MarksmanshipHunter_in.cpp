@@ -39,6 +39,8 @@ MarksmanshipHunter_in::MarksmanshipHunter_in(CreatureType type, Transform* trans
 		eventIters[i] = totalEvents[i].begin();
 	}
 	this->SetActive(true);
+
+	mainHandBoneIndex = 23;
 }
 
 MarksmanshipHunter_in::~MarksmanshipHunter_in()
@@ -79,6 +81,15 @@ void MarksmanshipHunter_in::Render()
 	myCollider->Render();
 	range->Render();
 	CH_Base_ver2::Render();
+}
+
+void MarksmanshipHunter_in::EquipWeapon(Weapon* weapon)
+{
+	if (weapon == nullptr) return;
+
+	this->weapon = weapon;
+	weapon->Rot() = Vector3(0.0f, 21.0f, 20.0f);
+	weapon->SetParent(mainHand);
 }
 
 void MarksmanshipHunter_in::PlayerUpdate()

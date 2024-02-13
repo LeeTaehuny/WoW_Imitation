@@ -31,6 +31,7 @@ F_009_Combustion::F_009_Combustion() : ActiveSkill(SkillType::Target)
 F_009_Combustion::~F_009_Combustion()
 {
 	SAFE_DEL(particle);
+	SAFE_DEL(icon);
 }
 
 void F_009_Combustion::Update()
@@ -81,7 +82,7 @@ void F_009_Combustion::UseSkill()
 		isRun = true;
 		isCooldown = true;
 
-		// TODO : 내 모든 스킬 데미지 * 2로 설정
+		// TODO : 내 모든 데미지 * 2로 설정
 		if (FireMage_in* mage = dynamic_cast<FireMage_in*>(owner))
 		{
 			mage->SetDoubleDamage(true);

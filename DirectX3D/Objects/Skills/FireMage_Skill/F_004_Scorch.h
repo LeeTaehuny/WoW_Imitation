@@ -9,17 +9,27 @@ public:
 
 	virtual void Update() override;
 	virtual void Render() override;
-	virtual void UseSkill(Collider* targetCollider) override;
+	virtual void UseSkill(MonsterBase* monsterbase) override;
 
 // Getter & Setter
 public:
 	void SetCooltime(float value) { MAX_delay = value; coolTime = value; }
 	float GetCooltime() { return coolTime; }
 
-	void SetDamage(float value) { skillDamage = value; }
-	float GetDamage() { return skillDamage; }
+	void SetDamage(float value) { additiveDamage += value; }
+	float GetDamage() { return additiveDamage; }
+
+public:
+	virtual void Init() override;
 
 private:
 	ParticleSystem* hitParticleSystem;
+
+	bool isPowerUp;
+
+	float delayTime;
+	float MAX_delayAnim;
+
+	float additiveDamage;
 };
 

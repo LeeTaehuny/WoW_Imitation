@@ -1,5 +1,6 @@
 ﻿#include "Framework.h"
 #include "F_001_Pyroblast.h"
+#include "Objects/Character_/FireMage_in.h"
 
 F_001_Pyroblast::F_001_Pyroblast() : ActiveSkill(SkillType::Target)
 {
@@ -13,9 +14,6 @@ F_001_Pyroblast::F_001_Pyroblast() : ActiveSkill(SkillType::Target)
 
 	// 스킬 속도
 	speed = 20.0f;
-
-	// 스킬 데미지
-	skillDamage = 100.0f;
 
 	// 쿨타임 설정 (4초)
 	MAX_delay = 4.0f;
@@ -34,6 +32,14 @@ F_001_Pyroblast::F_001_Pyroblast() : ActiveSkill(SkillType::Target)
 
 	// 아이콘 추가
 	icon = new Quad(L"Textures/Character_Skill_Icon/FireMage/01_Pyroblast.png");
+
+	isPowerUp = false;
+
+	// 스킬 지연 발사
+	delayTime = 0.0f;
+	MAX_delayAnim = 0.7f;
+
+	additiveDamage = 1.0f;
 }
 
 F_001_Pyroblast::~F_001_Pyroblast()
@@ -47,27 +53,34 @@ F_001_Pyroblast::~F_001_Pyroblast()
 
 void F_001_Pyroblast::Update()
 {
-	if (!impact)
+	if (delayTime < MAX_delayAnim && isRun)
 	{
-		if (isRun)
-		{
-			if (!fireBallParticle->IsPlay())
-				fireBallParticle->Play(myCollider->Pos());
-			else
-				fireBallParticle->SetPos(myCollider->Pos());
-		}
+		delayTime += DELTA;
 	}
 	else
 	{
-		hitParticleSystem->Play(hitCollider->Pos());
-		fireBallParticle->Stop();
-		impact = false;
+		if (!impact)
+		{
+			if (isRun)
+			{
+				if (!fireBallParticle->IsPlay())
+					fireBallParticle->Play(myCollider->Pos());
+				else
+					fireBallParticle->SetPos(myCollider->Pos());
+			}
+		}
+		else
+		{
+			hitParticleSystem->Play(hitCollider->Pos());
+			fireBallParticle->Stop();
+			impact = false;
+		}
+
+		ActiveSkill::Update();
+
+		fireBallParticle->Update();
+		hitParticleSystem->Update();
 	}
-
-
-	ActiveSkill::Update();
-	fireBallParticle->Update();
-	hitParticleSystem->Update();
 }
 
 void F_001_Pyroblast::Render()
@@ -80,19 +93,51 @@ void F_001_Pyroblast::Render()
 		fireBallParticle->Render();
 }
 
-void F_001_Pyroblast::UseSkill(Collider* targetCollider)
+void F_001_Pyroblast::UseSkill(MonsterBase* monsterbase)
 {
-	if (targetCollider == nullptr) return;
+	if (owner->GetWeapon() == nullptr) return;
 
-	if (!isRun && !isCooldown)
+	if (monsterbase == nullptr) return;
+
+	if (FireMage_in* player = dynamic_cast<FireMage_in*>(owner))
 	{
-		target = targetCollider;
+		if (!isRun && !isCooldown)
+		{
+			if (player->GetState() == player->State::ATTACK1) return;
 
-		myCollider->Pos() = owner->GlobalPos();
-		myCollider->UpdateWorld();
-		myCollider->SetActive(true);
+			target = monsterbase->GetCollider();
 
-		isRun = true;
-		isCooldown = true;
+			myCollider->Pos() = owner->GetCollider()->GlobalPos();
+			myCollider->UpdateWorld();
+			myCollider->SetActive(true);
+
+			player->SetState(player->State::ATTACK1);
+			owner->GetInstancing()->PlayClip(owner->GetIndex(), 2, 1.0f);
+
+			isRun = true;
+			isCooldown = true;
+
+			delayTime = 0.0f;
+
+			Init();
+		}
+	}
+}
+
+void F_001_Pyroblast::Init()
+{
+	// 스킬 데미지 설정
+	int temp = owner->GetStat().damage;
+
+	if (FireMage_in* mage = dynamic_cast<FireMage_in*>(owner))
+	{
+		if (mage->GetDoubleDamage())
+		{
+			skillDamage = 2 * temp * 1.1f * additiveDamage;
+		}
+		else
+		{
+			skillDamage = temp * 1.1f * additiveDamage;
+		}
 	}
 }

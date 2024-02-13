@@ -3,9 +3,6 @@
 
 F_004_Scorch::F_004_Scorch() : ActiveSkill(SkillType::Target)
 {
-	// 스킬 데미지
-	skillDamage = 100.0f;
-
 	// 쿨타임 설정 (1.5초)
 	MAX_delay = 1.5f;
 	coolTime = MAX_delay;
@@ -25,6 +22,12 @@ F_004_Scorch::F_004_Scorch() : ActiveSkill(SkillType::Target)
 
 	// 아이콘 추가
 	icon = new Quad(L"Textures/Character_Skill_Icon/FireMage/04_Scorch.png");
+
+	// 스킬 지연 발사
+	delayTime = 0.0f;
+	MAX_delayAnim = 0.7f;
+
+	additiveDamage = 1.0f;
 }
 
 F_004_Scorch::~F_004_Scorch()
@@ -35,59 +38,66 @@ F_004_Scorch::~F_004_Scorch()
 
 void F_004_Scorch::Update()
 {
-	hitParticleSystem->Update();
-
-	if (isCooldown)
+	if (delayTime < MAX_delayAnim && isRun)
 	{
-		Cooldown();
+		delayTime += DELTA;
 	}
-
-	if (isRun)
+	else
 	{
-		// 해당 충돌체의 주인 찾기
-		vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
-		vector<MonsterBase*> cols2 = MONSTER->GetSkeleton();
-		vector<MonsterBase*> cols3 = MONSTER->GetSkeleton_Knight();
+		hitParticleSystem->Update();
 
-		for (MonsterBase* monster : cols1)
+		if (isCooldown)
 		{
-			if (monster->GetCollider() == target)
-			{
-				// 충돌한 몬스터들에게 데미지 주기
-				// * 매개변수로 owner의 공격력과 번호 저장하기
-				monster->Hit(skillDamage);
-
-				hitParticleSystem->Play(target->GlobalPos());
-				isRun = false;
-				return;
-			}
+			Cooldown();
 		}
 
-		for (MonsterBase* monster : cols2)
+		if (isRun)
 		{
-			if (monster->GetCollider() == target)
-			{
-				// 충돌한 몬스터들에게 데미지 주기
-				// * 매개변수로 owner의 공격력과 번호 저장하기
-				monster->Hit(skillDamage);
+			// 해당 충돌체의 주인 찾기
+			vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
+			vector<MonsterBase*> cols2 = MONSTER->GetSkeleton();
+			vector<MonsterBase*> cols3 = MONSTER->GetSkeleton_Knight();
 
-				hitParticleSystem->Play(target->GlobalPos());
-				isRun = false;
-				return;
+			for (MonsterBase* monster : cols1)
+			{
+				if (monster->GetCollider() == target)
+				{
+					// 충돌한 몬스터들에게 데미지 주기
+					// * 매개변수로 owner의 공격력과 번호 저장하기
+					monster->Hit(skillDamage);
+
+					hitParticleSystem->Play(target->GlobalPos());
+					isRun = false;
+					return;
+				}
 			}
-		}
 
-		for (MonsterBase* monster : cols3)
-		{
-			if (monster->GetCollider() == target)
+			for (MonsterBase* monster : cols2)
 			{
-				// 충돌한 몬스터들에게 데미지 주기
-				// * 매개변수로 owner의 공격력과 번호 저장하기
-				monster->Hit(skillDamage);
+				if (monster->GetCollider() == target)
+				{
+					// 충돌한 몬스터들에게 데미지 주기
+					// * 매개변수로 owner의 공격력과 번호 저장하기
+					monster->Hit(skillDamage);
 
-				hitParticleSystem->Play(target->GlobalPos());
-				isRun = false;
-				return;
+					hitParticleSystem->Play(target->GlobalPos());
+					isRun = false;
+					return;
+				}
+			}
+
+			for (MonsterBase* monster : cols3)
+			{
+				if (monster->GetCollider() == target)
+				{
+					// 충돌한 몬스터들에게 데미지 주기
+					// * 매개변수로 owner의 공격력과 번호 저장하기
+					monster->Hit(skillDamage);
+
+					hitParticleSystem->Play(target->GlobalPos());
+					isRun = false;
+					return;
+				}
 			}
 		}
 	}
@@ -98,15 +108,47 @@ void F_004_Scorch::Render()
 	hitParticleSystem->Render();
 }
 
-void F_004_Scorch::UseSkill(Collider* targetCollider)
+void F_004_Scorch::UseSkill(MonsterBase* monsterbase)
 {
-	if (targetCollider == nullptr) return;
+	if (owner->GetWeapon() == nullptr) return;
 
-	if (!isRun && !isCooldown)
+	if (monsterbase == nullptr) return;
+
+	if (FireMage_in* player = dynamic_cast<FireMage_in*>(owner))
 	{
-		target = targetCollider;
+		if (!isRun && !isCooldown)
+		{
+			if (player->GetState() == player->State::ATTACK1) return;
 
-		isRun = true;
-		isCooldown = true;
+			target = monsterbase->GetCollider();
+
+			player->SetState(player->State::ATTACK1);
+			owner->GetInstancing()->PlayClip(owner->GetIndex(), 2, 1.0f);
+
+			isRun = true;
+			isCooldown = true;
+
+			delayTime = 0.0f;
+
+			Init();
+		}
+	}
+}
+
+void F_004_Scorch::Init()
+{
+	// 스킬 데미지 설정
+	int temp = owner->GetStat().damage;
+
+	if (FireMage_in* mage = dynamic_cast<FireMage_in*>(owner))
+	{
+		if (mage->GetDoubleDamage())
+		{
+			skillDamage = 2 * temp * additiveDamage;
+		}
+		else
+		{
+			skillDamage = temp * additiveDamage;
+		}
 	}
 }

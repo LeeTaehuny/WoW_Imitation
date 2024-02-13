@@ -19,6 +19,8 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+public:
+	virtual void EquipWeapon(class Weapon* weapon) override;
 	void SetState(State state);
 
 private:

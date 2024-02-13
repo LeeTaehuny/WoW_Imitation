@@ -37,6 +37,10 @@
     <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_003_Guardian_Spirit.cpp" />
     <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_002_Holy_Word_Sanctify.cpp" />
     <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_001_Holy_Word_Serenity.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest\H_004_Holy_Word_Chastise.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest\H_003_Guardian_Spirit.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest\H_002_Holy_Word_Sanctify.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest\H_001_Holy_Word_Serenity.cpp" />
     <ClCompile Include="Objects\Character_\CH_Manager.cpp" />
     <ClCompile Include="Objects\Skills\FireMage_Skill\F_008_FlameOn.cpp" />
     <ClCompile Include="Objects\Skills\FireMage_Skill\F_007_SearingTouch.cpp" />
@@ -66,6 +70,12 @@
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_009_Eye_Of_Tyr.cpp" />
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_004_Ardent_Defender.cpp" />
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_008_Guardian_Of_Ancient_Kings.cpp" />
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_004_HOTR.cpp" />
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_014_Blessing_of_Spellwarding.cpp" />
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_034_Moment_Of_Glory.cpp" />
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_032_Eye_Of_Tyr.cpp" />
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_009_Ardent_Defender.cpp" />
+    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_024_Guardian_Of_Ancient_Kings.cpp" />
     <ClCompile Include="Scenes\MAP\MapTestScene.cpp" />
     <ClCompile Include="Objects\MAP\BossMap.cpp" />
     <ClCompile Include="Framework\Environment\Reflection.cpp" />
@@ -226,6 +236,22 @@
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_003_Guardian_Spirit.h" />
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_002_Holy_Word_Sanctify.h" />
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_001_Holy_Word_Serenity.h" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_001_MortalStrike.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_002_Overpower.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_004_DiebytheSword.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_007_ColossusSmash.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_010_Bladestorm.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_003_MartialProwess.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_005_SharpenedBlades.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_006_FueledbyViolence.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_008_Massacre.cpp" />
+    <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_009_BluntInstruments.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Objects\Skills\HolyPriest\H_004_Holy_Word_Chastise.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest\H_003_Guardian_Spirit.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest\H_002_Holy_Word_Sanctify.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest\H_001_Holy_Word_Serenity.h" />
     <ClInclude Include="Objects\Character_\CH_Manager.h" />
     <ClInclude Include="Objects\Skills\FireMage_Skill\F_008_FlameOn.h" />
     <ClInclude Include="Objects\Skills\FireMage_Skill\F_007_SearingTouch.h" />
@@ -259,6 +285,12 @@
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_009_Eye_Of_Tyr.h" />
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_004_Ardent_Defender.h" />
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_008_Guardian_Of_Ancient_Kings.h" />
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_004_HOTR.h" />
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_014_Blessing_of_Spellwarding.h" />
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_034_Moment_Of_Glory.h" />
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_032_Eye_Of_Tyr.h" />
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_009_Ardent_Defender.h" />
+    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_024_Guardian_Of_Ancient_Kings.h" />
     <ClInclude Include="Scenes\KimScene.h" />
     <ClInclude Include="Objects\Inventory\Slot.h" />
     <ClInclude Include="Objects\UI\Button.h" />
@@ -420,6 +452,16 @@
     <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_009_Volley.h" />
     <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_010_Wailing_Arrow.h" />
     <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\ArrowManager.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_001_MortalStrike.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_002_Overpower.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_004_DiebytheSword.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_007_ColossusSmash.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_010_Bladestorm.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_003_MartialProwess.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_005_SharpenedBlades.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_006_FueledbyViolence.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_008_Massacre.h" />
+    <ClInclude Include="Objects\Skills\ArmsWarrior_Skill\A_009_BluntInstruments.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX3D.rc" />

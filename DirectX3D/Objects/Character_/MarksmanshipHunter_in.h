@@ -20,8 +20,11 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+public:
+	virtual void EquipWeapon(class Weapon* weapon) override;
 	// 상태 변경용 함수
 	void SetState(State state);
+
 private:
 	// 플레이어용 업데이트
 	virtual void PlayerUpdate() override;

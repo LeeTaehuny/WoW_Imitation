@@ -29,7 +29,7 @@ void F_006_SurgingBlaze::UseSkill()
 			// 쿨타임 0.5초 감소
 			tmpSkill->SetCooltime(tmpSkill->GetCooltime() - 0.5f);
 			// 데미지 10% 증가
-			tmpSkill->SetDamage(tmpSkill->GetDamage() * 1.1f);
+			tmpSkill->SetDamage(0.1f);
 		}
 		// 002 스킬인 경우
 		else if (F_002_FireBlast* tmpSkill = dynamic_cast<F_002_FireBlast*>(skill))
@@ -37,7 +37,7 @@ void F_006_SurgingBlaze::UseSkill()
 			// 쿨타임 0.5초 감소
 			tmpSkill->SetCooltime(tmpSkill->GetCooltime() - 0.5f);
 			// 데미지 10% 증가
-			tmpSkill->SetDamage(tmpSkill->GetDamage() * 1.1f);
+			tmpSkill->SetDamage(0.1f);
 		}
 	}
 }

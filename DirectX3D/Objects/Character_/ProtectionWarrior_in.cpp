@@ -40,6 +40,8 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 		eventIters[i] = totalEvents[i].begin();
 	}
 	this->SetActive(true);
+
+	mainHandBoneIndex = 37;
 }
 
 ProtectionWarrior_in::~ProtectionWarrior_in()
@@ -80,6 +82,15 @@ void ProtectionWarrior_in::Render()
 	myCollider->Render();
 	range->Render();
 	CH_Base_ver2::Render();
+}
+
+void ProtectionWarrior_in::EquipWeapon(Weapon* weapon)
+{
+	if (weapon == nullptr) return;
+
+	this->weapon = weapon;
+
+	weapon->SetParent(mainHand);
 }
 
 void ProtectionWarrior_in::PlayerUpdate()
@@ -310,6 +321,7 @@ void ProtectionWarrior_in::EndATK()
 	{
 		// 공격이 끝났으므로 무기의 충돌체 정보를 꺼주기
 		weapon->GetCollider()->SetActive(false);
+		weapon->ClearHit();
 	}
 }
 
