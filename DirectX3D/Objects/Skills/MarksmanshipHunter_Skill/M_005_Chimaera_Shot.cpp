@@ -85,7 +85,6 @@ void M_005_Chimaera_Shot::Update()
 				mon1->Hit(skillDamage);
 				col1->SetActive(false);
 				tol1->SetActive(false);
-				tol1 = nullptr;
 			}
 		}
 
@@ -104,7 +103,6 @@ void M_005_Chimaera_Shot::Update()
 				mon2->Hit(skillDamage * 0.5f);
 				col2->SetActive(false);
 				tol2->SetActive(false);
-				tol2 = nullptr;
 			}
 		}
 
@@ -214,15 +212,22 @@ void M_005_Chimaera_Shot::UseSkill(MonsterBase* monsterbase)
 		col2->SetActive(false);
 	}
 
-	tol1 = ARROW->GetActiveArrow();
+	if (!tol1)
+	{
+		tol1 = ARROW->GetActiveArrow();
+		tol1->SetParent(col1);
+	}
 	tol1->SetActive(true);
+	
 	if (mon2 != nullptr)
 	{
-		tol2 = ARROW->GetActiveArrow();
-		tol2->SetParent(col2);
-		tol2->UpdateWorld();
+		if (!tol2)
+		{
+			tol2 = ARROW->GetActiveArrow();
+			tol2->SetParent(col2);
+			tol2->UpdateWorld();
+		}		
 	}
 	tol1->SetActive(false);
-	tol1->SetParent(col1);
 	tol1->UpdateWorld();
 }

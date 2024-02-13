@@ -167,9 +167,12 @@ void M_003_Rapid_Fire::UseSkill(MonsterBase* monsterbase)
 
 	FOR(7)
 	{
-		seven[i] = ARROW->GetActiveArrow();
-		seven[i]->SetActive(true);
-		seven[i]->SetParent(it_me_Mario[i]);
+		if (!seven[i])
+		{
+			seven[i] = ARROW->GetActiveArrow();
+			seven[i]->SetActive(true);
+			seven[i]->SetParent(it_me_Mario[i]);
+		}		
 	}
 
 	FOR(7)
@@ -216,7 +219,6 @@ void M_003_Rapid_Fire::tack(int imto)
 			it_me_Mario[imto]->SetActive(false);
 			effectTexture[imto]->SetActive(false);
 			seven[imto]->SetActive(false);
-			seven[imto] = nullptr;
 			skillonoff[imto] = false;
 		}
 	}

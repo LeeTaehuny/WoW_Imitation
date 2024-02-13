@@ -22,7 +22,7 @@ KimScene::KimScene()
 	//CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(1);
 
-	skill = new M_010_Wailing_Arrow();
+	skill = new M_008_Multi_Shot();
 	skill->SetOwner(CH->GetPlayerData());
 
 	MONSTER;

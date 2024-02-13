@@ -123,6 +123,7 @@ void M_008_Multi_Shot::UseSkill(MonsterBase* monsterbase)
 		c->SetState(MarksmanshipHunter_in::State::ATTACK1);
 	}
 
+	ThisNumber = 0;
 	monsters[ThisNumber] = monsterbase;
 	ThisNumber++;
 	animStart = 0;
@@ -171,14 +172,17 @@ void M_008_Multi_Shot::UseSkill(MonsterBase* monsterbase)
 
 	if (ThisNumber < 5)
 		skillDamage = owner->GetStat().damage * 0.5f;
-	else if (ThisNumber >= 5)
+	else
 		skillDamage = owner->GetStat().damage * 0.2f;
 
 	owner->GetStat().mp -= 20;
 
 	FOR(ThisNumber)
 	{
-		targetArrows[i] = ARROW->GetActiveArrow();
+		if (targetArrows[i] == nullptr)
+		{
+			targetArrows[i] = ARROW->GetActiveArrow();
+		}		
 		targetArrows[i]->SetActive(true);
 	}
 
@@ -192,7 +196,7 @@ void M_008_Multi_Shot::UseSkill(MonsterBase* monsterbase)
 
 void M_008_Multi_Shot::Using(int imto)
 {
-	if (targetArrows[imto])
+	if (monsters[imto])
 	{
 		if (startTiming[imto] == 0)
 		{
@@ -218,7 +222,7 @@ void M_008_Multi_Shot::Using(int imto)
 			targetCollider[imto]->SetActive(false);
 			monsterTecture[imto]->SetActive(false);
 			targetArrows[imto]->SetActive(false);
-			targetArrows[imto] = nullptr;
+			monsters[imto] = nullptr;
 		}
 	}
 }
