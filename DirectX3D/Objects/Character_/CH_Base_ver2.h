@@ -40,7 +40,7 @@ public:
 	// NPC�� ������Ʈ
 	virtual void AIUpdate() = 0;
 	// �ٸ� �ݶ��̴��� �浹���� ��
-	virtual void OnHit(Collider* collider) = 0;
+	virtual void OnHit(float damage) = 0;
 
 	virtual void LearnSkill(class SkillBase* skill) {};
 

@@ -9,7 +9,7 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 	this->instancing = instancing;
 	this->index = index;
 
-	myCollider= new CapsuleCollider(0.5f, 1.0f);
+	myCollider = new CapsuleCollider(0.5f, 1.0f);
 	myCollider->SetParent(this);
 	myCollider->Pos() = Vector3(0, 1.0f, 0);
 
@@ -101,18 +101,17 @@ void ProtectionWarrior_in::AIUpdate()
 	range->UpdateWorld();
 }
 
-void ProtectionWarrior_in::OnHit(Collider* collider)
+void ProtectionWarrior_in::OnHit(float damage)
 {
-	if (this->myCollider->IsCollision(collider))
+	stat.hp -= damage;
+
+	if (stat.hp > 0)
 	{
-		if (stat.hp > 0)
-		{
-			SetState(HIT);
-		}
-		else if (stat.hp <= 0)
-		{
-			SetState(DIE);
-		}
+		SetState(HIT);
+	}
+	else if (stat.hp <= 0)
+	{
+		SetState(DIE);
 	}
 }
 
@@ -127,10 +126,10 @@ void ProtectionWarrior_in::AI_animation_Moving()
 			randomHangdong = MAX_randomHangdong;
 			randomVelocity = Vector3(Random(-1, 2), 0, Random(-1, 2));
 		}
-	
+
 		this->Pos() += randomVelocity * (moveSpeed / 10) * DELTA;
 		this->Rot().y = atan2(randomVelocity.x, randomVelocity.z) + XM_PI;
-	
+
 		SetState(WALK_F);
 	}
 	// 플레이어의 주변이 아니라면
@@ -139,9 +138,9 @@ void ProtectionWarrior_in::AI_animation_Moving()
 		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
 		randomVelocity = velo;
 		randomHangdong = 2.0f;
-	
+
 		this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
-	
+
 		this->Pos() += velo * moveSpeed * DELTA;
 		SetState(WALK_F);
 	}

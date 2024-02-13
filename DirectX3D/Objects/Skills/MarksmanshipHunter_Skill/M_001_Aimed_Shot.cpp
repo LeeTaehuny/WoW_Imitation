@@ -9,7 +9,7 @@ M_001_Aimed_Shot::M_001_Aimed_Shot() : ActiveSkill(SkillType::Target)
 	// 기본 생성 요소
 	{
 		// 스킬 속도
-		speed = 30.0f;
+		speed = 5.0f;
 
 		// 스킬 데미지
 		skillDamage = 0.0f;
@@ -17,21 +17,19 @@ M_001_Aimed_Shot::M_001_Aimed_Shot() : ActiveSkill(SkillType::Target)
 		// 쿨타임 설정 기본 쿨타임은 : (6초)
 		// 충천하여 스킬을 사용하는 방식 (2회 충전)
 		// 그렇기 때문에 쿨타입을 반으로 줄임
-		MAX_delay = 6.0f;
+		MAX_delay = 2.0f;
 		coolTime = MAX_delay;
 
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
 		isRun = false;
 		isCooldown = false;
 
-		// 마나 소모 : 35.0%
+		// 마나 소모 : 3.5%
 		usingType = monster_Data;
 	}
 	icon = new Quad(L"Textures/Character_Skill_Icon/MarksmanshipHunter/001.jpg");
 
-	arrow = new Model("arrow");
 	effectTexture = new Quad(L"Textures/Effect/Alpha_Red_snow.png");
-	effectTexture->SetParent(arrow);
 	effectTexture->Scale() *= 0.05f;
 	FOR(2) blendState[i] = new BlendState();
 	FOR(2) depthState[i] = new DepthStencilState();
@@ -45,7 +43,6 @@ M_001_Aimed_Shot::~M_001_Aimed_Shot()
 	delete hitCollider;
 	delete icon;
 	delete target;
-	delete arrow;
 	delete targetMonster;
 	delete effectTexture;
 
@@ -63,17 +60,20 @@ void M_001_Aimed_Shot::Update()
 		direction = (targetMonster->GetCollider()->GlobalPos() - myCollider->GlobalPos()).GetNormalized();
 		myCollider->Pos() += direction * speed * DELTA;
 		myCollider->UpdateWorld();
-
-		arrow->Pos() = myCollider->GlobalPos();
-		arrow->Rot().y = atan2(direction.x, direction.z) + -(XM_PI * 0.5f);
+		
+		arrow->Rot().y = atan2(direction.x, direction.z) - 1.6f;;
+		arrow->SetActive(true);
+		arrow->UpdateWorld();
 		effectTexture->Rot() = CAM->Rot();
 		effectTexture->UpdateWorld();
-		arrow->UpdateWorld();
 
 		if (myCollider->IsCollision(targetMonster->GetCollider()))
 		{
 			targetMonster->Hit(skillDamage);
 			myCollider->SetActive(false);
+			arrow->SetActive(false);			
+			effectTexture->SetParent(nullptr);
+			arrow = nullptr;
 			isRun = false;
 		}
 	}
@@ -93,15 +93,13 @@ void M_001_Aimed_Shot::Render()
 		effectTexture->Render();
 		blendState[0]->SetState();
 		depthState[0]->SetState();
-
-		arrow->Render();
 	}	
 }
 
 void M_001_Aimed_Shot::UseSkill(MonsterBase* monsterbase)
 {
 	if (isCooldown || monsterbase == nullptr || 
-		owner->GetStat().mp < 350) return;
+		owner->GetStat().mp < 35) return;
 
 	if (MarksmanshipHunter_in* c = dynamic_cast<MarksmanshipHunter_in*>(owner))
 	{
@@ -109,12 +107,17 @@ void M_001_Aimed_Shot::UseSkill(MonsterBase* monsterbase)
 	}
 
 	skillDamage = owner->GetStat().damage * 2.8f;
-	owner->GetStat().mp -= 350;
+	owner->GetStat().mp -= 35;
+
+	arrow = ARROW->GetActiveArrow();
+	arrow->SetParent(myCollider);
+	effectTexture->SetParent(arrow);
 
 	myCollider->Pos() = owner->GlobalPos();
 	myCollider->Pos().y += owner->GlobalScale().y;
 	myCollider->SetActive(true);
 	myCollider->UpdateWorld();
+	arrow->UpdateWorld();
 
 	targetMonster = monsterbase;
 	animStart = 0;

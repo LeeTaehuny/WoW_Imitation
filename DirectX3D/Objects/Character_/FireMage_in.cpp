@@ -102,18 +102,17 @@ void FireMage_in::AIUpdate()
 	range->UpdateWorld();
 }
 
-void FireMage_in::OnHit(Collider* collider)
+void FireMage_in::OnHit(float damage)
 {
-	if (this->myCollider->IsCollision(collider))
+	stat.hp -= damage;
+
+	if (stat.hp > 0)
 	{
-		if (stat.hp > 0)
-		{
-			SetState(HIT);
-		}
-		else if (stat.hp <= 0)
-		{
-			SetState(DIE);
-		}
+		SetState(HIT);
+	}
+	else if (stat.hp <= 0)
+	{
+		SetState(DIE);
 	}
 }
 

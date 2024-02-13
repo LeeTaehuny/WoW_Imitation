@@ -13,14 +13,6 @@ H_005_Censure::~H_005_Censure()
 	delete icon;
 }
 
-void H_005_Censure::Update()
-{
-}
-
-void H_005_Censure::Render()
-{
-}
-
 void H_005_Censure::UseSkill()
 {
 	owner->GetStat().damage *= 1.2f;

@@ -219,6 +219,7 @@
     <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_008_Multi_Shot.cpp" />
     <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_009_Volley.cpp" />
     <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_010_Wailing_Arrow.cpp" />
+    <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\ArrowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.h" />
@@ -418,6 +419,7 @@
     <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_008_Multi_Shot.h" />
     <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_009_Volley.h" />
     <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_010_Wailing_Arrow.h" />
+    <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\ArrowManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX3D.rc" />

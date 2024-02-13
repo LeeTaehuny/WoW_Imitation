@@ -10,7 +10,7 @@ public:
 	virtual void UseSkill(MonsterBase* monsterbase) override;
 
 private:
-	Model* arrow;
+	Transform* arrow;
 	MonsterBase* targetMonster;
 	Quad* effectTexture;
 	BlendState* blendState[2];

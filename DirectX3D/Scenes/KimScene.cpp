@@ -22,10 +22,11 @@ KimScene::KimScene()
 	//CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(1);
 
-	skill = new M_001_Aimed_Shot();
+	skill = new M_010_Wailing_Arrow();
 	skill->SetOwner(CH->GetPlayerData());
 
 	MONSTER;
+	ARROW;
 
 	MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
 	MONSTER->SpawnScarecrow(Vector3(10));
@@ -120,6 +121,7 @@ void KimScene::Update()
 	CH->Update();
 	skill->Update();
 	MONSTER->Update();
+	ARROW->Update();
 }
 
 void KimScene::PreRender()
@@ -134,6 +136,7 @@ void KimScene::Render()
 	CH->Render();
 	skill->Render();
 	MONSTER->Render();
+	ARROW->Render();
 }
 
 void KimScene::PostRender()
