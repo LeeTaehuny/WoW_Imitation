@@ -195,3 +195,8 @@ void Cylinder::SetHeight(float newHeight)
     MakeTangent();
     mesh->CreateMesh();
 }
+
+bool Cylinder::IsCapsuleCollision(CapsuleCollider* collider) 
+{
+    return false;
+}

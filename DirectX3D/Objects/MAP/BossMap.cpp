@@ -42,15 +42,15 @@ BossMap::BossMap()
 	fixeds[1] = new Model("LastBossMap1_O2");   // 계단쪽에있는 사슬 기둥입니다
 	fixeds[1]->Pos().y += 22.5f;                // 사슬 기둥의 초기 위치를 설정합니다
 	fixeds[1]->Pos().x += 75;
-	StairCollider = new BoxCollider(Vector3(10, 40, 20));
-	StairCollider->Pos().y += 11;
-	StairCollider->Pos().x += 60;
-	StairCollider->Rot().z -= 0.80;
+	StairCollider = new BoxCollider(Vector3(5, 40, 25));
+	StairCollider->Pos().y += 7.5;
+	StairCollider->Pos().x += 57.5;
+	StairCollider->Rot().z -= 0.875;
 	Chair_Ground = new BoxCollider(Vector3(15, 10, 20));
-	Chair_Ground->Pos().y += 23.5f;
+	Chair_Ground->Pos().y += 18.5f;
 	Chair_Ground->Pos().x += 78.5;
 	Chair = new BoxCollider(Vector3(10, 10, 10));
-	Chair->Pos().y += 25.0f;
+	Chair->Pos().y += 20.0f;
 	Chair->Pos().x += 80.0f;
 
 	disappears.resize(4);							// 1페이즈 이후에 사라지는 얼음기둥(갈비뼈모양) 입니다
@@ -58,7 +58,7 @@ BossMap::BossMap()
 	for (int i = 0; i < disappears.size(); i++)
 	{
 		disappears[i] = new Model("LastBossMap1_O");
-		disappears_C[i] = new Cylinder(3.5, 15, 32);
+		disappears_C[i] = new Cylinder(3.5f, 15.0f, 32);
 		disappears_C[i]->SetParent(disappears[i]);
 		disappears_C[i]->Pos().y += 10.0f;
 		//disappears_C[i]->SetActive(false);
@@ -75,9 +75,12 @@ BossMap::BossMap()
 	disappears[3]->Pos().z += 30;
 	disappears[3]->Rot().y -= 1.575f;
 
-
-
-	Phase1->Pos().y -= 100.0f;
+	fixeds[0]->Pos().y -= 2.25f;
+	Phase1->SetParent(fixeds[0]);
+	for (int i = 0; i < Phase2.size(); i++) Phase2[i]->SetParent(fixeds[0]);
+	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->SetParent(fixeds[0]);
+	for (int i = 0; i < disappears.size(); i++) disappears[i]->SetParent(fixeds[0]);
+	//fixeds[0]->Scale() *= 0.5f;
 }
 
 BossMap::~BossMap()
@@ -105,6 +108,7 @@ void BossMap::Update()
 	switch (PhaseNum) // 페이즈 넘버에따라 엑티브와 업데이트 여부를 판단하여 수행합니다
 	{
 	case 0:
+		Phase1->UpdateWorld();
 		Phase1->SetActive(true);
 		GroundColider1->SetActive(true);
 		GroundColider1->UpdateWorld();
@@ -123,6 +127,7 @@ void BossMap::Update()
 		break;
 	case 2:
 		Phase1->SetActive(true);
+		Phase1->UpdateWorld();
 		GroundColider1->SetActive(true);
 		for (int i = 0; i < Phase2.size(); i++) Phase2[i]->SetActive(false);
 		ZeroSet();

@@ -12,6 +12,8 @@ public:
     void Render() override;
 
     void SetHeight(float newHeight);
+
+    bool IsCapsuleCollision(CapsuleCollider* collider);
    
 private:
     void MakeMesh();

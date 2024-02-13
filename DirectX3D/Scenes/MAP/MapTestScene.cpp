@@ -27,7 +27,7 @@ MapTestScene::MapTestScene()
 	Transform* transform = instaning->Add();
 	player = new ProtectionWarrior_in(CreatureType::Player, transform, instaning, 0);
 	//PLAYER->Pos() = bossmap->GetSpawnpoint_B();
-	player->Pos() = bossmap->GetSpawnpoint_P();
+	//player->Pos() = bossmap->GetSpawnpoint_P();
 	player->Rot().y -= 1.575f;
 
 	PLAYER = new Model("ProtectionWarrior");
@@ -57,7 +57,12 @@ void MapTestScene::Update()
 	//Test->UpdateWorld();
 
 	//if (bossmap->IsCollision(TestSize));
-	if (bossmap->IsCollision(player->GetCollider()));
+	if (bossmap->IsCollision(player->GetCollider())) 
+	{
+		player->Pos().y += 0.1f;
+	};
+
+	if (player->Pos().y < 0) player->Pos().y = 0;
 }
 
 void MapTestScene::Render()
