@@ -8,6 +8,80 @@ Dungeon::Dungeon() //: Transform()
 	//terrain->Rot().y = 0.0f;
 	//terrain->Rot().z = 0.0f;
 
+	//Tiles.resize(100);
+	//for (int i = 0; i < Tiles.size(); ++i) 
+	//{
+	//	Tiles[i] = new Quad(L"Textures/Landscape/Tile_Dungeon.png");
+	//	Tiles[i]->Scale() *= 0.0235f;
+	//	Tiles[i]->Rot().x += 1.575f;
+	//}
+	//float xgap = 6;
+	//float zgap = 6;
+	//float Xcurrent = 29;
+	//float Zcurrent = 53;
+	//for (int i = 0; i < Tiles.size(); ++i)
+	//{
+	//	if(i <= 6)
+	//	{
+	//		Tiles[i]->Pos().x = Xcurrent;
+	//		Tiles[i]->Pos().z = Zcurrent;
+	//		Xcurrent += xgap;
+	//	}
+	//	if (i > 6)
+	//	{
+	//		Xcurrent = 29;
+	//		Tiles[i]->Pos().x = Xcurrent;
+	//		Tiles[i]->Pos().z = Zcurrent;
+	//		Xcurrent += xgap;
+	//		Zcurrent += zgap;
+	//	}
+	//}
+	
+	Tiles.resize(98);
+	float xgap = 6.0f;
+	float zgap = 6.0f;
+	float Xcurrent = 29.0f;
+	float Zcurrent = 53.0f;
+	for (int i = 0; i < Tiles.size(); ++i)
+	{
+		Tiles[i] = new Quad(L"Textures/Landscape/Tile_Dungeon.png");
+		Tiles[i]->Scale() *= 0.0235f;
+		Tiles[i]->Rot().x += 1.57f;
+
+		Tiles[i]->Pos().x = Xcurrent;
+		Tiles[i]->Pos().z = Zcurrent;
+
+		Xcurrent += xgap;
+
+		if ((i + 1) % 7 == 0)
+		{
+			Xcurrent = 29.0f;
+			Zcurrent += zgap;
+		}
+	}
+
+	Tiles2.resize(169);
+	Xcurrent = 9;
+	Zcurrent = 132;
+	for (int i = 0; i < Tiles2.size(); ++i)
+	{
+		Tiles2[i] = new Quad(L"Textures/Landscape/Tile_Dungeon.png");
+		Tiles2[i]->Scale() *= 0.0235f;
+		Tiles2[i]->Rot().x += 1.57f;
+
+		Tiles2[i]->Pos().x = Xcurrent;
+		Tiles2[i]->Pos().z = Zcurrent;
+
+		Xcurrent += xgap;
+
+		if ((i + 1) % 13 == 0)
+		{
+			Xcurrent = 9.0f;
+			Zcurrent += zgap;
+		}
+	}
+
+
 	Gates.resize(6);
 	Gates[0] = new Model("Gate");
 	boxCollider_G = new BoxCollider(Vector3(35, 120, 230));
@@ -391,6 +465,9 @@ void Dungeon::Update()
 	boxCollider_WRF->UpdateWorld();
 	boxCollider_WGL->UpdateWorld();
 	boxCollider_WGR->UpdateWorld();
+
+	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->UpdateWorld();
+	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->UpdateWorld();
 }
 
 void Dungeon::Render()
@@ -447,6 +524,9 @@ void Dungeon::Render()
 
 	boxCollider_WLF->Render();
 	boxCollider_WRF->Render();
+
+	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->Render();
+	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->Render();
 }
 
 bool Dungeon::IsCollision(Collider* c)

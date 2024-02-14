@@ -87,8 +87,8 @@ GameManager::GameManager()
     //SceneManager::Get()->Add("ModelExport");
 
     // Terrains
-    SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
-    SceneManager::Get()->Add("Terrain");
+    //SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
+    //SceneManager::Get()->Add("Terrain");
     //SceneManager::Get()->Create("Terrain", new TerrainScene());
     //SceneManager::Get()->Add("Terrain");
     //SceneManager::Get()->Create("Terrain", new TerrainLODScene());
