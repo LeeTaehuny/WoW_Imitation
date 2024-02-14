@@ -8,35 +8,6 @@ Dungeon::Dungeon() //: Transform()
 	//terrain->Rot().y = 0.0f;
 	//terrain->Rot().z = 0.0f;
 
-	//Tiles.resize(100);
-	//for (int i = 0; i < Tiles.size(); ++i) 
-	//{
-	//	Tiles[i] = new Quad(L"Textures/Landscape/Tile_Dungeon.png");
-	//	Tiles[i]->Scale() *= 0.0235f;
-	//	Tiles[i]->Rot().x += 1.575f;
-	//}
-	//float xgap = 6;
-	//float zgap = 6;
-	//float Xcurrent = 29;
-	//float Zcurrent = 53;
-	//for (int i = 0; i < Tiles.size(); ++i)
-	//{
-	//	if(i <= 6)
-	//	{
-	//		Tiles[i]->Pos().x = Xcurrent;
-	//		Tiles[i]->Pos().z = Zcurrent;
-	//		Xcurrent += xgap;
-	//	}
-	//	if (i > 6)
-	//	{
-	//		Xcurrent = 29;
-	//		Tiles[i]->Pos().x = Xcurrent;
-	//		Tiles[i]->Pos().z = Zcurrent;
-	//		Xcurrent += xgap;
-	//		Zcurrent += zgap;
-	//	}
-	//}
-	
 	Tiles.resize(98);
 	float xgap = 6.0f;
 	float zgap = 6.0f;
