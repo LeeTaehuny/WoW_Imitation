@@ -34,6 +34,7 @@ private:
 	vector<Model*> Pillar;
 
 	Model* Roof;
+	Model* Grownd_Circle;
 
 	vector<Model*> InGates;
 	Model* NextDoor;

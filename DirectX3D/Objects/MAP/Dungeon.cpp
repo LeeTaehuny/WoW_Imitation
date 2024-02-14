@@ -173,8 +173,10 @@ Dungeon::Dungeon() //: Transform()
 		Walls_B[i]->Pos().z += 180.0f;
 	}
 
+	//////////////////////////////////////////////////
 	Portal = new Model("Portal");
 	Portal->Pos().x += 890;
+	Portal->Pos().y -= 7.0;
 	Portal->Scale() *= 6;
 
 	Wall_deco = new Model("Wall_deco");
@@ -205,6 +207,12 @@ Dungeon::Dungeon() //: Transform()
 	Pillar[4]->Pos().z += 150;
 	Pillar[5]->Pos().x += 575;
 	Pillar[5]->Pos().z += 150;
+
+	Grownd_Circle = new Model("Grownd_Circle");
+	Grownd_Circle->Pos().x += 762.5;
+	Grownd_Circle->Pos().y -= 3.5;
+	Grownd_Circle->Scale() *= 10.0;
+
 
 
 	//////////////////////////////////////////////
@@ -282,6 +290,7 @@ Dungeon::Dungeon() //: Transform()
 	Portal->SetParent(Gates[0]);
 	Wall_deco->SetParent(Gates[0]);
 	for (int i = 0; i < Pillar.size(); ++i) Pillar[i]->SetParent(Gates[0]);
+	Grownd_Circle->SetParent(Gates[0]);
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->SetParent(Gates[0]);
 
 	Gates[0]->Pos().y += 75.0f;
@@ -293,6 +302,7 @@ Dungeon::Dungeon() //: Transform()
 	Portal->Pos().y -= 75.0f;
 	Wall_deco->Pos().y -= 75.0f;
 	for (int i = 0; i < Pillar.size(); ++i) Pillar[i]->Pos().y -= 75.0f;
+	Grownd_Circle->Pos().y -= 75.0f;
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->Pos().y -= 75.0f;
 
 	Gates[0]->Scale() *= 0.166f;
@@ -349,7 +359,7 @@ void Dungeon::Update()
 		Pillar[i]->UpdateWorld();
 		boxColliders_P[i]->UpdateWorld();
 	}
-
+	Grownd_Circle->UpdateWorld();
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->UpdateWorld();
 
 	if (!KEY_PRESS(VK_RBUTTON))
@@ -413,7 +423,7 @@ void Dungeon::Render()
 		Pillar[i]->Render();
 		boxColliders_P[i]->Render();
 	}
-
+	Grownd_Circle->Render();
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->Render();
 
 	boxCollider_G->Render();

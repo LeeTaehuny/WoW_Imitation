@@ -3,7 +3,7 @@
 
 ModelExportScene::ModelExportScene()
 {
-    //string name = "Pillar";
+    //string name = "Grownd_Circle2";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
 	//
