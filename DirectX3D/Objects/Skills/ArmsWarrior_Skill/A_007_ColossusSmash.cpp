@@ -42,6 +42,8 @@ A_007_ColossusSmash::A_007_ColossusSmash() : ActiveSkill(SkillType::Target)
 	MAX_delayAnim = 1.0f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::monster_Data;
 }
 
 A_007_ColossusSmash::~A_007_ColossusSmash()

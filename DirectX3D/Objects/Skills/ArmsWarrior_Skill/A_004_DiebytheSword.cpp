@@ -26,6 +26,8 @@ A_004_DiebytheSword::A_004_DiebytheSword() : ActiveSkill(SkillType::Target)
 
 	// 아이콘 추가
 	icon = new Quad(L"Textures/Character_Skill_Icon/ArmsWarrior/04_DiebytheSword.png");
+
+	usingType = UseType::NON_Data;
 }
 
 A_004_DiebytheSword::~A_004_DiebytheSword()

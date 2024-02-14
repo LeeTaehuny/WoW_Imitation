@@ -44,6 +44,8 @@ F_005_PhoenixFlame::F_005_PhoenixFlame() : ActiveSkill(SkillType::Target)
 	MAX_delayAnim = 1.0f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::monster_Data;
 }
 
 F_005_PhoenixFlame::~F_005_PhoenixFlame()

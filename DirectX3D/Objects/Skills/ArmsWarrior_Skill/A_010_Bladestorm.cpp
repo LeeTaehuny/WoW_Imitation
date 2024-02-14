@@ -58,6 +58,8 @@ A_010_Bladestorm::A_010_Bladestorm() : ActiveSkill(SkillType::NonTarget)
 	MAX_hitTime = 0.5f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::NON_Data;
 }
 
 A_010_Bladestorm::~A_010_Bladestorm()

@@ -28,6 +28,8 @@ F_004_Scorch::F_004_Scorch() : ActiveSkill(SkillType::Target)
 	MAX_delayAnim = 0.7f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::monster_Data;
 }
 
 F_004_Scorch::~F_004_Scorch()

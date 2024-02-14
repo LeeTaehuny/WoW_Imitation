@@ -36,6 +36,8 @@ A_002_Overpower::A_002_Overpower() : ActiveSkill(SkillType::NonTarget)
 	curTime = 0.0f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::NON_Data;
 }
 
 A_002_Overpower::~A_002_Overpower()

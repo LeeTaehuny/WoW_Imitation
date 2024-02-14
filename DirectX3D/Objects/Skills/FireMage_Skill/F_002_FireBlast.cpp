@@ -29,6 +29,8 @@ F_002_FireBlast::F_002_FireBlast() : ActiveSkill(SkillType::Target)
 
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::monster_Data;
 }
 
 F_002_FireBlast::~F_002_FireBlast()

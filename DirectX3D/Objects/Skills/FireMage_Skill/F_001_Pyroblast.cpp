@@ -40,6 +40,8 @@ F_001_Pyroblast::F_001_Pyroblast() : ActiveSkill(SkillType::Target)
 	MAX_delayAnim = 0.7f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::monster_Data;
 }
 
 F_001_Pyroblast::~F_001_Pyroblast()

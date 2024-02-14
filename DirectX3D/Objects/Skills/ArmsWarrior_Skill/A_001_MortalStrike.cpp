@@ -33,6 +33,8 @@ A_001_MortalStrike::A_001_MortalStrike() : ActiveSkill(SkillType::NonTarget)
 	curTime = 0.0f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::NON_Data;
 }
 
 A_001_MortalStrike::~A_001_MortalStrike()

@@ -26,6 +26,8 @@ F_009_Combustion::F_009_Combustion() : ActiveSkill(SkillType::Target)
 
 	// 아이콘 추가
 	icon = new Quad(L"Textures/Character_Skill_Icon/FireMage/09_Combustion.png");
+
+	usingType = UseType::NON_Data;
 }
 
 F_009_Combustion::~F_009_Combustion()

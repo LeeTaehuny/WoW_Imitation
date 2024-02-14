@@ -45,6 +45,8 @@ F_010_Meteor::F_010_Meteor() : ActiveSkill(SkillType::Target)
 	MAX_delayAnim = 1.0f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::monster_Data;
 }
 
 F_010_Meteor::~F_010_Meteor()
