@@ -16,7 +16,7 @@ public:
 
 private:
 	//Terrain* terrain;
-	Vector3 ThisPos = { 0, 0, 0 };
+	//Vector3 ThisPos = { 0, 0, 0 };
 
 	vector<Model*> Gates;
 
@@ -27,6 +27,11 @@ private:
 	Model* Walls_RF;
 
 	vector<Model*> Walls_B;
+
+	Model* Portal;
+	Model* Wall_deco;
+
+	vector<Model*> Pillar;
 
 	Model* Roof;
 
@@ -65,4 +70,5 @@ private:
 	vector<BoxCollider*> boxColliders_WL;
 	vector<BoxCollider*> boxColliders_WR;
 	vector<BoxCollider*> boxColliders_WB;
+	vector<BoxCollider*> boxColliders_P;
 };

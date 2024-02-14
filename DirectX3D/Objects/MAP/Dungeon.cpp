@@ -173,6 +173,40 @@ Dungeon::Dungeon() //: Transform()
 		Walls_B[i]->Pos().z += 180.0f;
 	}
 
+	Portal = new Model("Portal");
+	Portal->Pos().x += 890;
+	Portal->Scale() *= 6;
+
+	Wall_deco = new Model("Wall_deco");
+	Wall_deco->Rot().y += 3.15f;
+	Wall_deco->Pos().x += 925;
+	Wall_deco->Scale() *= 6;
+
+	Pillar.resize(6);
+	boxColliders_P.resize(6);
+	for (int i = 0; i < Pillar.size(); ++i) 
+	{
+		Pillar[i] = new Model("Pillar");
+		boxColliders_P[i] = new BoxCollider(Vector3(3.75, 10, 3.75));
+		boxColliders_P[i]->Pos().y += 5;
+		boxColliders_P[i]->SetParent(Pillar[i]);
+		Pillar[i]->Scale() *= 10.0;
+	}
+	Pillar[0]->Pos().x += 825;
+	Pillar[0]->Pos().z -= 150;
+	Pillar[1]->Pos().x += 700;
+	Pillar[1]->Pos().z -= 150;
+	Pillar[2]->Pos().x += 575;
+	Pillar[2]->Pos().z -= 150;
+
+	Pillar[3]->Pos().x += 825;
+	Pillar[3]->Pos().z += 150;
+	Pillar[4]->Pos().x += 700;
+	Pillar[4]->Pos().z += 150;
+	Pillar[5]->Pos().x += 575;
+	Pillar[5]->Pos().z += 150;
+
+
 	//////////////////////////////////////////////
 
 	InGates.resize(7);
@@ -245,6 +279,9 @@ Dungeon::Dungeon() //: Transform()
 	for (int i = 0; i < Walls_R.size(); ++i) Walls_R[i]->SetParent(Gates[0]);
 	Walls_RF->SetParent(Gates[0]);
 	for (int i = 0; i < Walls_B.size(); ++i) Walls_B[i]->SetParent(Gates[0]);
+	Portal->SetParent(Gates[0]);
+	Wall_deco->SetParent(Gates[0]);
+	for (int i = 0; i < Pillar.size(); ++i) Pillar[i]->SetParent(Gates[0]);
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->SetParent(Gates[0]);
 
 	Gates[0]->Pos().y += 75.0f;
@@ -253,6 +290,9 @@ Dungeon::Dungeon() //: Transform()
 	for (int i = 0; i < Walls_R.size(); ++i) Walls_R[i]->Pos().y -= 75.0f;
 	Walls_RF->Pos().y -= 75.0f;
 	for (int i = 0; i < Walls_B.size(); ++i) Walls_B[i]->Pos().y -= 75.0f;
+	Portal->Pos().y -= 75.0f;
+	Wall_deco->Pos().y -= 75.0f;
+	for (int i = 0; i < Pillar.size(); ++i) Pillar[i]->Pos().y -= 75.0f;
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->Pos().y -= 75.0f;
 
 	Gates[0]->Scale() *= 0.166f;
@@ -301,6 +341,13 @@ void Dungeon::Update()
 	{
 		Walls_B[i]->UpdateWorld();
 		boxColliders_WB[i]->UpdateWorld();
+	}
+	Portal->UpdateWorld();
+	Wall_deco->UpdateWorld();
+	for (int i = 0; i < Pillar.size(); ++i) 
+	{
+		Pillar[i]->UpdateWorld();
+		boxColliders_P[i]->UpdateWorld();
 	}
 
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->UpdateWorld();
@@ -358,7 +405,14 @@ void Dungeon::Render()
 	{
 		Walls_B[i]->Render();
 		boxColliders_WB[i]->Render();
-	} 
+	}
+	Portal->Render();
+	Wall_deco->Render();
+	for (int i = 0; i < Pillar.size(); ++i)
+	{
+		Pillar[i]->Render();
+		boxColliders_P[i]->Render();
+	}
 
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->Render();
 
@@ -419,6 +473,10 @@ bool Dungeon::IsCollision(Collider* c)
 	for (int i = 0; i < Walls_B.size(); ++i)
 	{
 		if (boxColliders_WB[i]->PushCollision(c)) return true;
+	}
+	for (int i = 0; i < Pillar.size(); ++i) 
+	{
+		if (boxColliders_P[i]->PushCollision(c)) return true;
 	}
 	
 	return false;

@@ -3,10 +3,10 @@
 
 ModelExportScene::ModelExportScene()
 {
-    //string name = "Pillar_G";
+    //string name = "Pillar";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
-	
+	//
     //exporter = new ModelExporter(name, file);
     //exporter->ExportMaterial();
     //exporter->ExportMesh();
