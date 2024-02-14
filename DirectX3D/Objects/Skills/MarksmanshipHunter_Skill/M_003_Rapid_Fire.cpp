@@ -8,7 +8,7 @@ M_003_Rapid_Fire::M_003_Rapid_Fire() : ActiveSkill(SkillType::Target)
 	// 기본 생성 요소
 	{
 		// 스킬 속도
-		speed = 5.0f;
+		speed = 20.0f;
 
 		// 스킬 데미지
 		skillDamage = 0.0f;
@@ -170,7 +170,6 @@ void M_003_Rapid_Fire::UseSkill(MonsterBase* monsterbase)
 		if (!seven[i])
 		{
 			seven[i] = ARROW->GetActiveArrow();
-			seven[i]->SetActive(true);
 			seven[i]->SetParent(it_me_Mario[i]);
 		}		
 	}
@@ -178,7 +177,6 @@ void M_003_Rapid_Fire::UseSkill(MonsterBase* monsterbase)
 	FOR(7)
 	{
 		it_me_Mario[i]->SetActive(true);
-		seven[i]->SetActive(false);
 		startTiming[i] = 0;
 		deleyTime[i] = 0;
 		skillonoff[i] = true;
@@ -219,6 +217,7 @@ void M_003_Rapid_Fire::tack(int imto)
 			it_me_Mario[imto]->SetActive(false);
 			effectTexture[imto]->SetActive(false);
 			seven[imto]->SetActive(false);
+			seven[imto]->SetIsRun(false);
 			skillonoff[imto] = false;
 		}
 	}

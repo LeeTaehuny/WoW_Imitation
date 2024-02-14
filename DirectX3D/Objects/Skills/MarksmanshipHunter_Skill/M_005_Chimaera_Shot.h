@@ -18,8 +18,8 @@ private:
 	Collider* col1;
 	Collider* col2;
 
-	Transform* tol1;
-	Transform* tol2;
+	Arrow* tol1;
+	Arrow* tol2;
 
 	Quad* effectTexture1;
 	Quad* effectTexture2;

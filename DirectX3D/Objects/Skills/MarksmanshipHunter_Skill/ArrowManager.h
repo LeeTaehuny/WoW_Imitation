@@ -13,13 +13,13 @@ public:
 	void Render();
 
 	// 혹시 모를 벡터 겟터 함수
-	vector<Transform*> GetArrow() { return arrow; }
+	vector<Arrow*> GetArrow() { return arrows; }
 
 	// 현재 활성화된 화살의 트랜스폼을 받아오기 위한 함수
-	Transform* GetActiveArrow();
+	Arrow* GetActiveArrow();
 
 private:
 	ModelInstancing* arrow_models;
 
-	vector<Transform*> arrow;
+	vector<Arrow*> arrows;
 };

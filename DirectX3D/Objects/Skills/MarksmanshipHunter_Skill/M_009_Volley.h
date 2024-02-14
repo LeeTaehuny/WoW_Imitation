@@ -15,7 +15,7 @@ private:
 	MonsterBase* targetMonster;
 
 	vector<Quad*> monsterTecture;
-	vector<Transform*> targetArrows;
+	vector<Arrow*> targetArrows;
 	vector<Collider*> targetCollider;
 	vector<Vector3> directions;
 	vector<float> velocity;

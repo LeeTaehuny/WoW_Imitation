@@ -60,7 +60,7 @@ void M_001_Aimed_Shot::Update()
 		direction = (targetMonster->GetCollider()->GlobalPos() - myCollider->GlobalPos()).GetNormalized();
 		myCollider->Pos() += direction * speed * DELTA;
 		myCollider->UpdateWorld();
-		
+
 		arrow->Rot().y = atan2(direction.x, direction.z) - 1.6f;;
 		arrow->SetActive(true);
 		arrow->UpdateWorld();
@@ -71,9 +71,9 @@ void M_001_Aimed_Shot::Update()
 		{
 			targetMonster->Hit(skillDamage);
 			myCollider->SetActive(false);
-			arrow->SetActive(false);			
+			arrow->SetActive(false);
+			arrow->SetIsRun(false);
 			effectTexture->SetParent(nullptr);
-			arrow = nullptr;
 			isRun = false;
 		}
 	}
@@ -93,12 +93,12 @@ void M_001_Aimed_Shot::Render()
 		effectTexture->Render();
 		blendState[0]->SetState();
 		depthState[0]->SetState();
-	}	
+	}
 }
 
 void M_001_Aimed_Shot::UseSkill(MonsterBase* monsterbase)
 {
-	if (isCooldown || monsterbase == nullptr || 
+	if (isCooldown || monsterbase == nullptr ||
 		owner->GetStat().mp < 35) return;
 
 	if (MarksmanshipHunter_in* c = dynamic_cast<MarksmanshipHunter_in*>(owner))

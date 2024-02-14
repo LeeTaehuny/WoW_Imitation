@@ -36,11 +36,12 @@ M_008_Multi_Shot::M_008_Multi_Shot() : ActiveSkill(SkillType::Target)
 	blendState[1]->Alpha(true);
 	depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ZERO);
 
-	monsters.resize(20);
-	targetArrows.resize(20);
-	startTiming.resize(20);
+	int sizeMaxValue = 10;
+	monsters.resize(sizeMaxValue);
+	targetArrows.resize(sizeMaxValue);
+	startTiming.resize(sizeMaxValue);
 
-	FOR(20)
+	FOR(sizeMaxValue)
 	{
 		targetCollider.push_back(new SphereCollider());
 		monsterTecture.push_back(new Quad(L"Textures/Effect/Alpha_Red_snow.png"));
@@ -78,7 +79,7 @@ void M_008_Multi_Shot::Update()
 		{
 			Using(i);
 
-			if (!targetArrows[i])
+			if (!targetArrows[i]->Active())
 				imsivalue++;
 
 			if (ThisNumber <= imsivalue)
@@ -175,21 +176,16 @@ void M_008_Multi_Shot::UseSkill(MonsterBase* monsterbase)
 	else
 		skillDamage = owner->GetStat().damage * 0.2f;
 
+	FOR(ThisNumber)
+	{
+		targetArrows[i] = ARROW->GetActiveArrow();
+		targetArrows[i]->SetParent(targetCollider[i]);
+	}
+
 	owner->GetStat().mp -= 20;
 
 	FOR(ThisNumber)
 	{
-		if (targetArrows[i] == nullptr)
-		{
-			targetArrows[i] = ARROW->GetActiveArrow();
-		}		
-		targetArrows[i]->SetActive(true);
-	}
-
-	FOR(ThisNumber)
-	{
-		targetArrows[i]->SetParent(targetCollider[i]);
-		targetArrows[i]->SetActive(false);
 		startTiming[i] = 0;
 	}
 }
@@ -222,6 +218,7 @@ void M_008_Multi_Shot::Using(int imto)
 			targetCollider[imto]->SetActive(false);
 			monsterTecture[imto]->SetActive(false);
 			targetArrows[imto]->SetActive(false);
+			targetArrows[imto]->SetIsRun(false);
 			monsters[imto] = nullptr;
 		}
 	}

@@ -12,7 +12,7 @@ public:
 private:
 
 	MonsterBase* monsterTarget;
-	Transform* arrow;
+	Arrow* arrow;
 	Quad* arrowTexture;
 
 	ParticleSystem* particle;

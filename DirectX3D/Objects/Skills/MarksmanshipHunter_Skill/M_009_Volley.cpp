@@ -120,7 +120,7 @@ void M_009_Volley::Update()
 				monsterTecture[i]->SetActive(false);
 				monsterTecture[i]->SetParent(nullptr);
 				targetArrows[i]->SetActive(false);
-				targetArrows[i] = nullptr;
+				targetArrows[i]->SetIsRun(false);
 			}
 		}
 	}
@@ -175,15 +175,14 @@ void M_009_Volley::UseSkill(MonsterBase* monsterbase)
 
 	FOR(targetArrows.size())
 	{
-		targetArrows[i] = ARROW->GetActiveArrow();
-		targetArrows[i]->SetActive(true);
+		if (targetArrows[i] == nullptr)
+			targetArrows[i] = ARROW->GetActiveArrow();
 		ThisNumber++;
 	}
 
 	FOR(ThisNumber)
 	{
 		targetArrows[i]->SetParent(targetCollider[i]);
-		targetArrows[i]->SetActive(false);
 		startTiming[i] = 0;
 	}
 }

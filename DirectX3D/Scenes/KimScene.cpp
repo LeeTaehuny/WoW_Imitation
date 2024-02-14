@@ -16,17 +16,17 @@
 
 KimScene::KimScene()
 {
-	CH->PlayerSpawn(5);
+	CH->PlayerSpawn(4);
 
-	CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(1);
-
-	skill = new H_001_Holy_Word_Serenity();
-	skill->SetOwner(CH->GetPlayerData());
+	//CH->NonPlayerSpawn(1);
 
 	MONSTER;
 	ARROW;
+
+	skill = new M_009_Volley();
+	skill->SetOwner(CH->GetPlayerData());
 
 	MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
 	MONSTER->SpawnScarecrow(Vector3(10));

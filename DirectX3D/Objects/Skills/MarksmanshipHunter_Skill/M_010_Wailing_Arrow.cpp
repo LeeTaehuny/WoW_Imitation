@@ -131,7 +131,7 @@ void M_010_Wailing_Arrow::Update()
 			isRun = false;
 			myCollider->SetActive(false);
 			arrow->SetActive(false);
-			arrow = nullptr;
+			arrow->SetIsRun(false);
 			return;
 		}
 	}

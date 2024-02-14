@@ -7,8 +7,10 @@ ArrowManager::ArrowManager()
 
 	FOR(30)
 	{
-		arrow.push_back(arrow_models->Add());
-		arrow[i]->SetActive(false);
+		Arrow* aro = new Arrow(arrow_models->Add());
+
+		arrows.push_back(aro);
+		arrows[i]->SetActive(false);
 	}
 }
 
@@ -16,7 +18,7 @@ ArrowManager::~ArrowManager()
 {
 	delete arrow_models;
 
-	for (Transform* tra : arrow)
+	for (Arrow* tra : arrows)
 		delete tra;
 }
 
@@ -30,15 +32,21 @@ void ArrowManager::Render()
 	arrow_models->Render();
 }
 
-Transform* ArrowManager::GetActiveArrow()
+Arrow* ArrowManager::GetActiveArrow()
 {
-	for (int i = 0; i < arrow.size(); ++i)
+	for (int i = 0; i < arrows.size(); ++i)
 	{
-		if (!arrow[i]->Active())
+		if (!arrows[i]->GetIsRun())
 		{
-			return arrow[i];
+			arrows[i]->SetIsRun(true);
+			return arrows[i];
 		}
 	}
 
-	return nullptr;
+	// 사용 가능한 화살이 없다면 새롭게 만듬
+	Arrow* aro = new Arrow(arrow_models->Add());
+	aro->SetActive(false);
+	aro->SetIsRun(false);
+	arrows.push_back(aro);
+	return arrows[arrows.size() - 1];
 }

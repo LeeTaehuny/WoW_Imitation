@@ -66,12 +66,6 @@
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_009_Eye_Of_Tyr.cpp" />
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_004_Ardent_Defender.cpp" />
     <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_008_Guardian_Of_Ancient_Kings.cpp" />
-    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_004_HOTR.cpp" />
-    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_014_Blessing_of_Spellwarding.cpp" />
-    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_034_Moment_Of_Glory.cpp" />
-    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_032_Eye_Of_Tyr.cpp" />
-    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_009_Ardent_Defender.cpp" />
-    <ClCompile Include="Objects\Skills\ProtectionWarrior_Skill\P_024_Guardian_Of_Ancient_Kings.cpp" />
     <ClCompile Include="Scenes\MAP\MapTestScene.cpp" />
     <ClCompile Include="Objects\MAP\BossMap.cpp" />
     <ClCompile Include="Framework\Environment\Reflection.cpp" />
@@ -226,6 +220,7 @@
     <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_009_Volley.cpp" />
     <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_010_Wailing_Arrow.cpp" />
     <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\ArrowManager.cpp" />
+    <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\Arrow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.h" />
@@ -242,6 +237,7 @@
     <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_006_FueledbyViolence.cpp" />
     <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_008_Massacre.cpp" />
     <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_009_BluntInstruments.cpp" />
+    <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\Arrow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Character_\CH_Manager.h" />
@@ -277,12 +273,6 @@
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_009_Eye_Of_Tyr.h" />
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_004_Ardent_Defender.h" />
     <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_008_Guardian_Of_Ancient_Kings.h" />
-    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_004_HOTR.h" />
-    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_014_Blessing_of_Spellwarding.h" />
-    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_034_Moment_Of_Glory.h" />
-    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_032_Eye_Of_Tyr.h" />
-    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_009_Ardent_Defender.h" />
-    <ClInclude Include="Objects\Skills\ProtectionWarrior_Skill\P_024_Guardian_Of_Ancient_Kings.h" />
     <ClInclude Include="Scenes\KimScene.h" />
     <ClInclude Include="Objects\Inventory\Slot.h" />
     <ClInclude Include="Objects\UI\Button.h" />

@@ -14,7 +14,7 @@ public:
 private:
 	vector<MonsterBase*> monsters;
 	vector<Quad*> monsterTecture;
-	vector<Transform*> targetArrows;
+	vector<Arrow*> targetArrows;
 	vector<Collider*> targetCollider;
 	vector<int> startTiming;
 

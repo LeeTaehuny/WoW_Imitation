@@ -250,6 +250,7 @@ using namespace GameMath;
 #include "Objects/Skills/HolyPriest_Skill/H_010_Everlasting_Light.h"
 
 // 사격 사냥꾼 스킬
+#include "Objects/Skills/MarksmanshipHunter_Skill/Arrow.h"
 #include "Objects/Skills/MarksmanshipHunter_Skill/ArrowManager.h"
 #include "Objects/Skills/MarksmanshipHunter_Skill/M_001_Aimed_Shot.h"
 #include "Objects/Skills/MarksmanshipHunter_Skill/M_002_Crack_Shot.h"
