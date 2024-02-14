@@ -50,8 +50,8 @@ void CH_Manager::Render()
 	RENDER(marksmanshiphunter);
 	RENDER(holypriest);
 
-	//for (CH_Base_ver2* ch : character)
-	//	if (ch != nullptr) ch->Render();
+	for (CH_Base_ver2* ch : character)
+		if (ch != nullptr) ch->Render();
 }
 
 void CH_Manager::PostRender()

@@ -238,6 +238,7 @@ using namespace GameMath;
 #include "Objects/Skills/ProtectionWarrior_Skill/P_010_Moment_Of_Glory.h"
 
 // 신성 사제 스킬
+#include "Objects/Skills/HolyPriest_Skill/H_000_Basic_Atttack.h"
 #include "Objects/Skills/HolyPriest_Skill/H_001_Holy_Word_Serenity.h"
 #include "Objects/Skills/HolyPriest_Skill/H_002_Holy_Word_Sanctify.h"
 #include "Objects/Skills/HolyPriest_Skill/H_003_Guardian_Spirit.h"
@@ -252,6 +253,7 @@ using namespace GameMath;
 // 사격 사냥꾼 스킬
 #include "Objects/Skills/MarksmanshipHunter_Skill/Arrow.h"
 #include "Objects/Skills/MarksmanshipHunter_Skill/ArrowManager.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_000_Basic_Atttack.h"
 #include "Objects/Skills/MarksmanshipHunter_Skill/M_001_Aimed_Shot.h"
 #include "Objects/Skills/MarksmanshipHunter_Skill/M_002_Crack_Shot.h"
 #include "Objects/Skills/MarksmanshipHunter_Skill/M_003_Rapid_Fire.h"

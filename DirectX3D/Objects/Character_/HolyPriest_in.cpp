@@ -44,6 +44,20 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 	this->SetActive(true);
 
 	mainHandBoneIndex = 37;
+	FOR(7)
+	{
+		// 공격 판별용 bool 벡터 변수
+		// 0 = 일반공격
+		// 1 = 빛의 권능 : 평온
+		// 2 = 빛의 권능 : 신성화
+		// 3 = 수호 영혼
+		// 4 = 빛의 권능 : 응징
+		// 5 = 치유의 마법진
+		// 6 = 천상의 찬가
+		attackSignal.push_back(false);
+	}
+	skillList.push_back(new H_000_Basic_Atttack());
+	skillList[skillList.size() - 1]->SetOwner(this);
 }
 
 HolyPriest_in::~HolyPriest_in()
@@ -52,6 +66,9 @@ HolyPriest_in::~HolyPriest_in()
 	delete motion;
 	delete myCollider;
 	delete range;
+
+	for (SkillBase* skill : skillList)
+		delete skill;
 }
 
 void HolyPriest_in::Update()
@@ -71,6 +88,9 @@ void HolyPriest_in::Update()
 		break;
 	}
 
+	FOR(skillList.size())
+		skillList[i]->Update();
+
 	ExecuteEvent();
 	CH_Base_ver2::Update();
 	Transform::UpdateWorld();
@@ -83,6 +103,10 @@ void HolyPriest_in::Render()
 
 	myCollider->Render();
 	range->Render();
+
+	FOR(skillList.size())
+		skillList[i]->Render();
+
 	CH_Base_ver2::Render();
 }
 
@@ -293,11 +317,12 @@ void HolyPriest_in::Attack()
 	// 점프, 사망, 피격, 공격 상태인 경우 리턴
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
-	if (KEY_DOWN(VK_LBUTTON))
+	if (attackSignal[0])
 	{
-		SetState(ATTACK1);
+		attackSignal[0] = false;
 
 		// TODO : 원거리 공격 만들기
+		skillList[0]->UseSkill(monsterSelectData);
 	}
 }
 

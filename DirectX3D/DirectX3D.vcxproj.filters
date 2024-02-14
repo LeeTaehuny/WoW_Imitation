@@ -221,6 +221,9 @@
     <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_010_Wailing_Arrow.cpp" />
     <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\ArrowManager.cpp" />
     <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\Arrow.cpp" />
+    <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_000_Basic_Atttack.cpp" />
+    <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_000_Basic_Atttack.cpp" />
+    <ClCompile Include="Objects\Skills\FireMage_Skill\F_000_Basic_Atttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.h" />
@@ -238,6 +241,9 @@
     <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_008_Massacre.cpp" />
     <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_009_BluntInstruments.cpp" />
     <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\Arrow.h" />
+    <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_000_Basic_Atttack.h" />
+    <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_000_Basic_Atttack.h" />
+    <ClInclude Include="Objects\Skills\FireMage_Skill\F_000_Basic_Atttack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Character_\CH_Manager.h" />

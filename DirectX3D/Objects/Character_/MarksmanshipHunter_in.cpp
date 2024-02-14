@@ -41,6 +41,20 @@ MarksmanshipHunter_in::MarksmanshipHunter_in(CreatureType type, Transform* trans
 	this->SetActive(true);
 
 	mainHandBoneIndex = 23;
+	FOR(7)
+	{
+		// 공격 판별용 bool 벡터 변수
+		// 0 = 일반공격
+		// 1 = 조준 사격
+		// 2 = 속사
+		// 3 = 키메라 사격
+		// 4 = 일제 사격
+		// 5 = 연발 사격
+		// 6 = 울부짖는 화살
+		attackSignal.push_back(false);
+	}
+	skillList.push_back(new M_000_Basic_Atttack());
+	skillList[skillList.size() - 1]->SetOwner(this);
 }
 
 MarksmanshipHunter_in::~MarksmanshipHunter_in()
@@ -49,6 +63,9 @@ MarksmanshipHunter_in::~MarksmanshipHunter_in()
 	delete motion;
 	delete myCollider;
 	delete range;
+
+	for (SkillBase* skill : skillList)
+		delete skill;
 }
 
 void MarksmanshipHunter_in::Update()
@@ -68,6 +85,9 @@ void MarksmanshipHunter_in::Update()
 		break;
 	}
 
+	FOR(skillList.size())
+		skillList[i]->Update();
+
 	ExecuteEvent();
 	CH_Base_ver2::Update();
 	Transform::UpdateWorld();
@@ -80,6 +100,10 @@ void MarksmanshipHunter_in::Render()
 
 	myCollider->Render();
 	range->Render();
+
+	FOR(skillList.size())
+		skillList[i]->Render();
+
 	CH_Base_ver2::Render();
 }
 
@@ -292,11 +316,12 @@ void MarksmanshipHunter_in::Attack()
 	// 점프, 사망, 피격, 공격 상태인 경우 리턴
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
-	if (KEY_DOWN(VK_LBUTTON))
+	if (attackSignal[0])
 	{
-		SetState(ATTACK1);
+		attackSignal[0] = false;
 
 		// TODO : 원거리 공격 만들기
+		skillList[0]->UseSkill(monsterSelectData);
 	}
 }
 

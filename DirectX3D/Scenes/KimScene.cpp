@@ -16,7 +16,7 @@
 
 KimScene::KimScene()
 {
-	CH->PlayerSpawn(4);
+	CH->PlayerSpawn(3);
 
 	//CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(1);
@@ -33,13 +33,13 @@ KimScene::KimScene()
 	MONSTER->SpawnScarecrow(Vector3(-10));
 	MONSTER->SpawnScarecrow(Vector3(-5));
 
-	particle = new ParticleSystem("TextData/Particles/fire.fx");
+	particle = new ParticleSystem("TextData/Particles/Fire/fireBall.fx");
 }
 
 KimScene::~KimScene()
 {
+	delete skill;
 	delete particle;
-	
 }
 
 void KimScene::Update()
@@ -67,30 +67,39 @@ void KimScene::Update()
 	{
 		if (KEY_DOWN(VK_LBUTTON))
 		{
-			// 마우스 위치의 Ray 생성
-			Ray ray = CAM->ScreenPointToRay(mousePos);
-			Contact contact;
-
-			// 몬스터 배열 받기
-			vector<MonsterBase*> monsters = MONSTER->GetScarecrow();
-
-			// 몬스터 순회하며 Ray 충돌 연산
-			for (MonsterBase* monster : monsters)
+			// 정보를 받아오기 위한 변수
 			{
-				if (monster->GetCollider()->IsRayCollision(ray, &contact))
+				// 마우스 위치의 Ray 생성
+				Ray ray = CAM->ScreenPointToRay(mousePos);
+				Contact contact;
+
+				// 몬스터 배열 받기
+				vector<MonsterBase*> monsters = MONSTER->GetScarecrow();
+
+				// 몬스터 순회하며 Ray 충돌 연산
+				for (MonsterBase* monster : monsters)
 				{
-					// 충돌했다면 해당 몬스터를 내 타겟으로 설정
-					targetMonster = monster;
+					if (monster->GetCollider()->IsRayCollision(ray, &contact))
+					{
+						// 충돌했다면 해당 몬스터를 내 타겟으로 설정
+						targetMonster = monster;
+						CH->GetPlayerData()->SetSelectTarget(targetMonster);
+						CH->GetPlayerData()->SetAttackSignal(0);
+						break;
+					}
+				}
+
+				for (CH_Base_ver2* play : CH->GetCharcterData())
+				{
+					if (play->GetCollider()->IsRayCollision(ray, &contact))
+					{
+						targetNPC = play;
+						break;
+					}
 				}
 			}
 
-			for (CH_Base_ver2* play : CH->GetCharcterData())
-			{
-				if (play->GetCollider()->IsRayCollision(ray, &contact))
-				{
-					targetNPC = play;
-				}
-			}
+			
 		}
 
 		if (KEY_DOWN('K'))
@@ -118,8 +127,8 @@ void KimScene::Update()
 	}
 
 	UPDATE(particle);
+	UPDATE(skill);
 	CH->Update();
-	skill->Update();
 	MONSTER->Update();
 	ARROW->Update();
 }
@@ -132,6 +141,7 @@ void KimScene::PreRender()
 void KimScene::Render()
 {
 	RENDER(particle);
+	RENDER(skill);
 
 	CH->Render();
 	skill->Render();

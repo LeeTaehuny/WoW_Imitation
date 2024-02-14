@@ -48,7 +48,7 @@ public:
 
 	virtual void EquipWeapon(class Weapon* weapon) = 0;
 
-// Getter & Setter
+	// Getter & Setter
 public:
 	class Inventory* GetInventory() { return inventory; }
 	Collider* GetCollider() { return myCollider; }
@@ -69,7 +69,18 @@ public:
 	// 무기
 	class Weapon* GetWeapon() { return weapon; }
 
-// Member Variable
+	vector<bool> GetAttackSignal() { return attackSignal; }
+	// 캐릭터의 공격 혹은 스킬에 신호를 주기위한 함수
+	// 일반공격 = 0
+	// 무기 전사 : 4개
+	// 보호 팔라딘 : 3개
+	// 화염 마법사 : 6개
+	// 저격 사냥꾼 : 6개
+	// 신성 사제 : 6개
+	void SetAttackSignal(int value) { attackSignal[value] = !attackSignal[value]; }
+	void SetSelectTarget(class MonsterBase* monster) { monsterSelectData = monster; }
+
+	// Member Variable
 protected:
 	CreatureType creatureType;
 	ProfessionType professionType;
@@ -82,8 +93,8 @@ protected:
 	// ��ų
 	vector<class SkillBase*> skillList;
 
-// �ν��Ͻ̿� �ʿ��� ������
-protected: 
+	// �ν��Ͻ̿� �ʿ��� ������
+protected:
 	// �ν��Ͻ� ����
 	ModelAnimatorInstancing* instancing;
 	ModelAnimatorInstancing::Motion* motion;
@@ -94,7 +105,7 @@ protected:
 	vector<map<float, Event>::iterator> eventIters;
 
 protected:
-	
+
 	Vector3 velocity;
 	bool isCasting = false;
 	float moveSpeed = 10.0f;
@@ -113,6 +124,11 @@ protected:
 	class Weapon* weapon;
 
 	Transform* mainHand;
+
+protected: // 평타 및 스킬을 사용할때 참고하기 위한 변수들
+	vector<bool> attackSignal; // 어떤 공격을 할지에 대한 판별용 벡터 변수
+	class MonsterBase* monsterSelectData; // 현재 선택된 몬스터의 정보를 받기 위한 변수
+
 
 protected: // NPC ĳ���͸� �����ϱ� ���� ���� �� �Լ�
 

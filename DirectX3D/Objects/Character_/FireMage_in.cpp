@@ -1,6 +1,7 @@
 #include "Framework.h"
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
+#include "Objects/Skills/FireMage_Skill/F_000_Basic_Atttack.h"
 
 FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::ProtectionWarrior)
@@ -43,6 +44,20 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 	this->SetActive(true);
 
 	mainHandBoneIndex = 23;
+	FOR(7)
+	{
+		// 공격 판별용 bool 벡터 변수
+		// 0 = 일반공격
+		// 1 = 불덩이 작렬
+		// 2 = 화염 작렬
+		// 3 = 불태우기
+		// 4 = 불사조의 불길
+		// 5 = 발화
+		// 6 = 메테오
+		attackSignal.push_back(false);
+	}
+	skillList.push_back(new F_000_Basic_Atttack());
+	skillList[skillList.size() - 1]->SetOwner(this);
 }
 
 FireMage_in::~FireMage_in()
@@ -70,6 +85,9 @@ void FireMage_in::Update()
 		break;
 	}
 
+	FOR(skillList.size())
+		skillList[i]->Update();
+
 	ExecuteEvent();
 	CH_Base_ver2::Update();
 	Transform::UpdateWorld();
@@ -82,6 +100,10 @@ void FireMage_in::Render()
 
 	myCollider->Render();
 	range->Render();
+
+	FOR(skillList.size())
+		skillList[i]->Render();
+
 	CH_Base_ver2::Render();
 }
 
@@ -293,11 +315,12 @@ void FireMage_in::Attack()
 	// 점프, 사망, 피격, 공격 상태인 경우 리턴
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
-	if (KEY_DOWN(VK_LBUTTON))
+	if (attackSignal[0])
 	{
-		SetState(ATTACK1);
+		attackSignal[0] = false;
 
 		// TODO : 원거리 공격 만들기
+		skillList[0]->UseSkill(monsterSelectData);
 	}
 }
 
