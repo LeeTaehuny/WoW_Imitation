@@ -3,10 +3,9 @@
 
 ModelExportScene::ModelExportScene()
 {
-    //string name = "IceBroken";
+    //string name = "Rug";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
-	//
     //exporter = new ModelExporter(name, file);
     //exporter->ExportMaterial();
     //exporter->ExportMesh();

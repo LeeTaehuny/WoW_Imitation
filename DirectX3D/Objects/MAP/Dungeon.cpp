@@ -384,7 +384,7 @@ Dungeon::Dungeon() //: Transform()
 
 	//////////////////////////////////////////////
 
-	InGates.resize(8);
+	InGates.resize(9);
 	InGates[0] = new Model("InGate");
 	InGates[0]->Pos().x += 460.0f;
 	InGates[0]->Pos().y += 10.0f;
@@ -451,6 +451,11 @@ Dungeon::Dungeon() //: Transform()
 	InGates[7]->Pos().y += 75.0f;
 	InGates[7]->Scale() *= 4.0f;
 
+	InGates[8] = new Model("Rug");
+	InGates[8]->Rot().y += 1.575f;
+	InGates[8]->Pos().x += 460.0f;
+	InGates[8]->Pos().y -= 1.0f;
+	InGates[8]->Scale() *= 6.5f;
 
 
 	for (int i = 1; i < Gates.size(); ++i) Gates[i]->SetParent(Gates[0]);
