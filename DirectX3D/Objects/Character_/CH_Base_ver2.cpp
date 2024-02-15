@@ -1,6 +1,7 @@
 #include "Framework.h"
 #include "Objects/Inventory/Inventory.h"
 #include "Objects/Item/Weapon.h"
+#include "Objects/UI/StatusUI.h"
 
 CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionType)
 	: creatureType(creatureType), professionType(professionType)
@@ -9,6 +10,7 @@ CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionT
 	{
 	case CreatureType::Player:
 		inventory = new Inventory();
+		statusUI = new StatusUI(this);
 		break;
 	case CreatureType::NonPlayer:
 		break;
@@ -17,7 +19,8 @@ CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionT
 	// 스탯 설정 (임시)
 	stat.maxHp = 1000.0f;
 	stat.hp = stat.maxHp;
-	stat.mp = 1000;
+	stat.maxMp = 1000;
+	stat.mp = stat.maxMp;
 	stat.damage = 100.0f;
 	stat.defence = 100;
 
@@ -34,6 +37,7 @@ CH_Base_ver2::~CH_Base_ver2()
 void CH_Base_ver2::Update()
 {
 	if (inventory != nullptr) inventory->Update();
+	if (statusUI != nullptr) statusUI->Update();
 
 	if (weapon != nullptr)
 	{
@@ -55,7 +59,16 @@ void CH_Base_ver2::Render()
 void CH_Base_ver2::UIRender()
 {
 	if (!Active()) return;
+	if (statusUI != nullptr) statusUI->UIRender();
 	if (inventory != nullptr) inventory->UIRender();
+}
+
+void CH_Base_ver2::ClearWeapon()
+{
+	if (weapon != nullptr)
+	{
+		weapon = nullptr;
+	}
 }
 
 //void CH_Base_ver2::EquipWeapon(Weapon* weapon)

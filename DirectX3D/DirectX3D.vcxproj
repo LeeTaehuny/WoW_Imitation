@@ -338,6 +338,7 @@
     <ClInclude Include="Objects\Particle\Spark.h" />
     <ClInclude Include="Objects\Shop\Shop.h" />
     <ClInclude Include="Objects\Monster\Skeleton_Knight.h" />
+    <ClInclude Include="Objects\UI\StatusUI.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Objects\Test\TestLight.h" />
     <ClInclude Include="Objects\Particle\Trail.h" />
@@ -404,6 +405,7 @@
     <ClCompile Include="Objects\Monster\MonsterManager.cpp" />
     <ClCompile Include="Objects\Inventory\Slot.cpp" />
     <ClCompile Include="Objects\UI\Button.cpp" />
+    <ClCompile Include="Objects\UI\StatusUI.cpp" />
     <ClInclude Include="Scenes\MAP\TestDungeonScene.h" />
   </ItemGroup>
   <ItemGroup>

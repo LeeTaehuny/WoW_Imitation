@@ -57,6 +57,8 @@ A_007_ColossusSmash::~A_007_ColossusSmash()
 
 void A_007_ColossusSmash::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (delayTime < MAX_delayAnim && isRun)
 	{
 		delayTime += DELTA;

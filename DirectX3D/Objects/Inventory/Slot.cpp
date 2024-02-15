@@ -43,6 +43,10 @@ void Slot::OnClick()
 		break;
 	case SlotType::Inventory_Slot:
 		break;
+	case SlotType::Status_Frame:
+		break;
+	case SlotType::Status_Slot:
+		break;
 	default:
 		break;
 	}
@@ -56,6 +60,10 @@ void Slot::OnHover()
 	case SlotType::Inventory_Frame:
 		break;
 	case SlotType::Inventory_Slot:
+		break;
+	case SlotType::Status_Frame:
+		break;
+	case SlotType::Status_Slot:
 		break;
 	default:
 		break;
@@ -73,6 +81,11 @@ void Slot::OnPress()
 	case SlotType::Inventory_Slot:
 		Observer::Get()->ExcuteParamEvent("PickInvItem", this);
 		break;
+	case SlotType::Status_Frame:
+		Observer::Get()->ExcuteEvent("MoveStatusFrame");
+		break;
+	case SlotType::Status_Slot:
+		break;
 	default:
 		break;
 	}
@@ -88,6 +101,11 @@ void Slot::OnRelease()
 		break;
 	case SlotType::Inventory_Slot:
 		Observer::Get()->ExcuteParamEvent("DownInvItem", this);
+		break;
+	case SlotType::Status_Frame:
+		Observer::Get()->ExcuteEvent("StopStatusFrame");
+		break;
+	case SlotType::Status_Slot:
 		break;
 	default:
 		break;

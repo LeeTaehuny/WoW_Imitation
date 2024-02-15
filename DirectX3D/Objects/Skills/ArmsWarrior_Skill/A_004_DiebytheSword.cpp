@@ -38,6 +38,8 @@ A_004_DiebytheSword::~A_004_DiebytheSword()
 
 void A_004_DiebytheSword::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (isRun)
 	{
 		particle->SetPos(owner->GetCollider()->GlobalPos());

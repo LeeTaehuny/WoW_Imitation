@@ -55,6 +55,8 @@ F_001_Pyroblast::~F_001_Pyroblast()
 
 void F_001_Pyroblast::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (delayTime < MAX_delayAnim && isRun)
 	{
 		delayTime += DELTA;

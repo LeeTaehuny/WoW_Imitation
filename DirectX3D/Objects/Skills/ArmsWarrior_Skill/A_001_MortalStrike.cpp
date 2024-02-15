@@ -48,6 +48,8 @@ A_001_MortalStrike::~A_001_MortalStrike()
 
 void A_001_MortalStrike::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (isRun)
 	{
 		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 2;

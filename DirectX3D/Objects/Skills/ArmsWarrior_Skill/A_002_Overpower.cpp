@@ -51,6 +51,8 @@ A_002_Overpower::~A_002_Overpower()
 
 void A_002_Overpower::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (isRun)
 	{
 		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 2;

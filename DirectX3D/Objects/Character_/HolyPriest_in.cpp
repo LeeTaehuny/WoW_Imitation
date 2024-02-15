@@ -1,9 +1,10 @@
 #include "Framework.h"
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
+#include "Objects/Inventory/Inventory.h"
 
 HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
-	: CH_Base_ver2(type, ProfessionType::ProtectionWarrior)
+	: CH_Base_ver2(type, ProfessionType::HolyPriest)
 {
 	transform->SetParent(this);
 	this->instancing = instancing;
@@ -91,7 +92,7 @@ void HolyPriest_in::EquipWeapon(Weapon* weapon)
 	if (weapon == nullptr) return;
 
 	this->weapon = weapon;
-	//weapon->Rot() = Vector3(0.0f, 21.0f, 20.0f);
+	weapon->SetOwner(this);
 	weapon->SetParent(mainHand);
 }
 
@@ -292,6 +293,9 @@ void HolyPriest_in::Attack()
 {
 	// 점프, 사망, 피격, 공격 상태인 경우 리턴
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
+
+	// 인벤토리가 열려있으면 공격 X
+	if (creatureType == CreatureType::Player && inventory->Active()) return;
 
 	if (KEY_DOWN(VK_LBUTTON))
 	{

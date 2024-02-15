@@ -40,6 +40,8 @@ F_004_Scorch::~F_004_Scorch()
 
 void F_004_Scorch::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (delayTime < MAX_delayAnim && isRun)
 	{
 		delayTime += DELTA;

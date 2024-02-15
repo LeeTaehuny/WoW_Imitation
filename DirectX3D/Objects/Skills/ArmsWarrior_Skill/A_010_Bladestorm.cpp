@@ -71,6 +71,8 @@ A_010_Bladestorm::~A_010_Bladestorm()
 
 void A_010_Bladestorm::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (isRun)
 	{
 		myCollider->Rot().y += DELTA * 8.0f;

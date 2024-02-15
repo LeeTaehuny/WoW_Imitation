@@ -30,7 +30,6 @@ Inventory::~Inventory()
 
 void Inventory::Update()
 {
-	// 테스트 코드. 나중에는 플레이어에서 i키와 매핑할 것.
 	if (KEY_DOWN('I'))
 	{
 		if (Active())
@@ -70,6 +69,15 @@ void Inventory::Update()
 		{
 			invSlot[tempIndex]->SetSelect(false);
 			invSlot[tempIndex]->SetCilck(false);
+		}
+		
+		for (Slot* slot : invSlot)
+		{
+			if (mousePos.x > slot->GlobalPos().x + 33.0f || mousePos.x < slot->GlobalPos().x - 33.0f &&
+				mousePos.y > slot->GlobalPos().y + 33.0f || mousePos.y < slot->GlobalPos().y - 33.0f)
+			{
+				tempIndex = -1;
+			}
 		}
 	}
 }
@@ -134,7 +142,7 @@ void Inventory::AddItem(Item* item)
 	}
 
 	// 전달받은 아이템의 타입이 포션인 경우 중복되는 아이템이 있는지 찾기
-	for (InventoryItem inv : inventory)
+	for (InventoryItem& inv : inventory)
 	{
 		if (inv.item == nullptr) continue;
 		// 만약 아이템의 태그가 같다면?

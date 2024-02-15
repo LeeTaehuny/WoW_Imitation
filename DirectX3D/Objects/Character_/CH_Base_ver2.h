@@ -20,6 +20,7 @@ struct Status
 {
 	float maxHp;	// �ִ� ü��
 	float hp;		// ���� ü��
+	int maxMp;
 	int mp;			// ����
 	int defence;	// ����
 	float damage;	// ���ݷ�
@@ -48,6 +49,8 @@ public:
 
 	virtual void EquipWeapon(class Weapon* weapon) = 0;
 
+	void ClearWeapon();
+
 // Getter & Setter
 public:
 	class Inventory* GetInventory() { return inventory; }
@@ -69,6 +72,9 @@ public:
 	// 무기
 	class Weapon* GetWeapon() { return weapon; }
 
+	// 직업
+	ProfessionType GetProfessionType() { return professionType; }
+
 // Member Variable
 protected:
 	CreatureType creatureType;
@@ -78,6 +84,7 @@ protected:
 	Collider* myCollider;
 
 	class Inventory* inventory;
+	class StatusUI* statusUI;
 
 	// ��ų
 	vector<class SkillBase*> skillList;

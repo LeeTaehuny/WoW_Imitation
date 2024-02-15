@@ -38,6 +38,8 @@ F_009_Combustion::~F_009_Combustion()
 
 void F_009_Combustion::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (isRun)
 	{
 		particle->SetPos(owner->GlobalPos());

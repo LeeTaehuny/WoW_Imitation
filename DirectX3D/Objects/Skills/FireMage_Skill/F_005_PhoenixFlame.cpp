@@ -61,6 +61,8 @@ F_005_PhoenixFlame::~F_005_PhoenixFlame()
 
 void F_005_PhoenixFlame::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (delayTime < MAX_delayAnim && isRun)
 	{
 		delayTime += DELTA;

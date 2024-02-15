@@ -41,6 +41,8 @@ F_002_FireBlast::~F_002_FireBlast()
 
 void F_002_FireBlast::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (delayTime < MAX_delayAnim && isRun)
 	{
 		delayTime += DELTA;

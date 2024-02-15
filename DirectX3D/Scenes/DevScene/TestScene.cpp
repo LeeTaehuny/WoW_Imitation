@@ -48,8 +48,7 @@ TestScene::TestScene()
 	//player = new FireMage_in(CreatureType::Player, transform, paladin, count++);
 	//CAM->SetTarget(player);
 	
-	//shop = new Shop();
-
+	shop = new Shop();
 
 	MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
 	MONSTER->SpawnScarecrow(Vector3(0, 0, 4));
@@ -88,22 +87,22 @@ TestScene::TestScene()
 	//player->GetSkillList().push_back(skill9);
 	//player->GetSkillList().push_back(skill10);
 
-	CH->PlayerSpawn(1);
+	CH->PlayerSpawn(5);
 
 	MONSTER->SetTarget(CH->GetPlayerData()->GetCollider());
 
 	weapon = new Weapon("sword_1", WeaponType::Staff);
 
-	if (Weapon* w = dynamic_cast<Weapon*>(weapon))
-	{
-		CH->GetPlayerData()->EquipWeapon(w);
-		//player->EquipWeapon(w);
-		w->SetOwner(CH->GetPlayerData());
-	}
+	//if (Weapon* w = dynamic_cast<Weapon*>(weapon))
+	//{
+	//	CH->GetPlayerData()->EquipWeapon(w);
+	//	//player->EquipWeapon(w);
+	//	w->SetOwner(CH->GetPlayerData());
+	//}
 
 	skill1 = new A_002_Overpower();
 	skill1->SetOwner(CH->GetPlayerData());
-	skill1->Init();
+	//skill1->Init();
 
 	//skill2 = new F_002_FireBlast();
 	//skill2->SetOwner(CH->GetPlayerData());
@@ -148,60 +147,7 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
-	//shop->Update();
-	//
-	//// 상점 - 플레이어 상호작용
-	//{
-	//	if ((player->GlobalPos() - shop->GlobalPos()).Length() < 10.0f)
-	//	{
-	//		shop->SetActive(true);
-	//	}
-	//	else
-	//	{
-	//		shop->SetActive(false);
-	//	}
-	//
-	//	if (shop->Active())
-	//	{
-	//		const vector<Slot*> slots = shop->GetItemSlots();
-	//		const vector<Slot*> items = player->GetInventory()->GetInvSlots();
-	//
-	//		int idx = 0;
-	//		for (Slot* slot : slots)
-	//		{
-	//			if (mousePos.x <= slot->GlobalPos().x + slot->GetSize().x && mousePos.x >= slot->GlobalPos().x - slot->GetSize().x &&
-	//				mousePos.y <= slot->GlobalPos().y + slot->GetSize().y && mousePos.y >= slot->GlobalPos().y - slot->GetSize().y)
-	//			{
-	//				if (KEY_DOWN(VK_RBUTTON))
-	//				{
-	//					string tmpName = shop->GetItemName(idx);
-	//
-	//					if (tmpName.size())
-	//					{
-	//						shop->PurchaseItem(tmpName, player->GetInventory());
-	//					}
-	//				}
-	//			}
-	//
-	//			idx++;
-	//		}
-	//
-	//		idx = 0;
-	//		for (Slot* item : items)
-	//		{
-	//			if (mousePos.x <= item->GlobalPos().x + 33.0f && mousePos.x >= item->GlobalPos().x - 33.0f &&
-	//				mousePos.y <= item->GlobalPos().y + 33.0f && mousePos.y >= item->GlobalPos().y - 33.0f)
-	//			{
-	//				if (KEY_DOWN(VK_RBUTTON))
-	//				{
-	//					shop->SellItem(idx, player->GetInventory());
-	//				}
-	//			}
-	//
-	//			idx++;
-	//		}
-	//	}
-	//}
+	shop->Update();
 	//
 	//// 임시 스킬 사용 테스트 (좌클릭 타겟 설정, K : 스킬 사용)
 	//{
@@ -353,7 +299,9 @@ void TestScene::Render()
 void TestScene::PostRender()
 {
 	//player->UIRender();
-	//shop->UIRender();
+	shop->UIRender();
+	CH->PostRender();
+
 }
 
 void TestScene::GUIRender()

@@ -27,8 +27,11 @@ public:
 
 // Getter & Setter
 public:
-	const vector<InventoryItem>& GetInventory() { return inventory; }
+	vector<InventoryItem>& GetInventory() { return inventory; }
 	const vector<class Slot*>& GetInvSlots() { return invSlot; }
+
+	int GetTempIndex() { return tempIndex; }
+	void SetTempIndex(int value) { tempIndex = value; }
 
 // Event Func
 private:
