@@ -19,9 +19,9 @@ public:
 protected:
 
     // 타겟의 콜라이더를 받아옴 (나중에 변경 가능)
-    vector<Collider*> target;
+    vector<CH_Base_ver2*> target;
     // 현재 타겟의 정보를 받아옴 (공격을 위한 변수)
-    Collider* targetTransform;
+    CH_Base_ver2* targetTransform;
     // 현재 움직일 수 있는가를 판별하는 변수 (거짓이면 움직이지 못함)
     bool Moving = true;
     // 타겟의 번호에 따라 헤이트 리스트가 배정되며 헤이트가 높은 적을
@@ -31,7 +31,11 @@ protected:
     Transform* transform;
     // 공격범위 콜라이더 (충돌시 공격 모션 재생)
     SphereCollider* attackRange;
+    // 실제 공격 범위 (충돌시 대상에게 데미지를 줌)
     BoxCollider* attackBumwe;
+    float Max_attack_deley = 0.9f;
+    float attack_deley = Max_attack_deley;
+    int oneAttack = 0;
 
     ModelAnimatorInstancing* instancing;
     ModelAnimatorInstancing::Motion* motion;
@@ -41,6 +45,7 @@ protected:
     float moveSpeed = 30;
     float maxHP = 10;
     float curHP = 10;
+    float Atk = 600;
 
     // 방향
     Vector3 velocity;

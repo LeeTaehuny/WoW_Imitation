@@ -201,7 +201,7 @@ void CH_Manager::PlayerSpawn(int value)
 	}
 
 	//CAM->SetTarget(character[0]);
-	MONSTER->SetTarget(character[0]->GetCollider());
+	MONSTER->SetTarget(character[0]);
 }
 
 void CH_Manager::NonPlayerSpawn(int value)
@@ -262,6 +262,6 @@ void CH_Manager::NonPlayerSpawn(int value)
 	}
 
 	character[character.size() - 1]->SetPlayer(character[0]);
-	MONSTER->SetTarget(character[character.size() - 1]->GetCollider());
+	MONSTER->SetTarget(character[character.size() - 1]);
 	nonCount++;
 }

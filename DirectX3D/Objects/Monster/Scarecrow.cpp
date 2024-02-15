@@ -1,6 +1,6 @@
 ﻿#include "Framework.h"
 
-Scarecrow::Scarecrow(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<Collider*> target)
+Scarecrow::Scarecrow(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<CH_Base_ver2*> target)
 {
 	this->transform = transform;
 	this->instancing = instancing;
@@ -10,8 +10,11 @@ Scarecrow::Scarecrow(Transform* transform, ModelAnimatorInstancing* instancing, 
 	root = new Transform();
 
 	collider = new CapsuleCollider(30, 100);
-	collider->SetParent(root);
-	collider->Pos() = { -15.0f, 10.0f, 0.0f };
+	collider->Scale().y *= 1.5f;
+	collider->Scale().x *= 2.5f;
+	collider->Scale().z *= 2.5f;
+	collider->SetParent(this->transform);
+	collider->Pos() = { 0.0f, 110.0f, 0.0f };
 
 	motion = instancing->GetMotion(index);
 	totalEvents.resize(instancing->GetClipSize());

@@ -10,7 +10,7 @@ public:
 
 public:
 
-    Scarecrow(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<Collider*> target);
+    Scarecrow(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<CH_Base_ver2*> target);
     ~Scarecrow();
 
     virtual void Update() override;

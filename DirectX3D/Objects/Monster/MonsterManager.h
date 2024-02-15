@@ -22,7 +22,7 @@ public:
 // Getter & Setter
 public:
     // 지금 필드에 있는 플레이어 캐릭터들의 모든 콜라이더 정보를 저장함
-    void SetTarget(Collider* transform);
+    void SetTarget(CH_Base_ver2* transform);
     vector<MonsterBase*> GetSkeleton() { return skeleton; }
     vector<MonsterBase*> GetSkeleton_Knight() { return skeleton_Knight; }
     vector<MonsterBase*> GetScarecrow() { return scarecrow; }
@@ -32,7 +32,7 @@ public:
     //vector<Collider*> monsterCollider;
 
     // 플레이어 캐릭터들의 정보를 저장함
-    vector<Collider*> targets;
+    vector<CH_Base_ver2*> targets;
 private:
     // 스켈레톤의 인스턴싱
     ModelAnimatorInstancing* skeleton_body;

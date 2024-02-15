@@ -27,7 +27,7 @@ Skeleton_Knight::Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* 
 	SetEvent(HIT, bind(&Skeleton_Knight::EndHit, this), 0.9f);
 	SetEvent(DEATH, bind(&Skeleton_Knight::EndDeath, this), 1);
 
-	Max_attack_deley = 1.5f;
+	Max_attack_deley = 0.7f;
 	attack_deley = Max_attack_deley;
 
 	FOR(totalEvents.size())
@@ -38,9 +38,9 @@ Skeleton_Knight::Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* 
 
 	// 플레이어 캐릭터의 수만큼 해이트 정보 확장
 	targetHate.resize(this->target.size());
-	attackBumwe = new BoxCollider(Vector3(100, 200, 200));
-	attackBumwe->SetParent(this->transform);
-	attackBumwe->Pos() = Vector3(0, 100, -150);
+	attackBumwe = new BoxCollider(Vector3(50, 200, 150));
+	attackBumwe->SetParent(root);
+	attackBumwe->Pos() = Vector3(0, 0, -150);
 	attackBumwe->SetActive(false);
 }
 
@@ -201,47 +201,32 @@ void Skeleton_Knight::Move()
 
 void Skeleton_Knight::targetAttack()
 {
-	if (attackBumwe->Active())
-	{
-		attack_deley -= DELTA;
-		if (attack_deley <= 0)
-		{
-			attack_deley = Max_attack_deley;
-			if (attackBumwe->IsCollision(targetTransform->GetCollider()))
-			{
-				if (oneAttack == 0)
-				{
-					targetTransform->OnHit(Atk);
-					attackBumwe->SetActive(false);
-					oneAttack++;
-				}
-			}
-		}
-	}
-	else
-	{
-		attack_deley = Max_attack_deley;
-	}
+	if (curState == ATTACK1) return;
+	if (curState == DEATH) return;
+	if (curState == HIT) return;
 
-	if (curState == ATTACK1 || curState == DEATH || curState == HIT) return;
-	if (attackRange->IsCollision(targetTransform->GetCollider()) &&
-		oneAttack == 0)
+	if (attackRange->IsCollision(targetTransform->GetCollider()))
 	{
 		Moving = false;
 		attackBumwe->SetActive(true);
 		SetState(ATTACK1);
 	}
-	else if (oneAttack == 1 && curState != ATTACK1)
-	{
-		oneAttack = 0;
-		Moving = true;
-		attackBumwe->SetActive(false);
-	}
 	else
 	{
 		Moving = true;
-		attackBumwe->SetActive(false);
 	}
+
+	if (!attackBumwe->Active()) return;
+
+	attack_deley -= DELTA;
+	if (attack_deley <= 0)
+	{
+		attack_deley = Max_attack_deley;
+		if (attackBumwe->IsCollision(targetTransform->GetCollider()))
+		{
+			targetTransform->OnHit(Atk);
+		}
+	}	
 }
 
 void Skeleton_Knight::UpdateUI()

@@ -1,6 +1,6 @@
 ﻿#include "Framework.h"
 
-Skeleton::Skeleton(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<Collider*> target)
+Skeleton::Skeleton(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<CH_Base_ver2*> target)
 {
 	this->transform = transform;
 	this->instancing = instancing;
@@ -10,8 +10,11 @@ Skeleton::Skeleton(Transform* transform, ModelAnimatorInstancing* instancing, UI
 	root = new Transform();
 
 	collider = new CapsuleCollider(30, 100);
-	collider->SetParent(root);
-	collider->Pos() = { -15.0f, 10.0f, 0.0f };
+	collider->Scale().y *= 1.5f;
+	collider->Scale().x *= 2.5f;
+	collider->Scale().z *= 2.5f;
+	collider->SetParent(this->transform);
+	collider->Pos() = { 0.0f, 110.0f, 0.0f };
 	attackRange = new SphereCollider(200);
 	attackRange->SetParent(root);
 
@@ -25,6 +28,9 @@ Skeleton::Skeleton(Transform* transform, ModelAnimatorInstancing* instancing, UI
 	SetEvent(HIT, bind(&Skeleton::EndHit, this), 0.9f);
 	SetEvent(DEATH, bind(&Skeleton::EndDeath, this), 1);
 
+	Max_attack_deley = 1.5f;
+	attack_deley = Max_attack_deley;
+
 	FOR(totalEvents.size())
 	{
 		eventIters[i] = totalEvents[i].begin();
@@ -33,9 +39,9 @@ Skeleton::Skeleton(Transform* transform, ModelAnimatorInstancing* instancing, UI
 
 	// 플레이어 캐릭터의 수만큼 해이트 정보 확장
 	targetHate.resize(this->target.size());
-	attackBumwe = new BoxCollider(Vector3(50, 200, 150));
-	attackBumwe->SetParent(root);
-	attackBumwe->Pos() = Vector3(0, 0, -150);
+	attackBumwe = new BoxCollider(Vector3(200, 200, 200));
+	attackBumwe->SetParent(this->transform);
+	attackBumwe->Pos() = Vector3(0, 100, -150);
 	attackBumwe->SetActive(false);
 }
 
@@ -74,8 +80,8 @@ void Skeleton::Update()
 
 void Skeleton::Render()
 {
-	//collider->Render();
-	//attackRange->Render();
+	collider->Render();
+	attackRange->Render();
 	attackBumwe->Render();
 }
 
@@ -125,7 +131,7 @@ void Skeleton::Spawn(Vector3 pos)
 {
 	transform->SetActive(true);
 	collider->SetActive(true);
-	SetState(WALKING);
+	SetState(RUN);
 	curHP = maxHP;
 	transform->Pos() = pos;
 }
@@ -154,12 +160,12 @@ void Skeleton::ExecuteEvent()
 void Skeleton::EndAttack()
 {
 	attackBumwe->SetActive(false);
-	SetState(WALKING);
+	SetState(RUN);
 }
 
 void Skeleton::EndHit()
 {
-	SetState(WALKING);
+	SetState(RUN);
 }
 
 void Skeleton::EndDeath()
@@ -203,37 +209,62 @@ void Skeleton::Move()
 
 void Skeleton::targetAttack()
 {
-	if (curState == ATTACK1) return;
-	if (curState == ATTACK2) return;
 	if (curState == DEATH) return;
 	if (curState == SCREAM) return;
 	if (curState == HIT) return;
 
-	if (attackRange->IsCollision(targetTransform))
+	if (attackBumwe->Active())
 	{
-		Moving = false;
-		int ran = Random(1, 3);
-		attackBumwe->SetActive(true);
-
-		if (ran == 1)
+		attack_deley -= DELTA;
+		if (attack_deley <= 0)
 		{
-			SetState(ATTACK1);
-		}
-		else if (ran == 2)
-		{
-			SetState(ATTACK2);
+			attack_deley = Max_attack_deley;
+			if (attackBumwe->IsCollision(targetTransform->GetCollider()))
+			{
+				if (oneAttack == 0)
+				{
+					targetTransform->OnHit(Atk);
+					attackBumwe->SetActive(false);
+					oneAttack++;
+				}
+			}
 		}
 	}
 	else
 	{
-		Moving = true;
+		attack_deley = Max_attack_deley;
 	}
 
-	if (!attackBumwe->Active()) return;
-
-	if (attackBumwe->IsCollision(targetTransform))
+	if (curState == ATTACK1 || curState == ATTACK2) return;
+	if (attackRange->IsCollision(targetTransform->GetCollider()) &&
+		oneAttack == 0)
 	{
-
+		Moving = false;
+		attackBumwe->SetActive(true);
+		int ron = Random(1, 3);
+		if (ron == 1)
+		{
+			SetState(ATTACK1);
+			Max_attack_deley = 0.9f;
+			attack_deley = Max_attack_deley;
+		}
+		else if (ron == 2)
+		{
+			SetState(ATTACK2);
+			Max_attack_deley = 1.5f;
+			attack_deley = Max_attack_deley;
+		}
+	}
+	else if (oneAttack == 1 && curState == RUN)
+	{
+		oneAttack = 0;
+		Moving = true;
+		attackBumwe->SetActive(false);
+	}
+	else
+	{
+		Moving = true;
+		attackBumwe->SetActive(false);
 	}
 }
 

@@ -42,7 +42,7 @@ MonsterManager::~MonsterManager()
 	for (MonsterBase* skel : scarecrow)
 		delete skel;
 
-	for (Collider* col : targets)
+	for (CH_Base_ver2* col : targets)
 		delete col;
 }
 
@@ -74,7 +74,7 @@ void MonsterManager::Render()
 		RENDER(skel);
 }
 
-void MonsterManager::SetTarget(Collider* transform)
+void MonsterManager::SetTarget(CH_Base_ver2* transform)
 {
 	targets.push_back(transform);
 }

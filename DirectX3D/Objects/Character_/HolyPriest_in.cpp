@@ -345,6 +345,10 @@ void HolyPriest_in::EndHit()
 	{
 		SetState(DIE);
 	}
+	else
+	{
+		SetState(IDLE1);
+	}
 }
 
 void HolyPriest_in::EndDie()

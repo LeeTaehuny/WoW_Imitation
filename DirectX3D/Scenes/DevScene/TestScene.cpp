@@ -90,7 +90,7 @@ TestScene::TestScene()
 
 	CH->PlayerSpawn(1);
 
-	MONSTER->SetTarget(CH->GetPlayerData()->GetCollider());
+	MONSTER->SetTarget(CH->GetPlayerData());
 
 	weapon = new Weapon("sword_1", WeaponType::Staff);
 

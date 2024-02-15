@@ -16,7 +16,7 @@
 
 KimScene::KimScene()
 {
-	CH->PlayerSpawn(3);
+	CH->PlayerSpawn(5);
 
 	//CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(1);
@@ -32,6 +32,10 @@ KimScene::KimScene()
 	MONSTER->SpawnScarecrow(Vector3(10));
 	MONSTER->SpawnScarecrow(Vector3(-10));
 	MONSTER->SpawnScarecrow(Vector3(-5));
+
+	MONSTER->SpawnSkeleton(Vector3(10));
+	
+	//MONSTER->SpawnSkeletonKnight(Vector3(10));
 
 	particle = new ParticleSystem("TextData/Particles/Fire/fireBall.fx");
 }
@@ -67,26 +71,46 @@ void KimScene::Update()
 	{
 		if (KEY_DOWN(VK_LBUTTON))
 		{
-			// 정보를 받아오기 위한 변수
 			{
-				// 마우스 위치의 Ray 생성
 				Ray ray = CAM->ScreenPointToRay(mousePos);
 				Contact contact;
 
 				// 몬스터 배열 받기
 				vector<MonsterBase*> monsters = MONSTER->GetScarecrow();
-
-				// 몬스터 순회하며 Ray 충돌 연산
 				for (MonsterBase* monster : monsters)
 				{
 					if (monster->GetCollider()->IsRayCollision(ray, &contact))
 					{
 						// 충돌했다면 해당 몬스터를 내 타겟으로 설정
 						targetMonster = monster;
-						CH->GetPlayerData()->SetSelectTarget(targetMonster);
-						CH->GetPlayerData()->SetAttackSignal(0);
 						break;
 					}
+				}
+				monsters = MONSTER->GetSkeleton();
+				for (MonsterBase* monster : monsters)
+				{
+					if (monster->GetCollider()->IsRayCollision(ray, &contact))
+					{
+						// 충돌했다면 해당 몬스터를 내 타겟으로 설정
+						targetMonster = monster;
+						break;
+					}
+				}
+				monsters = MONSTER->GetSkeleton_Knight();
+				for (MonsterBase* monster : monsters)
+				{
+					if (monster->GetCollider()->IsRayCollision(ray, &contact))
+					{
+						// 충돌했다면 해당 몬스터를 내 타겟으로 설정
+						targetMonster = monster;
+						break;
+					}
+				}
+
+				if (targetMonster)
+				{
+					CH->GetPlayerData()->SetSelectTarget(targetMonster);
+					CH->GetPlayerData()->SetAttackSignal(0);
 				}
 
 				for (CH_Base_ver2* play : CH->GetCharcterData())

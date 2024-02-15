@@ -12,7 +12,7 @@ public:
 
 public:
 
-    Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<Collider*> target);
+    Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* instancing, UINT index, vector<CH_Base_ver2*> target);
     ~Skeleton_Knight();
 
     virtual void Update() override;
