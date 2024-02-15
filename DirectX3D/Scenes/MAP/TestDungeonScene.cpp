@@ -69,7 +69,7 @@ void TestDungeonScene::Update()
 		if (KEY_PRESS(VK_RIGHT)) dungeon->OpenDoor_I(true);
 	}
 
-	if (KEY_PRESS(VK_DOWN)) dungeon->Pos().x -= 100 * DELTA;
+	if (KEY_PRESS(VK_DOWN)) dungeon->IsClear(true);
 
 	if (player->Pos().y < 0) player->Pos().y = 0;
 	//if (player->Pos().y > 0) player->Pos().y = 0;

@@ -10,6 +10,7 @@ public:
 
 	bool OpenDoor(bool bol) { return open = bol; }
 	bool OpenDoor_I(bool bol) { return open_I = bol; }
+	bool IsClear(bool bol) { return isClear = bol; }
 	//Vector3 terrainpos() { return terrain->Pos(); }
 	Vector3 GetSpawnPoint_P() { return SpawnPoint_P; }
 	bool IsCollision(Collider* c);
@@ -28,26 +29,37 @@ private:
 
 	vector<Model*> Walls_B;
 
+	Model* Walls_BL;
+	Model* Walls_BR;
 	Model* Portal;
 	Model* Wall_deco;
+	Model* IceWall;
+	Model* IceWallL;
+	Model* IceWallR;
+	Model* IceWallC;
+	vector<Model*> Ice_debris;
+	Model* Ice_Broken;
 
 	vector<Model*> Pillar;
 
 	Model* Roof;
+	SkyBox* skybox;
 	vector<Quad*> Tiles;
 	vector<Quad*> Tiles2;
+	vector<Quad*> Tiles3;
 	Model* Grownd_Circle;
 
 	vector<Model*> InGates;
-	Model* NextDoor;
 
 	Vector3 SpawnPoint_P = {45.0f,0,10};
 	vector<Vector3*> SpawnPoint_A;
 
 	void DoorMove();
 	void DoorMove_I();
+	void CrashIceWall();
 	bool open = false;
 	bool open_I = false;
+	bool isClear = false;
 
 	BoxCollider* boxCollider_G;
 	BoxCollider* boxCollider_GL;
@@ -73,5 +85,10 @@ private:
 	vector<BoxCollider*> boxColliders_WL;
 	vector<BoxCollider*> boxColliders_WR;
 	vector<BoxCollider*> boxColliders_WB;
+	BoxCollider* boxColliders_WD;
+	vector<BoxCollider*> boxColliders_potal;
+	BoxCollider* boxColliders_WBL;
+	BoxCollider* boxColliders_WBR;
 	vector<BoxCollider*> boxColliders_P;
+	BoxCollider* boxColliders_B;
 };

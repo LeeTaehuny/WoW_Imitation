@@ -8,6 +8,9 @@ Dungeon::Dungeon() //: Transform()
 	//terrain->Rot().y = 0.0f;
 	//terrain->Rot().z = 0.0f;
 
+	//skybox = new SkyBox(L"Textures/Landscape/BlueSky.dds");
+	//skybox->UpdateWorld();
+
 	Tiles.resize(98);
 	float xgap = 6.0f;
 	float zgap = 6.0f;
@@ -51,6 +54,31 @@ Dungeon::Dungeon() //: Transform()
 			Zcurrent += zgap;
 		}
 	}
+	Tiles3.resize(21);
+	Xcurrent = 27;
+	Zcurrent = 210;
+	for (int i = 0; i < Tiles3.size(); ++i)
+	{
+		Tiles3[i] = new Quad(L"Textures/Landscape/Tile_Dungeon2.png");
+		Tiles3[i]->Scale() *= 0.0235f;
+		Tiles3[i]->Rot().x += 1.57f;
+
+		Tiles3[i]->Pos().x = Xcurrent;
+		Tiles3[i]->Pos().z = Zcurrent;
+
+		Xcurrent += xgap;
+
+		if ((i + 1) % 7 == 0)
+		{
+			Xcurrent = 27.0f;
+			Zcurrent += zgap;
+		}
+	}
+
+	//Roof = new Model("Roof");
+	//Roof->Pos().y += 100;
+	//Roof->Pos().z += 100;
+	//Roof->Pos().x += 100;
 
 
 	Gates.resize(6);
@@ -217,17 +245,51 @@ Dungeon::Dungeon() //: Transform()
 		currentX -= gap;
 		Walls_B[i]->Pos().z += 180.0f;
 	}
+	Walls_B[1]->Pos().x += 117.5;
+	Walls_B[2]->Pos().x += 117.5;
+	
+	Walls_BL = new Model("Wall");
+	Walls_BL->Rot().y += 1.575f;
+	Walls_BL->Pos().y += 10.0f;
+	Walls_BL->Pos().x += 993.0f;
+	Walls_BL->Pos().z += 137.5f;
+	Walls_BR = new Model("Wall");
+	Walls_BR->Rot().y -= 1.575f;
+	Walls_BR->Pos().y += 10.0f;
+	Walls_BR->Pos().x += 993.0f;
+	Walls_BR->Pos().z -= 130.5f;
+
+	boxColliders_WBL = new BoxCollider(Vector3(35, 150, 120));
+	boxColliders_WBL->SetParent(Walls_BL);
+	boxColliders_WBR = new BoxCollider(Vector3(35, 150, 120));
+	boxColliders_WBR->SetParent(Walls_BR);
+	
 
 	//////////////////////////////////////////////////
 	Portal = new Model("Portal");
-	Portal->Pos().x += 890;
+	Portal->Pos().x += 1005;
 	Portal->Pos().y -= 7.0;
 	Portal->Scale() *= 6;
+	boxColliders_potal.resize(2);
+	for (int i = 0; i < boxColliders_potal.size(); ++i) 
+	{
+		boxColliders_potal[i] = new BoxCollider(Vector3(3.5, 5, 6.5));
+		boxColliders_potal[i]->SetParent(Portal);
+	}
+	boxColliders_potal[0]->Pos().z += 7.0; // L
+	boxColliders_potal[0]->Rot().x -= 1.0f;
+	boxColliders_potal[0]->Pos().y += 3.0f;
+	boxColliders_potal[1]->Pos().z -= 7.0; // R
+	boxColliders_potal[1]->Rot().x += 1.0f;
+	boxColliders_potal[1]->Pos().y += 3.0f;
 
 	Wall_deco = new Model("Wall_deco");
 	Wall_deco->Rot().y += 3.15f;
-	Wall_deco->Pos().x += 925;
+	Wall_deco->Pos().x += 1042.5;
 	Wall_deco->Scale() *= 6;
+	boxColliders_WD = new BoxCollider(Vector3(2.5, 10, 2.5));
+	boxColliders_WD->Pos().y += 5;
+	boxColliders_WD->SetParent(Wall_deco);
 
 	Pillar.resize(6);
 	boxColliders_P.resize(6);
@@ -258,11 +320,71 @@ Dungeon::Dungeon() //: Transform()
 	Grownd_Circle->Pos().y -= 3.5;
 	Grownd_Circle->Scale() *= 10.0;
 
+	IceWall = new Model("IceWall");
+	IceWall->Pos().x += 955.0;
+	IceWall->Scale() *= 10.0;
 
+	IceWallL = new Model("IceWall2");//L
+	IceWallL->Pos().x += 910.0;
+	IceWallL->Pos().z += 150;
+	IceWallL->Scale() *= 6.0;
+
+	IceWallR = new Model("IceWall2");//R
+	IceWallR->Pos().x += 910.0;
+	IceWallR->Pos().z -= 150;
+	IceWallR->Scale() *= 6.0;
+
+	IceWallC = new Model("IceWall3");
+	IceWallC->Rot().y += 1.575f;
+	IceWallC->Pos().x += 915.0;
+	IceWallC->Scale() *= 3.0;
+
+	boxColliders_B = new BoxCollider(Vector3(17.5, 25, 47.5));
+	boxColliders_B->Pos().y += 12.0;
+	boxColliders_B->SetParent(IceWall);
+
+	Ice_debris.resize(12);
+	Ice_debris[0] = new Model("Ice_debris1");	// 얼음파편 입니다
+	Ice_debris[1] = new Model("Ice_debris2");
+	Ice_debris[2] = new Model("Ice_debris3");
+	Ice_debris[3] = new Model("Ice_debris4");
+	Ice_debris[4] = new Model("Ice_debris1");	
+	Ice_debris[5] = new Model("Ice_debris2");
+	Ice_debris[6] = new Model("Ice_debris3");
+	Ice_debris[7] = new Model("Ice_debris4");
+	Ice_debris[8] = new Model("Ice_debris1");	
+	Ice_debris[9] = new Model("Ice_debris2");
+	Ice_debris[10] = new Model("Ice_debris3");
+	Ice_debris[11] = new Model("Ice_debris4");
+	for (int i = 0; i < 4; ++i) 
+	{
+		Ice_debris[i]->Pos().y += 580.0f;
+		Ice_debris[i]->Pos().x += 955.0;
+		Ice_debris[i]->Scale() *= 1.5f;
+	}
+	for (int i = 4; i < 8; ++i)
+	{
+		Ice_debris[i]->Pos().y += 530.0f;
+		Ice_debris[i]->Pos().x += 955.0;
+		Ice_debris[i]->Pos().z -=150;
+		Ice_debris[i]->Scale() *= 1.5f;
+	}
+	for (int i = 8; i < 12; ++i)
+	{
+		Ice_debris[i]->Pos().y += 530.0f;
+		Ice_debris[i]->Pos().x += 955.0;
+		Ice_debris[i]->Pos().z += 150;
+		Ice_debris[i]->Scale() *= 1.5f;
+	}
+
+	Ice_Broken = new Model("IceBroken");
+	Ice_Broken->Pos().x += 955.0;
+	Ice_Broken->Pos().y -= 5.0;
+	Ice_Broken->Scale() *= 1.5f;
 
 	//////////////////////////////////////////////
 
-	InGates.resize(7);
+	InGates.resize(8);
 	InGates[0] = new Model("InGate");
 	InGates[0]->Pos().x += 460.0f;
 	InGates[0]->Pos().y += 10.0f;
@@ -324,6 +446,11 @@ Dungeon::Dungeon() //: Transform()
 	boxCollider_PL->Pos().x -= 2.0f;
 	boxCollider_PL->Pos().y += 17.5f;
 
+	InGates[7] = new Model("Door_deco");
+	InGates[7]->Pos().x += 428.5f;
+	InGates[7]->Pos().y += 75.0f;
+	InGates[7]->Scale() *= 4.0f;
+
 
 
 	for (int i = 1; i < Gates.size(); ++i) Gates[i]->SetParent(Gates[0]);
@@ -332,11 +459,19 @@ Dungeon::Dungeon() //: Transform()
 	for (int i = 0; i < Walls_R.size(); ++i) Walls_R[i]->SetParent(Gates[0]);
 	Walls_RF->SetParent(Gates[0]);
 	for (int i = 0; i < Walls_B.size(); ++i) Walls_B[i]->SetParent(Gates[0]);
+	Walls_BL->SetParent(Gates[0]);
+	Walls_BR->SetParent(Gates[0]);
 	Portal->SetParent(Gates[0]);
 	Wall_deco->SetParent(Gates[0]);
+	IceWall->SetParent(Gates[0]);
+	IceWallL->SetParent(Gates[0]);
+	IceWallR->SetParent(Gates[0]);
+	IceWallC->SetParent(Gates[0]);
 	for (int i = 0; i < Pillar.size(); ++i) Pillar[i]->SetParent(Gates[0]);
 	Grownd_Circle->SetParent(Gates[0]);
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->SetParent(Gates[0]);
+	for (int i = 0; i < Ice_debris.size(); ++i) Ice_debris[i]->SetParent(Gates[0]);
+	Ice_Broken->SetParent(Gates[0]);
 
 	Gates[0]->Pos().y += 75.0f;
 	for (int i = 0; i < Walls_L.size(); ++i) Walls_L[i]->Pos().y -= 75.0f;
@@ -344,11 +479,18 @@ Dungeon::Dungeon() //: Transform()
 	for (int i = 0; i < Walls_R.size(); ++i) Walls_R[i]->Pos().y -= 75.0f;
 	Walls_RF->Pos().y -= 75.0f;
 	for (int i = 0; i < Walls_B.size(); ++i) Walls_B[i]->Pos().y -= 75.0f;
+	Walls_BL->Pos().y -= 75.0f;
+	Walls_BR->Pos().y -= 75.0f;
 	Portal->Pos().y -= 75.0f;
 	Wall_deco->Pos().y -= 75.0f;
+	IceWall->Pos().y -= 75.0f;
+	IceWallL->Pos().y -= 75.0f;
+	IceWallR->Pos().y -= 75.0f;
+	IceWallC->Pos().y -= 75.0f;
 	for (int i = 0; i < Pillar.size(); ++i) Pillar[i]->Pos().y -= 75.0f;
 	Grownd_Circle->Pos().y -= 75.0f;
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->Pos().y -= 75.0f;
+	Ice_Broken->Pos().y -= 75.0f;
 
 	Gates[0]->Scale() *= 0.166f;
 	Gates[0]->Pos().y -= 62.5f;
@@ -376,9 +518,27 @@ void Dungeon::Update()
 {
 	//terrain->UpdateWorld();
 
+	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->UpdateWorld();
+	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->UpdateWorld();
+	for (int i = 0; i < Tiles3.size(); ++i) Tiles3[i]->UpdateWorld();
+
+	//Roof->UpdateWorld();
+
 	for (int i = 0; i < Gates.size(); ++i) Gates[i]->UpdateWorld();
 	if (open) DoorMove();
 	if (open_I) DoorMove_I();
+	if (isClear) 
+	{
+		CrashIceWall();
+	}
+	if (!isClear)
+	{
+		IceWall->UpdateWorld();
+		IceWallL->UpdateWorld();
+		IceWallR->UpdateWorld();
+		IceWallC->UpdateWorld();
+		boxColliders_B->UpdateWorld();
+	}
 
 	for (int i = 0; i < Walls_L.size(); ++i) 
 	{
@@ -397,8 +557,11 @@ void Dungeon::Update()
 		Walls_B[i]->UpdateWorld();
 		boxColliders_WB[i]->UpdateWorld();
 	}
+	Walls_BL->UpdateWorld();
+	Walls_BR->UpdateWorld();
 	Portal->UpdateWorld();
 	Wall_deco->UpdateWorld();
+
 	for (int i = 0; i < Pillar.size(); ++i) 
 	{
 		Pillar[i]->UpdateWorld();
@@ -432,72 +595,98 @@ void Dungeon::Update()
 	boxCollider_PR->UpdateWorld();
 	boxCollider_PL->UpdateWorld();
 
+	boxColliders_WBL->UpdateWorld();
+	boxColliders_WBR->UpdateWorld();
 	boxCollider_WLF->UpdateWorld();
 	boxCollider_WRF->UpdateWorld();
 	boxCollider_WGL->UpdateWorld();
 	boxCollider_WGR->UpdateWorld();
 
-	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->UpdateWorld();
-	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->UpdateWorld();
+	boxColliders_WD->UpdateWorld();
+	for (int i = 0; i < boxColliders_potal.size(); ++i) boxColliders_potal[i]->UpdateWorld();
 }
 
 void Dungeon::Render()
 {
 	//terrain->Render();
 
+	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->Render();
+	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->Render();
+	for (int i = 0; i < Tiles3.size(); ++i) Tiles3[i]->Render();
+
+	//skybox->Render();
+	//Roof->Render();
+
 	for (int i = 0; i < Gates.size(); ++i) Gates[i]->Render();
 
 	for (int i = 0; i < Walls_L.size(); ++i) 
 	{
 		Walls_L[i]->Render();
-		boxColliders_WL[i]->Render();
+		//boxColliders_WL[i]->Render();
 	}
 	Walls_LF->Render();
 	for (int i = 0; i < Walls_R.size(); ++i) 
 	{
 		Walls_R[i]->Render();
-		boxColliders_WR[i]->Render();
+		//boxColliders_WR[i]->Render();
 	} 
 	Walls_RF->Render();
 	for (int i = 0; i < Walls_B.size(); ++i) 
 	{
 		Walls_B[i]->Render();
-		boxColliders_WB[i]->Render();
+		//boxColliders_WB[i]->Render();
 	}
+	Walls_BL->Render();
+	Walls_BR->Render();
 	Portal->Render();
 	Wall_deco->Render();
+	if (!isClear)
+	{
+		IceWall->Render();
+		IceWallL->Render();
+		IceWallR->Render();
+		IceWallC->Render();
+	}
 	for (int i = 0; i < Pillar.size(); ++i)
 	{
 		Pillar[i]->Render();
-		boxColliders_P[i]->Render();
+		//boxColliders_P[i]->Render();
 	}
 	Grownd_Circle->Render();
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->Render();
 
-	boxCollider_G->Render();
-	boxCollider_GL->Render();
-	boxCollider_GR->Render();
-	boxCollider_GD->Render();
-	boxCollider_GP->Render();
-	boxCollider_GPI->Render();
-	boxCollider_S->Render();
-	boxCollider_SI->Render();
-	boxCollider_SIC->Render();
-	boxCollider_SIL->Render();
-	boxCollider_SIR->Render();
-	
-	boxCollider_DL->Render();
-	boxCollider_DR->Render();
-	boxCollider_PR->Render();
-	boxCollider_PL->Render();
-	boxCollider_WGL->Render();
-	boxCollider_WGR->Render();
-
-	boxCollider_WLF->Render();
-	boxCollider_WRF->Render();
-
-	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->Render();
-	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->Render();
+	//boxCollider_G->Render();
+	//boxCollider_GL->Render();
+	//boxCollider_GR->Render();
+	//boxCollider_GD->Render();
+	//boxCollider_GP->Render();
+	//boxCollider_GPI->Render();
+	//boxCollider_S->Render();
+	//boxCollider_SI->Render();
+	//boxCollider_SIC->Render();
+	//boxCollider_SIL->Render();
+	//boxCollider_SIR->Render();
+	//
+	//boxCollider_DL->Render();
+	//boxCollider_DR->Render();
+	//boxCollider_PR->Render();
+	//boxCollider_PL->Render();
+	//boxCollider_WGL->Render();
+	//boxCollider_WGR->Render();
+	//
+	//boxColliders_WBL->Render();
+	//boxColliders_WBR->Render();
+	//boxCollider_WLF->Render();
+	//boxCollider_WRF->Render();
+	//
+	//boxColliders_WD->Render();
+	//for (int i = 0; i < boxColliders_potal.size(); ++i) boxColliders_potal[i]->Render();
+	//boxColliders_B->Render();
+	if (isClear)
+	{
+		for (int i = 0; i < Ice_debris.size(); ++i) Ice_debris[i]->Render();
+		Ice_Broken->Render();
+	}
 }
 
 bool Dungeon::IsCollision(Collider* c)
@@ -535,11 +724,19 @@ bool Dungeon::IsCollision(Collider* c)
 	{
 		if (boxColliders_WB[i]->PushCollision(c)) return true;
 	}
+	if (boxColliders_WBL->PushCollision(c)) return true;
+	if (boxColliders_WBR->PushCollision(c)) return true;
 	for (int i = 0; i < Pillar.size(); ++i) 
 	{
 		if (boxColliders_P[i]->PushCollision(c)) return true;
 	}
-	
+	if (boxColliders_WD->PushCollision(c)) return true;
+	for (int i = 0; i < boxColliders_potal.size(); ++i) 
+	{
+		if (boxColliders_potal[i]->PushCollision(c)) return true;
+	}
+	if (boxColliders_B->PushCollision(c)) return true;
+
 	return false;
 }
 
@@ -583,4 +780,25 @@ void Dungeon::DoorMove_I()
 		}
 	}
 	return;
+}
+
+void Dungeon::CrashIceWall()
+{
+	IceWall->SetActive(false);
+	IceWallL->SetActive(false);
+	IceWallR->SetActive(false);
+	IceWallC->SetActive(false);
+	boxColliders_B->SetActive(false);
+
+	for (int i = 0; i < Ice_debris.size(); ++i) Ice_debris[i]->UpdateWorld();
+	Ice_Broken->UpdateWorld();
+
+	for (int i = 0; i < Ice_debris.size(); ++i) 
+	{
+		if (Ice_debris[i]->Pos().y > 390.0) 
+		{
+			Ice_debris[i]->Pos().y -= 150 * DELTA;
+		}
+	}
+	
 }

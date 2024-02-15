@@ -3,7 +3,7 @@
 
 ModelExportScene::ModelExportScene()
 {
-    //string name = "Grownd_Circle2";
+    //string name = "IceBroken";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
 	//
