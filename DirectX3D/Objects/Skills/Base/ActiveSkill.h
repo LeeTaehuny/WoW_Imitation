@@ -28,6 +28,9 @@ public:
 
 	UseType GetUsing() { return usingType; }
 
+	bool GetIsCooldown() { return isCooldown; }
+	int GetrequiredMp() { return requiredMp; }
+
 private:
 	void TargetUpdate();
 	void NonTargetUpdate();
@@ -70,4 +73,3 @@ protected:
 	// 사용 마나량
 	int requiredMp;
 };
-

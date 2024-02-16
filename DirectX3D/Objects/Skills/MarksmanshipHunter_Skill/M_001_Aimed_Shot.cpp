@@ -9,7 +9,7 @@ M_001_Aimed_Shot::M_001_Aimed_Shot() : ActiveSkill(SkillType::Target)
 	// 기본 생성 요소
 	{
 		// 스킬 속도
-		speed = 5.0f;
+		speed = 20.0f;
 
 		// 스킬 데미지
 		skillDamage = 0.0f;
@@ -17,7 +17,7 @@ M_001_Aimed_Shot::M_001_Aimed_Shot() : ActiveSkill(SkillType::Target)
 		// 쿨타임 설정 기본 쿨타임은 : (6초)
 		// 충천하여 스킬을 사용하는 방식 (2회 충전)
 		// 그렇기 때문에 쿨타입을 반으로 줄임
-		MAX_delay = 2.0f;
+		MAX_delay = 6.0f;
 		coolTime = MAX_delay;
 
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
@@ -25,6 +25,7 @@ M_001_Aimed_Shot::M_001_Aimed_Shot() : ActiveSkill(SkillType::Target)
 		isCooldown = false;
 
 		// 마나 소모 : 3.5%
+		requiredMp = 35.0f;
 		usingType = monster_Data;
 	}
 	icon = new Quad(L"Textures/Character_Skill_Icon/MarksmanshipHunter/001.jpg");
@@ -57,14 +58,25 @@ void M_001_Aimed_Shot::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
+		// 해당 몬스터가 죽어서 액티브가 꺼졌을 경우 
+		if (!targetMonster->GetCollider()->Active())
+		{
+			myCollider->SetActive(false);
+			arrow->SetActive(false);
+			arrow->SetIsRun(false);
+			effectTexture->SetParent(nullptr);
+			isRun = false;
+			return;
+		}
+
 		direction = (targetMonster->GetCollider()->GlobalPos() - myCollider->GlobalPos()).GetNormalized();
 		myCollider->Pos() += direction * speed * DELTA;
 		myCollider->UpdateWorld();
 
+		effectTexture->Rot() = CAM->Rot() * 1.6f;
 		arrow->Rot().y = atan2(direction.x, direction.z) - 1.6f;;
 		arrow->SetActive(true);
 		arrow->UpdateWorld();
-		effectTexture->Rot() = CAM->Rot();
 		effectTexture->UpdateWorld();
 
 		if (myCollider->IsCollision(targetMonster->GetCollider()))
@@ -99,7 +111,7 @@ void M_001_Aimed_Shot::Render()
 void M_001_Aimed_Shot::UseSkill(MonsterBase* monsterbase)
 {
 	if (isCooldown || monsterbase == nullptr ||
-		owner->GetStat().mp < 35) return;
+		owner->GetStat().mp < requiredMp) return;
 
 	if (MarksmanshipHunter_in* c = dynamic_cast<MarksmanshipHunter_in*>(owner))
 	{
@@ -107,17 +119,18 @@ void M_001_Aimed_Shot::UseSkill(MonsterBase* monsterbase)
 	}
 
 	skillDamage = owner->GetStat().damage * 2.8f;
-	owner->GetStat().mp -= 35;
-
-	arrow = ARROW->GetActiveArrow();
-	arrow->SetParent(myCollider);
-	effectTexture->SetParent(arrow);
+	owner->GetStat().mp -= requiredMp;
 
 	myCollider->Pos() = owner->GlobalPos();
 	myCollider->Pos().y += owner->GlobalScale().y;
 	myCollider->SetActive(true);
 	myCollider->UpdateWorld();
+
+	arrow = ARROW->GetActiveArrow();
+	arrow->SetParent(myCollider);
 	arrow->UpdateWorld();
+
+	effectTexture->SetParent(arrow);
 
 	targetMonster = monsterbase;
 	animStart = 0;

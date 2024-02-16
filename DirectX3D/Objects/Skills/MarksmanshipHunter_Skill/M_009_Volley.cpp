@@ -16,7 +16,7 @@ M_009_Volley::M_009_Volley() : ActiveSkill(SkillType::Target)
 		skillDamage = 0.0f;
 
 		// 쿨타임 설정 기본 쿨타임은 : (45초)
-		MAX_delay = 4.0f;
+		MAX_delay = 45.0f;
 		coolTime = MAX_delay;
 
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
@@ -24,6 +24,7 @@ M_009_Volley::M_009_Volley() : ActiveSkill(SkillType::Target)
 		isCooldown = false;
 
 		// 마나 소모 : 8.0%
+		requiredMp = 80;
 		usingType = monster_Data;
 	}
 	icon = new Quad(L"Textures/Character_Skill_Icon/MarksmanshipHunter/009.jpg");
@@ -35,7 +36,7 @@ M_009_Volley::M_009_Volley() : ActiveSkill(SkillType::Target)
 	blendState[1]->Alpha(true);
 	depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ZERO);
 
-	targetArrows.resize(25);
+	Arrows.resize(25);
 	startTiming.resize(25);
 	directions.resize(25);
 	velocity.resize(25);
@@ -45,7 +46,6 @@ M_009_Volley::M_009_Volley() : ActiveSkill(SkillType::Target)
 		targetCollider.push_back(new SphereCollider(0.05f));
 		monsterTecture.push_back(new Quad(L"Textures/Effect/Alpha_Red_snow.png"));
 		monsterTecture[i]->Scale() *= 0.05f;
-		monsterTecture[i]->SetParent(targetCollider[i]);
 		monsterTecture[i]->UpdateWorld();
 	}
 }
@@ -114,13 +114,18 @@ void M_009_Volley::Update()
 			runTime = 0;
 			isRun = false;
 
-			FOR(targetArrows.size())
+			FOR(Arrows.size())
 			{
 				targetCollider[i]->SetActive(false);
 				monsterTecture[i]->SetActive(false);
 				monsterTecture[i]->SetParent(nullptr);
-				targetArrows[i]->SetActive(false);
-				targetArrows[i]->SetIsRun(false);
+				if (Arrows[i] != nullptr)
+				{
+					Arrows[i]->Rot() = Vector3();
+					Arrows[i]->Pos() = Vector3();
+					Arrows[i]->SetActive(false);
+					Arrows[i]->SetIsRun(false);
+				}
 			}
 		}
 	}
@@ -152,10 +157,11 @@ void M_009_Volley::Render()
 void M_009_Volley::UseSkill(MonsterBase* monsterbase)
 {
 	if (isCooldown || monsterbase == nullptr ||
-		owner->GetStat().mp < 80) return;
+		owner->GetStat().mp < requiredMp ||
+		!monsterbase->GetCollider()->Active()) return;
 
 	targetMonster = monsterbase;
-	ThisNumber = -1;
+	ThisNumber = 0;
 
 	if (MarksmanshipHunter_in* c = dynamic_cast<MarksmanshipHunter_in*>(owner))
 	{
@@ -163,7 +169,7 @@ void M_009_Volley::UseSkill(MonsterBase* monsterbase)
 	}
 
 	skillDamage = owner->GetStat().damage * 0.24f;
-	owner->GetStat().mp -= 80;
+	owner->GetStat().mp -= requiredMp;
 	animStart = 0;
 	isRun = true;
 	isCooldown = true;
@@ -173,17 +179,13 @@ void M_009_Volley::UseSkill(MonsterBase* monsterbase)
 	hitCollider->Pos().y -= targetMonster->GetCollider()->Scale().y * 4;
 	hitCollider->UpdateWorld();
 
-	FOR(targetArrows.size())
+	FOR(Arrows.size())
 	{
-		if (targetArrows[i] == nullptr)
-			targetArrows[i] = ARROW->GetActiveArrow();
-		ThisNumber++;
-	}
-
-	FOR(ThisNumber)
-	{
-		targetArrows[i]->SetParent(targetCollider[i]);
+		Arrows[i] = ARROW->GetActiveArrow();
+		Arrows[i]->SetParent(targetCollider[i]);
+		monsterTecture[i]->SetParent(Arrows[i]);
 		startTiming[i] = 0;
+		ThisNumber++;
 	}
 }
 
@@ -197,28 +199,34 @@ void M_009_Volley::Using(int imto)
 		targetCollider[imto]->Pos().y += hitCollider->GlobalScale().y * 20;
 		targetCollider[imto]->UpdateWorld();
 
-		targetArrows[imto]->SetActive(true);
-		targetArrows[imto]->Pos().x = Random(-hitCollider->GlobalScale().x, hitCollider->GlobalScale().x);
-		targetArrows[imto]->Pos().z = Random(-hitCollider->GlobalScale().z,	hitCollider->GlobalScale().z);
-		targetArrows[imto]->UpdateWorld();
+		Arrows[imto]->SetActive(true);
+		Arrows[imto]->Pos().x = Random(-hitCollider->GlobalScale().x, hitCollider->GlobalScale().x);
+		Arrows[imto]->Pos().z = Random(-hitCollider->GlobalScale().z, hitCollider->GlobalScale().z);
+		Arrows[imto]->UpdateWorld();
 
 		monsterTecture[imto]->SetActive(true);
-		monsterTecture[imto]->SetParent(targetArrows[imto]);
 		monsterTecture[imto]->UpdateWorld();
 
 		// 무조건 밑으로 떨어트림
 		directions[imto] = Vector3(0, -1, 0);
 		velocity[imto] = Random(10, 20);
-		targetArrows[imto]->Rot().z = -1.8;
+		Arrows[imto]->Rot().z = -1.6f;
 	}
 
-	targetArrows[imto]->UpdateWorld();
-	targetCollider[imto]->Pos() += directions[imto] * velocity[imto] * DELTA;
-	targetCollider[imto]->UpdateWorld();
+
+
+	//Vector3 aro_tec = CAM->Rot();
+	//monsterTecture[imto]->Rot().x = CAM->Rot().x;
+	//monsterTecture[imto]->Rot().z = atan2(aro_tec.y, aro_tec.x) + 1.6f;
+	//monsterTecture[imto]->Rot().y = CAM->Rot().y;
 	monsterTecture[imto]->Rot() = CAM->Rot();
 	monsterTecture[imto]->UpdateWorld();
 
-	
+	Arrows[imto]->UpdateWorld();
+
+	targetCollider[imto]->Pos() += directions[imto] * velocity[imto] * DELTA;
+	targetCollider[imto]->UpdateWorld();
+
 	if (targetCollider[imto]->IsCollision(hitCollider))
 	{
 		startTiming[imto] = 0;

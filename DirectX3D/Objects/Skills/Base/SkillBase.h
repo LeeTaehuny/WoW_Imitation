@@ -23,8 +23,6 @@ public:
 
 	virtual void Init() {};
 
-	//void Cooldown();
-
 // Getter & Setter
 public:
 	vector<string> GetPrevSkills() { return prevSkills; }

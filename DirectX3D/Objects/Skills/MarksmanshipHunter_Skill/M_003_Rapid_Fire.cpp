@@ -14,7 +14,7 @@ M_003_Rapid_Fire::M_003_Rapid_Fire() : ActiveSkill(SkillType::Target)
 		skillDamage = 0.0f;
 
 		// 쿨타임 설정 기본 쿨타임은 : (20초)
-		MAX_delay = 2.0f;
+		MAX_delay = 20.0f;
 		coolTime = MAX_delay;
 
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
@@ -22,6 +22,7 @@ M_003_Rapid_Fire::M_003_Rapid_Fire() : ActiveSkill(SkillType::Target)
 		isCooldown = false;
 
 		// 마나 소모 : 10.0%
+		requiredMp = 100;
 		usingType = monster_Data;
 	}
 	icon = new Quad(L"Textures/Character_Skill_Icon/MarksmanshipHunter/003.jpg");
@@ -150,7 +151,7 @@ void M_003_Rapid_Fire::Render()
 void M_003_Rapid_Fire::UseSkill(MonsterBase* monsterbase)
 {
 	if (isRun || isCooldown || monsterbase == nullptr ||
-		owner->GetStat().mp < 100) return;
+		owner->GetStat().mp < requiredMp) return;
 
 	if (MarksmanshipHunter_in* c = dynamic_cast<MarksmanshipHunter_in*>(owner))
 	{
@@ -163,7 +164,7 @@ void M_003_Rapid_Fire::UseSkill(MonsterBase* monsterbase)
 	isCooldown = true;
 
 	skillDamage = owner->GetStat().damage * 0.4f;
-	owner->GetStat().mp -= 100;
+	owner->GetStat().mp -= requiredMp;
 
 	FOR(7)
 	{
@@ -186,6 +187,17 @@ void M_003_Rapid_Fire::UseSkill(MonsterBase* monsterbase)
 void M_003_Rapid_Fire::tack(int imto)
 {
 	//if (it_me_Mario[imto]->Active())
+	if (!monster->GetCollider()->Active())
+	{
+		isRun = false;
+		it_me_Mario[imto]->SetActive(false);
+		effectTexture[imto]->SetActive(false);
+		seven[imto]->SetActive(false);
+		seven[imto]->SetIsRun(false);
+		skillonoff[imto] = false;
+		return;
+	}
+
 	if (skillonoff[imto])
 	{
 		if (startTiming[imto] == 0)

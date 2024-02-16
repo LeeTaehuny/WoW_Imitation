@@ -10,13 +10,13 @@ M_008_Multi_Shot::M_008_Multi_Shot() : ActiveSkill(SkillType::Target)
 	// 기본 생성 요소
 	{
 		// 스킬 속도
-		speed = 5.0f;
+		speed = 20.0f;
 
 		// 스킬 데미지
 		skillDamage = 0.0f;
 
-		// 쿨타임 설정 기본 쿨타임은 : (4초)
-		MAX_delay = 4.0f;
+		// 쿨타임 설정 기본 쿨타임은 : (60초)
+		MAX_delay = 60.0f;
 		coolTime = MAX_delay;
 
 		// 처음은 스킬 실행중인 상태가 아니도록 설정
@@ -24,6 +24,7 @@ M_008_Multi_Shot::M_008_Multi_Shot() : ActiveSkill(SkillType::Target)
 		isCooldown = false;
 
 		// 마나 소모 : 2.0%
+		requiredMp = 20;
 		usingType = monster_Data;
 	}
 	icon = new Quad(L"Textures/Character_Skill_Icon/MarksmanshipHunter/008.jpg");
@@ -117,7 +118,7 @@ void M_008_Multi_Shot::Render()
 void M_008_Multi_Shot::UseSkill(MonsterBase* monsterbase)
 {
 	if (isCooldown || monsterbase == nullptr ||
-		owner->GetStat().mp < 20) return;
+		owner->GetStat().mp < requiredMp) return;
 
 	if (MarksmanshipHunter_in* c = dynamic_cast<MarksmanshipHunter_in*>(owner))
 	{
@@ -182,7 +183,7 @@ void M_008_Multi_Shot::UseSkill(MonsterBase* monsterbase)
 		targetArrows[i]->SetParent(targetCollider[i]);
 	}
 
-	owner->GetStat().mp -= 20;
+	owner->GetStat().mp -= requiredMp;
 
 	FOR(ThisNumber)
 	{
@@ -194,6 +195,16 @@ void M_008_Multi_Shot::Using(int imto)
 {
 	if (monsters[imto])
 	{
+		if (!monsters[imto]->GetCollider()->Active())
+		{
+			targetCollider[imto]->SetActive(false);
+			monsterTecture[imto]->SetActive(false);
+			targetArrows[imto]->SetActive(false);
+			targetArrows[imto]->SetIsRun(false);
+			monsters[imto] = nullptr;
+			return;
+		}
+
 		if (startTiming[imto] == 0)
 		{
 			startTiming[imto]++;

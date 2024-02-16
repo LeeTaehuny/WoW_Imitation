@@ -45,6 +45,14 @@ void M_000_Basic_Atttack::Update()
 	{
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
+		if (!targetMonster->GetCollider()->Active())
+		{
+			myCollider->SetActive(false);
+			arrow->SetActive(false);
+			arrow->SetIsRun(false);
+			isRun = false;
+			return;
+		}
 
 		direction = (targetMonster->GetCollider()->GlobalPos() - myCollider->GlobalPos()).GetNormalized();
 		myCollider->Pos() += direction * speed * DELTA;

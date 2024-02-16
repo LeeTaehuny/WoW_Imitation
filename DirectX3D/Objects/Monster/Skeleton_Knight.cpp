@@ -91,6 +91,7 @@ void Skeleton_Knight::Hit(float amount, int targetNumber)
 	if (curHP <= 0)
 	{
 		SetState(DEATH);
+		collider->SetActive(false);
 		curHP = 0.0f;
 	}
 	else
@@ -164,7 +165,7 @@ void Skeleton_Knight::EndHit()
 void Skeleton_Knight::EndDeath()
 {
 	transform->SetActive(false);
-	collider->SetActive(false);
+	//collider->SetActive(false);
 }
 
 void Skeleton_Knight::SetState(State state)
@@ -201,6 +202,7 @@ void Skeleton_Knight::Move()
 
 void Skeleton_Knight::targetAttack()
 {
+	if (curState == ATTACK1 || curState == DEATH || curState == HIT) return;
 	if (attackBumwe->Active())
 	{
 		attack_deley -= DELTA;
@@ -223,7 +225,6 @@ void Skeleton_Knight::targetAttack()
 		attack_deley = Max_attack_deley;
 	}
 
-	if (curState == ATTACK1 || curState == DEATH || curState == HIT) return;
 	if (attackRange->IsCollision(targetTransform->GetCollider()) &&
 		oneAttack == 0)
 	{

@@ -79,6 +79,7 @@ public:
 	// 신성 사제 : 6개
 	void SetAttackSignal(int value) { attackSignal[value] = !attackSignal[value]; }
 	void SetSelectTarget(class MonsterBase* monster) { monsterSelectData = monster; }
+	void SetAttackOrder() { this->atkTarget = !this->atkTarget; }
 
 	// Member Variable
 protected:
@@ -143,4 +144,10 @@ protected: // NPC ĳ���͸� �����ϱ� ���� ����
 	float MAX_randomHangdong = 5;
 	float randomHangdong = -1; // -1�� �ִ� ������ ù ������Ʈ ������ �������� �۵���Ű�� ����
 	Vector3 randomVelocity;
+
+	// 공격할 타겟이 있는지를 구분하기 위한 변수
+	bool atkTarget = false;
+	// 행동 틱 1초 단위
+	float Max_ActionTickTime = 1.0f;
+	float ActionTickTime = Max_ActionTickTime;
 };

@@ -19,6 +19,8 @@ public:
     // 허수아비 스폰
     void SpawnScarecrow(Vector3 pos);
 
+    MonsterBase* hitCollision(IN Collider* collider);
+
 // Getter & Setter
 public:
     // 지금 필드에 있는 플레이어 캐릭터들의 모든 콜라이더 정보를 저장함

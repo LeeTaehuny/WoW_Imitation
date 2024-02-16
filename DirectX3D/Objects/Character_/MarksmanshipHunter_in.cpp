@@ -21,27 +21,37 @@ MarksmanshipHunter_in::MarksmanshipHunter_in(CreatureType type, Transform* trans
 	SetEvent(HIT, bind(&MarksmanshipHunter_in::EndHit, this), 0.9f);
 	SetEvent(DIE, bind(&MarksmanshipHunter_in::EndDie, this), 1);
 
-	// 자신의 타입에 따라 
+	skillList.push_back(new M_000_Basic_Atttack());
+	skillList[skillList.size() - 1]->SetOwner(this);
 	switch (creatureType)
 	{
 	case CreatureType::Player:
-		range = new SphereCollider(10);
+		range = new SphereCollider(20);
 		break;
 
 	case CreatureType::NonPlayer:
-		range = new SphereCollider(20);
+		range = new SphereCollider(15);
+
+		skillList.push_back(new M_001_Aimed_Shot());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new M_003_Rapid_Fire());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new M_005_Chimaera_Shot());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new M_008_Multi_Shot());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new M_009_Volley());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new M_010_Wailing_Arrow());
+		skillList[skillList.size() - 1]->SetOwner(this);
 		break;
 	}
-	range->SetParent(this);
-
-	FOR(totalEvents.size())
-	{
-		eventIters[i] = totalEvents[i].begin();
-	}
-	this->SetActive(true);
-
-	mainHandBoneIndex = 23;
-	FOR(7)
+	FOR(skillList.size())
 	{
 		// 공격 판별용 bool 벡터 변수
 		// 0 = 일반공격
@@ -53,8 +63,18 @@ MarksmanshipHunter_in::MarksmanshipHunter_in(CreatureType type, Transform* trans
 		// 6 = 울부짖는 화살
 		attackSignal.push_back(false);
 	}
-	skillList.push_back(new M_000_Basic_Atttack());
-	skillList[skillList.size() - 1]->SetOwner(this);
+
+	range->SetParent(this);
+
+	FOR(totalEvents.size())
+	{
+		eventIters[i] = totalEvents[i].begin();
+	}
+	this->SetActive(true);
+
+	mainHandBoneIndex = 23;
+	weapon = new Weapon("bow_1", WeaponType::Staff);
+	weapon->SetParent(mainHand);
 }
 
 MarksmanshipHunter_in::~MarksmanshipHunter_in()
@@ -121,6 +141,7 @@ void MarksmanshipHunter_in::PlayerUpdate()
 	Control();
 	//Casting();
 
+
 	// 충돌체 업데이트
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
@@ -152,32 +173,41 @@ void MarksmanshipHunter_in::OnHit(float damage)
 
 void MarksmanshipHunter_in::AI_animation_Moving()
 {
-	// 내가 플레이어의 주위에 있다면
-	if (myPlayer->GetRange()->IsCollision(myCollider))
+	// 지금 공격할 타겟이 없다면
+	if (!atkTarget)
 	{
-		randomHangdong -= DELTA;
-		if (randomHangdong <= 0)
+		// 내가 플레이어의 주위에 있다면
+		if (myPlayer->GetRange()->IsCollision(myCollider))
 		{
-			randomHangdong = MAX_randomHangdong;
-			randomVelocity = Vector3(Random(-1, 2), 0, Random(-1, 2));
+			randomHangdong -= DELTA;
+			if (randomHangdong <= 0)
+			{
+				randomHangdong = MAX_randomHangdong;
+				randomVelocity = Vector3(Random(-1, 2), 0, Random(-1, 2));
+			}
+
+			this->Pos() += randomVelocity * (moveSpeed / 10) * DELTA;
+			this->Rot().y = atan2(randomVelocity.x, randomVelocity.z) + XM_PI;
+
+			SetState(WALK_F);
 		}
+		// 플레이어의 주변이 아니라면
+		else
+		{
+			Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
+			randomVelocity = velo;
+			randomHangdong = 2.0f;
 
-		this->Pos() += randomVelocity * (moveSpeed / 10) * DELTA;
-		this->Rot().y = atan2(randomVelocity.x, randomVelocity.z) + XM_PI;
+			this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
 
-		SetState(WALK_F);
+			this->Pos() += velo * moveSpeed * DELTA;
+			SetState(WALK_F);
+		}
 	}
-	// 플레이어의 주변이 아니라면
+	// 공격할 타겟이 있다면
 	else
 	{
-		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
-		randomVelocity = velo;
-		randomHangdong = 2.0f;
-
-		this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
-
-		this->Pos() += velo * moveSpeed * DELTA;
-		SetState(WALK_F);
+		ai_attack();
 	}
 }
 
@@ -315,13 +345,148 @@ void MarksmanshipHunter_in::Attack()
 {
 	// 점프, 사망, 피격, 공격 상태인 경우 리턴
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
+	if (!weapon) return;
 
+	// 일반공격
 	if (attackSignal[0])
 	{
 		attackSignal[0] = false;
-
-		// TODO : 원거리 공격 만들기
 		skillList[0]->UseSkill(monsterSelectData);
+	}
+}
+
+void MarksmanshipHunter_in::ai_attack()
+{
+	// 점프, 사망, 피격, 공격 상태인 경우 리턴
+	if (curState == DIE || curState == HIT || curState == ATTACK1) return;
+
+	ActionTickTime -= DELTA;
+	if (ActionTickTime <= 0)
+	{
+		ActionTickTime = Max_ActionTickTime;
+		if (monsterSelectData == nullptr)
+		{
+			monsterSelectData = MONSTER->hitCollision(range);
+
+			if (!monsterSelectData)
+				return;
+		}
+		else if (!monsterSelectData->GetTransform()->Active())
+		{
+			monsterSelectData = nullptr;
+			return;
+		}
+
+		// 공격할 대상을 바라보게 하는 코드
+		Vector3 poldirect = monsterSelectData->GetTransform()->GlobalPos() - this->GlobalPos();
+		this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
+
+		if (!monsterSelectData->GetCollider()->Active()) return;
+		int imsiSkillStart = Random(1, 7);
+		switch (imsiSkillStart)
+		{
+		case 1:
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[1]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill(monsterSelectData);
+					return;
+				}
+			}
+			break;
+
+		case 2:
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[2]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill(monsterSelectData);
+					return;
+				}
+			}
+			break;
+
+		case 3:
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[3]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill(monsterSelectData);
+					return;
+				}
+			}
+			break;
+
+		case 4:
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[4]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill(monsterSelectData);
+					return;
+				}
+			}
+			break;
+
+		case 5:
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[5]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill(monsterSelectData);
+					return;
+				}
+			}
+			break;
+
+		case 6:
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[6]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill(monsterSelectData);
+					return;
+				}
+			}
+			break;
+
+		default:
+			break;
+		}
+
+		skillList[0]->UseSkill(monsterSelectData);
+	}
+
+	if (!monsterSelectData)
+	{
+		// 내가 플레이어의 주위에 있다면
+		if (myPlayer->GetRange()->IsCollision(myCollider))
+		{
+			randomHangdong -= DELTA;
+			if (randomHangdong <= 0)
+			{
+				randomHangdong = MAX_randomHangdong;
+				randomVelocity = Vector3(Random(-1, 2), 0, Random(-1, 2));
+			}
+
+			this->Pos() += randomVelocity * (moveSpeed / 10) * DELTA;
+			this->Rot().y = atan2(randomVelocity.x, randomVelocity.z) + XM_PI;
+
+			SetState(WALK_F);
+		}
+		// 플레이어의 주변이 아니라면
+		else
+		{
+			Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
+			randomVelocity = velo;
+			randomHangdong = 2.0f;
+
+			this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
+
+			this->Pos() += velo * moveSpeed * DELTA;
+			SetState(WALK_F);
+		}
 	}
 }
 
@@ -343,6 +508,10 @@ void MarksmanshipHunter_in::EndHit()
 	if (stat.hp <= 0)
 	{
 		SetState(DIE);
+	}
+	else
+	{
+		SetState(IDLE1);
 	}
 }
 

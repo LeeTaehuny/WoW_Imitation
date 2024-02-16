@@ -46,6 +46,8 @@ private:
 	void Attack();
 	//void Casting();
 
+	void ai_attack();
+
 
 	// 이벤트 함수
 private:

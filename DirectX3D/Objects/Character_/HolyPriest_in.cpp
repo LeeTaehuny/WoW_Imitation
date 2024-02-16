@@ -24,6 +24,19 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 	SetEvent(HIT, bind(&HolyPriest_in::EndHit, this), 0.9f);
 	SetEvent(DIE, bind(&HolyPriest_in::EndDie, this), 1);
 
+	
+
+	FOR(totalEvents.size())
+	{
+		eventIters[i] = totalEvents[i].begin();
+	}
+	this->SetActive(true);
+
+	mainHandBoneIndex = 37;
+	
+
+	skillList.push_back(new H_000_Basic_Atttack());
+	skillList[skillList.size() - 1]->SetOwner(this);
 	// 자신의 타입에 따라 
 	switch (creatureType)
 	{
@@ -37,14 +50,7 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 	}
 	range->SetParent(this);
 
-	FOR(totalEvents.size())
-	{
-		eventIters[i] = totalEvents[i].begin();
-	}
-	this->SetActive(true);
-
-	mainHandBoneIndex = 37;
-	FOR(7)
+	FOR(skillList.size())
 	{
 		// 공격 판별용 bool 벡터 변수
 		// 0 = 일반공격
@@ -56,8 +62,8 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 		// 6 = 천상의 찬가
 		attackSignal.push_back(false);
 	}
-	skillList.push_back(new H_000_Basic_Atttack());
-	skillList[skillList.size() - 1]->SetOwner(this);
+	weapon = new Weapon("staff_2", WeaponType::Staff);
+	weapon->SetParent(mainHand);
 }
 
 HolyPriest_in::~HolyPriest_in()

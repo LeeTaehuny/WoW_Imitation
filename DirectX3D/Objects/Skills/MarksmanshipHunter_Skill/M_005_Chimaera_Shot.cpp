@@ -15,7 +15,7 @@ M_005_Chimaera_Shot::M_005_Chimaera_Shot() : ActiveSkill(SkillType::Target)
 	// 기본 생성 요소
 	{
 		// 스킬 속도
-		speed = 5.0f;
+		speed = 20.0f;
 
 		// 스킬 데미지
 		skillDamage = 0.0f;
@@ -29,6 +29,7 @@ M_005_Chimaera_Shot::M_005_Chimaera_Shot() : ActiveSkill(SkillType::Target)
 		isCooldown = false;
 
 		// 마나 소모 : 4.0%
+		requiredMp = 40;
 		usingType = monster_Data;
 	}
 	icon = new Quad(L"Textures/Character_Skill_Icon/MarksmanshipHunter/005.jpg");
@@ -70,43 +71,61 @@ void M_005_Chimaera_Shot::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
-		if (col1->Active())
+		if (mon1 != nullptr)
 		{
-			tol1->SetActive(true);
-			direction = (mon1->GetCollider()->GlobalPos() - col1->GlobalPos()).GetNormalized();
-			col1->Pos() += direction * speed * DELTA;
-			tol1->Rot().y = atan2(direction.x, direction.z) - 1.6f;
-			tol1->UpdateWorld();
-			col1->UpdateWorld();
-			effectTexture1->Rot() = CAM->Rot();
-			effectTexture1->UpdateWorld();
-			if (col1->IsCollision(mon1->GetCollider()))
+			if (!mon1->GetCollider()->Active())
 			{
-				mon1->Hit(skillDamage);
 				col1->SetActive(false);
 				tol1->SetActive(false);
 				tol1->SetIsRun(false);
 			}
+			else if (col1->Active())
+			{
+				tol1->SetActive(true);
+				direction = (mon1->GetCollider()->GlobalPos() - col1->GlobalPos()).GetNormalized();
+				col1->Pos() += direction * speed * DELTA;
+				col1->UpdateWorld();
+				tol1->Rot().y = atan2(direction.x, direction.z) - 1.6f;
+				tol1->UpdateWorld();
+				effectTexture1->Rot() = CAM->Rot();
+				effectTexture1->UpdateWorld();
+				if (col1->IsCollision(mon1->GetCollider()))
+				{
+					mon1->Hit(skillDamage);
+					col1->SetActive(false);
+					tol1->SetActive(false);
+					tol1->SetIsRun(false);
+				}
+			}
 		}
 
-		if (col2->Active())
+		if (mon2 != nullptr)
 		{
-			tol2->SetActive(true);
-			direction = (mon2->GetCollider()->GlobalPos() - col2->GlobalPos()).GetNormalized();
-			col2->Pos() += direction * speed * DELTA;
-			tol2->Rot().y = atan2(direction.x, direction.z) - 1.6f;
-			tol2->UpdateWorld();
-			col2->UpdateWorld();
-			effectTexture2->Rot() = CAM->Rot();
-			effectTexture2->UpdateWorld();
-			if (col2->IsCollision(mon2->GetCollider()))
+			if (!mon2->GetCollider()->Active())
 			{
-				mon2->Hit(skillDamage * 0.5f);
 				col2->SetActive(false);
 				tol2->SetActive(false);
 				tol2->SetIsRun(false);
 			}
-		}
+			else if (col2->Active())
+			{
+				tol2->SetActive(true);
+				direction = (mon2->GetCollider()->GlobalPos() - col2->GlobalPos()).GetNormalized();
+				col2->Pos() += direction * speed * DELTA;
+				col2->UpdateWorld();
+				tol2->Rot().y = atan2(direction.x, direction.z) - 1.6f;
+				tol2->UpdateWorld();
+				effectTexture2->Rot() = CAM->Rot();
+				effectTexture2->UpdateWorld();
+				if (col2->IsCollision(mon2->GetCollider()))
+				{
+					mon2->Hit(skillDamage * 0.5f);
+					col2->SetActive(false);
+					tol2->SetActive(false);
+					tol2->SetIsRun(false);
+				}
+			}
+		}		
 
 		if (!col1->Active() && !col2->Active())
 		{
@@ -140,7 +159,7 @@ void M_005_Chimaera_Shot::Render()
 void M_005_Chimaera_Shot::UseSkill(MonsterBase* monsterbase)
 {
 	if (isCooldown || monsterbase == nullptr ||
-		owner->GetStat().mp < 40) return;
+		owner->GetStat().mp < requiredMp) return;
 
 	if (MarksmanshipHunter_in* c = dynamic_cast<MarksmanshipHunter_in*>(owner))
 	{
@@ -148,7 +167,7 @@ void M_005_Chimaera_Shot::UseSkill(MonsterBase* monsterbase)
 	}
 
 	skillDamage = owner->GetStat().damage * 1.6f;
-	owner->GetStat().mp -= 40;
+	owner->GetStat().mp -= requiredMp;
 
 	mon1 = monsterbase;
 	animStart = 0;
@@ -214,14 +233,14 @@ void M_005_Chimaera_Shot::UseSkill(MonsterBase* monsterbase)
 		col2->SetActive(false);
 	}
 
-	tol1 = ARROW->GetActiveArrow();
-	tol1->SetParent(col1);
-
 	if (mon2 != nullptr)
 	{
 		tol2 = ARROW->GetActiveArrow();
 		tol2->SetParent(col2);
 		tol2->UpdateWorld();
 	}
+
+	tol1 = ARROW->GetActiveArrow();
+	tol1->SetParent(col1);
 	tol1->UpdateWorld();
 }

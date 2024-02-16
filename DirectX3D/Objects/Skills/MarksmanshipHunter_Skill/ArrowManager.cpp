@@ -46,7 +46,7 @@ Arrow* ArrowManager::GetActiveArrow()
 	// 사용 가능한 화살이 없다면 새롭게 만듬
 	Arrow* aro = new Arrow(arrow_models->Add());
 	aro->SetActive(false);
-	aro->SetIsRun(false);
+	aro->SetIsRun(true);
 	arrows.push_back(aro);
 	return arrows[arrows.size() - 1];
 }

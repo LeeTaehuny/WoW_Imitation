@@ -28,7 +28,6 @@ MonsterManager::MonsterManager()
 	scarecrow_body->ReadClip("Idle");
 	scarecrow_body->ReadClip("Hit");
 }
-
 MonsterManager::~MonsterManager()
 {
 	delete skeleton_body;
@@ -53,13 +52,18 @@ void MonsterManager::Update()
 	scarecrow_body->Update();
 
 	for (MonsterBase* skel : skeleton)
+	{
 		UPDATE(skel);
+	}
 	for (MonsterBase* skel : skeleton_Knight)
+	{
 		UPDATE(skel);
+	}
 	for (MonsterBase* skel : scarecrow)
+	{
 		UPDATE(skel);
+	}
 }
-
 void MonsterManager::Render()
 {
 	skeleton_body->Render();
@@ -150,4 +154,54 @@ void MonsterManager::SpawnScarecrow(Vector3 pos)
 	//monsterCollider.push_back(skel->collider);
 	scarecrow.push_back(skel);
 	scarecrow[scarecrow.size() - 1]->Spawn(pos);
+}
+
+MonsterBase* MonsterManager::hitCollision(IN Collider* collider)
+{
+	float imer = FLT_MAX;
+	MonsterBase* imsi = nullptr;
+	for (int i = 0; i < skeleton.size(); i++)
+	{
+		if (collider->IsCollision(skeleton[i]->GetCollider()))
+		{
+			Vector3 mol = skeleton[i]->GetTransform()->GlobalPos() - collider->GlobalPos();
+			
+			float imerjer = mol.Length();
+			if (imer >= imerjer)
+			{
+				imer = imerjer;
+				imsi = skeleton[i];
+			}
+		}
+	}
+	for (int i = 0; i < skeleton_Knight.size(); i++)
+	{
+		if (collider->IsCollision(skeleton_Knight[i]->GetCollider()))
+		{
+			Vector3 mol = skeleton_Knight[i]->GetTransform()->GlobalPos() - collider->GlobalPos();
+
+			float imerjer = mol.Length();
+			if (imer >= imerjer)
+			{
+				imer = imerjer;
+				imsi = skeleton_Knight[i];
+			}
+		}
+	}
+	for (int i = 0; i < scarecrow.size(); i++)
+	{
+		if (collider->IsCollision(scarecrow[i]->GetCollider()))
+		{
+			Vector3 mol = scarecrow[i]->GetTransform()->GlobalPos() - collider->GlobalPos();
+
+			float imerjer = mol.Length();
+			if (imer >= imerjer)
+			{
+				imer = imerjer;
+				imsi = scarecrow[i];
+			}
+		}
+	}
+
+	return imsi;
 }

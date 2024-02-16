@@ -41,6 +41,8 @@ ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAni
 	this->SetActive(true);
 
 	mainHandBoneIndex = 37;
+	weapon = new Weapon("sword_1", WeaponType::Sword);
+	weapon->SetParent(mainHand);
 }
 
 ArmsWarrior_in::~ArmsWarrior_in()

@@ -35,7 +35,15 @@ void CH_Manager::Update()
 	UPDATE(holypriest);
 
 	for (CH_Base_ver2* ch : character)
-		if (ch != nullptr) ch->Update();
+	{
+		if (ch != nullptr)
+		{
+			if (KEY_DOWN('Z'))
+				ch->SetAttackOrder();
+
+			ch->Update();
+		}
+	}
 }
 
 void CH_Manager::PreRender()

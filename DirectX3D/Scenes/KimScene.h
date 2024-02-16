@@ -15,7 +15,6 @@ private:
 
     MonsterBase* targetMonster;
     CH_Base_ver2* targetNPC;
-    class SkillBase* skill;
 
     ParticleSystem* particle;
 };

@@ -98,6 +98,7 @@ void Skeleton::Hit(float amount, int targetNumber)
 	if (curHP <= 0)
 	{
 		SetState(DEATH);
+		collider->SetActive(false);
 		curHP = 0.0f;
 	}
 	else
@@ -171,7 +172,7 @@ void Skeleton::EndHit()
 void Skeleton::EndDeath()
 {
 	transform->SetActive(false);
-	collider->SetActive(false);
+	//collider->SetActive(false);
 }
 
 void Skeleton::SetState(State state)

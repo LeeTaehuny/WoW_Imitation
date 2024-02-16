@@ -16,25 +16,22 @@
 
 KimScene::KimScene()
 {
-	CH->PlayerSpawn(5);
+	CH->PlayerSpawn(4);
 
-	//CH->NonPlayerSpawn(1);
+	CH->NonPlayerSpawn(4);
+	//CH->NonPlayerSpawn(2);
 	//CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(1);
 
 	MONSTER;
 	ARROW;
 
-	skill = new M_009_Volley();
-	skill->SetOwner(CH->GetPlayerData());
+	//MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
+	//MONSTER->SpawnScarecrow(Vector3(10));
+	//MONSTER->SpawnScarecrow(Vector3(-10));
+	//MONSTER->SpawnScarecrow(Vector3(-5));
 
-	MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
-	MONSTER->SpawnScarecrow(Vector3(10));
-	MONSTER->SpawnScarecrow(Vector3(-10));
-	MONSTER->SpawnScarecrow(Vector3(-5));
-
-	MONSTER->SpawnSkeleton(Vector3(10));
-	
+	//MONSTER->SpawnSkeleton(Vector3(10));	
 	//MONSTER->SpawnSkeletonKnight(Vector3(10));
 
 	particle = new ParticleSystem("TextData/Particles/Fire/fireBall.fx");
@@ -42,20 +39,23 @@ KimScene::KimScene()
 
 KimScene::~KimScene()
 {
-	delete skill;
 	delete particle;
 }
 
 void KimScene::Update()
 {
-	//if (KEY_DOWN(VK_LEFT))
-	//{
-	//	MONSTER->SpawnSkeleton(Vector3());
-	//}
-	//if (KEY_DOWN(VK_RIGHT))
-	//{
-	//	MONSTER->SpawnSkeletonKnight(Vector3());
-	//}
+	if (KEY_DOWN(VK_LEFT))
+	{
+		MONSTER->SpawnSkeleton(Vector3());
+	}
+	if (KEY_DOWN(VK_RIGHT))
+	{
+		MONSTER->SpawnSkeletonKnight(Vector3());
+	}
+	if (KEY_DOWN(VK_DOWN))
+	{
+		MONSTER->SpawnScarecrow(Vector3());
+	}
 	
 	if (KEY_DOWN('P'))
 	{
@@ -79,7 +79,8 @@ void KimScene::Update()
 				vector<MonsterBase*> monsters = MONSTER->GetScarecrow();
 				for (MonsterBase* monster : monsters)
 				{
-					if (monster->GetCollider()->IsRayCollision(ray, &contact))
+					if (monster->GetCollider()->IsRayCollision(ray, &contact) &&
+						monster->GetCollider()->Active())
 					{
 						// 충돌했다면 해당 몬스터를 내 타겟으로 설정
 						targetMonster = monster;
@@ -89,7 +90,8 @@ void KimScene::Update()
 				monsters = MONSTER->GetSkeleton();
 				for (MonsterBase* monster : monsters)
 				{
-					if (monster->GetCollider()->IsRayCollision(ray, &contact))
+					if (monster->GetCollider()->IsRayCollision(ray, &contact) &&
+						monster->GetCollider()->Active())
 					{
 						// 충돌했다면 해당 몬스터를 내 타겟으로 설정
 						targetMonster = monster;
@@ -99,7 +101,8 @@ void KimScene::Update()
 				monsters = MONSTER->GetSkeleton_Knight();
 				for (MonsterBase* monster : monsters)
 				{
-					if (monster->GetCollider()->IsRayCollision(ray, &contact))
+					if (monster->GetCollider()->IsRayCollision(ray, &contact) &&
+						monster->GetCollider()->Active())
 					{
 						// 충돌했다면 해당 몬스터를 내 타겟으로 설정
 						targetMonster = monster;
@@ -122,36 +125,33 @@ void KimScene::Update()
 					}
 				}
 			}
-
-			
 		}
 
-		if (KEY_DOWN('K'))
-		{
-			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skill))
-			{
-				if (UseType::character_Data == c->GetUsing())
-				{
-					c->UseSkill(targetNPC);
-				}
-				else if (UseType::collider_Data == c->GetUsing())
-				{
-
-				}
-				else if (UseType::monster_Data == c->GetUsing())
-				{
-					c->UseSkill(targetMonster);
-				}
-				else if (UseType::NON_Data == c->GetUsing())
-				{
-					c->UseSkill();
-				}
-			}
-		}
+		//if (KEY_DOWN('K'))
+		//{
+		//	if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skill))
+		//	{
+		//		if (UseType::character_Data == c->GetUsing())
+		//		{
+		//			c->UseSkill(targetNPC);
+		//		}
+		//		else if (UseType::collider_Data == c->GetUsing())
+		//		{
+		//
+		//		}
+		//		else if (UseType::monster_Data == c->GetUsing())
+		//		{
+		//			c->UseSkill(targetMonster);
+		//		}
+		//		else if (UseType::NON_Data == c->GetUsing())
+		//		{
+		//			c->UseSkill();
+		//		}
+		//	}
+		//}
 	}
 
 	UPDATE(particle);
-	UPDATE(skill);
 	CH->Update();
 	MONSTER->Update();
 	ARROW->Update();
@@ -165,10 +165,8 @@ void KimScene::PreRender()
 void KimScene::Render()
 {
 	RENDER(particle);
-	RENDER(skill);
 
 	CH->Render();
-	skill->Render();
 	MONSTER->Render();
 	ARROW->Render();
 }

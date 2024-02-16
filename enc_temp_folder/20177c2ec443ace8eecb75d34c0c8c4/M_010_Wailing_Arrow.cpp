@@ -26,7 +26,6 @@ M_010_Wailing_Arrow::M_010_Wailing_Arrow() : ActiveSkill(SkillType::Target)
 		isCooldown = false;
 
 		// 마나 소모 : 1.5%
-		requiredMp = 15;
 		usingType = monster_Data;
 	}
 	icon = new Quad(L"Textures/Character_Skill_Icon/MarksmanshipHunter/010.jpg");
@@ -64,7 +63,6 @@ void M_010_Wailing_Arrow::Update()
 	{
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
-
 		if (monsterTarget->GetCollider()->Active())
 		{
 			direction = (monsterTarget->GetCollider()->GlobalPos() - myCollider->Pos()).GetNormalized();
@@ -130,6 +128,7 @@ void M_010_Wailing_Arrow::Update()
 			myCollider->SetActive(false);
 			arrow->SetActive(false);
 			arrow->SetIsRun(false);
+			return;
 		}
 
 		
@@ -176,7 +175,7 @@ void M_010_Wailing_Arrow::Render()
 void M_010_Wailing_Arrow::UseSkill(MonsterBase* monsterbase)
 {
 	if (isCooldown || monsterbase == nullptr ||
-		owner->GetStat().mp < requiredMp) return;
+		owner->GetStat().mp < 15) return;
 
 	monsterTarget = monsterbase;
 	myCollider->SetActive(true);
@@ -191,7 +190,7 @@ void M_010_Wailing_Arrow::UseSkill(MonsterBase* monsterbase)
 	}
 
 	skillDamage = owner->GetStat().damage * 1.33f;
-	owner->GetStat().mp -= requiredMp;
+	owner->GetStat().mp -= 15;
 	animStart = 0;
 	isRun = true;
 	isCooldown = true;
