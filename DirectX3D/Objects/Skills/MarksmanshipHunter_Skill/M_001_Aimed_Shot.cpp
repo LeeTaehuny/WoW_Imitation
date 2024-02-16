@@ -3,6 +3,8 @@
 
 M_001_Aimed_Shot::M_001_Aimed_Shot() : ActiveSkill(SkillType::Target)
 {
+	skillName = "M_001_Aimed_Shot";
+
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);
 

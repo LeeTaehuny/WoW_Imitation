@@ -3,6 +3,8 @@
 
 M_007_Focused_Aim::M_007_Focused_Aim()
 {
+	skillName = "M_007_Focused_Aim";
+
 	icon = new Quad(L"Textures/Character_Skill_Icon/MarksmanshipHunter/007.jpg");
 	prevSkills.resize(2);
 	prevSkills[0] = "M_004_Lone_Wolf";

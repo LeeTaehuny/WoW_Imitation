@@ -3,6 +3,8 @@
 
 A_010_Bladestorm::A_010_Bladestorm() : ActiveSkill(SkillType::NonTarget)
 {
+	skillName = "A_010_Bladestorm";
+
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);
 

@@ -3,6 +3,8 @@
 
 P_006_Bulwark_Of_Order::P_006_Bulwark_Of_Order()
 {
+	skillName = "P_006_Bulwark_Of_Order";
+
 	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/006.jpg");
 	prevSkills.resize(2);
 	prevSkills[0] = "P_002_HOTR";

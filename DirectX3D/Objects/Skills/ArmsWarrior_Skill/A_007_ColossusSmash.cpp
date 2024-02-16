@@ -5,6 +5,8 @@
 
 A_007_ColossusSmash::A_007_ColossusSmash() : ActiveSkill(SkillType::Target)
 {
+	skillName = "A_007_ColossusSmash";
+
 	// 선행 스킬
 	prevSkills.push_back("A_006_FueledbyViolence");
 

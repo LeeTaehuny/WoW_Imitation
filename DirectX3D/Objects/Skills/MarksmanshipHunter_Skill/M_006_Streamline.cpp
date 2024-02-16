@@ -3,6 +3,8 @@
 
 M_006_Streamline::M_006_Streamline()
 {
+	skillName = "M_006_Streamline";
+
 	icon = new Quad(L"Textures/Character_Skill_Icon/MarksmanshipHunter/006.jpg");
 	prevSkills.resize(1);
 	prevSkills[0] = "M_003_Rapid_Fire";

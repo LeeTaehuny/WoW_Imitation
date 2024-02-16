@@ -3,6 +3,8 @@
 
 A_008_Massacre::A_008_Massacre()
 {
+	skillName = "A_008_Massacre";
+
 	// 선행 스킬
 	prevSkills.push_back("A_006_FueledbyViolence");
 

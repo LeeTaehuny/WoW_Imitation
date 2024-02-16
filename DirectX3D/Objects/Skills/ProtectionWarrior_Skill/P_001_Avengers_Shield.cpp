@@ -3,6 +3,8 @@
 P_001_Avengers_Shield::P_001_Avengers_Shield()
 	: ActiveSkill(SkillType::NonTarget)
 {
+	skillName = "P_001_Avengers_Shield";
+
 	/*
 	스킬의 효과
 

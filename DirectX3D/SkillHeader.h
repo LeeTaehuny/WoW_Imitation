@@ -1,0 +1,62 @@
+﻿#pragma once
+
+// 성기사(보호)
+#include "Objects/Skills/ProtectionWarrior_Skill/P_001_Avengers_Shield.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_002_HOTR.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_003_Grand_Crusader.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_004_Ardent_Defender.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_005_Barricade_Of_Faith.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_006_Bulwark_Of_Order.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_007_Blessing_of_Spellwarding.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_008_Guardian_Of_Ancient_Kings.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_009_Eye_Of_Tyr.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_010_Moment_Of_Glory.h"
+
+// 사제(신성)
+#include "Objects/Skills/HolyPriest_Skill/H_001_Holy_Word_Serenity.h"
+#include "Objects/Skills/HolyPriest_Skill/H_002_Holy_Word_Sanctify.h"
+#include "Objects/Skills/HolyPriest_Skill/H_003_Guardian_Spirit.h"
+#include "Objects/Skills/HolyPriest_Skill/H_004_Holy_Word_Chastise.h"
+#include "Objects/Skills/HolyPriest_Skill/H_005_Censure.h"
+#include "Objects/Skills/HolyPriest_Skill/H_006_Circle_Of_Healing.h"
+#include "Objects/Skills/HolyPriest_Skill/H_007_Cosmic_Ripple.h"
+#include "Objects/Skills/HolyPriest_Skill/H_008_Divine_Hymn.h"
+#include "Objects/Skills/HolyPriest_Skill/H_009_Enlightenment.h"
+#include "Objects/Skills/HolyPriest_Skill/H_010_Everlasting_Light.h"
+
+// 사냥꾼(사격)
+#include "Objects/Skills/MarksmanshipHunter_Skill/ArrowManager.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_001_Aimed_Shot.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_002_Crack_Shot.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_003_Rapid_Fire.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_004_Lone_Wolf.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_005_Chimaera_Shot.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_006_Streamline.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_007_Focused_Aim.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_008_Multi_Shot.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_009_Volley.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_010_Wailing_Arrow.h"
+
+// 마법사(화염)
+#include "Objects/Skills/FireMage_Skill/F_001_Pyroblast.h"
+#include "Objects/Skills/FireMage_Skill/F_002_FireBlast.h"
+#include "Objects/Skills/FireMage_Skill/F_003_Pyrotechnics.h"
+#include "Objects/Skills/FireMage_Skill/F_004_Scorch.h"
+#include "Objects/Skills/FireMage_Skill/F_005_PhoenixFlame.h"
+#include "Objects/Skills/FireMage_Skill/F_006_SurgingBlaze.h"
+#include "Objects/Skills/FireMage_Skill/F_007_SearingTouch.h"
+#include "Objects/Skills/FireMage_Skill/F_008_FlameOn.h"
+#include "Objects/Skills/FireMage_Skill/F_009_Combustion.h"
+#include "Objects/Skills/FireMage_Skill/F_010_Meteor.h"
+
+// 전사(무기)
+#include "Objects/Skills/ArmsWarrior_Skill/A_001_MortalStrike.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_002_Overpower.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_003_MartialProwess.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_004_DiebytheSword.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_005_SharpenedBlades.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_006_FueledbyViolence.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_007_ColossusSmash.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_008_Massacre.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_009_BluntInstruments.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_010_Bladestorm.h"

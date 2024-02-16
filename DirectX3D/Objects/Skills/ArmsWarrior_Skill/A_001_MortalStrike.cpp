@@ -5,6 +5,8 @@
 
 A_001_MortalStrike::A_001_MortalStrike() : ActiveSkill(SkillType::NonTarget)
 {
+	skillName = "A_001_MortalStrike";
+
 	// 충돌 판정용 콜라이더
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);

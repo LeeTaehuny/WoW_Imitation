@@ -43,7 +43,7 @@ public:
 	// �ٸ� �ݶ��̴��� �浹���� ��
 	virtual void OnHit(float damage) = 0;
 
-	virtual void LearnSkill(class SkillBase* skill) {};
+	bool LearnSkill(class SkillBase* skill);
 
 	virtual void AI_animation_Moving() = 0;
 
@@ -86,8 +86,9 @@ protected:
 	class Inventory* inventory;
 	class StatusUI* statusUI;
 
-	// ��ų
+	// 스킬
 	vector<class SkillBase*> skillList;
+	map<string, int> prevSkills;
 
 // �ν��Ͻ̿� �ʿ��� ������
 protected: 

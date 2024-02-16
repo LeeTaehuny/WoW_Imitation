@@ -31,6 +31,7 @@
     <FxCompile Include="Shaders\Effect\Bloom.hlsl" />
     <FxCompile Include="Shaders\Effect\Fog.hlsl" />
     <FxCompile Include="Shaders\UI\ProgressBar.hlsl" />
+    <FxCompile Include="Shaders\Basic\Slot.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.cpp" />
@@ -221,6 +222,7 @@
     <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_010_Wailing_Arrow.cpp" />
     <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\ArrowManager.cpp" />
     <ClCompile Include="Objects\UI\StatusUI.cpp" />
+    <ClCompile Include="Objects\Skills\SkillManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.h" />
@@ -238,6 +240,8 @@
     <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_008_Massacre.cpp" />
     <ClCompile Include="Objects\Skills\ArmsWarrior_Skill\A_009_BluntInstruments.cpp" />
     <ClInclude Include="Objects\UI\StatusUI.h" />
+    <ClInclude Include="Objects\Skills\SkillManager.h" />
+    <ClInclude Include="SkillHeader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Character_\CH_Manager.h" />

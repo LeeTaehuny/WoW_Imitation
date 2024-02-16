@@ -3,6 +3,8 @@
 
 P_008_Guardian_Of_Ancient_Kings::P_008_Guardian_Of_Ancient_Kings()
 {
+	skillName = "P_008_Guardian_Of_Ancient_Kings";
+
 	/*
 	스킬의 효과
 

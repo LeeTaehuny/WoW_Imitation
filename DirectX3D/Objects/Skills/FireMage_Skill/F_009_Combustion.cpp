@@ -4,6 +4,8 @@
 
 F_009_Combustion::F_009_Combustion() : ActiveSkill(SkillType::Target)
 {
+	skillName = "F_009_Combustion";
+
 	// 지속 시간 설정
 	curTime = 0.0f;
 	MAX_duration = 10.0f;

@@ -3,6 +3,8 @@
 
 M_004_Lone_Wolf::M_004_Lone_Wolf()
 {
+	skillName = "M_004_Lone_Wolf";
+
 	icon = new Quad(L"Textures/Character_Skill_Icon/MarksmanshipHunter/004.jpg");
 	prevSkills.resize(1);
 	prevSkills[0] = "M_001_Aimed_Shot";

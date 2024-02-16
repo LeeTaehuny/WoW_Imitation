@@ -3,6 +3,8 @@
 
 M_008_Multi_Shot::M_008_Multi_Shot() : ActiveSkill(SkillType::Target)
 {
+	skillName = "M_008_Multi_Shot";
+
 	hitCollider = new SphereCollider();
 	hitCollider->Scale().x *= 5;
 	hitCollider->Scale().z *= 5;

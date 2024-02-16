@@ -3,6 +3,8 @@
 
 H_002_Holy_Word_Sanctify::H_002_Holy_Word_Sanctify() : ActiveSkill(SkillType::NonTarget)
 {
+	skillName = "H_002_Holy_Word_Sanctify";
+
 	hitCollider = new SphereCollider();
 	hitCollider->SetActive(true);
 	hitCollider->Scale().x += 8;

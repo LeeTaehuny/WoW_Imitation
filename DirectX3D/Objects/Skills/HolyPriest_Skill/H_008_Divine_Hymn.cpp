@@ -3,6 +3,8 @@
 
 H_008_Divine_Hymn::H_008_Divine_Hymn() : ActiveSkill(SkillType::NonTarget)
 {
+	skillName = "H_008_Divine_Hymn";
+
 	hitCollider = new SphereCollider();
 	hitCollider->SetActive(false);
 	hitCollider->Scale().x += 5;

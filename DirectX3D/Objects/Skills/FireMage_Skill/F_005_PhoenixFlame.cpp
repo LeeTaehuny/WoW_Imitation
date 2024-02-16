@@ -3,6 +3,8 @@
 
 F_005_PhoenixFlame::F_005_PhoenixFlame() : ActiveSkill(SkillType::Target)
 {
+	skillName = "F_005_PhoenixFlame";
+
 	// 날아갈 콜라이더
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);

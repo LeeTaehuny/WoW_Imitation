@@ -3,6 +3,8 @@
 
 F_002_FireBlast::F_002_FireBlast() : ActiveSkill(SkillType::Target)
 {
+	skillName = "F_002_FireBlast";
+
 	// 쿨타임 설정 (5초)
 	MAX_delay = 5.0f;
 	coolTime = MAX_delay;

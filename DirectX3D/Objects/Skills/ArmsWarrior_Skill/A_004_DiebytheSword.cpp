@@ -4,6 +4,8 @@
 
 A_004_DiebytheSword::A_004_DiebytheSword() : ActiveSkill(SkillType::Target)
 {
+	skillName = "A_004_DiebytheSword";
+
 	// 지속 시간 설정
 	curTime = 0.0f;
 	MAX_duration = 8.0f;

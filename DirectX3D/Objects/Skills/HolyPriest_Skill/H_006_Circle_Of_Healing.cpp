@@ -3,6 +3,8 @@
 
 H_006_Circle_Of_Healing::H_006_Circle_Of_Healing() : ActiveSkill(SkillType::Target)
 {
+	skillName = "H_006_Circle_Of_Healing";
+
 	hitCollider = new SphereCollider();
 	hitCollider->SetActive(false);
 	hitCollider->Scale().x *= 5;

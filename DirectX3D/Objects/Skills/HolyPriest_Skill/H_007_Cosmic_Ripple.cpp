@@ -3,6 +3,8 @@
 
 H_007_Cosmic_Ripple::H_007_Cosmic_Ripple()
 {
+	skillName = "H_007_Cosmic_Ripple";
+
 	icon = new Quad(L"Textures/Character_Skill_Icon/HolyPriest/007.jpg");
 	prevSkills.resize(1);
 	prevSkills[0] = "H_002_Holy_Word_Sanctify";

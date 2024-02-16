@@ -47,6 +47,11 @@ void Slot::OnClick()
 		break;
 	case SlotType::Status_Slot:
 		break;
+	case SlotType::SkillTree_Frame:
+		break;
+	case SlotType::SkillTree_Slot:
+		Observer::Get()->ExcuteParamEvent("LearnSkill", this);
+		break;
 	default:
 		break;
 	}
@@ -64,6 +69,10 @@ void Slot::OnHover()
 	case SlotType::Status_Frame:
 		break;
 	case SlotType::Status_Slot:
+		break;
+	case SlotType::SkillTree_Frame:
+		break;
+	case SlotType::SkillTree_Slot:
 		break;
 	default:
 		break;
@@ -86,6 +95,10 @@ void Slot::OnPress()
 		break;
 	case SlotType::Status_Slot:
 		break;
+	case SlotType::SkillTree_Frame:
+		break;
+	case SlotType::SkillTree_Slot:
+		break;
 	default:
 		break;
 	}
@@ -106,6 +119,10 @@ void Slot::OnRelease()
 		Observer::Get()->ExcuteEvent("StopStatusFrame");
 		break;
 	case SlotType::Status_Slot:
+		break;
+	case SlotType::SkillTree_Frame:
+		break;
+	case SlotType::SkillTree_Slot:
 		break;
 	default:
 		break;

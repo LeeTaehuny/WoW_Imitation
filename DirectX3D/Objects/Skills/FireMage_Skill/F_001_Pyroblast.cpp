@@ -4,6 +4,8 @@
 
 F_001_Pyroblast::F_001_Pyroblast() : ActiveSkill(SkillType::Target)
 {
+	skillName = "F_001_Pyroblast";
+
 	// 날아갈 콜라이더
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);

@@ -3,6 +3,8 @@
 
 F_007_SearingTouch::F_007_SearingTouch()
 {
+	skillName = "F_007_SearingTouch";
+
 	// 선행 스킬
 	prevSkills.push_back("F_004_Scorch");
 

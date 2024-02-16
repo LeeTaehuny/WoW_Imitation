@@ -3,6 +3,8 @@
 
 F_010_Meteor::F_010_Meteor() : ActiveSkill(SkillType::Target)
 {
+	skillName = "F_010_Meteor";
+
 	// 날아갈 콜라이더
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);

@@ -1,0 +1,251 @@
+﻿#include "Framework.h"
+#include "SkillManager.h"
+#include "SkillHeader.h"
+#include "Objects/Inventory/Slot.h"
+
+SkillManager::SkillManager()
+{
+}
+
+SkillManager::~SkillManager()
+{
+}
+
+void SkillManager::Init(CH_Base_ver2* player)
+{
+	if (player == nullptr) return;
+
+	// 플레이어 정보 저장
+	this->player = player;
+
+	// 프레임 생성
+	skillTreeFrame = new Slot(L"Textures/UI/skillTreeBase.png", SlotType::SkillTree_Frame);
+	skillTreeFrame->Scale() *= 1.5f;
+	skillTreeFrame->Pos() = { CENTER_X / 2.0f, CENTER_Y, 1.0f };
+
+
+	// 슬롯 생성
+	skillTreeSlots.reserve(10);
+
+	for (int i = 0; i < 10; i++)
+	{
+		Slot* slot = new Slot(Vector2(33.0f, 33.0f), SlotType::SkillTree_Slot);
+		slot->SetParent(skillTreeFrame);
+		slot->GetMaterial()->SetShader(L"Basic/Slot.hlsl");
+		slot->UseColorBuffer();
+		
+		skillTreeSlots.push_back({ slot, false });
+	}
+
+	// 직군에 따른 스킬트리 생성
+	switch (player->GetProfessionType())
+	{
+	case ProfessionType::ArmsWarrior:
+		CreateA_SkillTree();
+		break;
+
+	case ProfessionType::FireMage:
+		CreateF_SkillTree();
+		break;
+
+	case ProfessionType::HolyPriest:
+		CreateH_SkillTree();
+		break;
+
+	case ProfessionType::MarksmanshipHunter:
+		CreateM_SkillTree();
+		break;
+
+	case ProfessionType::ProtectionWarrior:
+		CreateP_SkillTree();
+		break;
+
+	default:
+		break;
+	}
+
+	// 이벤트 등록
+	{
+		// 스킬 배우기
+		Observer::Get()->AddParamEvent("LearnSkill", bind(&SkillManager::LearnSkill, this, placeholders::_1));
+	}
+}
+
+void SkillManager::Update()
+{
+	if (KEY_DOWN('K'))
+	{
+		if (skillTreeFrame->Active())
+		{
+			skillTreeFrame->SetActive(false);
+		}
+		else
+		{
+			skillTreeFrame->SetActive(true);
+		}
+	}
+
+	if (!skillTreeFrame->Active()) return;
+
+	skillTreeFrame->Update();
+
+	for (pair<Slot*, bool> slot : skillTreeSlots)
+	{
+		slot.first->Update();
+	}
+}
+
+void SkillManager::PostRender()
+{
+	if (!skillTreeFrame->Active()) return;
+
+	skillTreeFrame->Render();
+
+	for (pair<Slot*, bool> slot : skillTreeSlots)
+	{
+		slot.first->Render();
+	}
+
+}
+
+void SkillManager::CreateA_SkillTree()
+{
+}
+
+void SkillManager::CreateF_SkillTree()
+{
+}
+
+void SkillManager::CreateH_SkillTree()
+{
+}
+
+void SkillManager::CreateM_SkillTree()
+{
+}
+
+void SkillManager::CreateP_SkillTree()
+{
+	// 프레임 이미지 설정
+	skillTreeFrame->GetMaterial()->SetDiffuseMap(L"Textures/UI/P_skillTree.png");
+
+	// 스킬 생성
+	{
+		SkillBase* skill = new P_001_Avengers_Shield();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new P_002_HOTR();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new P_003_Grand_Crusader();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new P_004_Ardent_Defender();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new P_005_Barricade_Of_Faith();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new P_006_Bulwark_Of_Order();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new P_007_Blessing_of_Spellwarding();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new P_008_Guardian_Of_Ancient_Kings();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new P_009_Eye_Of_Tyr();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new P_010_Moment_Of_Glory();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+	}
+
+	// 슬롯 위치 지정 & 이미지 지정
+	{
+		skillTreeSlots[0].first->Pos() = Vector3(3, 75, 0);
+		skillTreeSlots[0].first->GetMaterial()->SetDiffuseMap(skills[0]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[0].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[1].first->Pos() = Vector3(-80, 32, 0);
+		skillTreeSlots[1].first->GetMaterial()->SetDiffuseMap(skills[1]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[1].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[2].first->Pos() = Vector3(3, 32, 0);
+		skillTreeSlots[2].first->GetMaterial()->SetDiffuseMap(skills[2]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[2].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[3].first->Pos() = Vector3(3, -11, 0);
+		skillTreeSlots[3].first->GetMaterial()->SetDiffuseMap(skills[3]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[3].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[4].first->Pos() = Vector3(85, -11, 0);
+		skillTreeSlots[4].first->GetMaterial()->SetDiffuseMap(skills[4]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[4].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[5].first->Pos() = Vector3(-80, -55, 0);
+		skillTreeSlots[5].first->GetMaterial()->SetDiffuseMap(skills[5]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[5].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[6].first->Pos() = Vector3(3, -54, 0);
+		skillTreeSlots[6].first->GetMaterial()->SetDiffuseMap(skills[6]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[6].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[7].first->Pos() = Vector3(3, -97, 0);
+		skillTreeSlots[7].first->GetMaterial()->SetDiffuseMap(skills[7]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[7].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[8].first->Pos() = Vector3(3, -138, 0);
+		skillTreeSlots[8].first->GetMaterial()->SetDiffuseMap(skills[8]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[8].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[9].first->Pos() = Vector3(-80, -138, 0);
+		skillTreeSlots[9].first->GetMaterial()->SetDiffuseMap(skills[9]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[9].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+	}
+}
+
+void SkillManager::LearnSkill(void* slot)
+{
+	Slot* tmpSlot = static_cast<Slot*>(slot);
+
+	if (tmpSlot)
+	{
+		// 모든 슬롯을 순회하며 동일한 슬롯 인덱스 찾기
+		int idx = 0;
+		for (pair<Slot*, bool> slot : skillTreeSlots)
+		{
+			if (slot.first == tmpSlot)
+			{
+				break;
+			}
+			idx++;
+		}
+
+		// 인덱스가 범위를 넘었다면 종료
+		if (idx >= 10) return;
+
+		// 만약 해당 스킬이 이미 배워진 것이라면 종료
+		if (skillTreeSlots[idx].second == true) return;
+
+		// 스킬 배우기
+		if (player->LearnSkill(skills[idx]))
+		{
+			// 배우는데 성공했으므로 스킬 색상 활성화
+			skillTreeSlots[idx].first->GetColor() = { 1.0f, 1.0f, 1.0f, 1.0f };
+			// 스킬을 배웠다고 표시
+			skillTreeSlots[idx].second = true;
+		}
+	}
+}

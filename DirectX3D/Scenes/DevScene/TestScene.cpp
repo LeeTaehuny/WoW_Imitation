@@ -27,6 +27,8 @@
 #include "Objects/Skills/ArmsWarrior_Skill/A_009_BluntInstruments.h"
 #include "Objects/Skills/ArmsWarrior_Skill/A_010_Bladestorm.h"
 
+#include "Objects/Skills/SkillManager.h"
+
 
 TestScene::TestScene()
 {
@@ -87,9 +89,11 @@ TestScene::TestScene()
 	//player->GetSkillList().push_back(skill9);
 	//player->GetSkillList().push_back(skill10);
 
-	CH->PlayerSpawn(5);
+	CH->PlayerSpawn(2);
 
 	MONSTER->SetTarget(CH->GetPlayerData()->GetCollider());
+
+	SKILL->Init(CH->GetPlayerData());
 
 	weapon = new Weapon("sword_1", WeaponType::Staff);
 
@@ -100,8 +104,8 @@ TestScene::TestScene()
 	//	w->SetOwner(CH->GetPlayerData());
 	//}
 
-	skill1 = new A_002_Overpower();
-	skill1->SetOwner(CH->GetPlayerData());
+	//skill1 = new A_002_Overpower();
+	//skill1->SetOwner(CH->GetPlayerData());
 	//skill1->Init();
 
 	//skill2 = new F_002_FireBlast();
@@ -147,6 +151,7 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
+	SKILL->Update();
 	shop->Update();
 	//
 	//// 임시 스킬 사용 테스트 (좌클릭 타겟 설정, K : 스킬 사용)
@@ -156,10 +161,10 @@ void TestScene::Update()
 		// 마우스 위치의 Ray 생성
 		Ray ray = CAM->ScreenPointToRay(mousePos);
 		Contact contact;
-
+	
 		// 몬스터 배열 받기
 		vector<MonsterBase*> monsters = MONSTER->GetScarecrow();
-
+	
 		// 몬스터 순회하며 Ray 충돌 연산
 		for (MonsterBase* monster : monsters)
 		{
@@ -231,7 +236,7 @@ void TestScene::Update()
 	//paladin->Update();
 	//player->Update();
 	MONSTER->Update();
-	skill1->Update();
+	//skill1->Update();
 	//skill2->Update();
 	//skill4->Update();
 	//skill5->Update();
@@ -244,10 +249,10 @@ void TestScene::Update()
 	//skill9->Update();
 	//skill10->Update();
 
-	if (KEY_DOWN('C'))
-	{
-		skill1->UseSkill();
-	}
+	//if (KEY_DOWN('C'))
+	//{
+	//	skill1->UseSkill();
+	//}
 
 	//if (KEY_DOWN('V'))
 	//{
@@ -293,13 +298,14 @@ void TestScene::Render()
 	//skill9->Render();
 	//skill10->Render();
 	CH->Render();
-	skill1->Render();
+	//skill1->Render();
 }
 
 void TestScene::PostRender()
 {
+	SKILL->PostRender();
 	//player->UIRender();
-	shop->UIRender();
+	//shop->UIRender();
 	CH->PostRender();
 
 }

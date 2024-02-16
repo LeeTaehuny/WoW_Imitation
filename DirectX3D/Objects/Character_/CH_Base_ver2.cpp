@@ -2,6 +2,7 @@
 #include "Objects/Inventory/Inventory.h"
 #include "Objects/Item/Weapon.h"
 #include "Objects/UI/StatusUI.h"
+#include "CH_Base_ver2.h"
 
 CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionType)
 	: creatureType(creatureType), professionType(professionType)
@@ -63,6 +64,38 @@ void CH_Base_ver2::UIRender()
 	if (inventory != nullptr) inventory->UIRender();
 }
 
+bool CH_Base_ver2::LearnSkill(SkillBase* skill)
+{
+	if (skill == nullptr) return false;
+
+	// 스킬의 선행스킬들 가져오기
+	vector<string> prev = skill->GetPrevSkills();
+
+	for (string p : prev)
+	{
+		// 해당 스킬의 선행 스킬이 이미 배운 스킬 목록에 존재하지 않는다면?
+		if (prevSkills.find(p) == prevSkills.end())
+		{ 
+			// 종료
+			return false;
+		}
+	}
+
+	// 여기까지 오면 스킬을 배울 수 있다는 의미
+	// * 스킬이 만약 패시브 스킬이라면?
+	if (skill->GetSkillType() == SkillBaseType::Passive)
+	{
+		// 바로 스킬 사용
+		skill->UseSkill();
+	}
+
+	// 스킬 리스트에 추가
+	skillList.push_back(skill);
+
+	// 배운 이름 리스트에 해당 스킬의 이름 추가
+	prevSkills.insert({ skill->GetSkillName(), 0 });
+}
+
 void CH_Base_ver2::ClearWeapon()
 {
 	if (weapon != nullptr)
@@ -70,13 +103,3 @@ void CH_Base_ver2::ClearWeapon()
 		weapon = nullptr;
 	}
 }
-
-//void CH_Base_ver2::EquipWeapon(Weapon* weapon)
-//{
-//	if (weapon == nullptr) return;
-//
-//	this->weapon = weapon;
-//	weapon->Scale() *= 100.0f;
-//	weapon->Rot() = Vector3(0.0f, 11.0f, 0.0f);
-//	weapon->SetParent(mainHand);
-//}

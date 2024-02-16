@@ -5,6 +5,8 @@
 
 A_002_Overpower::A_002_Overpower() : ActiveSkill(SkillType::NonTarget)
 {
+	skillName = "A_002_Overpower";
+
 	// 충돌 판정용 콜라이더
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);

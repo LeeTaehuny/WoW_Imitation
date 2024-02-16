@@ -3,6 +3,8 @@
 
 H_004_Holy_Word_Chastise::H_004_Holy_Word_Chastise() : ActiveSkill(SkillType::Target)
 {
+	skillName = "H_004_Holy_Word_Chastise";
+
 	// 기본 생성 요소
 	{
 		// 스킬 속도

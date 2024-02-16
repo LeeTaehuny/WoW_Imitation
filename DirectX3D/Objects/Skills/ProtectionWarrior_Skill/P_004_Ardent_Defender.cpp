@@ -3,6 +3,8 @@
 
 P_004_Ardent_Defender::P_004_Ardent_Defender()
 {
+	skillName = "P_004_Ardent_Defender";
+
 	/*
 	스킬의 효과
 

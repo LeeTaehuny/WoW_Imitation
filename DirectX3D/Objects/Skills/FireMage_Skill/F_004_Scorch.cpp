@@ -3,6 +3,8 @@
 
 F_004_Scorch::F_004_Scorch() : ActiveSkill(SkillType::Target)
 {
+	skillName = "F_004_Scorch";
+
 	// 쿨타임 설정 (1.5초)
 	MAX_delay = 1.5f;
 	coolTime = MAX_delay;

@@ -1,10 +1,10 @@
 ﻿#include "Framework.h"
 #include "M_003_Rapid_Fire.h"
 
-// 일단 보류
-// 첫 사용은 문제가 없지만 두 번째 사용부터 화살 모델이 안보임
 M_003_Rapid_Fire::M_003_Rapid_Fire() : ActiveSkill(SkillType::Target)
 {
+	skillName = "M_003_Rapid_Fire";
+
 	// 기본 생성 요소
 	{
 		// 스킬 속도

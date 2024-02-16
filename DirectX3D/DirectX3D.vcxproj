@@ -339,6 +339,8 @@
     <ClInclude Include="Objects\Shop\Shop.h" />
     <ClInclude Include="Objects\Monster\Skeleton_Knight.h" />
     <ClInclude Include="Objects\UI\StatusUI.h" />
+    <ClInclude Include="Objects\Skills\SkillManager.h" />
+    <ClInclude Include="SkillHeader.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Objects\Test\TestLight.h" />
     <ClInclude Include="Objects\Particle\Trail.h" />
@@ -406,6 +408,7 @@
     <ClCompile Include="Objects\Inventory\Slot.cpp" />
     <ClCompile Include="Objects\UI\Button.cpp" />
     <ClCompile Include="Objects\UI\StatusUI.cpp" />
+    <ClCompile Include="Objects\Skills\SkillManager.cpp" />
     <ClInclude Include="Scenes\MAP\TestDungeonScene.h" />
   </ItemGroup>
   <ItemGroup>
@@ -570,6 +573,9 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shaders\Basic\Slot.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Shaders\Basic\Texture.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
