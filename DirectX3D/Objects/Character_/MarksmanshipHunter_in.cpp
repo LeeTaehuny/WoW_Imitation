@@ -134,7 +134,7 @@ void MarksmanshipHunter_in::GUIRender()
 		Transform::GUIRender();
 
 		string Mtag = "M_" + to_string(index);
-		ImGui::SliderFloat((tag + "_HP").c_str(), &stat.hp, 0, stat.maxHp);
+		//ImGui::SliderFloat((tag + "_HP").c_str(), &stat.hp, 0, stat.maxHp);
 		//ImGui::SliderFloat((tag + "_MP").c_str(), (float*)&stat.mp, 0, stat.maxHp);
 		ImGui::Text((Mtag + "_HP : " + to_string((int)stat.hp)).c_str());
 		ImGui::Text((Mtag + "_MP : " + to_string(stat.mp)).c_str());
@@ -166,7 +166,15 @@ void MarksmanshipHunter_in::PlayerUpdate()
 void MarksmanshipHunter_in::AIUpdate()
 {
 	if (!myPlayer) return;
-	AI_animation_Moving();
+	// 지금 공격할 타겟이 없다면
+	if (!atkTarget)
+	{
+		AI_animation_Moving();
+	}
+	else
+	{
+		ai_attack();
+	}
 
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
@@ -189,41 +197,38 @@ void MarksmanshipHunter_in::OnHit(float damage)
 
 void MarksmanshipHunter_in::AI_animation_Moving()
 {
-	// 지금 공격할 타겟이 없다면
-	if (!atkTarget)
+
+	// 내가 플레이어의 주위에 있다면
+	if (myPlayer->GetRange()->IsCollision(myCollider))
 	{
-		// 내가 플레이어의 주위에 있다면
-		if (myPlayer->GetRange()->IsCollision(myCollider))
+		randomHangdong -= DELTA;
+		if (randomHangdong <= 0)
 		{
-			randomHangdong -= DELTA;
-			if (randomHangdong <= 0)
-			{
-				randomHangdong = MAX_randomHangdong;
-				randomVelocity = Vector3(Random(-1, 2), 0, Random(-1, 2));
-			}
-
-			this->Pos() += randomVelocity * (moveSpeed / 10) * DELTA;
-			this->Rot().y = atan2(randomVelocity.x, randomVelocity.z) + XM_PI;
-
-			SetState(WALK_F);
+			randomHangdong = MAX_randomHangdong;
+			randomVelocity = Vector3(Random(-1, 2), 0, Random(-1, 2));
 		}
-		// 플레이어의 주변이 아니라면
-		else
-		{
-			Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
-			randomVelocity = velo;
-			randomHangdong = 2.0f;
 
-			this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
+		this->Pos() += randomVelocity * (moveSpeed / 10) * DELTA;
+		this->Rot().y = atan2(randomVelocity.x, randomVelocity.z) + XM_PI;
 
-			this->Pos() += velo * moveSpeed * DELTA;
-			SetState(WALK_F);
-		}
+		SetState(WALK_F);
 	}
-	// 공격할 타겟이 있다면
+	// 플레이어의 주변이 아니라면
 	else
 	{
-		ai_attack();
+		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
+		randomVelocity = velo;
+		randomHangdong = 2.0f;
+
+		this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
+
+		this->Pos() += velo * moveSpeed * DELTA;
+		SetState(WALK_F);
+	}
+
+	if (randomVelocity == Vector3())
+	{
+		SetState(IDLE1);
 	}
 }
 
@@ -476,33 +481,7 @@ void MarksmanshipHunter_in::ai_attack()
 
 	if (!monsterSelectData)
 	{
-		// 내가 플레이어의 주위에 있다면
-		if (myPlayer->GetRange()->IsCollision(myCollider))
-		{
-			randomHangdong -= DELTA;
-			if (randomHangdong <= 0)
-			{
-				randomHangdong = MAX_randomHangdong;
-				randomVelocity = Vector3(Random(-1, 2), 0, Random(-1, 2));
-			}
-
-			this->Pos() += randomVelocity * (moveSpeed / 10) * DELTA;
-			this->Rot().y = atan2(randomVelocity.x, randomVelocity.z) + XM_PI;
-
-			SetState(WALK_F);
-		}
-		// 플레이어의 주변이 아니라면
-		else
-		{
-			Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
-			randomVelocity = velo;
-			randomHangdong = 2.0f;
-
-			this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
-
-			this->Pos() += velo * moveSpeed * DELTA;
-			SetState(WALK_F);
-		}
+		AI_animation_Moving();
 	}
 }
 

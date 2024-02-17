@@ -2,6 +2,12 @@
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
 #include "Objects/Skills/FireMage_Skill/F_000_Basic_Atttack.h"
+#include "Objects/Skills/FireMage_Skill/F_001_Pyroblast.h"
+#include "Objects/Skills/FireMage_Skill/F_002_FireBlast.h"
+#include "Objects/Skills/FireMage_Skill/F_004_Scorch.h"
+#include "Objects/Skills/FireMage_Skill/F_005_PhoenixFlame.h"
+#include "Objects/Skills/FireMage_Skill/F_009_Combustion.h"
+#include "Objects/Skills/FireMage_Skill/F_010_Meteor.h"
 
 FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::ProtectionWarrior)
@@ -24,6 +30,8 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 	SetEvent(DIE, bind(&FireMage_in::EndHit, this), 0.9f);
 	SetEvent(JUMP, bind(&FireMage_in::EndHit, this), 0.9f);
 
+	skillList.push_back(new F_000_Basic_Atttack());
+	skillList[skillList.size() - 1]->SetOwner(this);
 	// 자신의 타입에 따라 
 	switch (creatureType)
 	{
@@ -33,6 +41,24 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 
 	case CreatureType::NonPlayer:
 		range = new SphereCollider(20);
+
+		skillList.push_back(new F_001_Pyroblast());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new F_002_FireBlast());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new F_004_Scorch());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new F_005_PhoenixFlame());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new F_009_Combustion());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new F_010_Meteor());
+		skillList[skillList.size() - 1]->SetOwner(this);
 		break;
 	}
 	range->SetParent(this);
@@ -56,8 +82,10 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 		// 6 = 메테오
 		attackSignal.push_back(false);
 	}
-	skillList.push_back(new F_000_Basic_Atttack());
-	skillList[skillList.size() - 1]->SetOwner(this);
+
+	weapon = new Weapon("staff_3", WeaponType::Staff);
+	weapon->Scale() *= 100;
+	weapon->SetParent(mainHand);
 }
 
 FireMage_in::~FireMage_in()
@@ -109,6 +137,18 @@ void FireMage_in::Render()
 
 void FireMage_in::GUIRender()
 {
+	if (ImGui::TreeNode((tag + "_DataBase").c_str()))
+	{
+		Transform::GUIRender();
+
+		string Mtag = "F_" + to_string(index);
+		//ImGui::SliderFloat((tag + "_HP").c_str(), &stat.hp, 0, stat.maxHp);
+		//ImGui::SliderFloat((tag + "_MP").c_str(), (float*)&stat.mp, 0, stat.maxHp);
+		ImGui::Text((Mtag + "_HP : " + to_string((int)stat.hp)).c_str());
+		ImGui::Text((Mtag + "_MP : " + to_string(stat.mp)).c_str());
+
+		ImGui::TreePop();
+	}
 }
 
 void FireMage_in::EquipWeapon(Weapon* weapon)
@@ -117,7 +157,7 @@ void FireMage_in::EquipWeapon(Weapon* weapon)
 
 	this->weapon = weapon;
 	weapon->Scale() *= 100.0f;
-	weapon->Rot() = Vector3(0.0f, 11.0f, 0.0f);
+	//weapon->Rot() = Vector3(0.0f, 11.0f, 0.0f);
 	weapon->SetParent(mainHand);
 }
 
@@ -134,7 +174,29 @@ void FireMage_in::PlayerUpdate()
 void FireMage_in::AIUpdate()
 {
 	if (!myPlayer) return;
-	AI_animation_Moving();
+	
+	// 지금 공격할 타겟이 없다면
+	if (!atkTarget)
+	{
+		AI_animation_Moving();
+	}
+	// 공격할 타겟이 있다면
+	else
+	{
+		if (curState == ATTACK1 || curState == ATTACK2 || curState == ATTACK3) return;
+
+		ActionTickTime -= DELTA;
+		if (ActionTickTime <= 0)
+		{
+			ActionTickTime = Max_ActionTickTime;
+			ai_attack();
+		}
+
+		if (!monsterSelectData)
+		{
+			AI_animation_Moving();
+		}
+	}
 
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
@@ -182,6 +244,11 @@ void FireMage_in::AI_animation_Moving()
 
 		this->Pos() += velo * moveSpeed * DELTA;
 		SetState(WALK_F);
+	}
+
+	if (randomVelocity  == Vector3())
+	{
+		SetState(IDLE1);
 	}
 }
 
@@ -326,6 +393,102 @@ void FireMage_in::Attack()
 		// TODO : 원거리 공격 만들기
 		skillList[0]->UseSkill(monsterSelectData);
 	}
+}
+
+void FireMage_in::ai_attack()
+{
+	if (monsterSelectData == nullptr)
+	{
+		monsterSelectData = MONSTER->hitCollision(range);
+
+		if (!monsterSelectData)
+			return;
+	}
+	else if (!monsterSelectData->GetTransform()->Active())
+	{
+		monsterSelectData = nullptr;
+		return;
+	}
+
+	// 공격할 대상을 바라보게 하는 코드
+	Vector3 poldirect = monsterSelectData->GetTransform()->GlobalPos() - this->GlobalPos();
+	this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
+
+	if (!monsterSelectData->GetCollider()->Active()) return;
+	int imsiSkillStart = Random(1, 7);
+	switch (imsiSkillStart)
+	{
+	case 1:
+		if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[1]))
+		{
+			if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+			{
+				c->UseSkill(monsterSelectData);
+				return;
+			}
+		}
+		break;
+
+	case 2:
+		if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[2]))
+		{
+			if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+			{
+				c->UseSkill(monsterSelectData);
+				return;
+			}
+		}
+		break;
+
+	case 3:
+		if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[3]))
+		{
+			if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+			{
+				c->UseSkill(monsterSelectData);
+				return;
+			}
+		}
+		break;
+
+	case 4:
+		if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[4]))
+		{
+			if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+			{
+				c->UseSkill(monsterSelectData);
+				return;
+			}
+		}
+		break;
+
+	case 5:
+		if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[5]))
+		{
+			if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+			{
+				c->UseSkill();
+				return;
+			}
+		}
+		break;
+
+	case 6:
+		if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[6]))
+		{
+			if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+			{
+				c->UseSkill(monsterSelectData);
+				return;
+			}
+		}
+		break;
+
+	default:
+		break;
+	}
+
+	skillList[0]->UseSkill(monsterSelectData);
 }
 
 void FireMage_in::SetState(State state)

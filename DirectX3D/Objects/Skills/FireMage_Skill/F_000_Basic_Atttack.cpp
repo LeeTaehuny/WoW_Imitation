@@ -9,7 +9,7 @@ F_000_Basic_Atttack::F_000_Basic_Atttack() : ActiveSkill(SkillType::Target)
 	// 기본 생성 요소
 	{
 		// 스킬 속도
-		speed = 5.0f;
+		speed = 20.0f;
 
 		// 스킬 데미지
 		skillDamage = 0.0f;

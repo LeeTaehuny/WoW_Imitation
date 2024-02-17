@@ -49,6 +49,7 @@ private:
 	void Moving();
 	void Jump();
 	void Attack();
+	void ai_attack();
 	//void Casting();
 
 // 이벤트 함수

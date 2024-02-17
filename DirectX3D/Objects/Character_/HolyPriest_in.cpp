@@ -345,6 +345,11 @@ void HolyPriest_in::AI_animation_Moving()
 		this->Pos() += velo * moveSpeed * DELTA;
 		SetState(WALK_F);
 	}
+
+	if (randomVelocity == Vector3())
+	{
+		SetState(IDLE1);
+	}
 }
 
 void HolyPriest_in::Control()

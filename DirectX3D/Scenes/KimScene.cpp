@@ -6,6 +6,10 @@
 #include "Objects/Shop/Shop.h"
 #include "Objects/Inventory/Slot.h"
 
+#include "Objects/Skills/FireMage_Skill/F_005_PhoenixFlame.h"
+#include "Objects/Skills/FireMage_Skill/F_009_Combustion.h"
+#include "Objects/Skills/FireMage_Skill/F_010_Meteor.h"
+
 //#include "Objects/Character_ver2/CH_Base_ver2.h"
 //#include "Objects/Character_ver2/ProtectionWarrior_in.h"
 
@@ -16,15 +20,18 @@
 
 KimScene::KimScene()
 {
-	CH->PlayerSpawn(4);
+	CH->PlayerSpawn(3);
 
-	CH->NonPlayerSpawn(5);
+	CH->NonPlayerSpawn(3);
 	//CH->NonPlayerSpawn(2);
 	//CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(1);
 
 	MONSTER;
 	ARROW;
+
+	skills = new F_005_PhoenixFlame();
+	skills->SetOwner(CH->GetPlayerData());
 
 	//MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
 	//MONSTER->SpawnScarecrow(Vector3(10));
@@ -40,6 +47,7 @@ KimScene::KimScene()
 KimScene::~KimScene()
 {
 	delete particle;
+	delete skills;
 }
 
 void KimScene::Update()
@@ -132,6 +140,12 @@ void KimScene::Update()
 		}
 	}
 
+	if (KEY_DOWN('K'))
+	{
+		skills->UseSkill(targetMonster);
+	}
+
+	skills->Update();
 	CH->Update();
 	MONSTER->Update();
 	ARROW->Update();
@@ -144,6 +158,7 @@ void KimScene::PreRender()
 
 void KimScene::Render()
 {
+	skills->Render();
 	CH->Render();
 	MONSTER->Render();
 	ARROW->Render();
