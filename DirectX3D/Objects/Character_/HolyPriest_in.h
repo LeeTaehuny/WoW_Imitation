@@ -18,6 +18,7 @@ public:
 
 	virtual void Update() override;
 	virtual void Render() override;
+	virtual void GUIRender();
 
 public:
 	virtual void EquipWeapon(class Weapon* weapon) override;
@@ -44,6 +45,8 @@ private:
 	void Attack();
 	//void Casting();
 
+	void ai_attack();
+
 	// 상태 변경용 함수
 
 	// 이벤트 함수
@@ -55,5 +58,16 @@ private:
 
 private:
 	State curState = IDLE1;
+	float target_Proportion = 0;
+
+	float heal = false; // 회복할 아군이 있는지를 판별하기 위한 변수
+	float atk = false; // 공격할 적이 있는지를 판별하기 위한 변수
+
+	Collider* skillRange;
+	bool use002skill = false; // 002스킬을 사용할지 안할지를 판별하는 변수
+	bool use008skill = false; // 008 스킬을 사용중인지 아닌지를 판별하는 함수
+	float Max_pressSkill = 5.0f;
+	float pressSkill = Max_pressSkill;
+	bool isRun008skill;
 };
 

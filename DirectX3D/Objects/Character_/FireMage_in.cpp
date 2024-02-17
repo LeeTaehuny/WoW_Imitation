@@ -107,6 +107,10 @@ void FireMage_in::Render()
 	CH_Base_ver2::Render();
 }
 
+void FireMage_in::GUIRender()
+{
+}
+
 void FireMage_in::EquipWeapon(Weapon* weapon)
 {
 	if (weapon == nullptr) return;

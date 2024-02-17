@@ -26,6 +26,7 @@ H_002_Holy_Word_Sanctify::H_002_Holy_Word_Sanctify() : ActiveSkill(SkillType::No
 		isCooldown = false;
 
 		// // 마나 소모 : 3.5%
+		requiredMp = 35;
 		usingType = NON_Data;
 	}
 
@@ -140,7 +141,7 @@ void H_002_Holy_Word_Sanctify::Render()
 
 void H_002_Holy_Word_Sanctify::UseSkill()
 {
-	if (isCooldown || owner->GetStat().mp < 35) return;
+	if (isCooldown || owner->GetStat().mp < requiredMp) return;
 
 	hitCollider->SetActive(true);
 	hitCollider->Pos() = owner->GlobalPos();
@@ -152,7 +153,7 @@ void H_002_Holy_Word_Sanctify::UseSkill()
 	}
 
 	skillDamage = owner->GetStat().damage * 0.291f;
-	owner->GetStat().mp -= 35;
+	owner->GetStat().mp -= requiredMp;
 
 	animStart = 0;
 	isRun = true;

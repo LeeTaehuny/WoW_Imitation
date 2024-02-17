@@ -18,7 +18,7 @@ KimScene::KimScene()
 {
 	CH->PlayerSpawn(4);
 
-	CH->NonPlayerSpawn(4);
+	CH->NonPlayerSpawn(5);
 	//CH->NonPlayerSpawn(2);
 	//CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(1);
@@ -34,7 +34,7 @@ KimScene::KimScene()
 	//MONSTER->SpawnSkeleton(Vector3(10));	
 	//MONSTER->SpawnSkeletonKnight(Vector3(10));
 
-	particle = new ParticleSystem("TextData/Particles/Fire/fireBall.fx");
+	//particle = new ParticleSystem("TextData/Particles/Fire/fireBall.fx");
 }
 
 KimScene::~KimScene()
@@ -60,12 +60,16 @@ void KimScene::Update()
 	if (KEY_DOWN('P'))
 	{
 		int gang = Random(1, 6);
-		CH->NonPlayerSpawn(gang);
+		CH->NonPlayerSpawn(4);
 	}
 
-	if (KEY_DOWN('1'))
+	if (KEY_DOWN(VK_NUMPAD5))
 	{
-		particle->Play(Vector3());
+		CH->GetPlayerData()->GetStat().hp -= 100;;
+	}
+	if (KEY_DOWN(VK_NUMPAD6))
+	{
+		CH->GetCharcterData()[1]->GetStat().hp -= 100;
 	}
 
 	{
@@ -126,32 +130,8 @@ void KimScene::Update()
 				}
 			}
 		}
-
-		//if (KEY_DOWN('K'))
-		//{
-		//	if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skill))
-		//	{
-		//		if (UseType::character_Data == c->GetUsing())
-		//		{
-		//			c->UseSkill(targetNPC);
-		//		}
-		//		else if (UseType::collider_Data == c->GetUsing())
-		//		{
-		//
-		//		}
-		//		else if (UseType::monster_Data == c->GetUsing())
-		//		{
-		//			c->UseSkill(targetMonster);
-		//		}
-		//		else if (UseType::NON_Data == c->GetUsing())
-		//		{
-		//			c->UseSkill();
-		//		}
-		//	}
-		//}
 	}
 
-	UPDATE(particle);
 	CH->Update();
 	MONSTER->Update();
 	ARROW->Update();
@@ -164,8 +144,6 @@ void KimScene::PreRender()
 
 void KimScene::Render()
 {
-	RENDER(particle);
-
 	CH->Render();
 	MONSTER->Render();
 	ARROW->Render();

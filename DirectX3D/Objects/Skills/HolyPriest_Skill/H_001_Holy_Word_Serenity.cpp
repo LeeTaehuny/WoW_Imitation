@@ -20,6 +20,7 @@ H_001_Holy_Word_Serenity::H_001_Holy_Word_Serenity() : ActiveSkill(SkillType::Ta
 		isCooldown = false;
 
 		// // 마나 소모 : 2.5%
+		requiredMp = 25;
 		usingType = character_Data;
 	}
 
@@ -90,7 +91,7 @@ void H_001_Holy_Word_Serenity::Render()
 void H_001_Holy_Word_Serenity::UseSkill(CH_Base_ver2* chbase)
 {
 	if (isCooldown || chbase == nullptr ||
-		owner->GetStat().mp < 25) return;
+		owner->GetStat().mp < requiredMp) return;
 
 	if (HolyPriest_in* c = dynamic_cast<HolyPriest_in*>(owner))
 	{
@@ -98,7 +99,7 @@ void H_001_Holy_Word_Serenity::UseSkill(CH_Base_ver2* chbase)
 	}
 
 	skillDamage = owner->GetStat().damage * 0.86f;
-	owner->GetStat().mp -= 25;
+	owner->GetStat().mp -= requiredMp;
 
 	animStart = 0;
 	healingTarget = chbase;

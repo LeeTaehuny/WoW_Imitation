@@ -24,8 +24,6 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 	SetEvent(HIT, bind(&HolyPriest_in::EndHit, this), 0.9f);
 	SetEvent(DIE, bind(&HolyPriest_in::EndDie, this), 1);
 
-	
-
 	FOR(totalEvents.size())
 	{
 		eventIters[i] = totalEvents[i].begin();
@@ -33,7 +31,7 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 	this->SetActive(true);
 
 	mainHandBoneIndex = 37;
-	
+
 
 	skillList.push_back(new H_000_Basic_Atttack());
 	skillList[skillList.size() - 1]->SetOwner(this);
@@ -46,6 +44,27 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 
 	case CreatureType::NonPlayer:
 		range = new SphereCollider(20);
+
+		skillRange = new SphereCollider(5);
+		skillRange->SetParent(this);
+
+		skillList.push_back(new H_001_Holy_Word_Serenity());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new H_002_Holy_Word_Sanctify());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new H_003_Guardian_Spirit());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new H_004_Holy_Word_Chastise());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new H_006_Circle_Of_Healing());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new H_008_Divine_Hymn());
+		skillList[skillList.size() - 1]->SetOwner(this);
 		break;
 	}
 	range->SetParent(this);
@@ -72,6 +91,7 @@ HolyPriest_in::~HolyPriest_in()
 	delete motion;
 	delete myCollider;
 	delete range;
+	delete skillRange;
 
 	for (SkillBase* skill : skillList)
 		delete skill;
@@ -113,7 +133,26 @@ void HolyPriest_in::Render()
 	FOR(skillList.size())
 		skillList[i]->Render();
 
+	if (creatureType == CreatureType::NonPlayer)
+	{
+		skillRange->Render();
+	}
+
 	CH_Base_ver2::Render();
+}
+
+void HolyPriest_in::GUIRender()
+{
+	if (ImGui::TreeNode((tag + "_DataBase").c_str()))
+	{
+		Transform::GUIRender();
+
+		string Mtag = "H_" + to_string(index);
+		ImGui::Text((Mtag + "_HP : " + to_string((int)stat.hp)).c_str());
+		ImGui::Text((Mtag + "_MP : " + to_string(stat.mp)).c_str());
+
+		ImGui::TreePop();
+	}
 }
 
 void HolyPriest_in::EquipWeapon(Weapon* weapon)
@@ -138,7 +177,126 @@ void HolyPriest_in::PlayerUpdate()
 void HolyPriest_in::AIUpdate()
 {
 	if (!myPlayer) return;
-	AI_animation_Moving();
+
+	if (use002skill)
+	{
+		if (skillRange->IsCollision(characterSelectData->GetCollider()))
+		{
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[2]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					use002skill = false;
+					c->UseSkill();
+					return;
+				}
+			}
+		}
+		else
+		{
+			Vector3 velo = (characterSelectData->GlobalPos() - this->Pos()).GetNormalized();
+			this->Pos() += velo * moveSpeed * DELTA;
+			this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
+			skillRange->UpdateWorld();
+			SetState(WALK_F);
+		}
+	}
+	else if (use008skill)
+	{
+		if (skillRange->IsCollision(characterSelectData->GetCollider()))
+		{
+			pressSkill -= DELTA;
+			if (pressSkill <= 0)
+			{
+				pressSkill = Max_pressSkill;
+				ActionTickTime = Max_ActionTickTime;
+				if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[6]))
+				{
+					if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+					{
+						c->UseSkill();
+						use008skill = false;
+						return;
+					}
+				}
+			}
+		}
+		else
+		{
+			Vector3 velo = (characterSelectData->GlobalPos() - this->Pos()).GetNormalized();
+			this->Pos() += velo * moveSpeed * DELTA;
+			this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
+			skillRange->UpdateWorld();
+			SetState(WALK_F);
+		}
+	}
+	// 지금 공격할 타겟이 없다면
+	else if (!atkTarget)
+	{
+		AI_animation_Moving();
+	}
+	// 공격할 타겟이 있다면
+	else
+	{
+		ActionTickTime -= DELTA;
+		if (ActionTickTime <= 0)
+		{
+			ActionTickTime = Max_ActionTickTime;
+			if (characterSelectData == nullptr)
+			{
+				float min_Hpvalue = 0.60f;
+				vector<CH_Base_ver2*> characters = CH->GetCharcterData();
+				for (int i = 0; i < characters.size(); i++)
+				{
+					if (range->IsCollision(characters[i]->GetCollider()))
+					{
+						if (this == characters[i]) continue;
+
+						float cur_hpValue = characters[i]->GetStat().hp / characters[i]->GetStat().maxHp;
+						if (min_Hpvalue >= cur_hpValue)
+						{
+							min_Hpvalue = cur_hpValue;
+							characterSelectData = characters[i];
+						}
+					}
+				}
+			}
+			else if (!characterSelectData->Active())
+			{
+				characterSelectData = nullptr;
+				return;
+			}
+
+			if (characterSelectData)
+			{
+				// 회복 대상 캐릭터의 체력 비율 구하기
+				target_Proportion = characterSelectData->GetStat().hp / characterSelectData->GetStat().maxHp;
+				if (target_Proportion <= 0.6)
+				{
+					heal = true;
+					atk = false;
+				}
+				else
+				{
+					characterSelectData = nullptr;
+					heal = false;
+					atk = true;
+				}				
+			}
+			else
+			{
+				heal = false;
+				atk = true;
+			}
+
+			ai_attack();
+		}
+
+		if (!heal && !atk)
+		{
+			AI_animation_Moving();
+		}
+	}
 
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
@@ -328,6 +486,135 @@ void HolyPriest_in::Attack()
 		attackSignal[0] = false;
 
 		// TODO : 원거리 공격 만들기
+		skillList[0]->UseSkill(monsterSelectData);
+	}
+}
+
+void HolyPriest_in::ai_attack()
+{
+	// 점프, 사망, 피격, 공격 상태인 경우 리턴
+	if (curState == DIE || curState == HIT || curState == ATTACK1) return;
+
+	if (heal)
+	{
+		Vector3 poldirect = characterSelectData->GlobalPos() - this->GlobalPos();
+		this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
+
+		int imsiSkillStart = Random(1, 6);
+		switch (imsiSkillStart)
+		{
+		case 1:
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[1]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill(characterSelectData);
+					return;
+				}
+			}
+			break;
+		case 2:
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[2]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					use002skill = true;
+					return;
+				}
+			}
+			break;
+		case 3:
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[3]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill(characterSelectData);
+					return;
+				}
+			}
+			break;
+		case 4:
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[5]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill(characterSelectData);
+					return;
+				}
+			}
+			break;
+		case 5:
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[6]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill();
+					use008skill = true;
+					return;
+				}
+			}
+			break;
+		default:
+			break;
+		}
+
+		if (monsterSelectData == nullptr)
+		{
+			monsterSelectData = MONSTER->hitCollision(range);
+
+			if (!monsterSelectData)
+			{
+				heal = false;
+				atk = false;
+				return;
+			}
+		}
+		else if (!monsterSelectData->GetCollider()->Active())
+		{
+			monsterSelectData = nullptr;
+			heal = false;
+			atk = false;
+			return;
+		}
+		poldirect = monsterSelectData->GetCollider()->GlobalPos() - this->GlobalPos();
+		this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
+
+		skillList[0]->UseSkill(monsterSelectData);
+	}
+	else if (atk)
+	{
+		if (monsterSelectData == nullptr)
+		{
+			monsterSelectData = MONSTER->hitCollision(range);
+
+			if (!monsterSelectData)
+			{
+				heal = false;
+				atk = false;
+				return;
+			}
+		}
+		else if (!monsterSelectData->GetCollider()->Active())
+		{
+			monsterSelectData = nullptr;
+			heal = false;
+			atk = false;
+			return;
+		}
+
+		// 공격할 대상을 바라보게 하는 코드
+		Vector3 poldirect = monsterSelectData->GetCollider()->GlobalPos() - this->GlobalPos();
+		this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
+
+		if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[4]))
+		{
+			if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+			{
+				c->UseSkill(monsterSelectData);
+				return;
+			}
+		}
+
 		skillList[0]->UseSkill(monsterSelectData);
 	}
 }

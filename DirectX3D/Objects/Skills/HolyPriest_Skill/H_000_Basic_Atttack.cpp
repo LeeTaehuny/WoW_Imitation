@@ -9,7 +9,7 @@ H_000_Basic_Atttack::H_000_Basic_Atttack() : ActiveSkill(SkillType::Target)
 	// 기본 생성 요소
 	{
 		// 스킬 속도
-		speed = 5.0f;
+		speed = 20.0f;
 
 		// 스킬 데미지
 		skillDamage = 0.0f;
@@ -46,6 +46,12 @@ void H_000_Basic_Atttack::Update()
 	{
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
+		if (!targetMonster->GetCollider()->Active())
+		{
+			myCollider->SetActive(false);
+			isRun = false;
+			return;
+		}
 
 		direction = (targetMonster->GetCollider()->GlobalPos() - myCollider->GlobalPos()).GetNormalized();
 		myCollider->Pos() += direction * speed * DELTA;

@@ -25,6 +25,7 @@ H_006_Circle_Of_Healing::H_006_Circle_Of_Healing() : ActiveSkill(SkillType::Targ
 		isCooldown = false;
 
 		// // 마나 소모 : 3.3%
+		requiredMp = 33;
 		usingType = character_Data;
 	}
 
@@ -155,10 +156,10 @@ void H_006_Circle_Of_Healing::Render()
 void H_006_Circle_Of_Healing::UseSkill(CH_Base_ver2* chbase)
 {
 	if (isCooldown || chbase == nullptr ||
-		owner->GetStat().mp < 33) return;
+		owner->GetStat().mp < requiredMp) return;
 
 	skillDamage = owner->GetStat().damage * 0.99f;
-	owner->GetStat().mp -= 33;
+	owner->GetStat().mp -= requiredMp;
 
 	if (HolyPriest_in* c = dynamic_cast<HolyPriest_in*>(owner))
 	{

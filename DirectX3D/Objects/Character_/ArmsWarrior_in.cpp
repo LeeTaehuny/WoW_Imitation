@@ -85,6 +85,10 @@ void ArmsWarrior_in::Render()
 	CH_Base_ver2::Render();
 }
 
+void ArmsWarrior_in::GUIRender()
+{
+}
+
 void ArmsWarrior_in::EquipWeapon(Weapon* weapon)
 {
 	if (weapon == nullptr) return;

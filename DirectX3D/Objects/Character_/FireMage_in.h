@@ -18,6 +18,7 @@ public:
 
 	virtual void Update() override;
 	virtual void Render() override;
+	virtual void GUIRender();
 
 public:
 	void SetDoubleDamage(bool value) { isDouble = value; }

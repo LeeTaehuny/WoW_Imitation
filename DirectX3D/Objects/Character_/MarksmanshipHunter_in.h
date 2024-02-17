@@ -19,6 +19,7 @@ public:
 
 	virtual void Update() override;
 	virtual void Render() override;
+	virtual void GUIRender();
 
 public:
 	virtual void EquipWeapon(class Weapon* weapon) override;

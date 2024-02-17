@@ -24,7 +24,8 @@ H_008_Divine_Hymn::H_008_Divine_Hymn() : ActiveSkill(SkillType::NonTarget)
 		isRun = false;
 		isCooldown = false;
 
-		// // 마나 소모 : 2.5%
+		// // 마나 소모 : 5.0%
+		requiredMp = 50;
 		usingType = NON_Data;
 	}
 
@@ -98,7 +99,7 @@ void H_008_Divine_Hymn::Update()
 		if (tickTime <= 0)
 		{
 			tickTime = Max_tickTime;
-			owner->GetStat().mp -= 50;
+			owner->GetStat().mp -= requiredMp;
 
 			if (owner->GetStat().mp <= 0)
 			{

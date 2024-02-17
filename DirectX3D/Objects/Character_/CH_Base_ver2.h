@@ -34,6 +34,7 @@ public:
 	virtual void Update();
 	virtual void Render();
 	void UIRender();
+	virtual void GUIRender() {};
 
 	// �÷��̾�� ������Ʈ
 	virtual void PlayerUpdate() = 0;
@@ -129,6 +130,7 @@ protected:
 protected: // 평타 및 스킬을 사용할때 참고하기 위한 변수들
 	vector<bool> attackSignal; // 어떤 공격을 할지에 대한 판별용 벡터 변수
 	class MonsterBase* monsterSelectData; // 현재 선택된 몬스터의 정보를 받기 위한 변수
+	class CH_Base_ver2* characterSelectData;
 
 
 protected: // NPC ĳ���͸� �����ϱ� ���� ���� �� �Լ�

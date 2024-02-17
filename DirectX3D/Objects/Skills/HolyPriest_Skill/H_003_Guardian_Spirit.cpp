@@ -20,6 +20,7 @@ H_003_Guardian_Spirit::H_003_Guardian_Spirit() : ActiveSkill(SkillType::Target)
 		isCooldown = false;
 
 		// // 마나 소모 : 0.9%
+		requiredMp = 9;
 		usingType = character_Data;
 	}
 
@@ -111,10 +112,10 @@ void H_003_Guardian_Spirit::Render()
 void H_003_Guardian_Spirit::UseSkill(CH_Base_ver2* chbase)
 {
 	if (isRun || isCooldown || chbase == nullptr ||
-		owner->GetStat().mp < 9) return;
+		owner->GetStat().mp < requiredMp) return;
 
 	skillDamage = owner->GetStat().damage * 0.0291f;
-	owner->GetStat().mp -= 9;
+	owner->GetStat().mp -= requiredMp;
 
 	if (HolyPriest_in* c = dynamic_cast<HolyPriest_in*>(owner))
 	{

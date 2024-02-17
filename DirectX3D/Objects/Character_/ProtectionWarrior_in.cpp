@@ -84,6 +84,10 @@ void ProtectionWarrior_in::Render()
 	CH_Base_ver2::Render();
 }
 
+void ProtectionWarrior_in::GUIRender()
+{
+}
+
 void ProtectionWarrior_in::EquipWeapon(Weapon* weapon)
 {
 	if (weapon == nullptr) return;

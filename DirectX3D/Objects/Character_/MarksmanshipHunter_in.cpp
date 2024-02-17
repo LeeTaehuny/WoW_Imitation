@@ -127,6 +127,22 @@ void MarksmanshipHunter_in::Render()
 	CH_Base_ver2::Render();
 }
 
+void MarksmanshipHunter_in::GUIRender()
+{
+	if (ImGui::TreeNode((tag + "_DataBase").c_str()))
+	{
+		Transform::GUIRender();
+
+		string Mtag = "M_" + to_string(index);
+		ImGui::SliderFloat((tag + "_HP").c_str(), &stat.hp, 0, stat.maxHp);
+		//ImGui::SliderFloat((tag + "_MP").c_str(), (float*)&stat.mp, 0, stat.maxHp);
+		ImGui::Text((Mtag + "_HP : " + to_string((int)stat.hp)).c_str());
+		ImGui::Text((Mtag + "_MP : " + to_string(stat.mp)).c_str());
+
+		ImGui::TreePop();
+	}
+}
+
 void MarksmanshipHunter_in::EquipWeapon(Weapon* weapon)
 {
 	if (weapon == nullptr) return;

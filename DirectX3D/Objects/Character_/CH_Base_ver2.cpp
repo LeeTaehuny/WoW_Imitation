@@ -28,7 +28,6 @@ CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionT
 CH_Base_ver2::~CH_Base_ver2()
 {
 	SAFE_DEL(inventory);
-	SAFE_DEL(myPlayer);
 }
 
 void CH_Base_ver2::Update()
@@ -39,7 +38,7 @@ void CH_Base_ver2::Update()
 	{
 		mainHand->SetWorld(instancing->GetTransformByNode(index, mainHandBoneIndex));
 		mainHand->GlobalPos() = GlobalPos();
-
+	
 		weapon->Update();
 	}
 }
