@@ -2,6 +2,12 @@
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
 
+#include "Objects/Skills/ArmsWarrior_Skill/A_001_MortalStrike.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_002_Overpower.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_004_DiebytheSword.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_007_ColossusSmash.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_010_Bladestorm.h"
+
 ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::ProtectionWarrior)
 {
@@ -30,6 +36,23 @@ ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAni
 
 	case CreatureType::NonPlayer:
 		range = new SphereCollider(20);
+		attackRange = new SphereCollider(2);
+		attackRange->SetParent(this);
+
+		skillList.push_back(new A_001_MortalStrike());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new A_002_Overpower());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new A_004_DiebytheSword());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new A_007_ColossusSmash());
+		skillList[skillList.size() - 1]->SetOwner(this);
+
+		skillList.push_back(new A_010_Bladestorm());
+		skillList[skillList.size() - 1]->SetOwner(this);
 		break;
 	}
 	range->SetParent(this);
@@ -51,6 +74,7 @@ ArmsWarrior_in::~ArmsWarrior_in()
 	delete motion;
 	delete myCollider;
 	delete range;
+	delete attackRange;
 }
 
 void ArmsWarrior_in::Update()
@@ -70,6 +94,9 @@ void ArmsWarrior_in::Update()
 		break;
 	}
 
+	FOR(skillList.size())
+		skillList[i]->Update();
+
 	ExecuteEvent();
 	CH_Base_ver2::Update();
 	Transform::UpdateWorld();
@@ -80,6 +107,12 @@ void ArmsWarrior_in::Render()
 	// ��Ƽ�� ���°� �ƴ϶�� ������Ʈ���� ����
 	if (!Active()) return;
 
+	FOR(skillList.size())
+		skillList[i]->Render();
+
+	if (attackRange)
+		attackRange->Render();
+
 	myCollider->Render();
 	range->Render();
 	CH_Base_ver2::Render();
@@ -87,6 +120,18 @@ void ArmsWarrior_in::Render()
 
 void ArmsWarrior_in::GUIRender()
 {
+	if (ImGui::TreeNode((tag + "_DataBase").c_str()))
+	{
+		Transform::GUIRender();
+
+		string Mtag = "M_" + to_string(index);
+		//ImGui::SliderFloat((tag + "_HP").c_str(), &stat.hp, 0, stat.maxHp);
+		//ImGui::SliderFloat((tag + "_MP").c_str(), (float*)&stat.mp, 0, stat.maxHp);
+		ImGui::Text((Mtag + "_HP : " + to_string((int)stat.hp)).c_str());
+		ImGui::Text((Mtag + "_MP : " + to_string(stat.mp)).c_str());
+
+		ImGui::TreePop();
+	}
 }
 
 void ArmsWarrior_in::EquipWeapon(Weapon* weapon)
@@ -111,7 +156,7 @@ void ArmsWarrior_in::AddHp(float value)
 			stat.hp = stat.maxHp;
 		}
 	}
-	
+
 }
 
 void ArmsWarrior_in::PlayerUpdate()
@@ -127,7 +172,46 @@ void ArmsWarrior_in::PlayerUpdate()
 void ArmsWarrior_in::AIUpdate()
 {
 	if (!myPlayer) return;
-	AI_animation_Moving();
+
+	if (atkGannnnn)
+	{
+		if (attackRange->IsCollision(saveMonsterCollider))
+		{
+			atkGannnnn = false;
+		}
+		else
+		{
+			Vector3 velo = (saveMonsterCollider->GlobalPos() - this->Pos()).GetNormalized();
+			randomVelocity = velo;
+
+			this->Pos() += velo * moveSpeed * DELTA;
+			this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
+
+			attackRange->UpdateWorld();
+			SetState(WALK_F);
+		}
+	}
+	else if (!atkTarget)
+	{
+		AI_animation_Moving();
+	}
+	// 공격할 타겟이 있다면
+	else
+	{
+		if (curState == ATTACK1 || curState == ATTACK2) return;
+
+		ActionTickTime -= DELTA;
+		if (ActionTickTime <= 0)
+		{
+			ActionTickTime = Max_ActionTickTime;
+			ai_attack();
+		}
+
+		if (!monsterSelectData)
+		{
+			AI_animation_Moving();
+		}
+	}
 
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
@@ -175,6 +259,11 @@ void ArmsWarrior_in::AI_animation_Moving()
 
 		this->Pos() += velo * moveSpeed * DELTA;
 		SetState(WALK_F);
+	}
+
+	if (randomVelocity == Vector3())
+	{
+		SetState(IDLE1);
 	}
 }
 
@@ -323,6 +412,178 @@ void ArmsWarrior_in::Attack()
 			weapon->GetCollider()->SetActive(true);
 			weapon->SetDamage(stat.damage);
 		}
+	}
+}
+
+void ArmsWarrior_in::ai_attack()
+{
+	if (monsterSelectData == nullptr)
+	{
+		monsterSelectData = MONSTER->hitCollision(range);
+
+		if (!monsterSelectData)
+			return;
+
+		saveMonsterCollider = monsterSelectData->GetCollider();
+	}
+	else if (!monsterSelectData->GetTransform()->Active())
+	{
+		monsterSelectData = nullptr;
+		saveMonsterCollider = nullptr;
+		return;
+	}
+
+	attackRange->UpdateWorld();
+	if (!monsterSelectData->GetCollider()->Active()) return;
+
+	// 공격할 대상을 바라보게 하는 코드
+	Vector3 poldirect = monsterSelectData->GetTransform()->GlobalPos() - this->GlobalPos();
+	this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
+
+	if (impact == 0)
+	{
+		impact++;
+		imsiSkillStart = Random(1, 6);
+	}
+
+	switch (imsiSkillStart)
+	{
+	case 1:
+		attackRange->Scale() = Vector3(1, 1, 1);
+		attackRange->UpdateWorld();
+
+		if (attackRange->IsCollision(saveMonsterCollider))
+		{
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[0]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill();
+					impact = 0;
+					return;
+				}
+				imsiSkillStart = 0;
+				ActionTickTime = -1;
+			}
+		}
+		else
+		{
+			atkGannnnn = true;
+		}
+		break;
+
+	case 2:
+		attackRange->Scale() = Vector3(1, 1, 1);
+		attackRange->UpdateWorld();
+
+		if (attackRange->IsCollision(saveMonsterCollider))
+		{
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[1]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill();
+					impact = 0;
+					return;
+				}
+				imsiSkillStart = 0;
+				ActionTickTime = -1;
+			}
+		}
+		else
+		{
+			atkGannnnn = true;
+		}
+		break;
+
+	case 3:
+
+		if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[2]))
+		{
+			if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+			{
+				c->UseSkill();
+				impact = 0;
+				return;
+			}
+			imsiSkillStart = 0;
+			ActionTickTime = -1;
+		}
+		break;
+
+	case 4:
+		attackRange->Scale() = Vector3(7, 7, 7);
+		attackRange->UpdateWorld();
+
+		if (attackRange->IsCollision(saveMonsterCollider))
+		{
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[3]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill(monsterSelectData);
+					impact = 0;
+					return;
+				}
+				imsiSkillStart = 0;
+				ActionTickTime = -1;
+			}
+		}
+		else
+		{
+			atkGannnnn = true;
+		}
+		break;
+
+	case 5:
+		attackRange->Scale() = Vector3(2, 2, 2);
+		attackRange->UpdateWorld();
+
+		if (attackRange->IsCollision(saveMonsterCollider))
+		{
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[4]))
+			{
+				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
+				{
+					c->UseSkill();
+					impact = 0;
+					return;
+				}
+				imsiSkillStart = 0;
+				ActionTickTime = -1;
+			}
+		}
+		else
+		{
+			atkGannnnn = true;
+		}
+		break;
+
+	case 0:
+		attackRange->Scale() = Vector3(1, 1, 1);
+		attackRange->UpdateWorld();
+
+		if (attackRange->IsCollision(saveMonsterCollider))
+		{
+			SetState(ATTACK1);
+			// 무기가 존재하는 경우
+			if (weapon)
+			{
+				// 무기의 콜라이더를 켜주고, 플레이어의 데미지를 전달
+				weapon->GetCollider()->SetActive(true);
+				weapon->SetDamage(stat.damage);
+			}
+			impact = 0;
+			atkGannnnn = true;
+		}
+		else
+		{
+			impact = 0;
+			atkGannnnn = true;
+			return;
+		}
+
+		break;
 	}
 }
 

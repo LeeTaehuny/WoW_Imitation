@@ -20,9 +20,9 @@
 
 KimScene::KimScene()
 {
-	CH->PlayerSpawn(2);
+	CH->PlayerSpawn(1);
 
-	CH->NonPlayerSpawn(2);
+	CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(2);
 	//CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(1);

@@ -72,5 +72,5 @@ private:
 	bool skill002;
 	bool skill009;
 
-	int imsiSkillStart;
+	int imsiSkillStart = 0;
 };

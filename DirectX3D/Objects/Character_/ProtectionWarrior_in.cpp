@@ -154,8 +154,6 @@ void ProtectionWarrior_in::AIUpdate()
 		}
 		else
 		{
-
-
 			Vector3 velo = (saveMonsterCollider->GlobalPos() - this->Pos()).GetNormalized();
 			randomVelocity = velo;
 
@@ -430,7 +428,7 @@ void ProtectionWarrior_in::ai_attack()
 
 		if (attackRange->IsCollision(saveMonsterCollider))
 		{
-			if (P_001_Avengers_Shield* c = dynamic_cast<P_001_Avengers_Shield*>(skillList[0]))
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[0]))
 			{
 				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
 				{

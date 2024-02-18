@@ -51,6 +51,7 @@ private:
 	void Moving();
 	void Jump();
 	void Attack();
+	void ai_attack();
 	//void Casting();
 
 // 이벤트 함수
@@ -67,4 +68,14 @@ private:
 	bool isLifeDrain = false;
 
 	State curState = IDLE1;
+
+	// 전사의 실제 공격 사거리
+	Collider* attackRange;
+
+	// 받아온 몬스터의 콜라이더 정보를 저장하기 위한 변수
+	Collider* saveMonsterCollider;
+
+	int impact = 0;
+	bool atkGannnnn = false;
+	int imsiSkillStart = 0;
 };
