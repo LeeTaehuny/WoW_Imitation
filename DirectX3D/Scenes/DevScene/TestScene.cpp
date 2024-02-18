@@ -89,13 +89,13 @@ TestScene::TestScene()
 	//player->GetSkillList().push_back(skill9);
 	//player->GetSkillList().push_back(skill10);
 
-	CH->PlayerSpawn(2);
+	CH->PlayerSpawn(4);
 
 	MONSTER->SetTarget(CH->GetPlayerData()->GetCollider());
 
 	SKILL->Init(CH->GetPlayerData());
 
-	weapon = new Weapon("sword_1", WeaponType::Staff);
+	weapon = new Weapon("staff_1", WeaponType::Staff);
 
 	//if (Weapon* w = dynamic_cast<Weapon*>(weapon))
 	//{

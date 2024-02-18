@@ -37,7 +37,7 @@ A_007_ColossusSmash::A_007_ColossusSmash() : ActiveSkill(SkillType::Target)
 	requiredMp = 20;
 
 	// 아이콘 추가
-	icon = new Quad(L"Textures/Character_Skill_Icon/FireMage/01_Pyroblast.png");
+	icon = new Quad(L"Textures/Character_Skill_Icon/ArmsWarrior/07_ColossusSmash.png");
 
 	// 스킬 지연 발사
 	delayTime = 0.0f;

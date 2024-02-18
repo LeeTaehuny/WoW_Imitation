@@ -69,6 +69,8 @@ void SkillManager::Init(CH_Base_ver2* player)
 		// 스킬 배우기
 		Observer::Get()->AddParamEvent("LearnSkill", bind(&SkillManager::LearnSkill, this, placeholders::_1));
 	}
+
+	skillTreeFrame->SetActive(false);
 }
 
 void SkillManager::Update()
@@ -110,18 +112,370 @@ void SkillManager::PostRender()
 
 void SkillManager::CreateA_SkillTree()
 {
+	// 프레임 이미지 설정
+	skillTreeFrame->GetMaterial()->SetDiffuseMap(L"Textures/UI/A_skillTree.png");
+
+	// 스킬 생성
+	{
+		SkillBase* skill = new A_001_MortalStrike();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new A_002_Overpower();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new A_003_MartialProwess();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new A_004_DiebytheSword();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new A_005_SharpenedBlades();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new A_006_FueledbyViolence();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new A_007_ColossusSmash();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new A_008_Massacre();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new A_009_BluntInstruments();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new A_010_Bladestorm();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+	}
+
+	// 슬롯 위치 지정 & 이미지 지정
+	{
+		skillTreeSlots[0].first->Pos() = Vector3(2, 78, 0);
+		skillTreeSlots[0].first->GetMaterial()->SetDiffuseMap(skills[0]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[0].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[1].first->Pos() = Vector3(2, 36, 0);
+		skillTreeSlots[1].first->GetMaterial()->SetDiffuseMap(skills[1]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[1].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[2].first->Pos() = Vector3(-60, -6, 0);
+		skillTreeSlots[2].first->GetMaterial()->SetDiffuseMap(skills[2]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[2].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[3].first->Pos() = Vector3(62, -6, 0);
+		skillTreeSlots[3].first->GetMaterial()->SetDiffuseMap(skills[3]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[3].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[4].first->Pos() = Vector3(-120, -48, 0);
+		skillTreeSlots[4].first->GetMaterial()->SetDiffuseMap(skills[4]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[4].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[5].first->Pos() = Vector3(2, -46, 0);
+		skillTreeSlots[5].first->GetMaterial()->SetDiffuseMap(skills[5]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[5].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[6].first->Pos() = Vector3(-60, -94, 0);
+		skillTreeSlots[6].first->GetMaterial()->SetDiffuseMap(skills[6]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[6].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[7].first->Pos() = Vector3(62, -94, 0);
+		skillTreeSlots[7].first->GetMaterial()->SetDiffuseMap(skills[7]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[7].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[8].first->Pos() = Vector3(-60, -138, 0);
+		skillTreeSlots[8].first->GetMaterial()->SetDiffuseMap(skills[8]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[8].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[9].first->Pos() = Vector3(62, -138, 0);
+		skillTreeSlots[9].first->GetMaterial()->SetDiffuseMap(skills[9]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[9].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+	}
 }
 
 void SkillManager::CreateF_SkillTree()
 {
+	// 프레임 이미지 설정
+	skillTreeFrame->GetMaterial()->SetDiffuseMap(L"Textures/UI/F_skillTree.png");
+
+	// 스킬 생성
+	{
+		SkillBase* skill = new F_001_Pyroblast();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new F_002_FireBlast();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new F_003_Pyrotechnics();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new F_004_Scorch();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new F_005_PhoenixFlame();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new F_006_SurgingBlaze();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new F_007_SearingTouch();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new F_008_FlameOn();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new F_009_Combustion();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new F_010_Meteor();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+	}
+
+	// 슬롯 위치 지정 & 이미지 지정
+	{
+		skillTreeSlots[0].first->Pos() = Vector3(2, 68, 0);
+		skillTreeSlots[0].first->GetMaterial()->SetDiffuseMap(skills[0]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[0].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[1].first->Pos() = Vector3(-60, 15, 0);
+		skillTreeSlots[1].first->GetMaterial()->SetDiffuseMap(skills[1]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[1].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[2].first->Pos() = Vector3(65, 15, 0);
+		skillTreeSlots[2].first->GetMaterial()->SetDiffuseMap(skills[2]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[2].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[3].first->Pos() = Vector3(-117, -38, 0);
+		skillTreeSlots[3].first->GetMaterial()->SetDiffuseMap(skills[3]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[3].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[4].first->Pos() = Vector3(2, -38, 0);
+		skillTreeSlots[4].first->GetMaterial()->SetDiffuseMap(skills[4]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[4].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[5].first->Pos() = Vector3(123, -38, 0);
+		skillTreeSlots[5].first->GetMaterial()->SetDiffuseMap(skills[5]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[5].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[6].first->Pos() = Vector3(-117, -90, 0);
+		skillTreeSlots[6].first->GetMaterial()->SetDiffuseMap(skills[6]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[6].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[7].first->Pos() = Vector3(123, -90, 0);
+		skillTreeSlots[7].first->GetMaterial()->SetDiffuseMap(skills[7]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[7].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[8].first->Pos() = Vector3(57, -140, 0);
+		skillTreeSlots[8].first->GetMaterial()->SetDiffuseMap(skills[8]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[8].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[9].first->Pos() = Vector3(123, -140, 0);
+		skillTreeSlots[9].first->GetMaterial()->SetDiffuseMap(skills[9]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[9].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+	}
 }
 
 void SkillManager::CreateH_SkillTree()
 {
+	// 프레임 이미지 설정
+	skillTreeFrame->GetMaterial()->SetDiffuseMap(L"Textures/UI/H_skillTree.png");
+
+	// 스킬 생성
+	{
+		SkillBase* skill = new H_001_Holy_Word_Serenity();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new H_002_Holy_Word_Sanctify();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new H_003_Guardian_Spirit();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new H_004_Holy_Word_Chastise();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new H_005_Censure();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new H_006_Circle_Of_Healing();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new H_007_Cosmic_Ripple();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new H_008_Divine_Hymn();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new H_009_Enlightenment();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new H_010_Everlasting_Light();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+	}
+
+	// 슬롯 위치 지정 & 이미지 지정
+	{
+		skillTreeSlots[0].first->Pos() = Vector3(2, 67, 0);
+		skillTreeSlots[0].first->GetMaterial()->SetDiffuseMap(skills[0]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[0].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[1].first->Pos() = Vector3(-68, 16, 0);
+		skillTreeSlots[1].first->GetMaterial()->SetDiffuseMap(skills[1]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[1].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[2].first->Pos() = Vector3(2, 16, 0);
+		skillTreeSlots[2].first->GetMaterial()->SetDiffuseMap(skills[2]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[2].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[3].first->Pos() = Vector3(70, 16, 0);
+		skillTreeSlots[3].first->GetMaterial()->SetDiffuseMap(skills[3]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[3].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[4].first->Pos() = Vector3(70, -34, 0);
+		skillTreeSlots[4].first->GetMaterial()->SetDiffuseMap(skills[4]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[4].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[5].first->Pos() = Vector3(-115, -35, 0);
+		skillTreeSlots[5].first->GetMaterial()->SetDiffuseMap(skills[5]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[5].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[6].first->Pos() = Vector3(-68, -35, 0);
+		skillTreeSlots[6].first->GetMaterial()->SetDiffuseMap(skills[6]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[6].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[7].first->Pos() = Vector3(2, -84, 0);
+		skillTreeSlots[7].first->GetMaterial()->SetDiffuseMap(skills[7]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[7].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[8].first->Pos() = Vector3(70, -84, 0);
+		skillTreeSlots[8].first->GetMaterial()->SetDiffuseMap(skills[8]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[8].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[9].first->Pos() = Vector3(-69, -134, 0);
+		skillTreeSlots[9].first->GetMaterial()->SetDiffuseMap(skills[9]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[9].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+	}
 }
 
 void SkillManager::CreateM_SkillTree()
 {
+	// 프레임 이미지 설정
+	skillTreeFrame->GetMaterial()->SetDiffuseMap(L"Textures/UI/M_skillTree.png");
+
+	// 스킬 생성
+	{
+		SkillBase* skill = new M_001_Aimed_Shot();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new M_002_Crack_Shot();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new M_003_Rapid_Fire();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new M_004_Lone_Wolf();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new M_005_Chimaera_Shot();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new M_006_Streamline();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new M_007_Focused_Aim();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new M_008_Multi_Shot();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new M_009_Volley();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+
+		skill = new M_010_Wailing_Arrow();
+		skill->SetOwner(player);
+		skills.push_back(skill);
+	}
+
+	// 슬롯 위치 지정 & 이미지 지정
+	{
+		skillTreeSlots[0].first->Pos() = Vector3(2, 77, 0);
+		skillTreeSlots[0].first->GetMaterial()->SetDiffuseMap(skills[0]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[0].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[1].first->Pos() = Vector3(-69, 31, 0);
+		skillTreeSlots[1].first->GetMaterial()->SetDiffuseMap(skills[1]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[1].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[2].first->Pos() = Vector3(-69, -15, 0);
+		skillTreeSlots[2].first->GetMaterial()->SetDiffuseMap(skills[2]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[2].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[3].first->Pos() = Vector3(2, 31, 0);
+		skillTreeSlots[3].first->GetMaterial()->SetDiffuseMap(skills[3]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[3].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[4].first->Pos() = Vector3(76, 31, 0);
+		skillTreeSlots[4].first->GetMaterial()->SetDiffuseMap(skills[4]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[4].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[5].first->Pos() = Vector3(-69, -59, 0);
+		skillTreeSlots[5].first->GetMaterial()->SetDiffuseMap(skills[5]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[5].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[6].first->Pos() = Vector3(76, -15, 0);
+		skillTreeSlots[6].first->GetMaterial()->SetDiffuseMap(skills[6]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[6].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[7].first->Pos() = Vector3(-69, -101, 0);
+		skillTreeSlots[7].first->GetMaterial()->SetDiffuseMap(skills[7]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[7].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[8].first->Pos() = Vector3(-69, -144, 0);
+		skillTreeSlots[8].first->GetMaterial()->SetDiffuseMap(skills[8]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[8].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+		skillTreeSlots[9].first->Pos() = Vector3(76, -60, 0);
+		skillTreeSlots[9].first->GetMaterial()->SetDiffuseMap(skills[9]->GetIcon()->GetMaterial()->GetDiffuseMap());
+		skillTreeSlots[9].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+	}
 }
 
 void SkillManager::CreateP_SkillTree()
