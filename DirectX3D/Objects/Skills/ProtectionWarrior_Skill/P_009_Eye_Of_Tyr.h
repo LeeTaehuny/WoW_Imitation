@@ -15,4 +15,7 @@ private:
 
 	Quad* donut;
 	CH_Base_ver2* targetCharcter;
+
+	float Max_animStart = 0.45f;
+	float animStart = 0;
 };

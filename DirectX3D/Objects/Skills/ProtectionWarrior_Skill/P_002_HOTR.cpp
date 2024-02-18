@@ -32,7 +32,8 @@ P_002_HOTR::P_002_HOTR() : ActiveSkill(SkillType::Target)
 		isRun = false;
 		isCooldown = false;
 
-		// // 마나 소모 : 0.32%
+		// 마나 소모 : 5.0%
+		requiredMp = 50;
 		usingType = monster_Data;
 	}
 
@@ -152,11 +153,11 @@ void P_002_HOTR::Render()
 void P_002_HOTR::UseSkill(MonsterBase* monsterbase)
 {
 	if (isCooldown || monsterbase == nullptr ||
-		owner->GetStat().mp < 3.2f) return;
+		owner->GetStat().mp < requiredMp) return;
 	targetMonster = monsterbase;
 
 	skillDamage = owner->GetStat().damage * 0.85f;
-	owner->GetStat().mp -= 3.2f;
+	owner->GetStat().mp -= requiredMp;
 
 	myCollider->SetActive(true);
 	root->SetWorld(owner->GetInstancing()->GetTransformByNode(owner->GetIndex(), 38));

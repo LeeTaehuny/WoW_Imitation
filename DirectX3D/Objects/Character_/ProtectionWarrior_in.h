@@ -43,6 +43,7 @@ private:
 	void Moving();
 	void Jump();
 	void Attack();
+	void ai_attack();
 	//void Casting();
 
 	// 상태 변경용 함수
@@ -57,4 +58,19 @@ private:
 
 private:
 	State curState = IDLE1;
+
+	// 팔라딘의 실제 공격 사거리
+	Collider* attackRange;
+
+	// 받아온 몬스터의 콜라이더 정보를 저장하기 위한 변수
+	Collider* saveMonsterCollider;
+
+	int impact = 0;
+	bool atkGannnnn = false;
+
+	bool skill001;
+	bool skill002;
+	bool skill009;
+
+	int imsiSkillStart;
 };

@@ -20,9 +20,9 @@
 
 KimScene::KimScene()
 {
-	CH->PlayerSpawn(3);
+	CH->PlayerSpawn(2);
 
-	CH->NonPlayerSpawn(3);
+	CH->NonPlayerSpawn(2);
 	//CH->NonPlayerSpawn(2);
 	//CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(1);
@@ -30,7 +30,7 @@ KimScene::KimScene()
 	MONSTER;
 	ARROW;
 
-	skills = new F_005_PhoenixFlame();
+	skills = new P_009_Eye_Of_Tyr();
 	skills->SetOwner(CH->GetPlayerData());
 
 	//MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
@@ -124,8 +124,8 @@ void KimScene::Update()
 
 				if (targetMonster)
 				{
-					CH->GetPlayerData()->SetSelectTarget(targetMonster);
-					CH->GetPlayerData()->SetAttackSignal(0);
+					//CH->GetPlayerData()->SetSelectTarget(targetMonster);
+					//CH->GetPlayerData()->SetAttackSignal(0);
 				}
 
 				for (CH_Base_ver2* play : CH->GetCharcterData())
@@ -142,7 +142,7 @@ void KimScene::Update()
 
 	if (KEY_DOWN('K'))
 	{
-		skills->UseSkill(targetMonster);
+		skills->UseSkill();
 	}
 
 	skills->Update();

@@ -83,9 +83,6 @@ void ProtectionWarrior_in::Update()
 		break;
 	}
 
-	FOR(skillList.size())
-		skillList[i]->Update();
-
 	ExecuteEvent();
 	CH_Base_ver2::Update();
 	Transform::UpdateWorld();
@@ -98,9 +95,6 @@ void ProtectionWarrior_in::Render()
 
 	if (attackRange)
 		attackRange->Render();
-
-	FOR(skillList.size())
-		skillList[i]->Render();
 
 	myCollider->Render();
 	range->Render();
@@ -419,7 +413,7 @@ void ProtectionWarrior_in::ai_attack()
 	if (impact == 0)
 	{
 		impact++;
-		imsiSkillStart = Random(1, 4);
+		imsiSkillStart = Random(1, 2);
 	}
 
 	switch (imsiSkillStart)
@@ -430,7 +424,7 @@ void ProtectionWarrior_in::ai_attack()
 
 		if (attackRange->IsCollision(saveMonsterCollider))
 		{
-			if (P_001_Avengers_Shield* c = dynamic_cast<P_001_Avengers_Shield*>(skillList[0]))
+			if (ActiveSkill* c = dynamic_cast<ActiveSkill*>(skillList[0]))
 			{
 				if (!c->GetIsCooldown() && c->GetrequiredMp() <= this->stat.mp)
 				{
@@ -438,8 +432,6 @@ void ProtectionWarrior_in::ai_attack()
 					impact = 0;
 					return;
 				}
-				imsiSkillStart = 0;
-				ActionTickTime = -1;
 			}
 		}
 		else
@@ -462,8 +454,6 @@ void ProtectionWarrior_in::ai_attack()
 					impact = 0;
 					return;
 				}
-				imsiSkillStart = 0;
-				ActionTickTime = -1;
 			}
 		}
 		else
@@ -486,8 +476,6 @@ void ProtectionWarrior_in::ai_attack()
 					impact = 0;
 					return;
 				}
-				imsiSkillStart = 0;
-				ActionTickTime = -1;
 			}
 		}
 		else
@@ -510,12 +498,10 @@ void ProtectionWarrior_in::ai_attack()
 				weapon->GetCollider()->SetActive(true);
 				weapon->SetDamage(stat.damage);
 			}
-			impact = 0;
 			atkGannnnn = true;
 		}
 		else
 		{
-			impact = 0;
 			atkGannnnn = true;
 			return;
 		}

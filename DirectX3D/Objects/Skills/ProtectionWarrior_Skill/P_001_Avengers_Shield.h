@@ -12,6 +12,8 @@ public:
 	// 임펙트 함수
 	void Impact();
 
+	Collider* Getyad() { return Yad; }
+
 private:
 	// 사정 거리를 판별하기 위한 콜라이더
 	Collider* Yad;
@@ -30,4 +32,9 @@ private:
 	
 	// 날아간 방패가 적이랑 부딪힌 횟수
 	int impaction_count = 0;
+
+	float Max_animStart = 0.45f;
+	float animStart = 0;
+
+	int onejacdong = 0;
 };

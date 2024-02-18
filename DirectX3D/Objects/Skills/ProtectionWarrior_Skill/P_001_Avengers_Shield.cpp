@@ -21,7 +21,7 @@ P_001_Avengers_Shield::P_001_Avengers_Shield()
 
 	{
 		// 스킬 속도
-		speed = 30.0f;
+		speed = 20.0f;
 
 		// 스킬 데미지 (유즈 부분에서 플레이어의 공격력을 받아올 것임)
 		skillDamage = 0.0f;
@@ -34,7 +34,8 @@ P_001_Avengers_Shield::P_001_Avengers_Shield()
 		isRun = false;
 		isCooldown = false;
 
-		// 마나 소모 불명 : 약 1.5%정도
+		// 마나 소모 불명 : 약 5.5%정도
+		requiredMp = 55;
 		usingType = monster_Data;
 	}
 
@@ -71,6 +72,14 @@ void P_001_Avengers_Shield::Update()
 {
 	if (isRun)
 	{
+		animStart += DELTA;
+		if (animStart <= Max_animStart) return;
+		if (onejacdong == 0)
+		{
+			myCollider->SetActive(true);
+			onejacdong++;
+		}
+
 		targetMonster = three[impaction_count];
 
 		direction = (targetMonster->GetCollider()->GlobalPos() - myCollider->GlobalPos()).GetNormalized();
@@ -169,6 +178,7 @@ void P_001_Avengers_Shield::Update()
 				if (min_length == FLT_MAX)
 				{
 					impaction_count = 0;
+					onejacdong = 0;
 					myCollider->SetActive(false);
 					isRun = false;
 				}
@@ -252,6 +262,7 @@ void P_001_Avengers_Shield::Update()
 				if (min_length == FLT_MAX)
 				{
 					impaction_count = 0;
+					onejacdong = 0;
 					myCollider->SetActive(false);
 					isRun = false;
 				}
@@ -259,6 +270,7 @@ void P_001_Avengers_Shield::Update()
 			else if (impaction_count == 2)
 			{
 				impaction_count = 0;
+				onejacdong = 0;
 				myCollider->SetActive(false);
 				isRun = false;
 			}
@@ -278,6 +290,8 @@ void P_001_Avengers_Shield::Render()
 {
 	if (isRun)
 	{
+		if (animStart <= Max_animStart) return;
+
 		shielD->Render();
 		trail->Render();
 	}
@@ -286,7 +300,7 @@ void P_001_Avengers_Shield::Render()
 void P_001_Avengers_Shield::UseSkill(MonsterBase* monsterbase)
 {
 	if (isCooldown || monsterbase == nullptr ||
-		owner->GetStat().mp < 15.0f) return;
+		owner->GetStat().mp < requiredMp) return;
 	three[0] = monsterbase;
 	targetMonster = three[0];
 
@@ -300,13 +314,13 @@ void P_001_Avengers_Shield::UseSkill(MonsterBase* monsterbase)
 			c->SetState(ProtectionWarrior_in::State::SKILL1);
 		}
 
-		myCollider->SetActive(true);
 		myCollider->Pos() = owner->GlobalPos();
 		isRun = true;
 		isCooldown = true;
+		onejacdong = 0;
 
 		skillDamage = owner->GetStat().damage * 0.66f;
-		owner->GetStat().mp -= 15.0f;
+		owner->GetStat().mp -= requiredMp;
 
 		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 1.0f;
 		endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back() * 1.0f;

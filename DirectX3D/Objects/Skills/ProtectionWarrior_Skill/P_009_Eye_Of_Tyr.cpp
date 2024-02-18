@@ -30,7 +30,8 @@ P_009_Eye_Of_Tyr::P_009_Eye_Of_Tyr() : ActiveSkill(SkillType::NonTarget)
 		isRun = false;
 		isCooldown = false;
 
-		// // 마나 소모 불명 : 0.5%
+		// 마나 소모 불명 : 10%
+		requiredMp = 100;
 		usingType = NON_Data;
 	}
 
@@ -67,6 +68,8 @@ void P_009_Eye_Of_Tyr::Update()
 {
 	if (isRun)
 	{
+		animStart += DELTA;
+		if (animStart <= Max_animStart) return;
 		hitCollider->Pos() = owner->GlobalPos();
 		 
 		vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
@@ -130,6 +133,8 @@ void P_009_Eye_Of_Tyr::Render()
 {
 	if (isRun)
 	{
+		if (animStart <= Max_animStart) return;
+
 		blendState[1]->SetState();
 		depthState[1]->SetState();
 
@@ -142,7 +147,7 @@ void P_009_Eye_Of_Tyr::Render()
 
 void P_009_Eye_Of_Tyr::UseSkill()
 {
-	if (isCooldown || owner->GetStat().mp < 5) return;
+	if (isCooldown || owner->GetStat().mp < requiredMp) return;
 
 	if (ProtectionWarrior_in* c = dynamic_cast<ProtectionWarrior_in*>(owner))
 	{
@@ -150,7 +155,7 @@ void P_009_Eye_Of_Tyr::UseSkill()
 	}
 
 	skillDamage = owner->GetStat().damage * 0.56f;
-	owner->GetStat().mp -= 5;
+	owner->GetStat().mp -= requiredMp;
 
 	hitCollider->SetActive(true);
 	isRun = true;
