@@ -3,6 +3,9 @@
 
 BossMap::BossMap()
 {
+	skybox = new SkyBox(L"Textures/Landscape/Space.dds");
+	skybox->UpdateWorld();
+
 	Phase1 = new Model("LastBossMap1");		// 1페이즈의 땅 입니다
 	GroundColider1 = new Cylinder();
 	GroundColider1->SetParent(Phase1);
@@ -112,6 +115,7 @@ void BossMap::Update()
 		Phase1->SetActive(true);
 		GroundColider1->SetActive(true);
 		GroundColider1->UpdateWorld();
+	
 		for (int i = 0; i < disappears.size(); i++) 
 		{
 			disappears[i]->UpdateWorld();
@@ -144,6 +148,8 @@ void BossMap::Update()
 
 void BossMap::Render()
 {
+	skybox->Render();
+
 	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->Render(); // 페이즈가 넘어가도 변화하지 않는것들은 그냥 랜더 합니다
 	StairCollider->Render();
 	Chair_Ground->Render();
@@ -153,16 +159,16 @@ void BossMap::Render()
 	{
 	case 0:
 		Phase1->Render();
-		GroundColider1->Render();
+		//GroundColider1->Render();
 		for (int i = 0; i < disappears.size(); i++) 
 		{
 			disappears[i]->Render();
-			disappears_C[i]->Render();
+			//disappears_C[i]->Render();
 		}
 		break;
 	case 1:
 		Phase2[0]->Render(); // 2페이즈는 일단 땅만 랜더 합니다
-		GroundColider2->Render();
+		//GroundColider2->Render();
 		NoneRender();
 		break;
 	case 2:
@@ -171,19 +177,37 @@ void BossMap::Render()
 		break;
 	case 3:
 		Phase2[0]->Render();
-		GroundColider2->Render();
+		//GroundColider2->Render();
 		NoneRender();
 	}
 }
 
 bool BossMap::IsCollision(Collider* c)
 {
-	//if (GroundColider1->PushCollision(c)) return true;
-	//if (GroundColider2->PushCollision(c)) return true;
-	if (StairCollider->PushCollision(c)) return true;
+	if (StairCollider->PushCollision(c)) 
+	{
+		c->GetParent()->Pos().y += 0.1f;
+		return true;
+	} 
 	if (Chair_Ground->PushCollision(c)) return true;
 	if (Chair->PushCollision(c)) return true;
 
+	if (PhaseNum == 0)
+	{
+		for (int i = 0; i < disappears.size(); i++) 
+		{
+			if (disappears_C[i]->PushCollision((CapsuleCollider*)c)) return true;
+		}
+	}
+	if (PhaseNum == 0 || PhaseNum == 2)
+	{
+		if (GroundColider1->IsCapsuleCollision((CapsuleCollider*)c)) return true;
+	}
+	if (PhaseNum == 1 || PhaseNum == 3) 
+	{
+		if (GroundColider2->IsCapsuleCollision((CapsuleCollider*)c)) return true;
+	}
+	
 	//return false;
 }
 

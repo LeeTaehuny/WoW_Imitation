@@ -3,7 +3,7 @@
 
 ModelExportScene::ModelExportScene()
 {
-    //string name = "Rug";
+    //string name = "Roof";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
     //exporter = new ModelExporter(name, file);

@@ -48,21 +48,27 @@ void MapTestScene::Update()
 	instaning->Update();
 	player->Update();
 	PLAYER->UpdateWorld();
+	//Test->UpdateWorld();
 
 	if (KEY_DOWN('1'))	bossmap->SetPhase(0);
 	if (KEY_DOWN('2'))	bossmap->SetPhase(1);
 	if (KEY_DOWN('3'))	bossmap->SetPhase(2);
 	if (KEY_DOWN('4'))	bossmap->SetPhase(3);
 
-	//Test->UpdateWorld();
-
-	//if (bossmap->IsCollision(TestSize));
 	if (bossmap->IsCollision(player->GetCollider())) 
 	{
-		player->Pos().y += 0.1f;
+	
+	};
+	if (!bossmap->IsCollision(player->GetCollider()))
+	{
+		player->Pos().y -= 30 * DELTA;
 	};
 
-	if (player->Pos().y < 0) player->Pos().y = 0;
+	if (player->Pos().y < bossmap->GetFallDead()) 
+	{
+		player->Pos().y = bossmap->GetFallDead();
+		//player->Die();
+	}
 }
 
 void MapTestScene::Render()

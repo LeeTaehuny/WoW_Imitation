@@ -15,6 +15,7 @@ public:
 private:
     Dungeon* dungeon;                                                    
     SphereCollider* TestSize;
+    //SkyBox* skybox;
 
     ModelAnimatorInstancing* instaning;
     CH_Base_ver2* player;

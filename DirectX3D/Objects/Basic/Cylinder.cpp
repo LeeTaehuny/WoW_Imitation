@@ -196,7 +196,48 @@ void Cylinder::SetHeight(float newHeight)
     mesh->CreateMesh();
 }
 
-bool Cylinder::IsCapsuleCollision(CapsuleCollider* collider) 
+bool Cylinder::IsCapsuleCollision(CapsuleCollider* collider)
 {
-    return false;
+    Vector3 aDirection = Up();
+    Vector3 aA = GlobalPos() - aDirection * Height() * 0.5f;
+    Vector3 aB = GlobalPos() + aDirection * Height() * 0.5f;
+
+    Vector3 bDirection = collider->Up();
+    Vector3 bA = collider->GlobalPos() - bDirection * collider->Height() * 0.5f;
+    Vector3 bB = collider->GlobalPos() + bDirection * collider->Height() * 0.5f;
+
+    Vector3 v0 = bA - aA;
+    Vector3 v1 = bB - aA;
+    Vector3 v2 = bA - aB;
+    Vector3 v3 = bB - aB;
+
+    float d0 = Dot(v0, v0);
+    float d1 = Dot(v1, v1);
+    float d2 = Dot(v2, v2);
+    float d3 = Dot(v3, v3);
+
+    Vector3 bestA;
+    if (d2 < d0 || d2 < d1 || d3 < d0 || d3 > d1)
+        bestA = aB;
+    else
+        bestA = aA;
+
+    Vector3 bestB = ClosestPointOnLine(bA, bB, bestA);
+    bestA = ClosestPointOnLine(aA, aB, bestB);
+    bestB = ClosestPointOnLine(bA, bB, bestA);
+
+    float distance = Distance(bestA, bestB);
+
+    return distance <= (Radius() + collider->Radius());
+}
+
+bool Cylinder::PushCollision(CapsuleCollider* collider)
+{
+    if (!IsCapsuleCollision(collider)) return false;
+
+    Vector3 dir = (collider->GlobalPos() - GlobalPos()).GetNormalized();
+
+    collider->GetParent()->Pos() += dir * 100 * DELTA;
+
+    return true;
 }

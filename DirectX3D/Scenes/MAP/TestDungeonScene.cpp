@@ -30,7 +30,8 @@ TestDungeonScene::TestDungeonScene()
 	//instaning->Pos() = dungeon->GetSpawnPoint_P();
 	player->Pos() = dungeon->GetSpawnPoint_P();
 
-
+	//skybox = new SkyBox(L"Textures/Landscape/Space.dds");
+	//skybox->UpdateWorld();
 
 	//dungeon->Rot().y += 3.15f;
 	//dungeon->Scale() *= 6.0f;
@@ -79,10 +80,11 @@ void TestDungeonScene::Update()
 
 void TestDungeonScene::Render()
 {
+	//skybox->Render();
+	dungeon->Render();
 	instaning->Render();
 	player->Render();
 
-	dungeon->Render();
 	TestSize->Render();
 	PLAYER->Render();
 }

@@ -8,8 +8,11 @@ Dungeon::Dungeon() //: Transform()
 	//terrain->Rot().y = 0.0f;
 	//terrain->Rot().z = 0.0f;
 
-	//skybox = new SkyBox(L"Textures/Landscape/BlueSky.dds");
-	//skybox->UpdateWorld();
+	skybox = new SkyBox(L"Textures/Landscape/Space.dds");
+	skybox->UpdateWorld();
+	//TestSky = new Model("SkyBox_D");
+	//TestSky->Scale() *= 60.0f;
+	//TestSky->Pos().y += 100.0f;
 
 	Tiles.resize(98);
 	float xgap = 6.0f;
@@ -20,6 +23,7 @@ Dungeon::Dungeon() //: Transform()
 	{
 		Tiles[i] = new Quad(L"Textures/Landscape/Tile_Dungeon.png");
 		Tiles[i]->Scale() *= 0.0235f;
+		Tiles[i]->Pos().y += 0.01f;
 		Tiles[i]->Rot().x += 1.57f;
 
 		Tiles[i]->Pos().x = Xcurrent;
@@ -41,6 +45,7 @@ Dungeon::Dungeon() //: Transform()
 	{
 		Tiles2[i] = new Quad(L"Textures/Landscape/Tile_Dungeon.png");
 		Tiles2[i]->Scale() *= 0.0235f;
+		Tiles2[i]->Pos().y += 0.01f;
 		Tiles2[i]->Rot().x += 1.57f;
 
 		Tiles2[i]->Pos().x = Xcurrent;
@@ -61,6 +66,7 @@ Dungeon::Dungeon() //: Transform()
 	{
 		Tiles3[i] = new Quad(L"Textures/Landscape/Tile_Dungeon2.png");
 		Tiles3[i]->Scale() *= 0.0235f;
+		Tiles3[i]->Pos().y += 0.01f;
 		Tiles3[i]->Rot().x += 1.57f;
 
 		Tiles3[i]->Pos().x = Xcurrent;
@@ -75,11 +81,19 @@ Dungeon::Dungeon() //: Transform()
 		}
 	}
 
-	//Roof = new Model("Roof");
-	//Roof->Pos().y += 100;
-	//Roof->Pos().z += 100;
-	//Roof->Pos().x += 100;
-
+	Roof = new Model("Roof");
+	Roof->Pos().y -= 1.5;
+	Roof->Pos().x += 765;
+	Roof->Scale().y *= 22.5f;
+	Roof->Scale().x *= 25.0f;
+	Roof->Scale().z *= 20.0f;
+	Roofi = new Model("Roof");
+	//Roofi->Pos().y -= 1.5;
+	Roofi->Pos().x += 765;
+	Roofi->Pos().y += 200;
+	Roofi->Scale().x *= 25.0f;
+	Roofi->Scale().z *= 20.0f;
+	Roofi->Rot().x -= 3.15f;
 
 	Gates.resize(6);
 	Gates[0] = new Model("Gate");
@@ -317,7 +331,7 @@ Dungeon::Dungeon() //: Transform()
 
 	Grownd_Circle = new Model("Grownd_Circle");
 	Grownd_Circle->Pos().x += 762.5;
-	Grownd_Circle->Pos().y -= 3.5;
+	Grownd_Circle->Pos().y -= 3.45;
 	Grownd_Circle->Scale() *= 10.0;
 
 	IceWall = new Model("IceWall");
@@ -477,6 +491,9 @@ Dungeon::Dungeon() //: Transform()
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->SetParent(Gates[0]);
 	for (int i = 0; i < Ice_debris.size(); ++i) Ice_debris[i]->SetParent(Gates[0]);
 	Ice_Broken->SetParent(Gates[0]);
+	//TestSky->SetParent(Gates[0]);
+	Roof->SetParent(Gates[0]);
+	Roofi->SetParent(Gates[0]);
 
 	Gates[0]->Pos().y += 75.0f;
 	for (int i = 0; i < Walls_L.size(); ++i) Walls_L[i]->Pos().y -= 75.0f;
@@ -527,7 +544,9 @@ void Dungeon::Update()
 	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->UpdateWorld();
 	for (int i = 0; i < Tiles3.size(); ++i) Tiles3[i]->UpdateWorld();
 
-	//Roof->UpdateWorld();
+	Roof->UpdateWorld();
+	Roofi->UpdateWorld();
+	//TestSky->UpdateWorld();
 
 	for (int i = 0; i < Gates.size(); ++i) Gates[i]->UpdateWorld();
 	if (open) DoorMove();
@@ -614,13 +633,16 @@ void Dungeon::Update()
 void Dungeon::Render()
 {
 	//terrain->Render();
+	skybox->Render();
 
 	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->Render();
 	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->Render();
 	for (int i = 0; i < Tiles3.size(); ++i) Tiles3[i]->Render();
 
-	//skybox->Render();
-	//Roof->Render();
+	
+	//TestSky->Render();
+	Roof->Render();
+	Roofi->Render();
 
 	for (int i = 0; i < Gates.size(); ++i) Gates[i]->Render();
 

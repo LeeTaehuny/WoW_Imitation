@@ -43,7 +43,9 @@ private:
 	vector<Model*> Pillar;
 
 	Model* Roof;
+	Model* Roofi;
 	SkyBox* skybox;
+	//Model* TestSky;
 	vector<Quad*> Tiles;
 	vector<Quad*> Tiles2;
 	vector<Quad*> Tiles3;
