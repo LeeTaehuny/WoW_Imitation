@@ -68,6 +68,10 @@ void SkillManager::Init(CH_Base_ver2* player)
 	{
 		// 스킬 배우기
 		Observer::Get()->AddParamEvent("LearnSkill", bind(&SkillManager::LearnSkill, this, placeholders::_1));
+
+		// 스킬 창 이동
+		Observer::Get()->AddEvent("MoveSkillFrame", bind(&SkillManager::MoveSkillFrame, this));
+		Observer::Get()->AddEvent("StopSkillFrame", bind(&SkillManager::StopSkillFrame, this));
 	}
 
 	skillTreeFrame->SetActive(false);
@@ -107,7 +111,6 @@ void SkillManager::PostRender()
 	{
 		slot.first->Render();
 	}
-
 }
 
 void SkillManager::CreateA_SkillTree()
@@ -568,6 +571,49 @@ void SkillManager::CreateP_SkillTree()
 		skillTreeSlots[9].first->GetMaterial()->SetDiffuseMap(skills[9]->GetIcon()->GetMaterial()->GetDiffuseMap());
 		skillTreeSlots[9].first->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
 	}
+}
+
+void SkillManager::MoveSkillFrame()
+{
+	// 스킬이 선택 중이면 종료
+	if (bIsSelected) return;
+
+	// 스킬트리 프레임이 선택되었다면?
+	if (skillTreeFrame->GetSelect())
+	{
+		for (pair<Slot*, bool> slot : skillTreeSlots)
+		{
+			// 슬롯이 선택된 것이 아닌지 체크하기
+			if (mousePos.x <= slot.first->GlobalPos().x + slot.first->GetSize().x && mousePos.x >= slot.first->GlobalPos().x - slot.first->GetSize().x &&
+				mousePos.y <= slot.first->GlobalPos().y + slot.first->GetSize().y && mousePos.y >= slot.first->GlobalPos().y - slot.first->GetSize().y)
+			{
+				return;
+			}
+		}
+
+		// 마우스 이동량의 Delta값 만큼 이동시키기
+		if (!bIsMove)
+		{
+			prevPos = mousePos;
+			bIsMove = true;
+		}
+		else
+		{
+			float deltaX = prevPos.x - mousePos.x;
+			float deltaY = prevPos.y - mousePos.y;
+
+			skillTreeFrame->Pos().x += -deltaX;
+			skillTreeFrame->Pos().y += -deltaY;
+
+			prevPos = mousePos;
+		}
+	}
+}
+
+void SkillManager::StopSkillFrame()
+{
+	// 이동중이 아니라고 설정
+	bIsMove = false;
 }
 
 void SkillManager::LearnSkill(void* slot)

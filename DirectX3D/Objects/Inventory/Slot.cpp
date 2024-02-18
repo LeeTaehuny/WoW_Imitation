@@ -96,6 +96,7 @@ void Slot::OnPress()
 	case SlotType::Status_Slot:
 		break;
 	case SlotType::SkillTree_Frame:
+		Observer::Get()->ExcuteEvent("MoveSkillFrame");
 		break;
 	case SlotType::SkillTree_Slot:
 		break;
@@ -121,6 +122,7 @@ void Slot::OnRelease()
 	case SlotType::Status_Slot:
 		break;
 	case SlotType::SkillTree_Frame:
+		Observer::Get()->ExcuteEvent("StopSkillFrame");
 		break;
 	case SlotType::SkillTree_Slot:
 		break;

@@ -27,7 +27,7 @@ public:
 
 // Getter & Setter
 public:
-	vector<InventoryItem>& GetInventory() { return inventory; }
+	vector<class Item*>& GetInventory() { return inventory; }
 	const vector<class Slot*>& GetInvSlots() { return invSlot; }
 
 	int GetTempIndex() { return tempIndex; }
@@ -49,7 +49,7 @@ private:
 // Member Variable
 private:
 	// 정보를 담아줄 인벤토리
-	vector<InventoryItem> inventory;
+	vector<Item*> inventory;
 
 	// UI
 	int MAX_COUNT = 28;		// 인벤토리 칸 수

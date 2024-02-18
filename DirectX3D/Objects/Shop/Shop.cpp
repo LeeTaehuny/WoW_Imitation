@@ -30,7 +30,7 @@ Shop::Shop()
 	items.resize(28);
 
 	// UI 설정
-	shopFrame = new Slot(L"Textures/UI/shop_frame.png", SlotType::Inventory_Frame);
+	shopFrame = new Slot(L"Textures/UI/shop_frame.png", SlotType::Shop_Frame);
 
 	shopFrame->Scale() *= 1.75f;
 	shopFrame->Pos() = { CENTER_X * 0.5f, CENTER_Y, 1.0f };

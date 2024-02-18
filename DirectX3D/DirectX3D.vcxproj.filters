@@ -223,6 +223,7 @@
     <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\ArrowManager.cpp" />
     <ClCompile Include="Objects\UI\StatusUI.cpp" />
     <ClCompile Include="Objects\Skills\SkillManager.cpp" />
+    <ClCompile Include="Objects\UI\QuickSlot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.h" />
@@ -242,6 +243,7 @@
     <ClInclude Include="Objects\UI\StatusUI.h" />
     <ClInclude Include="Objects\Skills\SkillManager.h" />
     <ClInclude Include="SkillHeader.h" />
+    <ClInclude Include="Objects\UI\QuickSlot.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Character_\CH_Manager.h" />

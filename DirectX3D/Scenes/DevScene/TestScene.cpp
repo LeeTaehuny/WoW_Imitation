@@ -28,6 +28,7 @@
 #include "Objects/Skills/ArmsWarrior_Skill/A_010_Bladestorm.h"
 
 #include "Objects/Skills/SkillManager.h"
+#include "Objects/UI/QuickSlot.h"
 
 
 TestScene::TestScene()
@@ -93,6 +94,8 @@ TestScene::TestScene()
 
 	MONSTER->SetTarget(CH->GetPlayerData()->GetCollider());
 
+	slot = new QuickSlot(CH->GetPlayerData());
+
 	SKILL->Init(CH->GetPlayerData());
 
 	weapon = new Weapon("staff_1", WeaponType::Staff);
@@ -143,6 +146,8 @@ TestScene::TestScene()
 	//skill10 = new F_010_Meteor();
 	//skill10->SetOwner(CH->GetPlayerData());
 	//skill10->Init();
+
+
 }
 
 TestScene::~TestScene()
@@ -153,6 +158,7 @@ void TestScene::Update()
 {
 	SKILL->Update();
 	shop->Update();
+	slot->Update();
 	//
 	//// 임시 스킬 사용 테스트 (좌클릭 타겟 설정, K : 스킬 사용)
 	//{
@@ -305,8 +311,10 @@ void TestScene::PostRender()
 {
 	SKILL->PostRender();
 	//player->UIRender();
-	//shop->UIRender();
+	shop->UIRender();
 	CH->PostRender();
+
+	slot->RenderUI();
 
 }
 

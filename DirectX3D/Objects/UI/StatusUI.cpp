@@ -93,8 +93,8 @@ void StatusUI::InteractWithPlayer()
 					mousePos.y <= slot->GlobalPos().y + slot->GetSize().y && mousePos.y >= slot->GlobalPos().y - slot->GetSize().y)
 				{
 					// 해당 칸의 아이템 저장
-					tempItem = player->GetInventory()->GetInventory()[idx].item;
-					tempIndex = player->GetInventory()->GetInventory()[idx].index;
+					tempItem = player->GetInventory()->GetInventory()[idx];
+					tempIndex = idx;
 				}
 
 				idx++;
@@ -123,7 +123,7 @@ void StatusUI::InteractWithPlayer()
 							if (weapon != nullptr)
 							{
 								// 장착했던 무기가 있는 경우 교체
-								player->GetInventory()->GetInventory()[tempIndex].item = weapon;
+								player->GetInventory()->GetInventory()[tempIndex] = weapon;
 								weapon = tempItem;
 
 								player->EquipWeapon(dynamic_cast<Weapon*>(weapon));
@@ -137,8 +137,7 @@ void StatusUI::InteractWithPlayer()
 								player->EquipWeapon(dynamic_cast<Weapon*>(weapon));
 
 								// 플레이어 인벤토리 비우기
-								player->GetInventory()->GetInventory()[tempIndex].item = nullptr;
-								player->GetInventory()->GetInventory()[tempIndex].quantity = 0;
+								player->GetInventory()->GetInventory()[tempIndex] = nullptr;
 							}
 
 							// 슬롯 이미지 설정
@@ -163,7 +162,7 @@ void StatusUI::InteractWithPlayer()
 							if (weapon != nullptr)
 							{
 								// 장착했던 무기가 있는 경우 교체
-								player->GetInventory()->GetInventory()[tempIndex].item = weapon;
+								player->GetInventory()->GetInventory()[tempIndex] = weapon;
 								weapon = tempItem;
 
 								player->EquipWeapon(dynamic_cast<Weapon*>(weapon));
@@ -177,8 +176,7 @@ void StatusUI::InteractWithPlayer()
 								player->EquipWeapon(dynamic_cast<Weapon*>(weapon));
 
 								// 플레이어 인벤토리 비우기
-								player->GetInventory()->GetInventory()[tempIndex].item = nullptr;
-								player->GetInventory()->GetInventory()[tempIndex].quantity = 0;
+								player->GetInventory()->GetInventory()[tempIndex] = nullptr;
 							}
 
 							// 슬롯 이미지 설정
@@ -203,7 +201,7 @@ void StatusUI::InteractWithPlayer()
 							if (weapon != nullptr)
 							{
 								// 장착했던 무기가 있는 경우 교체
-								player->GetInventory()->GetInventory()[tempIndex].item = weapon;
+								player->GetInventory()->GetInventory()[tempIndex] = weapon;
 								weapon = tempItem;
 
 								player->EquipWeapon(dynamic_cast<Weapon*>(weapon));
@@ -217,8 +215,7 @@ void StatusUI::InteractWithPlayer()
 								player->EquipWeapon(dynamic_cast<Weapon*>(weapon));
 
 								// 플레이어 인벤토리 비우기
-								player->GetInventory()->GetInventory()[tempIndex].item = nullptr;
-								player->GetInventory()->GetInventory()[tempIndex].quantity = 0;
+								player->GetInventory()->GetInventory()[tempIndex] = nullptr;
 							}
 
 							// 슬롯 이미지 설정
@@ -243,7 +240,7 @@ void StatusUI::InteractWithPlayer()
 							if (weapon != nullptr)
 							{
 								// 장착했던 무기가 있는 경우 교체
-								player->GetInventory()->GetInventory()[tempIndex].item = weapon;
+								player->GetInventory()->GetInventory()[tempIndex] = weapon;
 								weapon = tempItem;
 
 								player->EquipWeapon(dynamic_cast<Weapon*>(weapon));
@@ -257,8 +254,7 @@ void StatusUI::InteractWithPlayer()
 								player->EquipWeapon(dynamic_cast<Weapon*>(weapon));
 
 								// 플레이어 인벤토리 비우기
-								player->GetInventory()->GetInventory()[tempIndex].item = nullptr;
-								player->GetInventory()->GetInventory()[tempIndex].quantity = 0;
+								player->GetInventory()->GetInventory()[tempIndex] = nullptr;
 							}
 
 							// 슬롯 이미지 설정
@@ -283,7 +279,7 @@ void StatusUI::InteractWithPlayer()
 							if (weapon != nullptr)
 							{
 								// 장착했던 무기가 있는 경우 교체
-								player->GetInventory()->GetInventory()[tempIndex].item = weapon;
+								player->GetInventory()->GetInventory()[tempIndex] = weapon;
 								weapon = tempItem;
 
 								player->EquipWeapon(dynamic_cast<Weapon*>(weapon));
@@ -297,8 +293,7 @@ void StatusUI::InteractWithPlayer()
 								player->EquipWeapon(dynamic_cast<Weapon*>(weapon));
 
 								// 플레이어 인벤토리 비우기
-								player->GetInventory()->GetInventory()[tempIndex].item = nullptr;
-								player->GetInventory()->GetInventory()[tempIndex].quantity = 0;
+								player->GetInventory()->GetInventory()[tempIndex] = nullptr;
 							}
 
 							// 슬롯 이미지 설정
