@@ -11,7 +11,7 @@ struct InventoryItem
 class Inventory : public Transform
 {
 public:
-	Inventory();
+	Inventory(class CH_Base_ver2* player);
 	~Inventory();
 
 	void Update();
@@ -60,9 +60,10 @@ private:
 	bool bIsMove = false;
 	Vector3 prevPos;
 
-	// 클릭시 마우스에서 스폰될 이미지
-	Quad* mouseImg;
 	// 클릭시 저장될 객체
 	int tempIndex;
+
+	// 플레이어 저장용 변수
+	class CH_Base_ver2* player;
 };
 

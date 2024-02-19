@@ -90,15 +90,11 @@ TestScene::TestScene()
 	//player->GetSkillList().push_back(skill9);
 	//player->GetSkillList().push_back(skill10);
 
-	CH->PlayerSpawn(4);
+	CH->PlayerSpawn(3);
 
 	MONSTER->SetTarget(CH->GetPlayerData()->GetCollider());
 
-	slot = new QuickSlot(CH->GetPlayerData());
-
 	SKILL->Init(CH->GetPlayerData());
-
-	weapon = new Weapon("staff_1", WeaponType::Staff);
 
 	//if (Weapon* w = dynamic_cast<Weapon*>(weapon))
 	//{
@@ -158,7 +154,6 @@ void TestScene::Update()
 {
 	SKILL->Update();
 	shop->Update();
-	slot->Update();
 	//
 	//// 임시 스킬 사용 테스트 (좌클릭 타겟 설정, K : 스킬 사용)
 	//{
@@ -313,9 +308,6 @@ void TestScene::PostRender()
 	//player->UIRender();
 	shop->UIRender();
 	CH->PostRender();
-
-	slot->RenderUI();
-
 }
 
 void TestScene::GUIRender()

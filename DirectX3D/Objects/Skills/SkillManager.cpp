@@ -93,6 +93,26 @@ void SkillManager::Update()
 
 	if (!skillTreeFrame->Active()) return;
 
+	if (KEY_UP(VK_LBUTTON))
+	{
+
+		if (tempIndex != -1)
+		{
+			skillTreeSlots[tempIndex].first->SetSelect(false);
+			skillTreeSlots[tempIndex].first->SetCilck(false);
+		}
+
+		for (pair<Slot*, bool> slot : skillTreeSlots)
+		{
+			if (mousePos.x > slot.first->GlobalPos().x + 33.0f || mousePos.x < slot.first->GlobalPos().x - 33.0f &&
+				mousePos.y > slot.first->GlobalPos().y + 33.0f || mousePos.y < slot.first->GlobalPos().y - 33.0f)
+			{
+				tempIndex = -1;
+			}
+		}
+	}
+
+
 	skillTreeFrame->Update();
 
 	for (pair<Slot*, bool> slot : skillTreeSlots)
@@ -111,6 +131,11 @@ void SkillManager::PostRender()
 	{
 		slot.first->Render();
 	}
+}
+
+bool SkillManager::GetActive()
+{
+	return skillTreeFrame->Active();
 }
 
 void SkillManager::CreateA_SkillTree()
@@ -581,6 +606,15 @@ void SkillManager::MoveSkillFrame()
 	// 스킬트리 프레임이 선택되었다면?
 	if (skillTreeFrame->GetSelect())
 	{
+		// 슬롯이 선택된 것이 아닌지 체크하기
+		for (pair<Slot*, bool> slot : skillTreeSlots)
+		{
+			if (slot.first->GetSelect())
+			{
+				return;
+			}
+		}
+
 		for (pair<Slot*, bool> slot : skillTreeSlots)
 		{
 			// 슬롯이 선택된 것이 아닌지 체크하기
@@ -635,6 +669,8 @@ void SkillManager::LearnSkill(void* slot)
 
 		// 인덱스가 범위를 넘었다면 종료
 		if (idx >= 10) return;
+
+		tempIndex = idx;
 
 		// 만약 해당 스킬이 이미 배워진 것이라면 종료
 		if (skillTreeSlots[idx].second == true) return;

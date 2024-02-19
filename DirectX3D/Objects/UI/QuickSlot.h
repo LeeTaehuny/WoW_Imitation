@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Objects/Inventory/Inventory.h"
 
 
@@ -15,32 +15,43 @@ public:
 	~QuickSlot();
 
 	void Update();
-	void RenderUI();
+	void UIRender();
+
+public:
+	vector<QuickSlotItem>& GetQuickSlotItems() { return items; }
 
 private:
-	// Äü½½·Ô ÃÊ±âÈ­¿ë ÇÔ¼ö
+	// í€µìŠ¬ë¡¯ ì´ˆê¸°í™”ìš© í•¨ìˆ˜
 	void InitSlot();
-	// Á¶ÀÛ¿ë ÇÔ¼ö
+	// ì¡°ì‘ìš© í•¨ìˆ˜
 	void Control();
 
-	// Äü½½·Ô ¾÷µ¥ÀÌÆ® ÇÔ¼ö
+	// í€µìŠ¬ë¡¯ ì—…ë°ì´íŠ¸ í•¨ìˆ˜
 	void UpdateQuickSlot();
 
+	// í€µìŠ¬ë¡¯ ì´ë²¤íŠ¸ í•¨ìˆ˜
+	void UseSlot();
+
+	// í€µìŠ¬ë¡¯ ì‚¬ìš© í•¨ìˆ˜ (ìŠ¤í‚¬)
+	void UseSlotSkill(int index);
+	// í€µìŠ¬ë¡¯ ì‚¬ìš© í•¨ìˆ˜ (ì•„ì´í…œ)
+	void UseSlotItem(int index);
+
 private:
-	// ÇÃ·¹ÀÌ¾î Á¤º¸¸¦ ÀúÀåÇÏ±â À§ÇÑ º¯¼ö
+	// í”Œë ˆì´ì–´ ì •ë³´ë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
 	class CH_Base_ver2* player;
 
 	// UI
 	Quad* quickSlotFrame;
 	vector<class Slot*> quickSlots;
 
-	// Å¬¸¯½Ã ¸¶¿ì½º¿¡¼­ ½ºÆùµÉ ÀÌ¹ÌÁö
+	// í´ë¦­ì‹œ ë§ˆìš°ìŠ¤ì—ì„œ ìŠ¤í°ë  ì´ë¯¸ì§€
 	Quad* mouseImg;
 
-	// ÀÓ½Ã Äü½½·Ô ¾ÆÀÌÅÛ Á¤º¸
+	// ì„ì‹œ í€µìŠ¬ë¡¯ ì•„ì´í…œ ì •ë³´
 	QuickSlotItem tmpItem;
 
-	// µé¾îÀÖ´Â ½ÇÁ¦ ¾ÆÀÌÅÛ Á¤º¸
+	// ë“¤ì–´ìˆëŠ” ì‹¤ì œ ì•„ì´í…œ ì •ë³´
 	vector<QuickSlotItem> items;
 
 };

@@ -45,6 +45,10 @@ public:
 
 	bool LearnSkill(class SkillBase* skill);
 
+	// 체력 & 마나 회복 함수
+	void AddHp(int amount);
+	void AddMp(int amount);
+
 	virtual void AI_animation_Moving() = 0;
 
 	virtual void EquipWeapon(class Weapon* weapon) = 0;
@@ -75,6 +79,13 @@ public:
 	// 직업
 	ProfessionType GetProfessionType() { return professionType; }
 
+	// target
+	class MonsterBase* GetTargetMonster() { if (targetMonster != nullptr) return targetMonster; }
+	CH_Base_ver2* GetTargetCharacter() { if (targetCharacter != nullptr) return targetCharacter; }
+
+	// 퀵슬롯
+	class QuickSlot* GetQuickSlot() { return quickSlot; }
+
 // Member Variable
 protected:
 	CreatureType creatureType;
@@ -85,6 +96,10 @@ protected:
 
 	class Inventory* inventory;
 	class StatusUI* statusUI;
+	class QuickSlot* quickSlot;
+
+	class MonsterBase* targetMonster;
+	CH_Base_ver2* targetCharacter;
 
 	// 스킬
 	vector<class SkillBase*> skillList;

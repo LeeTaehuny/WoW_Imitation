@@ -1,19 +1,23 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "QuickSlot.h"
 #include "Objects/Inventory/Slot.h"
 #include "Objects/Item/Item.h"
 #include "Objects/Character_/CH_Base_ver2.h"
 #include "Objects/Skills/Base/SkillBase.h"
+#include "Objects/Skills/SkillManager.h"
+#include "Objects/Skills/Base/ActiveSkill.h"
+#include "Objects/Monster/MonsterBase.h"
+#include "Objects/Item/Potion.h"
 
 QuickSlot::QuickSlot(CH_Base_ver2* player) : player(player)
 {
-	// ½½·Ô ÃÊ±âÈ­
+	// ìŠ¬ë¡¯ ì´ˆê¸°í™”
 	InitSlot();
 
-	// Äü½½·Ô ¾ÆÀÌÅÛ ÃÊ±âÈ­
+	// í€µìŠ¬ë¡¯ ì•„ì´í…œ ì´ˆê¸°í™”
 	items.resize(9);
 
-	// ¸¶¿ì½º ¾×Æ¼ºê off
+	// ë§ˆìš°ìŠ¤ ì•¡í‹°ë¸Œ off
 	mouseImg = new Quad(Vector2(55.0f, 55.0f));
 	mouseImg->SetActive(false);
 }
@@ -43,7 +47,7 @@ void QuickSlot::Update()
 	}
 }
 
-void QuickSlot::RenderUI()
+void QuickSlot::UIRender()
 {
 	quickSlotFrame->Render();
 
@@ -76,7 +80,7 @@ void QuickSlot::InitSlot()
 	{
 		if (i <= 3)
 		{
-			quickSlots[i]->Pos().x = quickSlotFrame->Pos().x - 60 * (i + 1);
+			quickSlots[i]->Pos().x = quickSlotFrame->Pos().x - 60 * (3 - i + 1);
 			quickSlots[i]->Pos().y = quickSlotFrame->Pos().y;
 		}
 		else if (i == 4)
@@ -93,31 +97,32 @@ void QuickSlot::InitSlot()
 
 void QuickSlot::Control()
 {
-	// Å¬¸¯ ÀÌº¥Æ®
+	// í´ë¦­ ì´ë²¤íŠ¸
 	if (KEY_DOWN(VK_LBUTTON))
 	{
-		// ÇÃ·¹ÀÌ¾îÀÇ ÀÎº¥Åä¸®°¡ È°¼ºÈ­ µÇ¾îÀÖ´Ù¸é?
+		// í”Œë ˆì´ì–´ì˜ ì¸ë²¤í† ë¦¬ê°€ í™œì„±í™” ë˜ì–´ìˆë‹¤ë©´?
 		if (player->GetInventory()->Active())
 		{
 			vector<Slot*> invSlot = player->GetInventory()->GetInvSlots();
 
 			int idx = 0;
 
-			// ¸ğµç Ä­À» ¼øÈ¸ÇÏ¸ç ¼±ÅÃÇÑ Ä­À» Ã£±â
+			// ëª¨ë“  ì¹¸ì„ ìˆœíšŒí•˜ë©° ì„ íƒí•œ ì¹¸ì„ ì°¾ê¸°
 			for (Slot* slot : invSlot)
 			{
 				if (mousePos.x <= slot->GlobalPos().x + slot->GetSize().x && mousePos.x >= slot->GlobalPos().x - slot->GetSize().x &&
 					mousePos.y <= slot->GlobalPos().y + slot->GetSize().y && mousePos.y >= slot->GlobalPos().y - slot->GetSize().y)
 				{
-					// ¾ÆÀÌÅÛÀÌ Á¸ÀçÇÑ´Ù¸é?
+					// ì•„ì´í…œì´ ì¡´ì¬í•œë‹¤ë©´?
 					if (player->GetInventory()->GetInventory()[idx] != nullptr)
 					{
-						// ÇØ´ç Ä­ÀÇ ¾ÆÀÌÅÛ ÀúÀå
+						// í•´ë‹¹ ì¹¸ì˜ ì•„ì´í…œ ì €ì¥
 						tmpItem.item = player->GetInventory()->GetInventory()[idx];
 						tmpItem.skill = nullptr;
 
 						mouseImg->GetMaterial()->SetDiffuseMap(player->GetInventory()->GetInventory()[idx]->GetIcon()->GetMaterial()->GetDiffuseMap());
 						mouseImg->SetActive(true);
+						return;
 					}
 				}
 
@@ -125,52 +130,90 @@ void QuickSlot::Control()
 			}
 		}
 
-		// TODO : ½ºÅ³ ½½·Ô º¸°í ³Ö±â
-	}
-
-	// up ÀÌº¥Æ®
-	if (KEY_UP(VK_LBUTTON))
-	{
-		// ¸¶¿ì½º ÀÌ¹ÌÁö ºñÈ°¼ºÈ­
-		mouseImg->SetActive(false);
-
-		// ÀÓ½Ã Äü½½·Ô ¾ÆÀÌÅÛÀÇ Á¤º¸°¡ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é Á¾·á
-		if (tmpItem.item == nullptr && tmpItem.skill == nullptr) return;
-		//if (tmpItem.item->item == nullptr) return;
-
-		// Äü½½·Ô¿¡ µé¾î°¡Áö ¸øÇÏ´Â Á¾·ùÀÇ ¾ÆÀÌÅÛÀÎ °æ¿ì¿¡µµ Á¾·á
-		if (tmpItem.item != nullptr && tmpItem.item->GetType() == ItemType::Weapon)
+		// TODO : ìŠ¤í‚¬ ìŠ¬ë¡¯ ë³´ê³  ë„£ê¸°
+		if (SKILL->GetActive())
 		{
-			tmpItem.item = nullptr;
-			return;
-		}
+			vector<pair<Slot*, bool>> skillSlot = SKILL->GetSlot();
 
-		// ÇÃ·¹ÀÌ¾îÀÇ ÀÎº¥Åä¸®°¡ È°¼ºÈ­ µÇ¾îÀÖ´Ù¸é?
-		if (player->GetInventory()->Active())
-		{
 			int idx = 0;
 
-			// Äü½½·ÔÀ» ¼øÈ¸ÇÏ¸ç ¸¶¿ì½º À§Ä¡¿Í ºñ±³ÇÏ±â
-			for (Slot* slot : quickSlots)
+			// ëª¨ë“  ì¹¸ì„ ìˆœíšŒí•˜ë©° ì„ íƒí•œ ì¹¸ì„ ì°¾ê¸°
+			for (pair<Slot*, bool> slot : skillSlot)
 			{
-				if (mousePos.x <= slot->GlobalPos().x + slot->GetSize().x && mousePos.x >= slot->GlobalPos().x - slot->GetSize().x &&
-					mousePos.y <= slot->GlobalPos().y + slot->GetSize().y && mousePos.y >= slot->GlobalPos().y - slot->GetSize().y)
+				// ë°°ìš°ì§€ ì•Šì€ ìŠ¤í‚¬ì´ë©´ ë„˜ì–´ê°€ê¸°
+				if (slot.second == false)
 				{
-					// ÇØ´ç Ä­ÀÇ Äü½½·Ô ¾ÆÀÌÅÛ¿¡ Á¤º¸ ³Ö±â
-					items[idx] = tmpItem;
+					idx++;
+					continue;
+				}
 
-					// ÀÓ½Ã Á¤º¸µé »èÁ¦
+				// íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ì´ë©´ ë„˜ì–´ê°€ê¸°
+				if (SKILL->GetSkills()[idx]->GetSkillType() == SkillBaseType::Passive)
+				{
+					idx++;
+					continue;
+				}
+
+				if (mousePos.x <= slot.first->GlobalPos().x + slot.first->GetSize().x && mousePos.x >= slot.first->GlobalPos().x - slot.first->GetSize().x &&
+					mousePos.y <= slot.first->GlobalPos().y + slot.first->GetSize().y && mousePos.y >= slot.first->GlobalPos().y - slot.first->GetSize().y)
+				{
+					// ìŠ¤í‚¬ ì €ì¥í•˜ê¸°
+					tmpItem.skill = SKILL->GetSkills()[idx];
 					tmpItem.item = nullptr;
-					tmpItem.skill = nullptr;
+
+					// ë§ˆìš°ìŠ¤ ì´ë¯¸ì§€ ì„¤ì •í•˜ê¸°
+					mouseImg->GetMaterial()->SetDiffuseMap(SKILL->GetSkills()[idx]->GetIcon()->GetMaterial()->GetDiffuseMap());
+					mouseImg->SetActive(true);
+					return;
 				}
 
 				idx++;
 			}
 		}
+	}
 
+	// up ì´ë²¤íŠ¸
+	if (KEY_UP(VK_LBUTTON))
+	{
+		// ë§ˆìš°ìŠ¤ ì´ë¯¸ì§€ ë¹„í™œì„±í™”
+		mouseImg->SetActive(false);
+
+		// ì„ì‹œ í€µìŠ¬ë¡¯ ì•„ì´í…œì˜ ì •ë³´ê°€ ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´ ì¢…ë£Œ
+		if (tmpItem.item == nullptr && tmpItem.skill == nullptr) return;
+
+		// í€µìŠ¬ë¡¯ì— ë“¤ì–´ê°€ì§€ ëª»í•˜ëŠ” ì¢…ë¥˜ì˜ ì•„ì´í…œì¸ ê²½ìš°ì—ë„ ì¢…ë£Œ
+		if (tmpItem.item != nullptr && tmpItem.item->GetType() == ItemType::Weapon)
+		{
+			tmpItem.item = nullptr;
+			tmpItem.skill = nullptr;
+			return;
+		}
+
+		// í”Œë ˆì´ì–´ì˜ ì¸ë²¤í† ë¦¬ë‚˜ ìŠ¤í‚¬ ì°½ì´ í™œì„±í™” ë˜ì–´ìˆë‹¤ë©´?
+		if (player->GetInventory()->Active() || SKILL->GetActive())
+		{
+			int idx = 0;
+
+			// í€µìŠ¬ë¡¯ì„ ìˆœíšŒí•˜ë©° ë§ˆìš°ìŠ¤ ìœ„ì¹˜ì™€ ë¹„êµí•˜ê¸°
+			for (Slot* slot : quickSlots)
+			{
+				if (mousePos.x <= slot->GlobalPos().x + slot->GetSize().x && mousePos.x >= slot->GlobalPos().x - slot->GetSize().x &&
+					mousePos.y <= slot->GlobalPos().y + slot->GetSize().y && mousePos.y >= slot->GlobalPos().y - slot->GetSize().y)
+				{
+					// í•´ë‹¹ ì¹¸ì˜ í€µìŠ¬ë¡¯ ì•„ì´í…œì— ì •ë³´ ë„£ê¸°
+					items[idx] = tmpItem;
+				}
+
+				idx++;
+			}
+		}
+		
+		// ì„ì‹œ ì •ë³´ë“¤ ì‚­ì œ
 		tmpItem.item = nullptr;
 		tmpItem.skill = nullptr;
 	}
+
+	UseSlot();
 }
 
 void QuickSlot::UpdateQuickSlot()
@@ -195,5 +238,133 @@ void QuickSlot::UpdateQuickSlot()
 		}
 
 		idx++;
+	}
+}
+
+void QuickSlot::UseSlot()
+{
+	// í€µìŠ¬ë¡¯ ì‚¬ìš© ì´ë²¤íŠ¸
+
+	if (KEY_DOWN('1'))
+	{
+		UseSlotSkill(0);
+		UseSlotItem(0);
+	}
+
+	if (KEY_DOWN('2'))
+	{
+		UseSlotSkill(1);
+		UseSlotItem(1);
+	}
+
+	if (KEY_DOWN('3'))
+	{
+		UseSlotSkill(2);
+		UseSlotItem(2);
+	}
+
+	if (KEY_DOWN('4'))
+	{
+		UseSlotSkill(3);
+		UseSlotItem(3);
+	}
+
+	if (KEY_DOWN('5'))
+	{
+		UseSlotSkill(4);
+		UseSlotItem(4);
+	}
+
+	if (KEY_DOWN('6'))
+	{
+		UseSlotSkill(5);
+		UseSlotItem(5);
+	}
+
+	if (KEY_DOWN('7'))
+	{
+		UseSlotSkill(6);
+		UseSlotItem(6);
+	}
+
+	if (KEY_DOWN('8'))
+	{
+		UseSlotSkill(7);
+		UseSlotItem(7);
+	}
+
+	if (KEY_DOWN('9'))
+	{
+		UseSlotSkill(8);
+		UseSlotItem(8);
+	}
+}
+
+void QuickSlot::UseSlotSkill(int index)
+{
+	// ë¹„ì–´ìˆëŠ” ê²½ìš° ë°˜í™˜
+	if (items[index].item == nullptr && items[index].skill == nullptr) return;
+
+	// ìŠ¤í‚¬ì´ ì°¨ìˆëŠ” ê²½ìš°
+	if (items[index].skill != nullptr)
+	{
+		// í˜•ë³€í™˜
+		if (ActiveSkill* s = dynamic_cast<ActiveSkill*>(items[index].skill))
+		{
+			// í”Œë ˆì´ì–´ê°€ ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ìˆ˜ ìˆëŠ”ì§€ ì²´í¬ (ë§ˆë‚˜ëŸ‰)
+			if (player->GetStat().mp < s->GetRequiredMp()) return;
+
+			// íƒ€ì…ì— ë§ì¶° ìŠ¤í‚¬ ì‹¤í–‰
+			switch (s->GetUsing())
+			{
+			case UseType::character_Data:
+				// ìºë¦­í„° ë°ì´í„°ê°€ í•„ìš”í•œ ê²½ìš°ê°€ ë­˜ê¹Œìš”..?
+				items[index].skill->UseSkill(player->GetTargetCharacter());
+				player->GetStat().mp -= s->GetRequiredMp();
+				break;
+
+			case UseType::collider_Data:
+				items[index].skill->UseSkill(player->GetTargetMonster()->GetCollider());
+				player->GetStat().mp -= s->GetRequiredMp();
+				break;
+
+			case UseType::monster_Data:
+				items[index].skill->UseSkill(player->GetTargetMonster());
+				player->GetStat().mp -= s->GetRequiredMp();
+				break;
+
+			case UseType::NON_Data:
+				items[index].skill->UseSkill();
+				player->GetStat().mp -= s->GetRequiredMp();
+				break;
+			}
+		}
+	}
+}
+
+void QuickSlot::UseSlotItem(int index)
+{
+	// ë¹„ì–´ìˆëŠ” ê²½ìš° ë°˜í™˜
+	if (items[index].item == nullptr && items[index].skill == nullptr) return;
+
+	// ì•„ì´í…œì´ ì°¨ìˆëŠ” ê²½ìš°
+	if (items[index].item != nullptr)
+	{
+		// ì•„ì´í…œ ì‚¬ìš©
+		items[index].item->Use();
+		// ì‚¬ìš© ì²˜ë¦¬í•˜ê¸°
+		vector<Item*> inv = player->GetInventory()->GetInventory();
+
+		// ê°™ì€ ì•„ì´í…œ ì°¾ê¸°
+		int idx = 0;
+		for (Item* i : inv)
+		{
+			if (items[index].item == i) break;
+
+			idx++;
+		}
+
+		// í•´ë‹¹ ì•„ì´í…œ ì§€ìš°ê¸°
+		player->GetInventory()->DeleteItem(idx);
 	}
 }

@@ -2,8 +2,9 @@
 #include "Inventory.h"
 #include "Objects/Item/Item.h"
 #include "Objects/Inventory/Slot.h"
+#include "Objects/UI/QuickSlot.h"
 
-Inventory::Inventory()
+Inventory::Inventory(CH_Base_ver2* player) : player(player)
 {
 	// 인벤토리 초기화
 	InitInventory();
@@ -172,22 +173,33 @@ void Inventory::AddItem(Item* item)
 
 void Inventory::DeleteItem(int itemIndex)
 {
-	// 인덱스 오류 체크
-	if (itemIndex < 0 || itemIndex >= 28) return;
+	// 아이템이 존재하지 않는 경우 리턴
+	if (inventory[itemIndex] == nullptr) return;
 
-	// 만약 아이템이 존재한다면?
-	if (inventory[itemIndex] != nullptr)
+	Item* item = inventory[itemIndex];
+
+	// 아이템의 수량 체크
+	if (item->GetQuantity() > 1)
 	{
-		// 수량 체크
-		if (inventory[itemIndex]->GetQuantity() > 1)
+		// 1보다 큰 경우에는 수량만 감소 시키기
+		item->SetQuantity(item->GetQuantity() - 1);
+	}
+	else if (item->GetQuantity() == 1)
+	{
+		// 마지막 남은 아이템인 경우
+		// * 퀵슬롯 체크하기
+		vector<QuickSlotItem>& quickSlots = player->GetQuickSlot()->GetQuickSlotItems();
+		for (int i = 0; i < quickSlots.size(); i++)
 		{
-			inventory[itemIndex]->SetQuantity(inventory[itemIndex]->GetQuantity() - 1);
+			if (quickSlots[i].item == item)
+			{
+				quickSlots[i].item = nullptr;
+			}
 		}
-		else if (inventory[itemIndex]->GetQuantity() == 1)
-		{
-			// TODO : 퀵슬롯도 생각해서 지우기
-			SAFE_DEL(inventory[itemIndex]);
-		}
+		// * 인벤토리 체크하기
+		inventory[itemIndex] = nullptr;
+		// * 아이템 삭제하기
+		SAFE_DEL(item);
 	}
 }
 

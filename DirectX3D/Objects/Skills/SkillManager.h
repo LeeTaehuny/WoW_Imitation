@@ -14,6 +14,9 @@ public:
 
 public:
 	void SetSkillSelect(bool value) { bIsSelected = value; }
+	bool GetActive();
+	const vector<pair<class Slot*, bool>>& GetSlot() { return skillTreeSlots; }
+	vector<class SkillBase*> GetSkills() { return skills; }
 
 private:
 	void CreateA_SkillTree();
@@ -46,5 +49,7 @@ private:
 	bool bIsMove = false;
 	Vector3 prevPos;
 	bool bIsSelected = false;
+
+	int tempIndex = -1;
 };
 

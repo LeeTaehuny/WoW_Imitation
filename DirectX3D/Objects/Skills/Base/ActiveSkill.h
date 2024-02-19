@@ -27,6 +27,7 @@ public:
 
 
 	UseType GetUsing() { return usingType; }
+	int GetRequiredMp() { return requiredMp; }
 
 private:
 	void TargetUpdate();

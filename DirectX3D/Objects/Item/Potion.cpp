@@ -49,4 +49,12 @@ void Potion::GUIRender()
 
 void Potion::Use()
 {
+	if (potionType == PotionType::Hp)
+	{
+		CH->GetPlayerData()->AddHp(amount);
+	}
+	else
+	{
+		CH->GetPlayerData()->AddMp(amount);
+	}
 }
