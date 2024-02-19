@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Monster\Boss\Boss_LichKing.h" />
     <ClInclude Include="Objects\Skills\FireMage_Skill\F_000_Basic_Atttack.h" />
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_000_Basic_Atttack.h" />
     <ClInclude Include="Objects\Skills\MarksmanshipHunter_Skill\M_000_Basic_Atttack.h" />
@@ -355,6 +356,7 @@
     <ClInclude Include="Objects\Item\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Monster\Boss\Boss_LichKing.cpp" />
     <ClCompile Include="Objects\Skills\FireMage_Skill\F_000_Basic_Atttack.cpp" />
     <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_000_Basic_Atttack.cpp" />
     <ClCompile Include="Objects\Skills\MarksmanshipHunter_Skill\M_000_Basic_Atttack.cpp" />

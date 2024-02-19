@@ -2,12 +2,6 @@
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
 
-#include "Objects/Skills/ArmsWarrior_Skill/A_001_MortalStrike.h"
-#include "Objects/Skills/ArmsWarrior_Skill/A_002_Overpower.h"
-#include "Objects/Skills/ArmsWarrior_Skill/A_004_DiebytheSword.h"
-#include "Objects/Skills/ArmsWarrior_Skill/A_007_ColossusSmash.h"
-#include "Objects/Skills/ArmsWarrior_Skill/A_010_Bladestorm.h"
-
 ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::ProtectionWarrior)
 {

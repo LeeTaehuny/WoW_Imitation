@@ -1,13 +1,6 @@
 #include "Framework.h"
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
-#include "Objects/Skills/FireMage_Skill/F_000_Basic_Atttack.h"
-#include "Objects/Skills/FireMage_Skill/F_001_Pyroblast.h"
-#include "Objects/Skills/FireMage_Skill/F_002_FireBlast.h"
-#include "Objects/Skills/FireMage_Skill/F_004_Scorch.h"
-#include "Objects/Skills/FireMage_Skill/F_005_PhoenixFlame.h"
-#include "Objects/Skills/FireMage_Skill/F_009_Combustion.h"
-#include "Objects/Skills/FireMage_Skill/F_010_Meteor.h"
 
 FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::ProtectionWarrior)

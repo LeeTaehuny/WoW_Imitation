@@ -218,12 +218,29 @@ using namespace GameMath;
 #include "Objects/Monster/Skeleton_Knight.h"
 #include "Objects/Monster/Scarecrow.h"
 #include "Objects/Monster/MonsterManager.h"
+#include "Objects/Monster/Boss/Boss_LichKing.h"
 
 // 스킬 배이스
 #include "Objects/Skills/Base/SkillBase.h"
 
 // 스킬
 #include "Objects/Skills/FireBall.h"
+
+// 화염 마법사 스킬
+#include "Objects/Skills/FireMage_Skill/F_000_Basic_Atttack.h"
+#include "Objects/Skills/FireMage_Skill/F_001_Pyroblast.h"
+#include "Objects/Skills/FireMage_Skill/F_002_FireBlast.h"
+#include "Objects/Skills/FireMage_Skill/F_004_Scorch.h"
+#include "Objects/Skills/FireMage_Skill/F_005_PhoenixFlame.h"
+#include "Objects/Skills/FireMage_Skill/F_009_Combustion.h"
+#include "Objects/Skills/FireMage_Skill/F_010_Meteor.h"
+
+// 무기 전사 스킬
+#include "Objects/Skills/ArmsWarrior_Skill/A_001_MortalStrike.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_002_Overpower.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_004_DiebytheSword.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_007_ColossusSmash.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_010_Bladestorm.h"
 
 // 보호 성기사 스킬
 #include "Objects/Skills/ProtectionWarrior_Skill/P_001_Avengers_Shield.h"

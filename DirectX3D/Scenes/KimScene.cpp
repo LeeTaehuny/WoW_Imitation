@@ -20,18 +20,15 @@
 
 KimScene::KimScene()
 {
-	CH->PlayerSpawn(1);
+	//CH->PlayerSpawn(1);
 
-	CH->NonPlayerSpawn(1);
+	//CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(2);
 	//CH->NonPlayerSpawn(1);
 	//CH->NonPlayerSpawn(1);
 
-	MONSTER;
-	ARROW;
-
-	skills = new P_009_Eye_Of_Tyr();
-	skills->SetOwner(CH->GetPlayerData());
+	//MONSTER;
+	//ARROW;
 
 	//MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
 	//MONSTER->SpawnScarecrow(Vector3(10));
@@ -43,18 +40,12 @@ KimScene::KimScene()
 
 	//particle = new ParticleSystem("TextData/Particles/Fire/fireBall.fx");
 
-	lichking = new Model("LichKing");
-	lichking->Pos().z += 3;
-	frost = new Model("Frostmourne");
-	frost->Pos().y += 3;
+	lich = new Boss_LichKing();
 }
 
 KimScene::~KimScene()
 {
-	delete particle;
-	delete skills;
-	delete lichking;
-	delete frost;
+	delete lich;
 }
 
 void KimScene::Update()
@@ -146,19 +137,10 @@ void KimScene::Update()
 			}
 		}
 	}
-
-	if (KEY_DOWN('K'))
-	{
-		skills->UseSkill();
-	}
-
-	lichking->UpdateWorld();
-	frost->UpdateWorld();
-
-	skills->Update();
 	CH->Update();
-	MONSTER->Update();
-	ARROW->Update();
+	//MONSTER->Update();
+	//ARROW->Update();
+	lich->Update();
 }
 
 void KimScene::PreRender()
@@ -168,13 +150,10 @@ void KimScene::PreRender()
 
 void KimScene::Render()
 {
-	lichking->Render();
-	frost->Render();
-
-	skills->Render();
+	lich->Render();
 	CH->Render();
-	MONSTER->Render();
-	ARROW->Render();
+	//MONSTER->Render();
+	//ARROW->Render();
 }
 
 void KimScene::PostRender()
@@ -184,5 +163,6 @@ void KimScene::PostRender()
 
 void KimScene::GUIRender()
 {
+	lich->GUIRender();
 	CH->GUIRender();
 }

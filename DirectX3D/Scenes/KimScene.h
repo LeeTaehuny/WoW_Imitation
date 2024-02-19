@@ -16,10 +16,5 @@ private:
     MonsterBase* targetMonster;
     CH_Base_ver2* targetNPC;
 
-    SkillBase* skills;
-
-    ParticleSystem* particle;
-
-    Model* lichking;
-    Model* frost;
+    Boss_LichKing* lich;
 };
