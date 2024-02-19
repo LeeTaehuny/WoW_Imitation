@@ -19,4 +19,7 @@ private:
     SkillBase* skills;
 
     ParticleSystem* particle;
+
+    Model* lichking;
+    Model* frost;
 };

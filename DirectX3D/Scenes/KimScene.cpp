@@ -42,12 +42,19 @@ KimScene::KimScene()
 	//MONSTER->SpawnSkeletonKnight(Vector3(10));
 
 	//particle = new ParticleSystem("TextData/Particles/Fire/fireBall.fx");
+
+	lichking = new Model("LichKing");
+	lichking->Pos().z += 3;
+	frost = new Model("Frostmourne");
+	frost->Pos().y += 3;
 }
 
 KimScene::~KimScene()
 {
 	delete particle;
 	delete skills;
+	delete lichking;
+	delete frost;
 }
 
 void KimScene::Update()
@@ -145,6 +152,9 @@ void KimScene::Update()
 		skills->UseSkill();
 	}
 
+	lichking->UpdateWorld();
+	frost->UpdateWorld();
+
 	skills->Update();
 	CH->Update();
 	MONSTER->Update();
@@ -158,6 +168,9 @@ void KimScene::PreRender()
 
 void KimScene::Render()
 {
+	lichking->Render();
+	frost->Render();
+
 	skills->Render();
 	CH->Render();
 	MONSTER->Render();

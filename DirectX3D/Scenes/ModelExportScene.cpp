@@ -3,9 +3,16 @@
 
 ModelExportScene::ModelExportScene()
 {
-    //string name = "Wall";
+    string name = "LichKing";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
+
+
+    Model_MER_MESH(name);
+
+    name = "Frostmourne";
+    Model_MER_MESH(name);
+    //AnimationClip(name);
 	
     //exporter = new ModelExporter(name, file);
     //exporter->ExportMaterial();
