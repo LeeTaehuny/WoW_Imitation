@@ -27,7 +27,7 @@ F_004_Scorch::F_004_Scorch() : ActiveSkill(SkillType::Target)
 
 	// 스킬 지연 발사
 	delayTime = 0.0f;
-	MAX_delayAnim = 0.7f;
+	MAX_delayAnim = 1.5f;
 
 	additiveDamage = 1.0f;
 

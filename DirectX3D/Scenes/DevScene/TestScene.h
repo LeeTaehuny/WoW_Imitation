@@ -46,5 +46,11 @@ private:
 
 
     class QuickSlot* slot;
+
+    ProgressBar* hpBar;
+    ProgressBar* mpBar;
+    Quad* HpFrame;
+
+    class PlayerUI_Bar* p_bar;
 };
 

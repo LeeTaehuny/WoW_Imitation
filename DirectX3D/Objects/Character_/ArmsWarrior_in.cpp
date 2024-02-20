@@ -2,6 +2,7 @@
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
 #include "Objects/Inventory/Inventory.h"
+#include "Objects/UI/PlayerUI_Bar.h"
 
 ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::ArmsWarrior)
@@ -233,8 +234,11 @@ void ArmsWarrior_in::OnHit(float damage)
 	}
 	else if (stat.hp <= 0)
 	{
+		stat.hp = 0.0f;
 		SetState(DIE);
 	}
+
+	playerUI->SetHpPercent(stat.hp / stat.maxHp);
 }
 
 void ArmsWarrior_in::AI_animation_Moving()

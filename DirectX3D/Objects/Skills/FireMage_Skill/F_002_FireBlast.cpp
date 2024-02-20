@@ -27,7 +27,7 @@ F_002_FireBlast::F_002_FireBlast() : ActiveSkill(SkillType::Target)
 
 	// 스킬 지연 발사
 	delayTime = 0.0f;
-	MAX_delayAnim = 0.7f;
+	MAX_delayAnim = 1.5f;
 
 
 	additiveDamage = 1.0f;

@@ -3,6 +3,7 @@
 #include "Objects/UI/QuickSlot.h"
 #include "Objects/Item/Weapon.h"
 #include "Objects/UI/StatusUI.h"
+#include "Objects/UI/PlayerUI_Bar.h"
 #include "CH_Base_ver2.h"
 
 CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionType)
@@ -14,6 +15,32 @@ CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionT
 		inventory = new Inventory(this);
 		statusUI = new StatusUI(this);
 		quickSlot = new QuickSlot(this);
+
+		// HP/MP Bar 생성
+		switch (professionType)
+		{
+		case ProfessionType::ArmsWarrior:
+			playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/A_icon.png");
+			break;
+		case ProfessionType::FireMage:
+			playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/F_icon.png");
+			break;
+		case ProfessionType::HolyPriest:
+			playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/H_icon.png");
+			break;
+		case ProfessionType::MarksmanshipHunter:
+			playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/M_icon.png");
+			break;
+		case ProfessionType::ProtectionWarrior:
+			playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/P_icon.png");
+			break;
+		}
+
+		playerUI->Pos() = { CENTER_X / 3, CENTER_Y + CENTER_Y * 0.6f };
+		playerUI->Scale() = { 1.5f, 1.5f, 1.0f };
+		playerUI->SetHpPercent(1.0f);
+		playerUI->SetMpPercent(1.0f);
+
 		break;
 	case CreatureType::NonPlayer:
 		break;
@@ -21,9 +48,9 @@ CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionT
 
 	// 스탯 설정 (임시)
 	stat.maxHp = 1000.0f;
-	stat.hp = 10.0f;//stat.maxHp;
+	stat.hp = stat.maxHp;
 	stat.maxMp = 1000;
-	stat.mp = 1000.0f;//stat.maxMp;
+	stat.mp = stat.maxMp;
 	stat.damage = 100.0f;
 	stat.defence = 100;
 
@@ -41,6 +68,7 @@ void CH_Base_ver2::Update()
 	if (inventory != nullptr) inventory->Update();
 	if (statusUI != nullptr) statusUI->Update();
 	if (quickSlot != nullptr) quickSlot->Update();
+	if (playerUI != nullptr) playerUI->Update();
 
 	if (weapon != nullptr)
 	{
@@ -124,6 +152,7 @@ void CH_Base_ver2::UIRender()
 	if (statusUI != nullptr) statusUI->UIRender();
 	if (inventory != nullptr) inventory->UIRender();
 	if (quickSlot != nullptr) quickSlot->UIRender();
+	if (playerUI != nullptr) playerUI->PostRender();
 }
 
 bool CH_Base_ver2::LearnSkill(SkillBase* skill)

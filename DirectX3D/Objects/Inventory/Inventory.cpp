@@ -57,12 +57,6 @@ void Inventory::Update()
 
 	invFrame->Update();
 
-	//if (mouseImg->Active())
-	//{
-	//	mouseImg->Pos() = mousePos;
-	//	mouseImg->UpdateWorld();
-	//}
-
 	if (KEY_UP(VK_LBUTTON))
 	{
 		//mouseImg->SetActive(false);

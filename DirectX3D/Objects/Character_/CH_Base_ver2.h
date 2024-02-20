@@ -100,6 +100,9 @@ public:
 	// 퀵슬롯
 	class QuickSlot* GetQuickSlot() { return quickSlot; }
 
+	// 플레이어 UI
+	class PlayerUI_Bar* GetPlayerUI() { return playerUI; }
+
 // Member Variable
 protected:
 	CreatureType creatureType;
@@ -146,8 +149,13 @@ protected:
 	float curheight = 0.0f;
 
 protected:
+	// 스테이터스
 	Status stat;
+	// UI
+	class PlayerUI_Bar* playerUI;
+	
 	class Weapon* weapon;
+
 
 	Transform* mainHand;
 

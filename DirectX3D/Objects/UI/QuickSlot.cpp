@@ -7,6 +7,7 @@
 #include "Objects/Skills/SkillManager.h"
 #include "Objects/Skills/Base/ActiveSkill.h"
 #include "Objects/Monster/MonsterBase.h"
+#include "Objects/UI/PlayerUI_Bar.h"
 #include "Objects/Item/Potion.h"
 
 QuickSlot::QuickSlot(CH_Base_ver2* player) : player(player)
@@ -383,6 +384,9 @@ void QuickSlot::UseSlotSkill(int index)
 				break;
 			}
 		}
+
+		float percent = (float)player->GetStat().mp / (float)player->GetStat().maxMp;
+		player->GetPlayerUI()->SetMpPercent(percent);
 	}
 }
 
@@ -396,6 +400,22 @@ void QuickSlot::UseSlotItem(int index)
 	{
 		// 아이템 사용
 		items[index].item->Use();
+
+		// 아이템 타입에 따라 UI조정
+		if (Potion* p = dynamic_cast<Potion*>(items[index].item))
+		{
+			if (p->GetPotionType() == PotionType::Hp)
+			{
+				float percent = player->GetStat().hp / player->GetStat().maxHp;
+				player->GetPlayerUI()->SetHpPercent(percent);
+			}
+			else if (p->GetPotionType() == PotionType::Mp)
+			{
+				float percent = (float)player->GetStat().mp / (float)player->GetStat().maxMp;
+				player->GetPlayerUI()->SetMpPercent(percent);
+			}
+		}
+
 		// 사용 처리하기
 		vector<Item*> inv = player->GetInventory()->GetInventory();
 

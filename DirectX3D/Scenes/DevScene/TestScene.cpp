@@ -2,6 +2,7 @@
 #include "TestScene.h"
 #include "Objects/Shop/Shop.h"
 #include "Objects/Skills/SkillManager.h"
+#include "Objects/UI/PlayerUI_Bar.h"
 
 
 TestScene::TestScene()
@@ -53,6 +54,15 @@ void TestScene::Update()
 	MONSTER->Update();
 
 	CH->Update();
+
+	if (KEY_DOWN('P'))
+	{
+		CH->GetPlayerData()->OnHit(20.0f);
+	}
+	
+	//hpBar->UpdateWorld();
+	//mpBar->UpdateWorld();
+	//HpFrame->UpdateWorld();
 }
 
 void TestScene::PreRender()
@@ -72,6 +82,10 @@ void TestScene::PostRender()
 	SKILL->PostRender();
 	shop->UIRender();
 	CH->PostRender();
+	//UI 추가
+	//hpBar->Render();
+	//mpBar->Render();
+	//HpFrame->Render();
 }
 
 void TestScene::GUIRender()
