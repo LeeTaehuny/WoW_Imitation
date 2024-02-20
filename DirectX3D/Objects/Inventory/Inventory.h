@@ -49,7 +49,7 @@ private:
 // Member Variable
 private:
 	// 정보를 담아줄 인벤토리
-	vector<Item*> inventory;
+	vector<class Item*> inventory;
 
 	// UI
 	int MAX_COUNT = 28;		// 인벤토리 칸 수

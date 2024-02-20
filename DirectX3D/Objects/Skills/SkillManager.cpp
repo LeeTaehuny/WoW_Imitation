@@ -70,8 +70,8 @@ void SkillManager::Init(CH_Base_ver2* player)
 		Observer::Get()->AddParamEvent("LearnSkill", bind(&SkillManager::LearnSkill, this, placeholders::_1));
 
 		// 스킬 창 이동
-		Observer::Get()->AddEvent("MoveSkillFrame", bind(&SkillManager::MoveSkillFrame, this));
-		Observer::Get()->AddEvent("StopSkillFrame", bind(&SkillManager::StopSkillFrame, this));
+		//Observer::Get()->AddEvent("MoveSkillFrame", bind(&SkillManager::MoveSkillFrame, this));
+		//Observer::Get()->AddEvent("StopSkillFrame", bind(&SkillManager::StopSkillFrame, this));
 	}
 
 	skillTreeFrame->SetActive(false);

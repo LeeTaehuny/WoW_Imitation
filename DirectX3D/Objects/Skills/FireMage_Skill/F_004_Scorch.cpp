@@ -136,6 +136,13 @@ void F_004_Scorch::UseSkill(MonsterBase* monsterbase)
 
 			delayTime = 0.0f;
 
+			owner->GetStat().mp -= requiredMp;
+
+			if (owner->GetStat().mp < 0)
+			{
+				owner->GetStat().mp = 0;
+			}
+
 			Init();
 		}
 	}

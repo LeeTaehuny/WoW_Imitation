@@ -215,7 +215,17 @@ void ArmsWarrior_in::AIUpdate()
 
 void ArmsWarrior_in::OnHit(float damage)
 {
-	stat.hp -= damage;
+	// 방어력 버프 존재 시
+	if (isDefence)
+	{
+		// 방어력 1.3배 적용하기 (추후 뺄셈 연산으로 주기)
+		stat.hp -= damage;
+	}
+	else
+	{
+		stat.hp -= damage;
+	}
+
 
 	if (stat.hp > 0)
 	{

@@ -28,9 +28,8 @@ StatusUI::StatusUI(class CH_Base_ver2* player) : player(player)
 
 	// 이벤트 등록
 	{
-		// 인벤토리 이동
-		Observer::Get()->AddEvent("MoveStatusFrame", bind(&StatusUI::MoveStatusFrame, this));
-		Observer::Get()->AddEvent("StopStatusFrame", bind(&StatusUI::StopStatusFrame, this));
+		//Observer::Get()->AddEvent("MoveStatusFrame", bind(&StatusUI::MoveStatusFrame, this));
+		//Observer::Get()->AddEvent("StopStatusFrame", bind(&StatusUI::StopStatusFrame, this));
 	}
 }
 

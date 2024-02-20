@@ -141,6 +141,13 @@ void F_005_PhoenixFlame::UseSkill(MonsterBase* monsterbase)
 
 			delayTime = 0.0f;
 
+			owner->GetStat().mp -= requiredMp;
+
+			if (owner->GetStat().mp < 0)
+			{
+				owner->GetStat().mp = 0;
+			}
+
 			Init();
 		}
 	}

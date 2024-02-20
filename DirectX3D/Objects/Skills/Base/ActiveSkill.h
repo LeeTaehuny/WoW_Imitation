@@ -32,6 +32,8 @@ public:
 	bool GetIsCooldown() { return isCooldown; }
 	int GetrequiredMp() { return requiredMp; }
 
+	float GetCoolTime() { return coolTime; }
+
 private:
 	void TargetUpdate();
 	void NonTargetUpdate();

@@ -39,7 +39,7 @@ P_002_HOTR::P_002_HOTR() : ActiveSkill(SkillType::Target)
 		usingType = monster_Data;
 	}
 
-	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/004.jpg");
+	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/002.jpg");
 	holy_wave = new Quad(L"Textures/Effect/alpha_gold_snow.png");
 	holy_wave->Rot().x = 1.7f;
 	holy_wave->Scale() *= 0.05f;
@@ -159,7 +159,7 @@ void P_002_HOTR::UseSkill(MonsterBase* monsterbase)
 	targetMonster = monsterbase;
 
 	skillDamage = owner->GetStat().damage * 0.85f;
-	owner->GetStat().mp -= requiredMp;
+	
 
 	myCollider->SetActive(true);
 	root->SetWorld(owner->GetInstancing()->GetTransformByNode(owner->GetIndex(), 38));
@@ -180,6 +180,7 @@ void P_002_HOTR::UseSkill(MonsterBase* monsterbase)
 		hitCollider->UpdateWorld();
 		isRun = true;
 		isCooldown = true;
+		owner->GetStat().mp -= requiredMp;
 		animStart = 0;
 	}
 }
