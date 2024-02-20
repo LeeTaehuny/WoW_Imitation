@@ -27,6 +27,7 @@ public:
 
 
 	UseType GetUsing() { return usingType; }
+	int GetRequiredMp() { return requiredMp; }
 
 	bool GetIsCooldown() { return isCooldown; }
 	int GetrequiredMp() { return requiredMp; }

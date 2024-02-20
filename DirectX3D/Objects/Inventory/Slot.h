@@ -6,6 +6,12 @@ enum class SlotType
 {
 	Inventory_Frame,
 	Inventory_Slot,
+	Shop_Frame,
+	Status_Frame,
+	Status_Slot,
+	SkillTree_Frame,
+	SkillTree_Slot,
+	Quick_Slot,
 };
 
 class Slot : public Button

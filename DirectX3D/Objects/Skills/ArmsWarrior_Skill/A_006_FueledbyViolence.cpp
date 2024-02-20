@@ -4,6 +4,8 @@
 
 A_006_FueledbyViolence::A_006_FueledbyViolence()
 {
+	skillName = "A_006_FueledbyViolence";
+
 	// 선행 스킬
 	prevSkills.push_back("A_003_MartialProwess");
 	prevSkills.push_back("A_004_DiebytheSword");

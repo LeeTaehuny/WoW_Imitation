@@ -4,6 +4,8 @@
 
 A_009_BluntInstruments::A_009_BluntInstruments()
 {
+	skillName = "A_009_BluntInstruments";
+
 	// 선행 스킬
 	prevSkills.push_back("A_007_ColossusSmash");
 

@@ -3,6 +3,8 @@
 
 F_010_Meteor::F_010_Meteor() : ActiveSkill(SkillType::Target)
 {
+	skillName = "F_010_Meteor";
+
 	// 날아갈 콜라이더
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);
@@ -45,6 +47,8 @@ F_010_Meteor::F_010_Meteor() : ActiveSkill(SkillType::Target)
 	MAX_delayAnim = 1.0f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::monster_Data;
 }
 
 F_010_Meteor::~F_010_Meteor()
@@ -59,6 +63,8 @@ F_010_Meteor::~F_010_Meteor()
 
 void F_010_Meteor::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (delayTime < MAX_delayAnim && isRun)
 	{
 		delayTime += DELTA;

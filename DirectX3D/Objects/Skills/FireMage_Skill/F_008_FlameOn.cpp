@@ -4,6 +4,8 @@
 
 F_008_FlameOn::F_008_FlameOn()
 {
+	skillName = "F_008_FlameOn";
+
 	// 선행 스킬
 	prevSkills.push_back("F_006_SurgingBlaze");
 

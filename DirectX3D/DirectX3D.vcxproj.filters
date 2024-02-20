@@ -31,6 +31,7 @@
     <FxCompile Include="Shaders\Effect\Bloom.hlsl" />
     <FxCompile Include="Shaders\Effect\Fog.hlsl" />
     <FxCompile Include="Shaders\UI\ProgressBar.hlsl" />
+    <FxCompile Include="Shaders\Basic\Slot.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.cpp" />
@@ -225,6 +226,9 @@
     <ClCompile Include="Objects\Skills\HolyPriest_Skill\H_000_Basic_Atttack.cpp" />
     <ClCompile Include="Objects\Skills\FireMage_Skill\F_000_Basic_Atttack.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Boss_LichKing.cpp" />
+    <ClCompile Include="Objects\UI\StatusUI.cpp" />
+    <ClCompile Include="Objects\Skills\SkillManager.cpp" />
+    <ClCompile Include="Objects\UI\QuickSlot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.h" />
@@ -246,6 +250,10 @@
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_000_Basic_Atttack.h" />
     <ClInclude Include="Objects\Skills\FireMage_Skill\F_000_Basic_Atttack.h" />
     <ClInclude Include="Objects\Monster\Boss\Boss_LichKing.h" />
+    <ClInclude Include="Objects\UI\StatusUI.h" />
+    <ClInclude Include="Objects\Skills\SkillManager.h" />
+    <ClInclude Include="SkillHeader.h" />
+    <ClInclude Include="Objects\UI\QuickSlot.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Character_\CH_Manager.h" />

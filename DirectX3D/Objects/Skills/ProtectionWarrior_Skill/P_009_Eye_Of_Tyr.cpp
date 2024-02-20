@@ -3,6 +3,8 @@
 
 P_009_Eye_Of_Tyr::P_009_Eye_Of_Tyr() : ActiveSkill(SkillType::NonTarget)
 {
+	skillName = "P_009_Eye_Of_Tyr";
+
 	/*
 	스킬의 효과
 

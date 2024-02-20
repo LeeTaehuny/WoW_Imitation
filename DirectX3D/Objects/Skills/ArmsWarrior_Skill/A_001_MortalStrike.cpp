@@ -5,6 +5,8 @@
 
 A_001_MortalStrike::A_001_MortalStrike() : ActiveSkill(SkillType::NonTarget)
 {
+	skillName = "A_001_MortalStrike";
+
 	// 충돌 판정용 콜라이더
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);
@@ -33,6 +35,8 @@ A_001_MortalStrike::A_001_MortalStrike() : ActiveSkill(SkillType::NonTarget)
 	curTime = 0.0f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::NON_Data;
 }
 
 A_001_MortalStrike::~A_001_MortalStrike()
@@ -46,6 +50,8 @@ A_001_MortalStrike::~A_001_MortalStrike()
 
 void A_001_MortalStrike::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (isRun)
 	{
 		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 2;

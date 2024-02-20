@@ -3,6 +3,8 @@
 
 A_010_Bladestorm::A_010_Bladestorm() : ActiveSkill(SkillType::NonTarget)
 {
+	skillName = "A_010_Bladestorm";
+
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);
 
@@ -58,6 +60,8 @@ A_010_Bladestorm::A_010_Bladestorm() : ActiveSkill(SkillType::NonTarget)
 	MAX_hitTime = 0.5f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::NON_Data;
 }
 
 A_010_Bladestorm::~A_010_Bladestorm()
@@ -69,6 +73,8 @@ A_010_Bladestorm::~A_010_Bladestorm()
 
 void A_010_Bladestorm::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (isRun)
 	{
 		myCollider->Rot().y += DELTA * 8.0f;

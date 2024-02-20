@@ -32,6 +32,8 @@ private:
 	// 아이템 생성용 함수 2종(무기, 포션)
 	class Item* CreateWeapon(string name, WeaponType type);
 	class Item* CreatePotion(string name, PotionType type);
+	// 상점 - 플레이어 상호작용 함수
+	void InteractWithPlayer();
 
 // Models
 private:

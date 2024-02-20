@@ -3,6 +3,8 @@
 
 P_008_Guardian_Of_Ancient_Kings::P_008_Guardian_Of_Ancient_Kings()
 {
+	skillName = "P_008_Guardian_Of_Ancient_Kings";
+
 	/*
 	스킬의 효과
 
@@ -11,9 +13,8 @@ P_008_Guardian_Of_Ancient_Kings::P_008_Guardian_Of_Ancient_Kings()
 	*/
 	
 	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/008.jpg");
-	prevSkills.resize(2);
-	prevSkills[0] = "P_006_Bulwark_Of_Order";
-	prevSkills[1] = "P_007_Blessing_of_Spellwarding";
+	prevSkills.resize(1);
+	prevSkills[0] = "P_007_Blessing_of_Spellwarding";
 }
 
 P_008_Guardian_Of_Ancient_Kings::~P_008_Guardian_Of_Ancient_Kings()

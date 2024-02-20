@@ -4,6 +4,8 @@
 
 F_009_Combustion::F_009_Combustion() : ActiveSkill(SkillType::Target)
 {
+	skillName = "F_009_Combustion";
+
 	// 지속 시간 설정
 	curTime = 0.0f;
 	MAX_duration = 10.0f;
@@ -26,6 +28,8 @@ F_009_Combustion::F_009_Combustion() : ActiveSkill(SkillType::Target)
 
 	// 아이콘 추가
 	icon = new Quad(L"Textures/Character_Skill_Icon/FireMage/09_Combustion.png");
+
+	usingType = UseType::NON_Data;
 }
 
 F_009_Combustion::~F_009_Combustion()
@@ -36,6 +40,8 @@ F_009_Combustion::~F_009_Combustion()
 
 void F_009_Combustion::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (isRun)
 	{
 		particle->SetPos(owner->GlobalPos());

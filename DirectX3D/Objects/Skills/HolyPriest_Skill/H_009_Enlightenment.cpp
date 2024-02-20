@@ -3,6 +3,8 @@
 
 H_009_Enlightenment::H_009_Enlightenment()
 {
+	skillName = "H_009_Enlightenment";
+
 	icon = new Quad(L"Textures/Character_Skill_Icon/HolyPriest/009.jpg");
 	prevSkills.resize(1);
 	prevSkills[0] = "H_005_Censure";

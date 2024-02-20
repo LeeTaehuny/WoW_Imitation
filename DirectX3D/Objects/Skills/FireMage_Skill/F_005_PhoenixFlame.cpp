@@ -3,6 +3,8 @@
 
 F_005_PhoenixFlame::F_005_PhoenixFlame() : ActiveSkill(SkillType::Target)
 {
+	skillName = "F_005_PhoenixFlame";
+
 	// 날아갈 콜라이더
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);
@@ -44,6 +46,8 @@ F_005_PhoenixFlame::F_005_PhoenixFlame() : ActiveSkill(SkillType::Target)
 	MAX_delayAnim = 1.0f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::monster_Data;
 }
 
 F_005_PhoenixFlame::~F_005_PhoenixFlame()
@@ -59,6 +63,8 @@ F_005_PhoenixFlame::~F_005_PhoenixFlame()
 
 void F_005_PhoenixFlame::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (delayTime < MAX_delayAnim && isRun)
 	{
 		delayTime += DELTA;

@@ -5,6 +5,8 @@
 
 A_002_Overpower::A_002_Overpower() : ActiveSkill(SkillType::NonTarget)
 {
+	skillName = "A_002_Overpower";
+
 	// 충돌 판정용 콜라이더
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);
@@ -36,6 +38,8 @@ A_002_Overpower::A_002_Overpower() : ActiveSkill(SkillType::NonTarget)
 	curTime = 0.0f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::NON_Data;
 }
 
 A_002_Overpower::~A_002_Overpower()
@@ -49,6 +53,8 @@ A_002_Overpower::~A_002_Overpower()
 
 void A_002_Overpower::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (isRun)
 	{
 		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 2;

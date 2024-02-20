@@ -3,6 +3,8 @@
 
 F_004_Scorch::F_004_Scorch() : ActiveSkill(SkillType::Target)
 {
+	skillName = "F_004_Scorch";
+
 	// 쿨타임 설정 (1.5초)
 	MAX_delay = 1.5f;
 	coolTime = MAX_delay;
@@ -28,6 +30,8 @@ F_004_Scorch::F_004_Scorch() : ActiveSkill(SkillType::Target)
 	MAX_delayAnim = 0.7f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::monster_Data;
 }
 
 F_004_Scorch::~F_004_Scorch()
@@ -38,6 +42,8 @@ F_004_Scorch::~F_004_Scorch()
 
 void F_004_Scorch::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (delayTime < MAX_delayAnim && isRun)
 	{
 		delayTime += DELTA;

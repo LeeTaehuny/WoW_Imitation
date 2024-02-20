@@ -3,6 +3,8 @@
 
 F_003_Pyrotechnics::F_003_Pyrotechnics()
 {
+	skillName = "F_003_Pyrotechnics";
+
 	// 선행 스킬
 	prevSkills.push_back("F_001_Pyroblast");
 

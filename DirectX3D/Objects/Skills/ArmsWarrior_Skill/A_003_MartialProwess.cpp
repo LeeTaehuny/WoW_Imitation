@@ -5,6 +5,8 @@
 
 A_003_MartialProwess::A_003_MartialProwess()
 {
+	skillName = "A_003_MartialProwess";
+
 	// 선행 스킬
 	prevSkills.push_back("A_002_Overpower");
 

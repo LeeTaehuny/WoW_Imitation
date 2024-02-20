@@ -3,6 +3,8 @@
 
 P_005_Barricade_Of_Faith::P_005_Barricade_Of_Faith()
 {
+	skillName = "P_005_Barricade_Of_Faith";
+
 	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/005.jpg");
 	prevSkills.resize(1);
 	prevSkills[0] = "P_003_Grand_Crusader";

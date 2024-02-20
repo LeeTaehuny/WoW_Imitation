@@ -3,6 +3,8 @@
 
 P_003_Grand_Crusader::P_003_Grand_Crusader()
 {
+	skillName = "P_003_Grand_Crusader";
+
 	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/003.jpg");
 	prevSkills.resize(1);
 	prevSkills[0] = "P_001_Avengers_Shield";

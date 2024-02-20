@@ -2,8 +2,9 @@
 #include "Inventory.h"
 #include "Objects/Item/Item.h"
 #include "Objects/Inventory/Slot.h"
+#include "Objects/UI/QuickSlot.h"
 
-Inventory::Inventory()
+Inventory::Inventory(CH_Base_ver2* player) : player(player)
 {
 	// 인벤토리 초기화
 	InitInventory();
@@ -30,7 +31,6 @@ Inventory::~Inventory()
 
 void Inventory::Update()
 {
-	// 테스트 코드. 나중에는 플레이어에서 i키와 매핑할 것.
 	if (KEY_DOWN('I'))
 	{
 		if (Active())
@@ -56,20 +56,29 @@ void Inventory::Update()
 
 	invFrame->Update();
 
-	if (mouseImg->Active())
-	{
-		mouseImg->Pos() = mousePos;
-		mouseImg->UpdateWorld();
-	}
+	//if (mouseImg->Active())
+	//{
+	//	mouseImg->Pos() = mousePos;
+	//	mouseImg->UpdateWorld();
+	//}
 
 	if (KEY_UP(VK_LBUTTON))
 	{
-		mouseImg->SetActive(false);
+		//mouseImg->SetActive(false);
 
 		if (tempIndex != -1)
 		{
 			invSlot[tempIndex]->SetSelect(false);
 			invSlot[tempIndex]->SetCilck(false);
+		}
+		
+		for (Slot* slot : invSlot)
+		{
+			if (mousePos.x > slot->GlobalPos().x + 33.0f || mousePos.x < slot->GlobalPos().x - 33.0f &&
+				mousePos.y > slot->GlobalPos().y + 33.0f || mousePos.y < slot->GlobalPos().y - 33.0f)
+			{
+				tempIndex = -1;
+			}
 		}
 	}
 }
@@ -84,28 +93,28 @@ void Inventory::UIRender()
 		slot->Render();
 	}
 
-	if (mouseImg->Active())
-	{
-		mouseImg->Render();
-	}
 }
 
 void Inventory::UpdateInventory()
 {
 	// 인벤토리 내용을 순회하며 아이콘을 해당 슬롯에 적용시키기
-	for (InventoryItem inv : inventory)
+	int idx = 0;
+
+	for (Item* item : inventory)
 	{
-		if (inv.item == nullptr)
+		if (item == nullptr)
 		{
-			invSlot[inv.index]->GetMaterial()->SetDiffuseMap(L"Textures/Color/Black.png");
+			invSlot[idx]->GetMaterial()->SetDiffuseMap(L"Textures/Color/Black.png");
 		}
 		else
 		{
 			// 인벤토리 내의 아이템 인덱스에 따른 이미지 추출
-			Texture* icon = inv.item->GetIcon()->GetMaterial()->GetDiffuseMap();
+			Texture* icon = item->GetIcon()->GetMaterial()->GetDiffuseMap();
 			// 인덱스 번째 슬롯에 이미지 적용
-			invSlot[inv.index]->GetMaterial()->SetDiffuseMap(icon);
+			invSlot[idx]->GetMaterial()->SetDiffuseMap(icon);
 		}
+
+		idx++;
 	}
 }
 
@@ -114,34 +123,30 @@ void Inventory::AddItem(Item* item)
 	// 전달받은 아이템의 타입이 무기 타입이라면?
 	if (item->GetType() == ItemType::Weapon)
 	{
-		// 아이템 정보 생성
-		InventoryItem desc;
-
 		// 비어있는 인벤토리 인덱스 찾기
-		for (InventoryItem i : inventory)
+		for (Item*& invItem : inventory)
 		{
-			if (i.item == nullptr)
+			if (invItem == nullptr)
 			{
-				desc.index = i.index;
-				desc.item = item;
-				desc.quantity = 1;
-
 				// 인벤토리에 아이템 추가
-				inventory[i.index] = desc;
+				invItem = item;
+				invItem->SetQuantity(1);
+
 				return;
 			}
 		}
 	}
 
 	// 전달받은 아이템의 타입이 포션인 경우 중복되는 아이템이 있는지 찾기
-	for (InventoryItem inv : inventory)
+	for (Item*& invItem : inventory)
 	{
-		if (inv.item == nullptr) continue;
+		if (invItem == nullptr) continue;
+
 		// 만약 아이템의 태그가 같다면?
-		if (inv.item->GetTag() == item->GetTag())
+		if (invItem->GetTag() == item->GetTag())
 		{
 			// 수량 증가
-			inv.quantity++;
+			invItem->SetQuantity(invItem->GetQuantity() + 1);
 			// 전달받은 아이템 삭제
 			SAFE_DEL(item);
 			return;
@@ -153,41 +158,48 @@ void Inventory::AddItem(Item* item)
 	InventoryItem desc;
 
 	// 비어있는 인벤토리 인덱스 찾기
-	for (InventoryItem i : inventory)
+	for (Item*& invItem : inventory)
 	{
-		if (i.item == nullptr)
+		if (invItem == nullptr)
 		{
-			desc.index = i.index;
-			desc.item = item;
-			desc.quantity = 1;
-
 			// 인벤토리에 추가
-			inventory[i.index] = desc;
+			invItem = item;
+			invItem->SetQuantity(1);
+
 			return;
 		}
 	}
-
-	
 }
 
 void Inventory::DeleteItem(int itemIndex)
 {
-	// 인덱스 오류 체크
-	if (itemIndex < 0 || itemIndex >= 28) return;
+	// 아이템이 존재하지 않는 경우 리턴
+	if (inventory[itemIndex] == nullptr) return;
 
-	// 만약 아이템이 존재한다면?
-	if (inventory[itemIndex].item != nullptr)
+	Item* item = inventory[itemIndex];
+
+	// 아이템의 수량 체크
+	if (item->GetQuantity() > 1)
 	{
-		// 수량 체크
-		if (inventory[itemIndex].quantity > 1)
+		// 1보다 큰 경우에는 수량만 감소 시키기
+		item->SetQuantity(item->GetQuantity() - 1);
+	}
+	else if (item->GetQuantity() == 1)
+	{
+		// 마지막 남은 아이템인 경우
+		// * 퀵슬롯 체크하기
+		vector<QuickSlotItem>& quickSlots = player->GetQuickSlot()->GetQuickSlotItems();
+		for (int i = 0; i < quickSlots.size(); i++)
 		{
-			inventory[itemIndex].quantity--;
+			if (quickSlots[i].item == item)
+			{
+				quickSlots[i].item = nullptr;
+			}
 		}
-		else if (inventory[itemIndex].quantity == 1)
-		{
-			inventory[itemIndex].quantity--;
-			SAFE_DEL(inventory[itemIndex].item);
-		}
+		// * 인벤토리 체크하기
+		inventory[itemIndex] = nullptr;
+		// * 아이템 삭제하기
+		SAFE_DEL(item);
 	}
 }
 
@@ -200,12 +212,6 @@ void Inventory::InitInventory()
 
 	// 인벤토리 내용 초기화
 	inventory.resize(28);
-	int idx = 0;
-	for (InventoryItem& i : inventory)
-	{
-		i.index = idx;
-		idx++;
-	}
 
 	// 인벤토리 슬롯 설정
 	invSlot.resize(28);
@@ -223,10 +229,6 @@ void Inventory::InitInventory()
 
 	// 인벤토리 액티브 off
 	SetActive(false);
-
-	// 마우스 액티브 off
-	mouseImg = new Quad(Vector2(55.0f, 55.0f));
-	mouseImg->SetActive(false);
 }
 
 void Inventory::MoveInventoryFrame()
@@ -288,7 +290,7 @@ void Inventory::PickItem(void* slot)
 		if (idx >= 28) return;
 
 		// 해당 슬롯에 아이템이 존재하지 않는 경우 리턴
-		if (inventory[idx].item == nullptr)
+		if (inventory[idx] == nullptr)
 		{
 			tempIndex = -1;
 			// 현재 선택한 버튼 선택 여부 및 활성화 off
@@ -301,8 +303,8 @@ void Inventory::PickItem(void* slot)
 		tempIndex = idx;
 
 		// 마우스 이미지 활성화 및 해당 슬롯 이미지 넣기
-		mouseImg->GetMaterial()->SetDiffuseMap(invSlot[idx]->GetMaterial()->GetDiffuseMap());
-		mouseImg->SetActive(true);
+		//mouseImg->GetMaterial()->SetDiffuseMap(invSlot[idx]->GetMaterial()->GetDiffuseMap());
+		//mouseImg->SetActive(true);
 
 	}
 }
@@ -333,11 +335,9 @@ void Inventory::DownItem(void* slot)
 		invSlot[tempIndex]->SetCilck(false);
 
 		// 해당 인덱스의 위치에 아이템 정보 옮기기
-		Item* item = inventory[tempIndex].item;
-		int quantity = inventory[tempIndex].quantity;
-		inventory[tempIndex].item = inventory[idx].item;
-		inventory[tempIndex].quantity = inventory[idx].quantity;
-		inventory[idx].item = item;
-		inventory[idx].quantity = quantity;
+		Item* item = inventory[tempIndex];
+
+		inventory[tempIndex] = inventory[idx];
+		inventory[idx] = item;
 	}
 }

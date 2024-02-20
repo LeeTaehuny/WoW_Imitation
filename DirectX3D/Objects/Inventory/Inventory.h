@@ -11,7 +11,7 @@ struct InventoryItem
 class Inventory : public Transform
 {
 public:
-	Inventory();
+	Inventory(class CH_Base_ver2* player);
 	~Inventory();
 
 	void Update();
@@ -27,8 +27,11 @@ public:
 
 // Getter & Setter
 public:
-	const vector<InventoryItem>& GetInventory() { return inventory; }
+	vector<class Item*>& GetInventory() { return inventory; }
 	const vector<class Slot*>& GetInvSlots() { return invSlot; }
+
+	int GetTempIndex() { return tempIndex; }
+	void SetTempIndex(int value) { tempIndex = value; }
 
 // Event Func
 private:
@@ -46,7 +49,7 @@ private:
 // Member Variable
 private:
 	// 정보를 담아줄 인벤토리
-	vector<InventoryItem> inventory;
+	vector<Item*> inventory;
 
 	// UI
 	int MAX_COUNT = 28;		// 인벤토리 칸 수
@@ -57,9 +60,10 @@ private:
 	bool bIsMove = false;
 	Vector3 prevPos;
 
-	// 클릭시 마우스에서 스폰될 이미지
-	Quad* mouseImg;
 	// 클릭시 저장될 객체
 	int tempIndex;
+
+	// 플레이어 저장용 변수
+	class CH_Base_ver2* player;
 };
 

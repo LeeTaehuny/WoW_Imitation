@@ -1,9 +1,10 @@
 #include "Framework.h"
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
+#include "Objects/Inventory/Inventory.h"
 
 HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
-	: CH_Base_ver2(type, ProfessionType::ProtectionWarrior)
+	: CH_Base_ver2(type, ProfessionType::HolyPriest)
 {
 	transform->SetParent(this);
 	this->instancing = instancing;
@@ -35,7 +36,7 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 
 	skillList.push_back(new H_000_Basic_Atttack());
 	skillList[skillList.size() - 1]->SetOwner(this);
-	// ÀÚ½ÅÀÇ Å¸ÀÔ¿¡ µû¶ó 
+	// ï¿½Ú½ï¿½ï¿½ï¿½ Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -71,14 +72,14 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 
 	FOR(skillList.size())
 	{
-		// °ø°Ý ÆÇº°¿ë bool º¤ÅÍ º¯¼ö
-		// 0 = ÀÏ¹Ý°ø°Ý
-		// 1 = ºûÀÇ ±Ç´É : Æò¿Â
-		// 2 = ºûÀÇ ±Ç´É : ½Å¼ºÈ­
-		// 3 = ¼öÈ£ ¿µÈ¥
-		// 4 = ºûÀÇ ±Ç´É : ÀÀÂ¡
-		// 5 = Ä¡À¯ÀÇ ¸¶¹ýÁø
-		// 6 = Ãµ»óÀÇ Âù°¡
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Çºï¿½ï¿½ï¿½ bool ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		// 0 = ï¿½Ï¹Ý°ï¿½ï¿½ï¿½
+		// 1 = ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ : ï¿½ï¿½ï¿½
+		// 2 = ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ : ï¿½Å¼ï¿½È­
+		// 3 = ï¿½ï¿½È£ ï¿½ï¿½È¥
+		// 4 = ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ : ï¿½ï¿½Â¡
+		// 5 = Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// 6 = Ãµï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		attackSignal.push_back(false);
 	}
 	weapon = new Weapon("staff_2", WeaponType::Staff);
@@ -99,10 +100,10 @@ HolyPriest_in::~HolyPriest_in()
 
 void HolyPriest_in::Update()
 {
-	// ¾×Æ¼ºê »óÅÂ°¡ ¾Æ´Ï¶ó¸é ¾÷µ¥ÀÌÆ®ÇÏÁö ¾ÊÀ½
+	// ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (!Active()) return;
 
-	// ÇÃ·¹ÀÌ¾î Å¸ÀÔ¿¡ µû¶ó ¾÷µ¥ÀÌÆ® ¼öÇà
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -124,7 +125,7 @@ void HolyPriest_in::Update()
 
 void HolyPriest_in::Render()
 {
-	// ¾×Æ¼ºê »óÅÂ°¡ ¾Æ´Ï¶ó¸é ¾÷µ¥ÀÌÆ®ÇÏÁö ¾ÊÀ½
+	// ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (!Active()) return;
 
 	myCollider->Render();
@@ -160,7 +161,7 @@ void HolyPriest_in::EquipWeapon(Weapon* weapon)
 	if (weapon == nullptr) return;
 
 	this->weapon = weapon;
-	//weapon->Rot() = Vector3(0.0f, 21.0f, 20.0f);
+	weapon->SetOwner(this);
 	weapon->SetParent(mainHand);
 }
 
@@ -169,7 +170,7 @@ void HolyPriest_in::PlayerUpdate()
 	Control();
 	//Casting();
 
-	// Ãæµ¹Ã¼ ¾÷µ¥ÀÌÆ®
+	// ï¿½æµ¹Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
 }
@@ -230,12 +231,12 @@ void HolyPriest_in::AIUpdate()
 			SetState(WALK_F);
 		}
 	}
-	// Áö±Ý °ø°ÝÇÒ Å¸°ÙÀÌ ¾ø´Ù¸é
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½
 	else if (!atkTarget)
 	{
 		AI_animation_Moving();
 	}
-	// °ø°ÝÇÒ Å¸°ÙÀÌ ÀÖ´Ù¸é
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
 	else
 	{
 		ActionTickTime -= DELTA;
@@ -269,7 +270,7 @@ void HolyPriest_in::AIUpdate()
 
 			if (characterSelectData)
 			{
-				// È¸º¹ ´ë»ó Ä³¸¯ÅÍÀÇ Ã¼·Â ºñÀ² ±¸ÇÏ±â
+				// È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½
 				target_Proportion = characterSelectData->GetStat().hp / characterSelectData->GetStat().maxHp;
 				if (target_Proportion <= 0.6)
 				{
@@ -318,7 +319,7 @@ void HolyPriest_in::OnHit(float damage)
 
 void HolyPriest_in::AI_animation_Moving()
 {
-	// ³»°¡ ÇÃ·¹ÀÌ¾îÀÇ ÁÖÀ§¿¡ ÀÖ´Ù¸é
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
 	if (myPlayer->GetRange()->IsCollision(myCollider))
 	{
 		randomHangdong -= DELTA;
@@ -333,7 +334,7 @@ void HolyPriest_in::AI_animation_Moving()
 
 		SetState(WALK_F);
 	}
-	// ÇÃ·¹ÀÌ¾îÀÇ ÁÖº¯ÀÌ ¾Æ´Ï¶ó¸é
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Öºï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½
 	else
 	{
 		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
@@ -372,13 +373,13 @@ void HolyPriest_in::Control()
 
 void HolyPriest_in::Moving()
 {
-	// Á¡ÇÁ, °ø°Ý, ¸ÂÀ» ¶§, Á×¾úÀ» °æ¿ì ¿òÁ÷ÀÌÁö ¾Ê±â
+	// ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½×¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½
 	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
 
-	// Ä³¸¯ÅÍ ±âº» ÀÌµ¿ : W(¾Õ), S(µÚ), Q(ÁÂ), E(¿ì)
+	// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½Ìµï¿½ : W(ï¿½ï¿½), S(ï¿½ï¿½), Q(ï¿½ï¿½), E(ï¿½ï¿½)
 	{
 		if (KEY_PRESS('W'))
 		{
@@ -402,11 +403,11 @@ void HolyPriest_in::Moving()
 		}
 	}
 
-	// Ä³¸¯ÅÍ ¸¶¿ì½º ¿ìÅ¬¸¯¿¡ µû¸¥ ÀÌµ¿ º¯È­
+	// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½È­
 	{
 		if (KEY_PRESS(VK_RBUTTON))
 		{
-			// ÁÂ¿ì ÀÌµ¿
+			// ï¿½Â¿ï¿½ ï¿½Ìµï¿½
 			if (KEY_PRESS('A'))
 			{
 				velocity.x -= DELTA;
@@ -420,10 +421,10 @@ void HolyPriest_in::Moving()
 		}
 		else
 		{
-			// ¾ÕµÚ·Î ÀÌµ¿ ÁßÀÌ ¾Æ´Ò ¶§
+			// ï¿½ÕµÚ·ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½
 			if (KEY_PRESS('W') || KEY_PRESS('S'))
 			{
-				// ÁÂ¿ì È¸Àü
+				// ï¿½Â¿ï¿½ È¸ï¿½ï¿½
 				if (KEY_PRESS('A'))
 				{
 					Rot().y -= turnSpeed * DELTA;
@@ -436,7 +437,7 @@ void HolyPriest_in::Moving()
 		}
 	}
 
-	// °¡¼Óµµ ¼³Á¤
+	// ï¿½ï¿½ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (velocity.Length() > 1) velocity.Normalize();
 	if (!isMoveZ) velocity.z = Lerp(velocity.z, 0, deceleration * DELTA);
 	if (!isMoveX) velocity.x = Lerp(velocity.x, 0, deceleration * DELTA);
@@ -444,10 +445,10 @@ void HolyPriest_in::Moving()
 	Matrix rotY = XMMatrixRotationY(Rot().y);
 	Vector3 direction = XMVector3TransformCoord(velocity, rotY);
 
-	// À§Ä¡ ÀÌµ¿
+	// ï¿½ï¿½Ä¡ ï¿½Ìµï¿½
 	this->Pos() += direction * -1 * moveSpeed * DELTA;
 
-	// Á¡ÇÁÀÎ °æ¿ì¶ó¸é ¾Ö´Ï¸ÞÀÌ¼Ç ¼³Á¤ X
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ X
 	if (curState == JUMP) return;
 
 	if (velocity.z > 0.1f)
@@ -464,16 +465,16 @@ void HolyPriest_in::Moving()
 
 void HolyPriest_in::Jump()
 {
-	// Á¡ÇÁÁßÀÌ ¾Æ´Ï¶ó¸é ¸®ÅÏ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (!isJump) return;
 
 	jumpVelocity -= 1.8f * gravityMult * DELTA;
 	Pos().y += jumpVelocity;
 
-	// ÇöÀçÀÇ ÁöÁ¤ ³ôÀÌº¸´Ù À§Ä¡°¡ ³·´Ù¸é?
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½?
 	if (Pos().y < curheight)
 	{
-		// À§Ä¡ ÃÊ±âÈ­ ¹× »óÅÂ ÀüÈ¯
+		// ï¿½ï¿½Ä¡ ï¿½Ê±ï¿½È­ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 		Pos().y = curheight;
 		jumpVelocity = 0;
 		SetState(IDLE1);
@@ -483,21 +484,21 @@ void HolyPriest_in::Jump()
 
 void HolyPriest_in::Attack()
 {
-	// Á¡ÇÁ, »ç¸Á, ÇÇ°Ý, °ø°Ý »óÅÂÀÎ °æ¿ì ¸®ÅÏ
+	// ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½, ï¿½Ç°ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
 	if (attackSignal[0])
 	{
 		attackSignal[0] = false;
 
-		// TODO : ¿ø°Å¸® °ø°Ý ¸¸µé±â
+		// TODO : ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 		skillList[0]->UseSkill(monsterSelectData);
 	}
 }
 
 void HolyPriest_in::ai_attack()
 {
-	// Á¡ÇÁ, »ç¸Á, ÇÇ°Ý, °ø°Ý »óÅÂÀÎ °æ¿ì ¸®ÅÏ
+	// ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½, ï¿½Ç°ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (curState == DIE || curState == HIT || curState == ATTACK1) return;
 
 	if (heal)
@@ -607,7 +608,7 @@ void HolyPriest_in::ai_attack()
 			return;
 		}
 
-		// °ø°ÝÇÒ ´ë»óÀ» ¹Ù¶óº¸°Ô ÇÏ´Â ÄÚµå
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸°ï¿½ ï¿½Ï´ï¿½ ï¿½Úµï¿½
 		Vector3 poldirect = monsterSelectData->GetCollider()->GlobalPos() - this->GlobalPos();
 		this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
 

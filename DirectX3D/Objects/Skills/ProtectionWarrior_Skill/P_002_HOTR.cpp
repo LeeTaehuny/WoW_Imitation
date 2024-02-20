@@ -2,6 +2,8 @@
 
 P_002_HOTR::P_002_HOTR() : ActiveSkill(SkillType::Target)
 {
+	skillName = "P_002_HOTR";
+
 	/*
 	스킬의 효과
 

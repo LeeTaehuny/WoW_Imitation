@@ -3,6 +3,8 @@
 
 P_007_Blessing_of_Spellwarding::P_007_Blessing_of_Spellwarding()
 {
+	skillName = "P_007_Blessing_of_Spellwarding";
+
 	/*
 	스킬의 효과
 
@@ -11,9 +13,8 @@ P_007_Blessing_of_Spellwarding::P_007_Blessing_of_Spellwarding()
 	*/
 
 	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/007.jpg");
-	prevSkills.resize(2);
-	prevSkills[0] = "P_001_Avengers_Shield";
-	prevSkills[1] = "P_003_Grand_Crusader";
+	prevSkills.resize(1);
+	prevSkills[0] = "P_004_Ardent_Defender";
 }
 
 P_007_Blessing_of_Spellwarding::~P_007_Blessing_of_Spellwarding()

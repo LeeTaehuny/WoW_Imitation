@@ -3,6 +3,8 @@
 
 H_001_Holy_Word_Serenity::H_001_Holy_Word_Serenity() : ActiveSkill(SkillType::Target)
 {
+	skillName = "H_001_Holy_Word_Serenity";
+
 	// 기본 생성 요소
 	{
 		// 스킬 속도

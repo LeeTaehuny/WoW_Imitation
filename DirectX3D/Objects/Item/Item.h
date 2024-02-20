@@ -19,15 +19,20 @@ public:
 	virtual void GUIRender();
 	virtual void Use() = 0;
 
-// Getter
+// Getter & Setter
 public:
 	ItemType GetType() { return type; }
 	Quad* GetIcon() { return icon; }
 	string GetItemName() { return itemName; }
+	int GetQuantity() { return quantity; }
+	void SetQuantity(int value) { quantity = value; }
 
 protected:
 	Quad* icon;
 	string itemName;
 	ItemType type;
+
+private:
+	int quantity;
 };
 

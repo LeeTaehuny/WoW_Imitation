@@ -1,9 +1,17 @@
 #include "Framework.h"
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
+#include "Objects/Skills/FireMage_Skill/F_000_Basic_Atttack.h"
+#include "Objects/Skills/FireMage_Skill/F_001_Pyroblast.h"
+#include "Objects/Skills/FireMage_Skill/F_002_FireBlast.h"
+#include "Objects/Skills/FireMage_Skill/F_004_Scorch.h"
+#include "Objects/Skills/FireMage_Skill/F_005_PhoenixFlame.h"
+#include "Objects/Skills/FireMage_Skill/F_009_Combustion.h"
+#include "Objects/Skills/FireMage_Skill/F_010_Meteor.h"
+#include "Objects/Inventory/Inventory.h"
 
 FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
-	: CH_Base_ver2(type, ProfessionType::ProtectionWarrior)
+	: CH_Base_ver2(type, ProfessionType::FireMage)
 {
 	transform->SetParent(this);
 	this->instancing = instancing;
@@ -25,7 +33,7 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 
 	skillList.push_back(new F_000_Basic_Atttack());
 	skillList[skillList.size() - 1]->SetOwner(this);
-	// ÀÚ½ÅÀÇ Å¸ÀÔ¿¡ µû¶ó 
+	// ï¿½Ú½ï¿½ï¿½ï¿½ Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -65,14 +73,14 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 	mainHandBoneIndex = 23;
 	FOR(7)
 	{
-		// °ø°Ý ÆÇº°¿ë bool º¤ÅÍ º¯¼ö
-		// 0 = ÀÏ¹Ý°ø°Ý
-		// 1 = ºÒµ¢ÀÌ ÀÛ·Ä
-		// 2 = È­¿° ÀÛ·Ä
-		// 3 = ºÒÅÂ¿ì±â
-		// 4 = ºÒ»çÁ¶ÀÇ ºÒ±æ
-		// 5 = ¹ßÈ­
-		// 6 = ¸ÞÅ×¿À
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Çºï¿½ï¿½ï¿½ bool ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		// 0 = ï¿½Ï¹Ý°ï¿½ï¿½ï¿½
+		// 1 = ï¿½Òµï¿½ï¿½ï¿½ ï¿½Û·ï¿½
+		// 2 = È­ï¿½ï¿½ ï¿½Û·ï¿½
+		// 3 = ï¿½ï¿½ï¿½Â¿ï¿½ï¿½
+		// 4 = ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò±ï¿½
+		// 5 = ï¿½ï¿½È­
+		// 6 = ï¿½ï¿½ï¿½×¿ï¿½
 		attackSignal.push_back(false);
 	}
 
@@ -91,10 +99,10 @@ FireMage_in::~FireMage_in()
 
 void FireMage_in::Update()
 {
-	// ¾×Æ¼ºê »óÅÂ°¡ ¾Æ´Ï¶ó¸é ¾÷µ¥ÀÌÆ®ÇÏÁö ¾ÊÀ½
+	// ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (!Active()) return;
 
-	// ÇÃ·¹ÀÌ¾î Å¸ÀÔ¿¡ µû¶ó ¾÷µ¥ÀÌÆ® ¼öÇà
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -116,7 +124,7 @@ void FireMage_in::Update()
 
 void FireMage_in::Render()
 {
-	// ¾×Æ¼ºê »óÅÂ°¡ ¾Æ´Ï¶ó¸é ¾÷µ¥ÀÌÆ®ÇÏÁö ¾ÊÀ½
+	// ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (!Active()) return;
 
 	myCollider->Render();
@@ -149,8 +157,10 @@ void FireMage_in::EquipWeapon(Weapon* weapon)
 	if (weapon == nullptr) return;
 
 	this->weapon = weapon;
-	weapon->Scale() *= 100.0f;
-	//weapon->Rot() = Vector3(0.0f, 11.0f, 0.0f);
+	weapon->SetOwner(this);
+	if (weapon->Scale() == Vector3(1, 1, 1))
+		weapon->Scale() *= 100.0f; // í™•ì¸í•´ë³´ê¸°
+	weapon->Rot() = Vector3(0.0f, 11.0f, 0.0f);
 	weapon->SetParent(mainHand);
 }
 
@@ -159,7 +169,7 @@ void FireMage_in::PlayerUpdate()
 	Control();
 	//Casting();
 
-	// Ãæµ¹Ã¼ ¾÷µ¥ÀÌÆ®
+	// ï¿½æµ¹Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
 }
@@ -168,12 +178,12 @@ void FireMage_in::AIUpdate()
 {
 	if (!myPlayer) return;
 	
-	// Áö±Ý °ø°ÝÇÒ Å¸°ÙÀÌ ¾ø´Ù¸é
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½
 	if (!atkTarget)
 	{
 		AI_animation_Moving();
 	}
-	// °ø°ÝÇÒ Å¸°ÙÀÌ ÀÖ´Ù¸é
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
 	else
 	{
 		if (curState == ATTACK1 || curState == ATTACK2 || curState == ATTACK3) return;
@@ -211,7 +221,7 @@ void FireMage_in::OnHit(float damage)
 
 void FireMage_in::AI_animation_Moving()
 {
-	// ³»°¡ ÇÃ·¹ÀÌ¾îÀÇ ÁÖÀ§¿¡ ÀÖ´Ù¸é
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
 	if (myPlayer->GetRange()->IsCollision(myCollider))
 	{
 		randomHangdong -= DELTA;
@@ -226,7 +236,7 @@ void FireMage_in::AI_animation_Moving()
 
 		SetState(WALK_F);
 	}
-	// ÇÃ·¹ÀÌ¾îÀÇ ÁÖº¯ÀÌ ¾Æ´Ï¶ó¸é
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Öºï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½
 	else
 	{
 		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
@@ -265,13 +275,13 @@ void FireMage_in::Control()
 
 void FireMage_in::Moving()
 {
-	// Á¡ÇÁ, °ø°Ý, ¸ÂÀ» ¶§, Á×¾úÀ» °æ¿ì ¿òÁ÷ÀÌÁö ¾Ê±â
+	// ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½×¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½
 	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
 
-	// Ä³¸¯ÅÍ ±âº» ÀÌµ¿ : W(¾Õ), S(µÚ), Q(ÁÂ), E(¿ì)
+	// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½Ìµï¿½ : W(ï¿½ï¿½), S(ï¿½ï¿½), Q(ï¿½ï¿½), E(ï¿½ï¿½)
 	{
 		if (KEY_PRESS('W'))
 		{
@@ -295,11 +305,11 @@ void FireMage_in::Moving()
 		}
 	}
 
-	// Ä³¸¯ÅÍ ¸¶¿ì½º ¿ìÅ¬¸¯¿¡ µû¸¥ ÀÌµ¿ º¯È­
+	// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½È­
 	{
 		if (KEY_PRESS(VK_RBUTTON))
 		{
-			// ÁÂ¿ì ÀÌµ¿
+			// ï¿½Â¿ï¿½ ï¿½Ìµï¿½
 			if (KEY_PRESS('A'))
 			{
 				velocity.x -= DELTA;
@@ -313,10 +323,10 @@ void FireMage_in::Moving()
 		}
 		else
 		{
-			// ¾ÕµÚ·Î ÀÌµ¿ ÁßÀÌ ¾Æ´Ò ¶§
+			// ï¿½ÕµÚ·ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½
 			if (KEY_PRESS('W') || KEY_PRESS('S'))
 			{
-				// ÁÂ¿ì È¸Àü
+				// ï¿½Â¿ï¿½ È¸ï¿½ï¿½
 				if (KEY_PRESS('A'))
 				{
 					Rot().y -= turnSpeed * DELTA;
@@ -329,7 +339,7 @@ void FireMage_in::Moving()
 		}
 	}
 
-	// °¡¼Óµµ ¼³Á¤
+	// ï¿½ï¿½ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (velocity.Length() > 1) velocity.Normalize();
 	if (!isMoveZ) velocity.z = Lerp(velocity.z, 0, deceleration * DELTA);
 	if (!isMoveX) velocity.x = Lerp(velocity.x, 0, deceleration * DELTA);
@@ -337,10 +347,10 @@ void FireMage_in::Moving()
 	Matrix rotY = XMMatrixRotationY(Rot().y);
 	Vector3 direction = XMVector3TransformCoord(velocity, rotY);
 
-	// À§Ä¡ ÀÌµ¿
+	// ï¿½ï¿½Ä¡ ï¿½Ìµï¿½
 	this->Pos() += direction * -1 * moveSpeed * DELTA;
 
-	// Á¡ÇÁÀÎ °æ¿ì¶ó¸é ¾Ö´Ï¸ÞÀÌ¼Ç ¼³Á¤ X
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ X
 	if (curState == JUMP) return;
 
 	if (velocity.z > 0.1f)
@@ -357,16 +367,16 @@ void FireMage_in::Moving()
 
 void FireMage_in::Jump()
 {
-	// Á¡ÇÁÁßÀÌ ¾Æ´Ï¶ó¸é ¸®ÅÏ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (!isJump) return;
 
 	jumpVelocity -= 1.8f * gravityMult * DELTA;
 	Pos().y += jumpVelocity;
 
-	// ÇöÀçÀÇ ÁöÁ¤ ³ôÀÌº¸´Ù À§Ä¡°¡ ³·´Ù¸é?
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½?
 	if (Pos().y < curheight)
 	{
-		// À§Ä¡ ÃÊ±âÈ­ ¹× »óÅÂ ÀüÈ¯
+		// ï¿½ï¿½Ä¡ ï¿½Ê±ï¿½È­ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 		Pos().y = curheight;
 		jumpVelocity = 0;
 		SetState(IDLE1);
@@ -376,14 +386,14 @@ void FireMage_in::Jump()
 
 void FireMage_in::Attack()
 {
-	// Á¡ÇÁ, »ç¸Á, ÇÇ°Ý, °ø°Ý »óÅÂÀÎ °æ¿ì ¸®ÅÏ
+	// ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½, ï¿½Ç°ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
 	if (attackSignal[0])
 	{
 		attackSignal[0] = false;
 
-		// TODO : ¿ø°Å¸® °ø°Ý ¸¸µé±â
+		// TODO : ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 		skillList[0]->UseSkill(monsterSelectData);
 	}
 }
@@ -403,7 +413,7 @@ void FireMage_in::ai_attack()
 		return;
 	}
 
-	// °ø°ÝÇÒ ´ë»óÀ» ¹Ù¶óº¸°Ô ÇÏ´Â ÄÚµå
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸°ï¿½ ï¿½Ï´ï¿½ ï¿½Úµï¿½
 	Vector3 poldirect = monsterSelectData->GetTransform()->GlobalPos() - this->GlobalPos();
 	this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
 

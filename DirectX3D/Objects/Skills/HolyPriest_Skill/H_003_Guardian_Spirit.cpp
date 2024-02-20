@@ -3,6 +3,8 @@
 
 H_003_Guardian_Spirit::H_003_Guardian_Spirit() : ActiveSkill(SkillType::Target)
 {
+	skillName = "H_003_Guardian_Spirit";
+
 	// 기본 생성 요소
 	{
 		// 스킬 속도
