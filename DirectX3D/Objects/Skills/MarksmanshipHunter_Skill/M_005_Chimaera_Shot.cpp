@@ -3,6 +3,8 @@
 
 M_005_Chimaera_Shot::M_005_Chimaera_Shot() : ActiveSkill(SkillType::Target)
 {
+	skillName = "M_005_Chimaera_Shot";
+
 	Yad = new SphereCollider();
 	Yad->Scale() *= 7;
 	Yad->UpdateWorld();

@@ -28,6 +28,9 @@ public:
 	vector<string> GetPrevSkills() { return prevSkills; }
 	void SetOwner(class CH_Base_ver2* owner) { this->owner = owner; }
 	class CH_Base_ver2* GetOwner() { return owner; }
+	Quad* GetIcon() { return icon; }
+	SkillBaseType GetSkillType() { return skillBaseType; }
+	string GetSkillName() { return skillName; }
 
 protected:
 	// 본인의 콜라이더
@@ -35,6 +38,9 @@ protected:
 
 	// 선행스킬 이름
 	vector<string> prevSkills;
+
+	// 스킬의 이름
+	string skillName;
 
 	// 해당 스킬을 가지는 플레이어에 대한 정보
 	class CH_Base_ver2* owner;

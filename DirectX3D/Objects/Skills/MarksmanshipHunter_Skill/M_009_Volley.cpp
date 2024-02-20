@@ -3,6 +3,8 @@
 
 M_009_Volley::M_009_Volley() : ActiveSkill(SkillType::Target)
 {
+	skillName = "M_009_Volley";
+
 	hitCollider = new SphereCollider();
 	hitCollider->Scale().x *= 5;
 	hitCollider->Scale().z *= 5;

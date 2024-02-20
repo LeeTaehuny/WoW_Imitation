@@ -4,6 +4,8 @@
 
 A_004_DiebytheSword::A_004_DiebytheSword() : ActiveSkill(SkillType::Target)
 {
+	skillName = "A_004_DiebytheSword";
+
 	// 지속 시간 설정
 	curTime = 0.0f;
 	MAX_duration = 8.0f;
@@ -26,6 +28,8 @@ A_004_DiebytheSword::A_004_DiebytheSword() : ActiveSkill(SkillType::Target)
 
 	// 아이콘 추가
 	icon = new Quad(L"Textures/Character_Skill_Icon/ArmsWarrior/04_DiebytheSword.png");
+
+	usingType = UseType::NON_Data;
 }
 
 A_004_DiebytheSword::~A_004_DiebytheSword()
@@ -36,6 +40,8 @@ A_004_DiebytheSword::~A_004_DiebytheSword()
 
 void A_004_DiebytheSword::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (isRun)
 	{
 		particle->SetPos(owner->GetCollider()->GlobalPos());

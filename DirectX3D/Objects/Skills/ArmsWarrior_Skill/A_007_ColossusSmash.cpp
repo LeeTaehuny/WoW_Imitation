@@ -5,6 +5,8 @@
 
 A_007_ColossusSmash::A_007_ColossusSmash() : ActiveSkill(SkillType::Target)
 {
+	skillName = "A_007_ColossusSmash";
+
 	// 선행 스킬
 	prevSkills.push_back("A_006_FueledbyViolence");
 
@@ -35,13 +37,15 @@ A_007_ColossusSmash::A_007_ColossusSmash() : ActiveSkill(SkillType::Target)
 	requiredMp = 20;
 
 	// 아이콘 추가
-	icon = new Quad(L"Textures/Character_Skill_Icon/FireMage/01_Pyroblast.png");
+	icon = new Quad(L"Textures/Character_Skill_Icon/ArmsWarrior/07_ColossusSmash.png");
 
 	// 스킬 지연 발사
 	delayTime = 0.0f;
 	MAX_delayAnim = 1.0f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::monster_Data;
 }
 
 A_007_ColossusSmash::~A_007_ColossusSmash()
@@ -55,6 +59,8 @@ A_007_ColossusSmash::~A_007_ColossusSmash()
 
 void A_007_ColossusSmash::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (delayTime < MAX_delayAnim && isRun)
 	{
 		delayTime += DELTA;

@@ -1,6 +1,7 @@
 #include "Framework.h"
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
+#include "Objects/Inventory/Inventory.h"
 
 #include "Objects/Skills/ArmsWarrior_Skill/A_001_MortalStrike.h"
 #include "Objects/Skills/ArmsWarrior_Skill/A_002_Overpower.h"
@@ -9,7 +10,7 @@
 #include "Objects/Skills/ArmsWarrior_Skill/A_010_Bladestorm.h"
 
 ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
-	: CH_Base_ver2(type, ProfessionType::ProtectionWarrior)
+	: CH_Base_ver2(type, ProfessionType::ArmsWarrior)
 {
 	transform->SetParent(this);
 	this->instancing = instancing;
@@ -139,6 +140,7 @@ void ArmsWarrior_in::EquipWeapon(Weapon* weapon)
 	if (weapon == nullptr) return;
 
 	this->weapon = weapon;
+	weapon->SetOwner(this);
 	weapon->SetParent(mainHand);
 }
 
@@ -400,6 +402,9 @@ void ArmsWarrior_in::Attack()
 {
 	// ����, ���, �ǰ�, ���� ������ ��� ����
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
+
+	// 인벤토리가 열려있으면 공격 X
+	if (creatureType == CreatureType::Player && inventory->Active()) return;
 
 	if (KEY_DOWN(VK_LBUTTON))
 	{

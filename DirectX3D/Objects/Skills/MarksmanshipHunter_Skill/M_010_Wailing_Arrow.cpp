@@ -3,6 +3,8 @@
 
 M_010_Wailing_Arrow::M_010_Wailing_Arrow() : ActiveSkill(SkillType::Target)
 {
+	skillName = "M_010_Wailing_Arrow";
+
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);
 	hitCollider = new SphereCollider();

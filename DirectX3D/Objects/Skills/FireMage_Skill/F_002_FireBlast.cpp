@@ -3,6 +3,8 @@
 
 F_002_FireBlast::F_002_FireBlast() : ActiveSkill(SkillType::Target)
 {
+	skillName = "F_002_FireBlast";
+
 	// 쿨타임 설정 (5초)
 	MAX_delay = 5.0f;
 	coolTime = MAX_delay;
@@ -29,6 +31,8 @@ F_002_FireBlast::F_002_FireBlast() : ActiveSkill(SkillType::Target)
 
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::monster_Data;
 }
 
 F_002_FireBlast::~F_002_FireBlast()
@@ -39,6 +43,8 @@ F_002_FireBlast::~F_002_FireBlast()
 
 void F_002_FireBlast::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (delayTime < MAX_delayAnim && isRun)
 	{
 		delayTime += DELTA;

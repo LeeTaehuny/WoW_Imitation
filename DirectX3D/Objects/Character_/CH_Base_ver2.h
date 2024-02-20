@@ -20,6 +20,7 @@ struct Status
 {
 	float maxHp;	// �ִ� ü��
 	float hp;		// ���� ü��
+	int maxMp;
 	int mp;			// ����
 	int defence;	// ����
 	float damage;	// ���ݷ�
@@ -43,13 +44,19 @@ public:
 	// �ٸ� �ݶ��̴��� �浹���� ��
 	virtual void OnHit(float damage) = 0;
 
-	virtual void LearnSkill(class SkillBase* skill) {};
+	bool LearnSkill(class SkillBase* skill);
+
+	// 체력 & 마나 회복 함수
+	void AddHp(int amount);
+	void AddMp(int amount);
 
 	virtual void AI_animation_Moving() = 0;
 
 	virtual void EquipWeapon(class Weapon* weapon) = 0;
 
-	// Getter & Setter
+	void ClearWeapon();
+
+// Getter & Setter
 public:
 	class Inventory* GetInventory() { return inventory; }
 	Collider* GetCollider() { return myCollider; }
@@ -83,6 +90,17 @@ public:
 	void SetAttackOrder() { this->atkTarget = !this->atkTarget; }
 
 	// Member Variable
+	// 직업
+	ProfessionType GetProfessionType() { return professionType; }
+
+	// target
+	class MonsterBase* GetTargetMonster() { if (targetMonster != nullptr) return targetMonster; }
+	CH_Base_ver2* GetTargetCharacter() { if (targetCharacter != nullptr) return targetCharacter; }
+
+	// 퀵슬롯
+	class QuickSlot* GetQuickSlot() { return quickSlot; }
+
+// Member Variable
 protected:
 	CreatureType creatureType;
 	ProfessionType professionType;
@@ -91,9 +109,15 @@ protected:
 	Collider* myCollider;
 
 	class Inventory* inventory;
+	class StatusUI* statusUI;
+	class QuickSlot* quickSlot;
 
-	// ��ų
+	class MonsterBase* targetMonster;
+	CH_Base_ver2* targetCharacter;
+
+	// 스킬
 	vector<class SkillBase*> skillList;
+	map<string, int> prevSkills;
 
 	// �ν��Ͻ̿� �ʿ��� ������
 protected:

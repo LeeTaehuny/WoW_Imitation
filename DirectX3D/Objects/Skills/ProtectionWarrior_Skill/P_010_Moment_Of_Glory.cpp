@@ -3,6 +3,8 @@
 
 P_010_Moment_Of_Glory::P_010_Moment_Of_Glory()
 {
+	skillName = "P_010_Moment_Of_Glory";
+
 	/*
 	스킬의 효과
 
@@ -13,7 +15,7 @@ P_010_Moment_Of_Glory::P_010_Moment_Of_Glory()
 	*/
 
 	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/010.jpg");
-	prevSkills.resize(2);
+	prevSkills.resize(1);
 	prevSkills[0] = "P_008_Guardian_Of_Ancient_Kings";
 }
 

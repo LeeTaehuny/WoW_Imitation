@@ -3,6 +3,8 @@
 
 A_005_SharpenedBlades::A_005_SharpenedBlades()
 {
+	skillName = "A_005_SharpenedBlades";
+
 	// 선행 스킬
 	prevSkills.push_back("A_003_MartialProwess");
 

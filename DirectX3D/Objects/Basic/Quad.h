@@ -15,9 +15,14 @@ public:
 
 public:
     Vector2 GetSize() { return size; }
+    Float4& GetColor() { return colorBuffer->Get(); }
+
+    void UseColorBuffer();
 
 private:
     void MakeMesh();
+
+    bool isUsedColor = false;
 
 protected:
     Vector2 size;

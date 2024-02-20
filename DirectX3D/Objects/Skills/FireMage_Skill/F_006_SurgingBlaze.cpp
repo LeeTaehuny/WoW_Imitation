@@ -5,6 +5,8 @@
 
 F_006_SurgingBlaze::F_006_SurgingBlaze()
 {
+	skillName = "F_006_SurgingBlaze";
+
 	// 선행 스킬
 	prevSkills.push_back("F_003_Pyrotechnics");
 

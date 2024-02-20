@@ -27,6 +27,9 @@
 #include "Objects/Skills/ArmsWarrior_Skill/A_009_BluntInstruments.h"
 #include "Objects/Skills/ArmsWarrior_Skill/A_010_Bladestorm.h"
 
+#include "Objects/Skills/SkillManager.h"
+#include "Objects/UI/QuickSlot.h"
+
 
 TestScene::TestScene()
 {
@@ -48,8 +51,7 @@ TestScene::TestScene()
 	//player = new FireMage_in(CreatureType::Player, transform, paladin, count++);
 	//CAM->SetTarget(player);
 	
-	//shop = new Shop();
-
+	shop = new Shop();
 
 	MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
 	MONSTER->SpawnScarecrow(Vector3(0, 0, 4));
@@ -88,22 +90,22 @@ TestScene::TestScene()
 	//player->GetSkillList().push_back(skill9);
 	//player->GetSkillList().push_back(skill10);
 
-	CH->PlayerSpawn(1);
+	CH->PlayerSpawn(3);
 
 	MONSTER->SetTarget(CH->GetPlayerData());
 
-	weapon = new Weapon("sword_1", WeaponType::Staff);
+	SKILL->Init(CH->GetPlayerData());
 
-	if (Weapon* w = dynamic_cast<Weapon*>(weapon))
-	{
-		CH->GetPlayerData()->EquipWeapon(w);
-		//player->EquipWeapon(w);
-		w->SetOwner(CH->GetPlayerData());
-	}
+	//if (Weapon* w = dynamic_cast<Weapon*>(weapon))
+	//{
+	//	CH->GetPlayerData()->EquipWeapon(w);
+	//	//player->EquipWeapon(w);
+	//	w->SetOwner(CH->GetPlayerData());
+	//}
 
-	skill1 = new A_002_Overpower();
-	skill1->SetOwner(CH->GetPlayerData());
-	skill1->Init();
+	//skill1 = new A_002_Overpower();
+	//skill1->SetOwner(CH->GetPlayerData());
+	//skill1->Init();
 
 	//skill2 = new F_002_FireBlast();
 	//skill2->SetOwner(CH->GetPlayerData());
@@ -140,6 +142,8 @@ TestScene::TestScene()
 	//skill10 = new F_010_Meteor();
 	//skill10->SetOwner(CH->GetPlayerData());
 	//skill10->Init();
+
+
 }
 
 TestScene::~TestScene()
@@ -148,60 +152,8 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
-	//shop->Update();
-	//
-	//// 상점 - 플레이어 상호작용
-	//{
-	//	if ((player->GlobalPos() - shop->GlobalPos()).Length() < 10.0f)
-	//	{
-	//		shop->SetActive(true);
-	//	}
-	//	else
-	//	{
-	//		shop->SetActive(false);
-	//	}
-	//
-	//	if (shop->Active())
-	//	{
-	//		const vector<Slot*> slots = shop->GetItemSlots();
-	//		const vector<Slot*> items = player->GetInventory()->GetInvSlots();
-	//
-	//		int idx = 0;
-	//		for (Slot* slot : slots)
-	//		{
-	//			if (mousePos.x <= slot->GlobalPos().x + slot->GetSize().x && mousePos.x >= slot->GlobalPos().x - slot->GetSize().x &&
-	//				mousePos.y <= slot->GlobalPos().y + slot->GetSize().y && mousePos.y >= slot->GlobalPos().y - slot->GetSize().y)
-	//			{
-	//				if (KEY_DOWN(VK_RBUTTON))
-	//				{
-	//					string tmpName = shop->GetItemName(idx);
-	//
-	//					if (tmpName.size())
-	//					{
-	//						shop->PurchaseItem(tmpName, player->GetInventory());
-	//					}
-	//				}
-	//			}
-	//
-	//			idx++;
-	//		}
-	//
-	//		idx = 0;
-	//		for (Slot* item : items)
-	//		{
-	//			if (mousePos.x <= item->GlobalPos().x + 33.0f && mousePos.x >= item->GlobalPos().x - 33.0f &&
-	//				mousePos.y <= item->GlobalPos().y + 33.0f && mousePos.y >= item->GlobalPos().y - 33.0f)
-	//			{
-	//				if (KEY_DOWN(VK_RBUTTON))
-	//				{
-	//					shop->SellItem(idx, player->GetInventory());
-	//				}
-	//			}
-	//
-	//			idx++;
-	//		}
-	//	}
-	//}
+	SKILL->Update();
+	shop->Update();
 	//
 	//// 임시 스킬 사용 테스트 (좌클릭 타겟 설정, K : 스킬 사용)
 	//{
@@ -210,10 +162,10 @@ void TestScene::Update()
 		// 마우스 위치의 Ray 생성
 		Ray ray = CAM->ScreenPointToRay(mousePos);
 		Contact contact;
-
+	
 		// 몬스터 배열 받기
 		vector<MonsterBase*> monsters = MONSTER->GetScarecrow();
-
+	
 		// 몬스터 순회하며 Ray 충돌 연산
 		for (MonsterBase* monster : monsters)
 		{
@@ -285,7 +237,7 @@ void TestScene::Update()
 	//paladin->Update();
 	//player->Update();
 	MONSTER->Update();
-	skill1->Update();
+	//skill1->Update();
 	//skill2->Update();
 	//skill4->Update();
 	//skill5->Update();
@@ -298,10 +250,10 @@ void TestScene::Update()
 	//skill9->Update();
 	//skill10->Update();
 
-	if (KEY_DOWN('C'))
-	{
-		skill1->UseSkill();
-	}
+	//if (KEY_DOWN('C'))
+	//{
+	//	skill1->UseSkill();
+	//}
 
 	//if (KEY_DOWN('V'))
 	//{
@@ -347,13 +299,15 @@ void TestScene::Render()
 	//skill9->Render();
 	//skill10->Render();
 	CH->Render();
-	skill1->Render();
+	//skill1->Render();
 }
 
 void TestScene::PostRender()
 {
+	SKILL->PostRender();
 	//player->UIRender();
-	//shop->UIRender();
+	shop->UIRender();
+	CH->PostRender();
 }
 
 void TestScene::GUIRender()

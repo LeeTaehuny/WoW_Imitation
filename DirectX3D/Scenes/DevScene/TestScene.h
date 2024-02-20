@@ -42,5 +42,9 @@ private:
     Trail* trail;
 
     class Item* weapon;
+    class StatusUI* stat;
+
+
+    class QuickSlot* slot;
 };
 

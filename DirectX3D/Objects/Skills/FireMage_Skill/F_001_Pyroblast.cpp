@@ -4,6 +4,8 @@
 
 F_001_Pyroblast::F_001_Pyroblast() : ActiveSkill(SkillType::Target)
 {
+	skillName = "F_001_Pyroblast";
+
 	// 날아갈 콜라이더
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);
@@ -40,6 +42,8 @@ F_001_Pyroblast::F_001_Pyroblast() : ActiveSkill(SkillType::Target)
 	MAX_delayAnim = 0.7f;
 
 	additiveDamage = 1.0f;
+
+	usingType = UseType::monster_Data;
 }
 
 F_001_Pyroblast::~F_001_Pyroblast()
@@ -53,6 +57,8 @@ F_001_Pyroblast::~F_001_Pyroblast()
 
 void F_001_Pyroblast::Update()
 {
+	if (owner->GetWeapon() == nullptr) return;
+
 	if (delayTime < MAX_delayAnim && isRun)
 	{
 		delayTime += DELTA;

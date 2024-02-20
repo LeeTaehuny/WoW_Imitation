@@ -30,7 +30,7 @@ Shop::Shop()
 	items.resize(28);
 
 	// UI 설정
-	shopFrame = new Slot(L"Textures/UI/shop_frame.png", SlotType::Inventory_Frame);
+	shopFrame = new Slot(L"Textures/UI/shop_frame.png", SlotType::Shop_Frame);
 
 	shopFrame->Scale() *= 1.75f;
 	shopFrame->Pos() = { CENTER_X * 0.5f, CENTER_Y, 1.0f };
@@ -77,6 +77,15 @@ Shop::~Shop()
 
 void Shop::Update()
 {
+	if ((CH->GetPlayerData()->GlobalPos() - GlobalPos()).Length() < 10.0f)
+	{
+		SetActive(true);
+	}
+	else
+	{
+		SetActive(false);
+	}
+
 	shop->UpdateWorld();
 	trader->UpdateWorld();
 	
@@ -88,6 +97,8 @@ void Shop::Update()
 	{
 		slot->Update();
 	}
+
+	InteractWithPlayer();
 }
 
 void Shop::Render()
@@ -160,6 +171,49 @@ Item* Shop::CreateWeapon(string name, WeaponType type)
 Item* Shop::CreatePotion(string name, PotionType type)
 {
 	return new Potion(name, type);
+}
+
+void Shop::InteractWithPlayer()
+{
+	if (Active())
+	{
+		const vector<Slot*> items = CH->GetPlayerData()->GetInventory()->GetInvSlots();
+
+		int idx = 0;
+		for (Slot* slot : itemSlots)
+		{
+			if (mousePos.x <= slot->GlobalPos().x + slot->GetSize().x && mousePos.x >= slot->GlobalPos().x - slot->GetSize().x &&
+				mousePos.y <= slot->GlobalPos().y + slot->GetSize().y && mousePos.y >= slot->GlobalPos().y - slot->GetSize().y)
+			{
+				if (KEY_DOWN(VK_RBUTTON))
+				{
+					string tmpName = GetItemName(idx);
+
+					if (tmpName.size())
+					{
+						PurchaseItem(tmpName, CH->GetPlayerData()->GetInventory());
+					}
+				}
+			}
+
+			idx++;
+		}
+
+		idx = 0;
+		for (Slot* item : items)
+		{
+			if (mousePos.x <= item->GlobalPos().x + 33.0f && mousePos.x >= item->GlobalPos().x - 33.0f &&
+				mousePos.y <= item->GlobalPos().y + 33.0f && mousePos.y >= item->GlobalPos().y - 33.0f)
+			{
+				if (KEY_DOWN(VK_RBUTTON))
+				{
+					SellItem(idx, CH->GetPlayerData()->GetInventory());
+				}
+			}
+
+			idx++;
+		}
+	}
 }
 
 void Shop::PurchaseItem(string itemName, Inventory* inventory)
