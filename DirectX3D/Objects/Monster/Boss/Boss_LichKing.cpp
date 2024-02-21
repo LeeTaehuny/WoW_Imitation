@@ -51,6 +51,8 @@ Boss_LichKing::Boss_LichKing() : ModelAnimator("LichKing")
 	}
 
 	lich_SkillList.push_back(new Lich_001_Necrotic_Plague(this));
+	//lich_SkillList.push_back(new Lich_002_Infest(this));
+	lich_SkillList.push_back(new Lich_003_Summon_Drudge_Ghouls(this));
 
 	target = CH->GetPlayerData();
 }
@@ -93,7 +95,7 @@ void Boss_LichKing::Update()
 		}
 	}
 	// 체력 비율을 내기 위한 변수
-	float vidul = cur_hp / Max_hp;
+	float vidul = Lich_Stat.cur_hp / Lich_Stat.Max_hp;
 	if (vidul >= 0.7f)
 	{
 		phaseOne();
@@ -101,6 +103,7 @@ void Boss_LichKing::Update()
 
 	Moving();
 	Attack();
+	targetActiveSerch();
 
 	for (int i = 0; i < lich_SkillList.size(); i++)
 	{
@@ -169,15 +172,15 @@ void Boss_LichKing::SetState(State state)
 
 void Boss_LichKing::Hit(float damage, int targetNumber)
 {
-	float damage_armor = damage - Armor;
+	float damage_armor = damage - Lich_Stat.Armor;
 	
 	if (damage_armor > 0)
 	{
-		Max_hp -= damage_armor;
+		Lich_Stat.Max_hp -= damage_armor;
 		character_Damage_Data[targetNumber] = damage_armor;
 	}	
 
-	if (cur_hp <= 0)
+	if (Lich_Stat.cur_hp <= 0)
 	{
 		SetState(DIE);
 	}
@@ -195,7 +198,7 @@ void Boss_LichKing::Moving()
 	Vector3 direction = (target->GlobalPos() - GlobalPos()).GetNormalized();
 
 	Rot().y = atan2(direction.x, direction.z) + XM_PI;
-	Pos() += direction * moveSpeed  * DELTA;
+	Pos() += direction * Lich_Stat.moveSpeed  * DELTA;
 	SetState(WALKING);
 }
 void Boss_LichKing::Attack()
@@ -276,11 +279,47 @@ void Boss_LichKing::End_CAST()
 	}
 }
 
+void Boss_LichKing::targetActiveSerch()
+{
+	if (!target->GetCollider()->Active())
+	{
+		atk_serch->UpdateWorld();
+		float atk_leng = FLT_MAX;
+		vector<CH_Base_ver2*> characterData = CH->GetCharcterData();
+		CH_Base_ver2* lom = nullptr;
+		for (int i = 0; i < characterData.size(); ++i)
+		{
+			if (!characterData[i]->GetCollider()->Active()) continue;
+			if (atk_serch->IsCollision(characterData[i]->GetCollider()))
+			{
+				Vector3 leng = characterData[i]->GlobalPos() - atk_serch->GlobalPos();
+				float min = leng.Length();
+
+				if (atk_leng >= min)
+				{
+					atk_leng = min;
+					lom = characterData[i];
+				}
+			}
+		}
+		if (lom != nullptr)
+		{
+			target = lom;
+			lasting = true;
+		}
+	}
+}
+
 void Boss_LichKing::phaseOne()
 {
-	if (!lich_SkillList[0]->GetCoolTime())
+	//if (!lich_SkillList[0]->GetCoolTime())
+	//{
+	//	SetState(CASTING);
+	//	lich_SkillList[0]->UseSkill(target);
+	//}
+	if (!lich_SkillList[1]->GetCoolTime())
 	{
 		SetState(CASTING);
-		lich_SkillList[0]->UseSkill(target);
+		lich_SkillList[1]->UseSkill();
 	}
 }

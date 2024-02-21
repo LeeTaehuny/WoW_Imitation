@@ -76,7 +76,7 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 
 	mainHandBoneIndex = 23;
 
-	
+
 }
 
 FireMage_in::~FireMage_in()
@@ -168,7 +168,7 @@ void FireMage_in::AIUpdate()
 {
 	if (!myPlayer) return;
 	if (curState == HIT || curState == DIE) return;
-	
+
 	// ���� ������ Ÿ���� ���ٸ�
 	if (!atkTarget)
 	{
@@ -207,6 +207,7 @@ void FireMage_in::OnHit(float damage)
 	else if (stat.hp <= 0)
 	{
 		SetState(DIE);
+		myCollider->SetActive(false);
 	}
 }
 
@@ -240,7 +241,7 @@ void FireMage_in::AI_animation_Moving()
 		SetState(WALK_F);
 	}
 
-	if (randomVelocity  == Vector3())
+	if (randomVelocity == Vector3())
 	{
 		SetState(IDLE1);
 	}
@@ -498,14 +499,7 @@ void FireMage_in::EndATK()
 
 void FireMage_in::EndHit()
 {
-	if (stat.hp <= 0)
-	{
-		SetState(DIE);
-	}
-	else
-	{
-		SetState(IDLE1);
-	}
+	SetState(IDLE1);
 }
 
 void FireMage_in::EndDie()

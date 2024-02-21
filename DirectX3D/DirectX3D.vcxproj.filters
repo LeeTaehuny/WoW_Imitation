@@ -231,6 +231,8 @@
     <ClCompile Include="Objects\UI\QuickSlot.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_001_Necrotic_Plague.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_000_Base.cpp" />
+    <ClCompile Include="Objects\Monster\Boss\Lich_002_Infest.cpp" />
+    <ClCompile Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.h" />
@@ -258,6 +260,8 @@
     <ClInclude Include="Objects\UI\QuickSlot.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_001_Necrotic_Plague.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_000_Base.h" />
+    <ClInclude Include="Objects\Monster\Boss\Lich_002_Infest.h" />
+    <ClInclude Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Character_\CH_Manager.h" />

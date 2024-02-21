@@ -226,6 +226,7 @@ void ArmsWarrior_in::OnHit(float damage)
 	else if (stat.hp <= 0)
 	{
 		SetState(DIE);
+		myCollider->SetActive(false);
 	}
 }
 
@@ -610,14 +611,7 @@ void ArmsWarrior_in::EndATK()
 
 void ArmsWarrior_in::EndHit()
 {
-	if (stat.hp <= 0)
-	{
-		SetState(DIE);
-	}
-	else
-	{
-		SetState(IDLE1);
-	}
+	SetState(IDLE1);
 }
 
 void ArmsWarrior_in::EndDie()

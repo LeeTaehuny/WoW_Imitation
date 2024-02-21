@@ -222,6 +222,8 @@ using namespace GameMath;
 
 #include "Objects/Monster/Boss/Lich_000_Base.h"
 #include "Objects/Monster/Boss/Lich_001_Necrotic_Plague.h"
+#include "Objects/Monster/Boss/Lich_002_Infest.h"
+#include "Objects/Monster/Boss/Lich_003_Summon_Drudge_Ghouls.h"
 
 // 스킬 배이스
 #include "Objects/Skills/Base/SkillBase.h"

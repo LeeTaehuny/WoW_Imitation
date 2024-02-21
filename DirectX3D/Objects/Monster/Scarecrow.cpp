@@ -72,10 +72,8 @@ void Scarecrow::PostRender()
 {
 }
 
-void Scarecrow::Hit(float amount, int targetNumber)
+void Scarecrow::Hit(float amount)
 {
-	//targetHate[targetNumber] += amount;
-
 	SetState(HIT);
 
 	//if (KEY_DOWN(VK_LBUTTON))

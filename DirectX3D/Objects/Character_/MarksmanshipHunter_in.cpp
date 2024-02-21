@@ -183,8 +183,8 @@ void MarksmanshipHunter_in::OnHit(float damage)
 	else if (stat.hp <= 0)
 	{
 		SetState(DIE);
+		myCollider->SetActive(false);
 	}
-
 }
 
 void MarksmanshipHunter_in::AI_animation_Moving()
@@ -491,14 +491,7 @@ void MarksmanshipHunter_in::EndATK()
 
 void MarksmanshipHunter_in::EndHit()
 {
-	if (stat.hp <= 0)
-	{
-		SetState(DIE);
-	}
-	else
-	{
-		SetState(IDLE1);
-	}
+	SetState(IDLE1);
 }
 
 void MarksmanshipHunter_in::EndDie()

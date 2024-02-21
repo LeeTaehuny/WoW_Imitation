@@ -4,7 +4,7 @@ class Lich_000_Base
 public:
 	virtual void Update() = 0;
 	virtual void Render() = 0;
-	virtual void UseSkill(CH_Base_ver2* chbase) = 0;
+	virtual void UseSkill(CH_Base_ver2* chbase = nullptr) = 0;
 
 	void Cooldown();
 

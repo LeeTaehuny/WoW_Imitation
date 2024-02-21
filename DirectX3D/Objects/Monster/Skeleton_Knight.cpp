@@ -36,12 +36,40 @@ Skeleton_Knight::Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* 
 	}
 	velocity = Vector3();
 
-	// 플레이어 캐릭터의 수만큼 해이트 정보 확장
-	targetHate.resize(this->target.size());
 	attackBumwe = new BoxCollider(Vector3(100, 200, 200));
 	attackBumwe->SetParent(this->transform);
 	attackBumwe->Pos() = Vector3(0, 100, -150);
 	attackBumwe->SetActive(false);
+
+	attackTarget_serch = new SphereCollider();
+	attackTarget_serch->SetParent(this->transform);
+	attackTarget_serch->Scale() *= 1200;
+
+	// 현재 몬스터와 가장 가까운 캐릭터를 판별하기 위한 부분
+	{
+		attackTarget_serch->UpdateWorld();
+		float atk_leng = FLT_MAX;
+		vector<CH_Base_ver2*> characterData = CH->GetCharcterData();
+		CH_Base_ver2* lom = nullptr;
+		for (int i = 0; i < characterData.size(); ++i)
+		{
+			if (attackTarget_serch->IsCollision(characterData[i]->GetCollider()))
+			{
+				Vector3 leng = characterData[i]->GlobalPos() - attackTarget_serch->GlobalPos();
+				float min = leng.Length();
+
+				if (atk_leng >= min)
+				{
+					atk_leng = min;
+					lom = characterData[i];
+				}
+			}
+		}
+		if (lom != nullptr)
+		{
+			targetTransform = lom;
+		}
+	}
 }
 
 Skeleton_Knight::~Skeleton_Knight()
@@ -51,18 +79,17 @@ Skeleton_Knight::~Skeleton_Knight()
 	delete root;
 	delete targetTransform;
 	delete attackBumwe;
+	delete attackTarget_serch;
 }
 
 void Skeleton_Knight::Update()
 {
 	if (!transform->Active()) return;
-	//if (curState == DEATH) return;
-	//if (curState == SCREAM) return;
-	//if (curState == HIT) return;
 
 	Move();
 	targetAttack();
 	ExecuteEvent();
+	MonsterBase::targetActiveSerch();
 	//UpdateUI();
 
 	root->SetWorld(instancing->GetTransformByNode(index, 3));
@@ -82,10 +109,8 @@ void Skeleton_Knight::PostRender()
 {
 }
 
-void Skeleton_Knight::Hit(float amount, int targetNumber)
+void Skeleton_Knight::Hit(float amount)
 {
-	targetHate[targetNumber] += amount;
-
 	curHP -= amount;
 
 	if (curHP <= 0)
@@ -155,6 +180,8 @@ void Skeleton_Knight::EndAttack()
 {
 	attackBumwe->SetActive(false);
 	SetState(WALKING);
+
+	MonsterBase::targetActiveSerch();
 }
 
 void Skeleton_Knight::EndHit()
@@ -178,23 +205,9 @@ void Skeleton_Knight::SetState(State state)
 
 void Skeleton_Knight::Move()
 {
-	if (!Moving) return;
-	if (curState == DEATH) return;
-	if (curState == HIT) return;
+	if (!Moving || curState == DEATH || curState == HIT) return;
 
-	float Maxhate = 0;
-	int targetNumver = 0;
-	for (int i = 0; i < targetHate.size(); i++)
-	{
-		if (Maxhate <= targetHate[i])
-		{
-			Maxhate = targetHate[i];
-			targetNumver = i;
-			targetTransform = target[i];
-		}
-	}
-
-	velocity = (target[targetNumver]->GlobalPos() - transform->GlobalPos()).GetNormalized();
+	velocity = (targetTransform->GlobalPos() - transform->GlobalPos()).GetNormalized();
 
 	transform->Pos() += velocity * 2 * DELTA;
 	transform->Rot().y = atan2(velocity.x, velocity.z) + XM_PI;

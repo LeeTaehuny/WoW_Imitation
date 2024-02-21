@@ -1,5 +1,6 @@
 #include "Framework.h"
 #include "F_000_Basic_Atttack.h"
+#include "Objects/Item/Weapon.h"
 
 F_000_Basic_Atttack::F_000_Basic_Atttack() : ActiveSkill(SkillType::Target)
 {
@@ -92,7 +93,7 @@ void F_000_Basic_Atttack::UseSkill(MonsterBase* monsterbase)
 		c->SetState(FireMage_in::State::ATTACK1);
 	}
 
-	skillDamage = owner->GetStat().damage;
+	skillDamage = owner->GetStat().damage + owner->GetWeapon()->GetWeaponDamage();
 	targetMonster = monsterbase;
 	animStart = 0;
 	isRun = true;

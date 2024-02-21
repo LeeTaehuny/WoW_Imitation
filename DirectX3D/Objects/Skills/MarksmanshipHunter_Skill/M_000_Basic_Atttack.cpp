@@ -1,5 +1,6 @@
 ﻿#include "Framework.h"
 #include "M_000_Basic_Atttack.h"
+#include "Objects/Item/Weapon.h"
 
 M_000_Basic_Atttack::M_000_Basic_Atttack() : ActiveSkill(SkillType::Target)
 {
@@ -88,7 +89,7 @@ void M_000_Basic_Atttack::UseSkill(MonsterBase* monsterbase)
 		c->SetState(MarksmanshipHunter_in::State::ATTACK1);
 	}
 
-	skillDamage = owner->GetStat().damage;
+	skillDamage = owner->GetStat().damage + owner->GetWeapon()->GetWeaponDamage();
 	targetMonster = monsterbase;
 	animStart = 0;
 	isRun = true;

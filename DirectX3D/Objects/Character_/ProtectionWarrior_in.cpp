@@ -206,6 +206,7 @@ void ProtectionWarrior_in::OnHit(float damage)
 	else if (stat.hp <= 0)
 	{
 		SetState(DIE);
+		myCollider->SetActive(false);
 	}
 }
 
@@ -551,14 +552,7 @@ void ProtectionWarrior_in::EndATK()
 
 void ProtectionWarrior_in::EndHit()
 {
-	if (stat.hp <= 0)
-	{
-		SetState(DIE);
-	}
-	else
-	{
-		SetState(IDLE1);
-	}
+	SetState(IDLE1);
 }
 
 void ProtectionWarrior_in::EndDie()

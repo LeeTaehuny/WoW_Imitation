@@ -20,7 +20,7 @@ public:
     virtual void PostRender() override;
 
     // 데미지를 받기 위한 함수
-    virtual void Hit(float amount = 1, int targetNumber = 0) override;
+    virtual void Hit(float amount = 1) override;
     // 헤이트벡터의 순번을 지정하기 위한 임시변수
     int targetNumber = 0;
     virtual void Spawn(Vector3 pos) override;

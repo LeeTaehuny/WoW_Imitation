@@ -142,6 +142,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.h" />
+    <ClInclude Include="Objects\Monster\Boss\Lich_002_Infest.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_000_Base.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_001_Necrotic_Plague.h" />
     <ClInclude Include="Objects\Monster\Boss\Boss_LichKing.h" />
@@ -362,6 +364,8 @@
     <ClInclude Include="Objects\Item\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.cpp" />
+    <ClCompile Include="Objects\Monster\Boss\Lich_002_Infest.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_000_Base.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_001_Necrotic_Plague.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Boss_LichKing.cpp" />

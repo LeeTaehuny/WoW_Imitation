@@ -1,5 +1,6 @@
 ﻿#include "Framework.h"
 #include "H_000_Basic_Atttack.h"
+#include "Objects/Item/Weapon.h"
 
 H_000_Basic_Atttack::H_000_Basic_Atttack() : ActiveSkill(SkillType::Target)
 {
@@ -98,7 +99,7 @@ void H_000_Basic_Atttack::UseSkill(MonsterBase* monsterbase)
 		c->SetState(HolyPriest_in::State::ATTACK1);
 	}
 
-	skillDamage = owner->GetStat().damage;
+	skillDamage = owner->GetStat().damage + owner->GetWeapon()->GetWeaponDamage();
 	targetMonster = monsterbase;
 	animStart = 0;
 	isRun = true;

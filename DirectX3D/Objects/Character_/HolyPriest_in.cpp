@@ -71,7 +71,7 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 		weapon->SetParent(mainHand);
 		break;
 	}
-	range->SetParent(this);	
+	range->SetParent(this);
 }
 
 HolyPriest_in::~HolyPriest_in()
@@ -271,7 +271,7 @@ void HolyPriest_in::AIUpdate()
 					characterSelectData = nullptr;
 					heal = false;
 					atk = true;
-				}				
+				}
 			}
 			else
 			{
@@ -303,6 +303,7 @@ void HolyPriest_in::OnHit(float damage)
 	else if (stat.hp <= 0)
 	{
 		SetState(DIE);
+		myCollider->SetActive(false);
 	}
 }
 
@@ -626,14 +627,7 @@ void HolyPriest_in::EndATK()
 
 void HolyPriest_in::EndHit()
 {
-	if (stat.hp <= 0)
-	{
-		SetState(DIE);
-	}
-	else
-	{
-		SetState(IDLE1);
-	}
+	SetState(IDLE1);
 }
 
 void HolyPriest_in::EndDie()

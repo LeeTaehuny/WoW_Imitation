@@ -44,6 +44,8 @@ private: // 멤버 변수
     void End_DIE();
     void End_CAST();
 
+    void targetActiveSerch();
+
     void phaseOne();
 
 private:

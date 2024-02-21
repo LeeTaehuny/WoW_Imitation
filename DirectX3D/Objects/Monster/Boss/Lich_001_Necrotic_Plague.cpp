@@ -12,8 +12,8 @@ Lich_001_Necrotic_Plague::Lich_001_Necrotic_Plague(Boss_LichKing* lich)
 
 	MAX_delay = 120;
 	coolTime = MAX_delay;
-
 	Max_animStart = 0.45f;
+	isCooldown = true;
 }
 
 Lich_001_Necrotic_Plague::~Lich_001_Necrotic_Plague()
@@ -64,7 +64,7 @@ void Lich_001_Necrotic_Plague::Update()
 			{
 				Yad->Pos() = characterData->GlobalPos();
 				Yad->UpdateWorld();
-				//lich->GetStat().damage *= 2;
+				//lich->GetStat().damage = 2;
 
 				vector<CH_Base_ver2*> plData = lich->characterData;
 				float min_Len = FLT_MAX;
