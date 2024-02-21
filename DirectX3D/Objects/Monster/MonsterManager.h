@@ -11,6 +11,7 @@ public:
 
     void Update();
     void Render();
+    void PostRender();
 
     // 스켈레톤 스폰
     void SpawnSkeleton(Vector3 pos);

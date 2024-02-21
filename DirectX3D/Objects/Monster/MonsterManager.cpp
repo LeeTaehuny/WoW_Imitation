@@ -1,4 +1,5 @@
 ﻿#include "Framework.h"
+#include "MonsterManager.h"
 
 #define UPDATE(k) if (k != nullptr) k->Update()
 #define UPDATEWORLD(k) if (k != nullptr) k->UpdateWorld()
@@ -76,6 +77,16 @@ void MonsterManager::Render()
 		RENDER(skel);
 	for (MonsterBase* skel : scarecrow)
 		RENDER(skel);
+}
+
+void MonsterManager::PostRender()
+{
+	for (MonsterBase* skel : skeleton)
+		skel->PostRender();
+	for (MonsterBase* skel : skeleton_Knight)
+		skel->PostRender();
+	for (MonsterBase* skel : scarecrow)
+		skel->PostRender();
 }
 
 void MonsterManager::SetTarget(CH_Base_ver2* transform)

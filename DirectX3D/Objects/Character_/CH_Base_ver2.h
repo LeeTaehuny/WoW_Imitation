@@ -94,8 +94,8 @@ public:
 	ProfessionType GetProfessionType() { return professionType; }
 
 	// target
-	class MonsterBase* GetTargetMonster() { if (targetMonster != nullptr) return targetMonster; }
-	CH_Base_ver2* GetTargetCharacter() { if (targetCharacter != nullptr) return targetCharacter; }
+	class MonsterBase* GetTargetMonster() { return targetMonster; }
+	CH_Base_ver2* GetTargetCharacter() { return targetCharacter; }
 
 	// 퀵슬롯
 	class QuickSlot* GetQuickSlot() { return quickSlot; }
@@ -153,6 +153,7 @@ protected:
 	Status stat;
 	// UI
 	class PlayerUI_Bar* playerUI;
+	class MonsterUI_Bar* monsterUI;
 	
 	class Weapon* weapon;
 

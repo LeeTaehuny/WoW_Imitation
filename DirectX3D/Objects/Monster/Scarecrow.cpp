@@ -30,6 +30,13 @@ Scarecrow::Scarecrow(Transform* transform, ModelAnimatorInstancing* instancing, 
 	velocity = Vector3();
 
 	SetState(IDLE);
+
+	hitText.resize(20);
+
+	// 허수아비 스탯 설정
+	maxHP = 10000.0f;
+	curHP = maxHP;
+	Atk = 100.0f;
 }
 
 Scarecrow::~Scarecrow()
@@ -44,18 +51,13 @@ Scarecrow::~Scarecrow()
 void Scarecrow::Update()
 {
 	if (!transform->Active()) return;
-	//if (curState == DEATH) return;
-	//if (curState == SCREAM) return;
-	//if (curState == HIT) return;
 
-	//if (KEY_DOWN('1')) targetNumber = 0;
-	//if (KEY_DOWN('2')) targetNumber = 1;
-	//if (KEY_DOWN('3')) targetNumber = 2;
-	//if (KEY_DOWN('4')) targetNumber = 3;
+	if (curHP <= 0)
+	{
+		curHP = maxHP;
+	}
 
 	ExecuteEvent();
-	//UpdateUI();
-	//Hit(1, targetNumber);
 
 	root->SetWorld(instancing->GetTransformByNode(index, 3));
 	collider->UpdateWorld();
@@ -64,28 +66,50 @@ void Scarecrow::Update()
 void Scarecrow::Render()
 {
 	collider->Render();
-	//attackRange->Render();
-	//attackBumwe->Render();
 }
 
 void Scarecrow::PostRender()
 {
+	if (!transform->Active()) return;
+
+	for (HitDesc& hit : hitText)
+	{
+		// 출력 Off면 출력 X
+		if (!hit.isPrint) continue;
+
+		// 지속시간 감소 및 출력 여부 체크
+		hit.duration -= DELTA;
+
+		if (hit.duration <= 0.0f)
+		{
+			hit.isPrint = false;
+		}
+
+		// 몬스터의 위치 구하기
+		Vector3 screenPos = CAM->WorldToScreen(collider->GlobalPos());
+		// 출력 (남은 시간에 비례해서 점점 올라가게 설정하기)
+		Font::Get()->RenderText(hit.damage, { screenPos.x + 15.0f , screenPos.y - (50.0f * hit.duration) + 55.0f });
+	}
 }
 
 void Scarecrow::Hit(float amount, int targetNumber)
 {
-	//targetHate[targetNumber] += amount;
-
 	SetState(HIT);
 
-	//if (KEY_DOWN(VK_LBUTTON))
-	//{
-	//	Ray ray = CAM->ScreenPointToRay(mousePos);
-	//	if (collider->IsRayCollision(ray, nullptr))
-	//	{
-	//		SetState(HIT);
-	//	}
-	//}
+	curHP -= amount;
+
+	for (int i = 0; i < hitText.size(); i++)
+	{
+		// 출력 off 상태이면
+		if (!hitText[i].isPrint)
+		{
+			// 출력 설정하기
+			hitText[i].isPrint = true;
+			hitText[i].duration = 1.0f;
+			hitText[i].damage = to_string((int)amount);
+			break;
+		}
+	}
 }
 
 void Scarecrow::Spawn(Vector3 pos)

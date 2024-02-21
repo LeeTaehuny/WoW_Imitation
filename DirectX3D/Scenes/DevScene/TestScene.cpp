@@ -3,6 +3,7 @@
 #include "Objects/Shop/Shop.h"
 #include "Objects/Skills/SkillManager.h"
 #include "Objects/UI/PlayerUI_Bar.h"
+#include "Objects/UI/MonsterUI_Bar.h"
 
 
 TestScene::TestScene()
@@ -26,10 +27,19 @@ TestScene::TestScene()
 	//CAM->SetTarget(player);
 	
 	shop = new Shop();
-	CH->PlayerSpawn(3);
+	CH->PlayerSpawn(2);
 	//MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
 	MONSTER->SpawnScarecrow(Vector3(0, 0, 4));
 	MONSTER->SpawnScarecrow(Vector3(-10));
+	//MONSTER->SpawnSkeleton(Vector3(10));
+	//MONSTER->SpawnSkeletonKnight(Vector3(20));
+
+	//CH->NonPlayerSpawn(2);
+	//CH->NonPlayerSpawn(1);
+	//CH->NonPlayerSpawn(3);
+	//CH->NonPlayerSpawn(5);
+	//CH->NonPlayerSpawn(4);
+	
 
 	//MONSTER->SpawnSkeleton(Vector3(0, 0, 25));
 	
@@ -39,7 +49,6 @@ TestScene::TestScene()
 	SKILL->Init(CH->GetPlayerData());
 
 	CAM->SetTarget(CH->GetPlayerData());
-
 }
 
 TestScene::~TestScene()
@@ -63,6 +72,7 @@ void TestScene::Update()
 	//hpBar->UpdateWorld();
 	//mpBar->UpdateWorld();
 	//HpFrame->UpdateWorld();
+
 }
 
 void TestScene::PreRender()
@@ -82,6 +92,8 @@ void TestScene::PostRender()
 	SKILL->PostRender();
 	shop->UIRender();
 	CH->PostRender();
+	MONSTER->PostRender();
+
 	//UI 추가
 	//hpBar->Render();
 	//mpBar->Render();

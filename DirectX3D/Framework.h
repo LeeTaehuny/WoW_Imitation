@@ -42,6 +42,7 @@ if (p != nullptr)	\
 #include <string>
 #include <vector>
 #include <map>
+#include <queue>
 #include <unordered_map>
 #include <functional>
 #include <algorithm>

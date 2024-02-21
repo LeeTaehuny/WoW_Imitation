@@ -4,6 +4,7 @@
 #include "Objects/Item/Weapon.h"
 #include "Objects/UI/StatusUI.h"
 #include "Objects/UI/PlayerUI_Bar.h"
+#include "Objects/UI/MonsterUI_Bar.h"
 #include "CH_Base_ver2.h"
 
 CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionType)
@@ -17,29 +18,39 @@ CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionT
 		quickSlot = new QuickSlot(this);
 
 		// HP/MP Bar 생성
-		switch (professionType)
 		{
-		case ProfessionType::ArmsWarrior:
-			playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/A_icon.png");
-			break;
-		case ProfessionType::FireMage:
-			playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/F_icon.png");
-			break;
-		case ProfessionType::HolyPriest:
-			playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/H_icon.png");
-			break;
-		case ProfessionType::MarksmanshipHunter:
-			playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/M_icon.png");
-			break;
-		case ProfessionType::ProtectionWarrior:
-			playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/P_icon.png");
-			break;
-		}
+			switch (professionType)
+			{
+			case ProfessionType::ArmsWarrior:
+				playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/A_icon.png");
+				break;
+			case ProfessionType::FireMage:
+				playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/F_icon.png");
+				break;
+			case ProfessionType::HolyPriest:
+				playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/H_icon.png");
+				break;
+			case ProfessionType::MarksmanshipHunter:
+				playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/M_icon.png");
+				break;
+			case ProfessionType::ProtectionWarrior:
+				playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/P_icon.png");
+				break;
+			}
 
-		playerUI->Pos() = { CENTER_X / 3, CENTER_Y + CENTER_Y * 0.6f };
-		playerUI->Scale() = { 1.5f, 1.5f, 1.0f };
-		playerUI->SetHpPercent(1.0f);
-		playerUI->SetMpPercent(1.0f);
+			playerUI->Pos() = { CENTER_X / 3, CENTER_Y + CENTER_Y * 0.7f };
+			playerUI->Scale() = { 1.5f, 1.5f, 1.0f };
+			playerUI->SetHpPercent(1.0f);
+			playerUI->SetMpPercent(1.0f);
+		}
+		
+		// 몬스터 HP bar 생성
+		{
+			monsterUI = new MonsterUI_Bar();
+
+			monsterUI->Pos() = { CENTER_X + CENTER_X * 2 / 3 , CENTER_Y + CENTER_Y * 0.7f };
+			monsterUI->Scale() = { 1.0f, 1.0f, 1.0f };
+		}
 
 		break;
 	case CreatureType::NonPlayer:
@@ -69,6 +80,11 @@ void CH_Base_ver2::Update()
 	if (statusUI != nullptr) statusUI->Update();
 	if (quickSlot != nullptr) quickSlot->Update();
 	if (playerUI != nullptr) playerUI->Update();
+	if (targetMonster != nullptr && monsterUI != nullptr)
+	{
+		monsterUI->SetHpPercent(targetMonster->GetHpPercent());
+		monsterUI->Update();
+	}
 
 	if (weapon != nullptr)
 	{
@@ -131,6 +147,23 @@ void CH_Base_ver2::Update()
 
 		// TODO : 플레이어 선택
 	}
+
+	// 타겟 몬스터 검증
+	if (targetMonster != nullptr)
+	{
+		// 해당 몬스터가 죽어있다면?
+		if (!targetMonster->GetTransform()->Active())
+		{
+			// 지정 해제
+			targetMonster = nullptr;
+		}
+		// 해당 몬스터와 플레이어의 거리가 멀리 떨어진 경우라면?
+		else if ((targetMonster->GetTransform()->GlobalPos() - this->GlobalPos()).Length() >= 30.0f)
+		{
+			// 지정 해제
+			targetMonster = nullptr;
+		}
+	}
 }
 
 void CH_Base_ver2::Render()
@@ -153,6 +186,7 @@ void CH_Base_ver2::UIRender()
 	if (inventory != nullptr) inventory->UIRender();
 	if (quickSlot != nullptr) quickSlot->UIRender();
 	if (playerUI != nullptr) playerUI->PostRender();
+	if (targetMonster != nullptr && monsterUI != nullptr) monsterUI->PostRender();
 }
 
 bool CH_Base_ver2::LearnSkill(SkillBase* skill)

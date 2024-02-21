@@ -42,6 +42,13 @@ Skeleton_Knight::Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* 
 	attackBumwe->SetParent(this->transform);
 	attackBumwe->Pos() = Vector3(0, 100, -150);
 	attackBumwe->SetActive(false);
+
+	hitText.resize(20);
+
+	// 스켈레톤 나이트 스탯 설정
+	maxHP = 2000.0f;
+	curHP = maxHP;
+	Atk = 300.0f;
 }
 
 Skeleton_Knight::~Skeleton_Knight()
@@ -80,6 +87,26 @@ void Skeleton_Knight::Render()
 
 void Skeleton_Knight::PostRender()
 {
+	if (!transform->Active()) return;
+
+	for (HitDesc& hit : hitText)
+	{
+		// 출력 Off면 출력 X
+		if (!hit.isPrint) continue;
+
+		// 지속시간 감소 및 출력 여부 체크
+		hit.duration -= DELTA;
+
+		if (hit.duration <= 0.0f)
+		{
+			hit.isPrint = false;
+		}
+
+		// 몬스터의 위치 구하기
+		Vector3 screenPos = CAM->WorldToScreen(collider->GlobalPos());
+		// 출력 (남은 시간에 비례해서 점점 올라가게 설정하기)
+		Font::Get()->RenderText(hit.damage, { screenPos.x + 15.0f , screenPos.y - (50.0f * hit.duration) + 55.0f });
+	}
 }
 
 void Skeleton_Knight::Hit(float amount, int targetNumber)
@@ -99,26 +126,19 @@ void Skeleton_Knight::Hit(float amount, int targetNumber)
 		SetState(HIT);
 	}
 
-	/*if (KEY_DOWN(VK_LBUTTON))
+	for (int i = 0; i < hitText.size(); i++)
 	{
-		Ray ray = CAM->ScreenPointToRay(mousePos);
-		if (collider->IsRayCollision(ray, nullptr))
+		// 출력 off 상태이면
+		if (!hitText[i].isPrint)
 		{
-			targetHate[targetNumber] += amount;
+			// 출력 설정하기
+			hitText[i].isPrint = true;
+			hitText[i].duration = 1.0f;
+			hitText[i].damage = to_string((int)amount);
 
-			if (curHP <= 0)
-			{
-				SetState(DEATH);
-			}
-			else
-			{
-				SetState(HIT);
-			}
+			break;
 		}
-	}*/
-
-	//curHP = curHP - amount;
-	//hpBar->SetAmount(curHP / maxHP);	
+	}
 }
 
 void Skeleton_Knight::Spawn(Vector3 pos)
