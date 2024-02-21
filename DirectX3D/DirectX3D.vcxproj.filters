@@ -229,6 +229,8 @@
     <ClCompile Include="Objects\UI\StatusUI.cpp" />
     <ClCompile Include="Objects\Skills\SkillManager.cpp" />
     <ClCompile Include="Objects\UI\QuickSlot.cpp" />
+    <ClCompile Include="Objects\Monster\Boss\Lich_001_Necrotic_Plague.cpp" />
+    <ClCompile Include="Objects\Monster\Boss\Lich_000_Base.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.h" />
@@ -254,6 +256,8 @@
     <ClInclude Include="Objects\Skills\SkillManager.h" />
     <ClInclude Include="SkillHeader.h" />
     <ClInclude Include="Objects\UI\QuickSlot.h" />
+    <ClInclude Include="Objects\Monster\Boss\Lich_001_Necrotic_Plague.h" />
+    <ClInclude Include="Objects\Monster\Boss\Lich_000_Base.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Character_\CH_Manager.h" />

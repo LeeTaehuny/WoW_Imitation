@@ -43,6 +43,9 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 
 		skillList.push_back(new P_009_Eye_Of_Tyr());
 		skillList[skillList.size() - 1]->SetOwner(this);
+
+		weapon = new Weapon("hammer_1", WeaponType::Hammer);
+		weapon->SetParent(mainHand);
 		break;
 	}
 	range->SetParent(this);
@@ -54,8 +57,6 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 	this->SetActive(true);
 
 	mainHandBoneIndex = 37;
-	weapon = new Weapon("hammer_1", WeaponType::Hammer);
-	weapon->SetParent(mainHand);
 }
 
 ProtectionWarrior_in::~ProtectionWarrior_in()
@@ -147,6 +148,7 @@ void ProtectionWarrior_in::PlayerUpdate()
 void ProtectionWarrior_in::AIUpdate()
 {
 	if (!myPlayer) return;
+	if (curState == HIT || curState == DIE) return;
 
 	if (atkGannnnn)
 	{
@@ -552,6 +554,10 @@ void ProtectionWarrior_in::EndHit()
 	if (stat.hp <= 0)
 	{
 		SetState(DIE);
+	}
+	else
+	{
+		SetState(IDLE1);
 	}
 }
 

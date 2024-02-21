@@ -39,7 +39,7 @@ P_002_HOTR::P_002_HOTR() : ActiveSkill(SkillType::Target)
 		usingType = monster_Data;
 	}
 
-	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/004.jpg");
+	icon = new Quad(L"Textures/Character_Skill_Icon/ProtectionWarrior/002.jpg");
 	holy_wave = new Quad(L"Textures/Effect/alpha_gold_snow.png");
 	holy_wave->Rot().x = 1.7f;
 	holy_wave->Scale() *= 0.05f;

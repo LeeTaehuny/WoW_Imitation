@@ -9,9 +9,6 @@ public:
 	virtual void Render() override;
 	virtual void UseSkill(MonsterBase* monsterbase) override;
 
-	// 임펙트 함수
-	void Impact();
-
 	Collider* Getyad() { return Yad; }
 
 private:

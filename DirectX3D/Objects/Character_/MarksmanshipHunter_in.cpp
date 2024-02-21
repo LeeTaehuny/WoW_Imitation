@@ -50,19 +50,10 @@ MarksmanshipHunter_in::MarksmanshipHunter_in(CreatureType type, Transform* trans
 
 		skillList.push_back(new M_010_Wailing_Arrow());
 		skillList[skillList.size() - 1]->SetOwner(this);
+
+		weapon = new Weapon("bow_1", WeaponType::Staff);
+		weapon->SetParent(mainHand);
 		break;
-	}
-	FOR(skillList.size())
-	{
-		// ���� �Ǻ��� bool ���� ����
-		// 0 = �Ϲݰ���
-		// 1 = ���� ���
-		// 2 = �ӻ�
-		// 3 = Ű�޶� ���
-		// 4 = ���� ���
-		// 5 = ���� ���
-		// 6 = ���¢�� ȭ��
-		attackSignal.push_back(false);
 	}
 
 	range->SetParent(this);
@@ -74,8 +65,6 @@ MarksmanshipHunter_in::MarksmanshipHunter_in(CreatureType type, Transform* trans
 	this->SetActive(true);
 
 	mainHandBoneIndex = 23;
-	weapon = new Weapon("bow_1", WeaponType::Staff);
-	weapon->SetParent(mainHand);
 }
 
 MarksmanshipHunter_in::~MarksmanshipHunter_in()
@@ -168,6 +157,7 @@ void MarksmanshipHunter_in::PlayerUpdate()
 void MarksmanshipHunter_in::AIUpdate()
 {
 	if (!myPlayer) return;
+	if (curState == HIT || curState == DIE) return;
 	// ���� ������ Ÿ���� ���ٸ�
 	if (!atkTarget)
 	{
@@ -371,10 +361,9 @@ void MarksmanshipHunter_in::Attack()
 	if (!weapon) return;
 
 	// �Ϲݰ���
-	if (attackSignal[0])
+	if (KEY_DOWN(VK_LBUTTON))
 	{
-		attackSignal[0] = false;
-		skillList[0]->UseSkill(monsterSelectData);
+		skillList[0]->UseSkill(targetMonster);
 	}
 }
 

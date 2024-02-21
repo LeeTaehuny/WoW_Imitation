@@ -37,9 +37,5 @@ void P_010_Moment_Of_Glory::Render()
 void P_010_Moment_Of_Glory::UseSkill()
 {
 	// 전체 체력의 3할 회복
-	owner->GetStat().hp += owner->GetStat().maxHp * 0.3f;
-	if (owner->GetStat().maxHp <= owner->GetStat().hp)
-	{
-		owner->GetStat().hp = owner->GetStat().maxHp;
-	}
+	owner->GetStat().maxHp += owner->GetStat().maxHp * 0.3f;
 }

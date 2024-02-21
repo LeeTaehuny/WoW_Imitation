@@ -48,6 +48,9 @@ ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAni
 
 		skillList.push_back(new A_010_Bladestorm());
 		skillList[skillList.size() - 1]->SetOwner(this);
+
+		weapon = new Weapon("sword_1", WeaponType::Sword);
+		weapon->SetParent(mainHand);
 		break;
 	}
 	range->SetParent(this);
@@ -59,8 +62,6 @@ ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAni
 	this->SetActive(true);
 
 	mainHandBoneIndex = 37;
-	weapon = new Weapon("sword_1", WeaponType::Sword);
-	weapon->SetParent(mainHand);
 }
 
 ArmsWarrior_in::~ArmsWarrior_in()
@@ -168,6 +169,7 @@ void ArmsWarrior_in::PlayerUpdate()
 void ArmsWarrior_in::AIUpdate()
 {
 	if (!myPlayer) return;
+	if (curState == HIT || curState == DIE) return;
 
 	if (atkGannnnn)
 	{
@@ -611,6 +613,10 @@ void ArmsWarrior_in::EndHit()
 	if (stat.hp <= 0)
 	{
 		SetState(DIE);
+	}
+	else
+	{
+		SetState(IDLE1);
 	}
 }
 

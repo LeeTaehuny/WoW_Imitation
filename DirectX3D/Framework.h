@@ -220,6 +220,9 @@ using namespace GameMath;
 #include "Objects/Monster/MonsterManager.h"
 #include "Objects/Monster/Boss/Boss_LichKing.h"
 
+#include "Objects/Monster/Boss/Lich_000_Base.h"
+#include "Objects/Monster/Boss/Lich_001_Necrotic_Plague.h"
+
 // 스킬 배이스
 #include "Objects/Skills/Base/SkillBase.h"
 

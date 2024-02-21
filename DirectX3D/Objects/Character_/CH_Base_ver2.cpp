@@ -23,7 +23,7 @@ CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionT
 	stat.maxHp = 1000.0f;
 	stat.hp = 10.0f;//stat.maxHp;
 	stat.maxMp = 1000;
-	stat.mp = 10.0f;//stat.maxMp;
+	stat.mp = 1000.0f;//stat.maxMp;
 	stat.damage = 100.0f;
 	stat.defence = 100;
 
@@ -56,7 +56,7 @@ void CH_Base_ver2::Update()
 	}
 
 	// 임시 지정 코드
-	if (KEY_DOWN(VK_LBUTTON))
+	if (KEY_DOWN(VK_RBUTTON))
 	{
 		// 마우스 위치의 Ray 생성
 		Ray ray = CAM->ScreenPointToRay(mousePos);

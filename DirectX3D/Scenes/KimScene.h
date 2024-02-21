@@ -17,4 +17,6 @@ private:
     CH_Base_ver2* targetNPC;
 
     Boss_LichKing* lich;
+
+    class Shop* shop;
 };

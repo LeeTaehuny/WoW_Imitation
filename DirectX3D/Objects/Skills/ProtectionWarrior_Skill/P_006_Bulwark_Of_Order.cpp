@@ -25,9 +25,5 @@ void P_006_Bulwark_Of_Order::Render()
 
 void P_006_Bulwark_Of_Order::UseSkill()
 {
-	owner->GetStat().hp += owner->GetStat().damage * 0.6f;
-	if (owner->GetStat().hp >= owner->GetStat().maxHp)
-	{
-		owner->GetStat().hp = owner->GetStat().maxHp;
-	}
+	owner->GetStat().maxHp += owner->GetStat().damage * 0.6f;
 }

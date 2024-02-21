@@ -66,24 +66,12 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 
 		skillList.push_back(new H_008_Divine_Hymn());
 		skillList[skillList.size() - 1]->SetOwner(this);
+
+		weapon = new Weapon("staff_2", WeaponType::Staff);
+		weapon->SetParent(mainHand);
 		break;
 	}
-	range->SetParent(this);
-
-	FOR(skillList.size())
-	{
-		// ���� �Ǻ��� bool ���� ����
-		// 0 = �Ϲݰ���
-		// 1 = ���� �Ǵ� : ���
-		// 2 = ���� �Ǵ� : �ż�ȭ
-		// 3 = ��ȣ ��ȥ
-		// 4 = ���� �Ǵ� : ��¡
-		// 5 = ġ���� ������
-		// 6 = õ���� ����
-		attackSignal.push_back(false);
-	}
-	weapon = new Weapon("staff_2", WeaponType::Staff);
-	weapon->SetParent(mainHand);
+	range->SetParent(this);	
 }
 
 HolyPriest_in::~HolyPriest_in()
@@ -178,6 +166,7 @@ void HolyPriest_in::PlayerUpdate()
 void HolyPriest_in::AIUpdate()
 {
 	if (!myPlayer) return;
+	if (curState == HIT || curState == DIE) return;
 
 	if (use002skill)
 	{
@@ -487,12 +476,9 @@ void HolyPriest_in::Attack()
 	// ����, ���, �ǰ�, ���� ������ ��� ����
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
-	if (attackSignal[0])
+	if (KEY_DOWN(VK_LBUTTON))
 	{
-		attackSignal[0] = false;
-
-		// TODO : ���Ÿ� ���� �����
-		skillList[0]->UseSkill(monsterSelectData);
+		skillList[0]->UseSkill(targetMonster);
 	}
 }
 

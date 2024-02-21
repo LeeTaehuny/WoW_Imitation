@@ -77,15 +77,6 @@ public:
 	// 무기
 	class Weapon* GetWeapon() { return weapon; }
 
-	vector<bool> GetAttackSignal() { return attackSignal; }
-	// 캐릭터의 공격 혹은 스킬에 신호를 주기위한 함수
-	// 일반공격 = 0
-	// 무기 전사 : 4개
-	// 보호 팔라딘 : 3개
-	// 화염 마법사 : 6개
-	// 저격 사냥꾼 : 6개
-	// 신성 사제 : 6개
-	void SetAttackSignal(int value) { attackSignal[value] = !attackSignal[value]; }
 	void SetSelectTarget(class MonsterBase* monster) { monsterSelectData = monster; }
 	void SetAttackOrder() { this->atkTarget = !this->atkTarget; }
 
@@ -152,7 +143,6 @@ protected:
 	Transform* mainHand;
 
 protected: // 평타 및 스킬을 사용할때 참고하기 위한 변수들
-	vector<bool> attackSignal; // 어떤 공격을 할지에 대한 판별용 벡터 변수
 	class MonsterBase* monsterSelectData; // 현재 선택된 몬스터의 정보를 받기 위한 변수
 	class CH_Base_ver2* characterSelectData;
 

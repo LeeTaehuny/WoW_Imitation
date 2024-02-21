@@ -28,8 +28,8 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 	eventIters.resize(instancing->GetClipSize());
 
 	SetEvent(ATTACK1, bind(&FireMage_in::EndATK, this), 0.7f);
-	SetEvent(DIE, bind(&FireMage_in::EndHit, this), 0.9f);
-	SetEvent(JUMP, bind(&FireMage_in::EndHit, this), 0.9f);
+	SetEvent(DIE, bind(&FireMage_in::EndDie, this), 0.9f);
+	SetEvent(HIT, bind(&FireMage_in::EndHit, this), 0.9f);
 
 	skillList.push_back(new F_000_Basic_Atttack());
 	skillList[skillList.size() - 1]->SetOwner(this);
@@ -60,6 +60,10 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 
 		skillList.push_back(new F_010_Meteor());
 		skillList[skillList.size() - 1]->SetOwner(this);
+
+		weapon = new Weapon("staff_3", WeaponType::Staff);
+		weapon->Scale() *= 100;
+		weapon->SetParent(mainHand);
 		break;
 	}
 	range->SetParent(this);
@@ -71,22 +75,8 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 	this->SetActive(true);
 
 	mainHandBoneIndex = 23;
-	FOR(7)
-	{
-		// ���� �Ǻ��� bool ���� ����
-		// 0 = �Ϲݰ���
-		// 1 = �ҵ��� �۷�
-		// 2 = ȭ�� �۷�
-		// 3 = ���¿��
-		// 4 = �һ����� �ұ�
-		// 5 = ��ȭ
-		// 6 = ���׿�
-		attackSignal.push_back(false);
-	}
 
-	weapon = new Weapon("staff_3", WeaponType::Staff);
-	weapon->Scale() *= 100;
-	weapon->SetParent(mainHand);
+	
 }
 
 FireMage_in::~FireMage_in()
@@ -177,6 +167,7 @@ void FireMage_in::PlayerUpdate()
 void FireMage_in::AIUpdate()
 {
 	if (!myPlayer) return;
+	if (curState == HIT || curState == DIE) return;
 	
 	// ���� ������ Ÿ���� ���ٸ�
 	if (!atkTarget)
@@ -389,12 +380,10 @@ void FireMage_in::Attack()
 	// ����, ���, �ǰ�, ���� ������ ��� ����
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
-	if (attackSignal[0])
+	if (KEY_DOWN(VK_LBUTTON))
 	{
-		attackSignal[0] = false;
-
 		// TODO : ���Ÿ� ���� �����
-		skillList[0]->UseSkill(monsterSelectData);
+		skillList[0]->UseSkill(targetMonster);
 	}
 }
 
@@ -512,6 +501,10 @@ void FireMage_in::EndHit()
 	if (stat.hp <= 0)
 	{
 		SetState(DIE);
+	}
+	else
+	{
+		SetState(IDLE1);
 	}
 }
 
