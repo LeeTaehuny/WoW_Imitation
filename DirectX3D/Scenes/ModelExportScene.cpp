@@ -8,8 +8,8 @@ ModelExportScene::ModelExportScene()
     //ModelExporter* exporter;
 
     Model_MER_MESH(name);
-    AnimationClip(name, "valky__8");
-    AnimationClip(name, "valky__28");
+    AnimationClip(name, "valky_8");
+    AnimationClip(name, "valky_28");
     //AnimationClip(name, "Attack_2");
     //AnimationClip(name, "Attack_3");
     //AnimationClip(name, "Attack_4");
