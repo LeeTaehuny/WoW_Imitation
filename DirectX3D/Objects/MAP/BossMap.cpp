@@ -79,11 +79,17 @@ BossMap::BossMap()
 	disappears[3]->Rot().y -= 1.575f;
 
 	fixeds[0]->Pos().y -= 2.25f;
+	//fixeds[0]->Pos().y += 150.0f;
 	Phase1->SetParent(fixeds[0]);
 	for (int i = 0; i < Phase2.size(); i++) Phase2[i]->SetParent(fixeds[0]);
 	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->SetParent(fixeds[0]);
 	for (int i = 0; i < disappears.size(); i++) disappears[i]->SetParent(fixeds[0]);
 	//fixeds[0]->Scale() *= 0.5f;
+
+
+	//FOR(2)
+	//	blendState[i] = new BlendState();
+	//blendState[1]->Alpha(true);
 }
 
 BossMap::~BossMap()
@@ -93,6 +99,9 @@ BossMap::~BossMap()
 	for (int i = 0; i < Phase2.size(); i++) delete Phase2[i];
 	for (int i = 0; i < fixeds.size(); i++) delete fixeds[i];
 	for (int i = 0; i < disappears.size(); i++) delete disappears[i];
+
+	//FOR(2)
+	//	delete blendState[i];
 }
 
 void BossMap::Update()
@@ -149,11 +158,13 @@ void BossMap::Update()
 void BossMap::Render()
 {
 	skybox->Render();
-
+	
 	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->Render(); // 페이즈가 넘어가도 변화하지 않는것들은 그냥 랜더 합니다
-	StairCollider->Render();
-	Chair_Ground->Render();
-	Chair->Render();
+	//StairCollider->Render();
+	//Chair_Ground->Render();
+	//Chair->Render();
+
+	//blendState[1]->SetState();
 
 	switch (PhaseNum) // 페이즈 넘버에따라 랜더 여부를 판단하여 수행합니다
 	{
@@ -173,13 +184,15 @@ void BossMap::Render()
 		break;
 	case 2:
 		Phase1->Render();
-		GroundColider1->Render();
+		//GroundColider1->Render();
 		break;
 	case 3:
 		Phase2[0]->Render();
 		//GroundColider2->Render();
 		NoneRender();
 	}
+	
+	//blendState[0]->SetState();
 }
 
 bool BossMap::IsCollision(Collider* c)
@@ -188,7 +201,11 @@ bool BossMap::IsCollision(Collider* c)
 	{
 		c->GetParent()->Pos().y += 0.1f;
 		return true;
-	} 
+	}
+	//else 
+	//{
+	//	c->GetParent()->Pos().y -= 1.0f * DELTA;
+	//}
 	if (Chair_Ground->PushCollision(c)) return true;
 	if (Chair->PushCollision(c)) return true;
 
@@ -196,19 +213,34 @@ bool BossMap::IsCollision(Collider* c)
 	{
 		for (int i = 0; i < disappears.size(); i++) 
 		{
-			if (disappears_C[i]->PushCollision((CapsuleCollider*)c)) return true;
+			if (disappears_C[i]->PushCollision((CapsuleCollider*)c)) 
+			{
+				if (c->GetParent()->Pos().y < 0) 
+				{
+					c->GetParent()->Pos().y = 0;
+				}
+
+				return true;
+			}
+			
 		}
 	}
 	if (PhaseNum == 0 || PhaseNum == 2)
 	{
-		if (GroundColider1->IsCapsuleCollision((CapsuleCollider*)c)) return true;
+		if (GroundColider1->IsCapsuleCollision((CapsuleCollider*)c)) 
+		{
+			return true;
+		}
 	}
 	if (PhaseNum == 1 || PhaseNum == 3) 
 	{
-		if (GroundColider2->IsCapsuleCollision((CapsuleCollider*)c)) return true;
+		if (GroundColider2->IsCapsuleCollision((CapsuleCollider*)c)) 
+		{
+			return true;
+		}
 	}
-	
-	//return false;
+
+	return false;
 }
 
 void BossMap::Fall() // 얼음 바닥이 떨어지는 함수 입니다

@@ -7,17 +7,42 @@ public:
 
 	void Update();
 	void Render();
+	void GUIRender();
 
 	bool OpenDoor(bool bol) { return open = bol; }
 	bool OpenDoor_I(bool bol) { return open_I = bol; }
 	bool IsClear(bool bol) { return isClear = bol; }
-	//Vector3 terrainpos() { return terrain->Pos(); }
+
 	Vector3 GetSpawnPoint_P() { return SpawnPoint_P; }
+
 	bool IsCollision(Collider* c);
+
+	vector<Vector3> SpawnMonsters_A()
+	{
+		vector<Vector3> spawnPoints;
+
+		for (int i = 0; i < SpawnPoint_A.size(); ++i)
+		{
+			spawnPoints.push_back(SpawnPoint_A[i]);
+		}
+
+		return spawnPoints;
+	}
+	vector<Vector3> SpawnMonsters_B()
+	{
+		vector<Vector3> spawnPoints;
+
+		for (int i = 0; i < SpawnPoint_B.size(); ++i)
+		{
+			spawnPoints.push_back(SpawnPoint_B[i]);
+		}
+
+		return spawnPoints;
+	}
 
 private:
 	//Terrain* terrain;
-	//Vector3 ThisPos = { 0, 0, 0 };
+	TerrainLOD* terrain;
 
 	vector<Model*> Gates;
 
@@ -46,6 +71,12 @@ private:
 	Model* Roofi;
 	SkyBox* skybox;
 	//Model* TestSky;
+
+	Model* Chandelier;
+	LightBuffer::Light* light;
+	TestLight* Lamp;
+	SphereCollider* TestPos;
+
 	vector<Quad*> Tiles;
 	vector<Quad*> Tiles2;
 	vector<Quad*> Tiles3;
@@ -53,8 +84,9 @@ private:
 
 	vector<Model*> InGates;
 
-	Vector3 SpawnPoint_P = {45.0f,0,10};
-	vector<Vector3*> SpawnPoint_A;
+	Vector3 SpawnPoint_P = {45,0,10};
+	vector<Vector3> SpawnPoint_A;
+	vector<Vector3> SpawnPoint_B;
 
 	void DoorMove();
 	void DoorMove_I();
@@ -93,4 +125,7 @@ private:
 	BoxCollider* boxColliders_WBR;
 	vector<BoxCollider*> boxColliders_P;
 	BoxCollider* boxColliders_B;
+
+	int n = 0;
+	int n1 = 0;
 };

@@ -4,9 +4,13 @@
 Dungeon::Dungeon() //: Transform()
 {
 	//terrain = new Terrain();
-	//terrain->Rot().x = 0.0f;
-	//terrain->Rot().y = 0.0f;
-	//terrain->Rot().z = 0.0f;
+	terrain = new TerrainLOD(L"Textures/HeightMaps/TestTerrain_H.png");
+	terrain->Rot().y += 1.575f;
+	terrain->Scale() *= 1.75f;
+	terrain->Pos().x = 200.0f;
+	terrain->Pos().z = -658.0f;
+	
+	
 
 	skybox = new SkyBox(L"Textures/Landscape/Space.dds");
 	skybox->UpdateWorld();
@@ -314,6 +318,7 @@ Dungeon::Dungeon() //: Transform()
 		boxColliders_P[i]->Pos().y += 5;
 		boxColliders_P[i]->SetParent(Pillar[i]);
 		Pillar[i]->Scale() *= 10.0;
+		Pillar[i]->Scale().y *= 3.0f;
 	}
 	Pillar[0]->Pos().x += 825;
 	Pillar[0]->Pos().z -= 150;
@@ -357,6 +362,20 @@ Dungeon::Dungeon() //: Transform()
 	boxColliders_B->Pos().y += 12.0;
 	boxColliders_B->SetParent(IceWall);
 
+	Chandelier = new Model("Chandelier");
+	Chandelier->Pos() = Roofi->Pos();
+	Chandelier->Scale() *= 6;
+	Chandelier->Pos().y -= 100;
+	Lamp = new TestLight();
+	light = Lamp->GetLight();
+	light->color = { 0.5f, 0.5f, 1.0f, 1 };
+	Environment::Get()->GetLight(0)->color = { 0.25f, 0.25f, 0.25f, 1 };
+	light->type = 1;
+	light->pos.x = 44.5;
+	light->pos.z = 177;
+	light->pos.y = 22.5;
+	light->range = 300;
+	
 	Ice_debris.resize(12);
 	Ice_debris[0] = new Model("Ice_debris1");	// 얼음파편 입니다
 	Ice_debris[1] = new Model("Ice_debris2");
@@ -417,61 +436,60 @@ Dungeon::Dungeon() //: Transform()
 	boxCollider_WGR = new BoxCollider(Vector3(35, 150, 120));
 	boxCollider_WGR->SetParent(InGates[2]);
 	
-	InGates[3] = new Model("InGateDoor_R");
-	InGates[3]->Pos().x += 450.0f;
-	InGates[3]->Pos().z -= 36.5f;
-	InGates[3]->Pos().y -= 12.5f;
+	InGates[3] = new Model("Pillar_G"); // R
+	InGates[3]->Rot().y += 3.15f;
+	InGates[3]->Pos().x += 430.0f;
+	InGates[3]->Pos().z -= 56.5f;
 	InGates[3]->Scale() *= 2.0f;
+	boxCollider_PR = new BoxCollider(Vector3(14.5, 37.5, 15));
+	boxCollider_PR->SetParent(InGates[3]);
+	boxCollider_PR->Pos().x -= 2.0f;
+	boxCollider_PR->Pos().y += 17.5f;
+	
+	InGates[4] = new Model("Pillar_G"); // L
+	InGates[4]->Rot().y += 3.15f;
+	InGates[4]->Pos().x += 430.0f;
+	InGates[4]->Pos().z += 56.5f;
+	InGates[4]->Scale() *= 2.0f;
+	boxCollider_PL = new BoxCollider(Vector3(14.5, 37.5, 15));
+	boxCollider_PL->SetParent(InGates[4]);
+	boxCollider_PL->Pos().x -= 2.0f;
+	boxCollider_PL->Pos().y += 17.5f;
+
+	InGates[5] = new Model("Door_deco");
+	InGates[5]->Pos().x += 428.5f;
+	InGates[5]->Pos().y += 75.0f;
+	InGates[5]->Scale() *= 4.0f;
+
+	InGates[6] = new Model("Rug");
+	InGates[6]->Rot().y += 1.575f;
+	InGates[6]->Pos().x += 460.0f;
+	InGates[6]->Pos().y -= 1.0f;
+	InGates[6]->Scale() *= 6.5f;
+
+	InGates[7] = new Model("InGateDoor_R");
+	InGates[7]->Pos().x += 450.0f;
+	InGates[7]->Pos().z -= 36.5f;
+	InGates[7]->Pos().y -= 12.5f;
+	InGates[7]->Scale() *= 2.0f;
 	boxCollider_DR = new BoxCollider(Vector3(9, 50, 17.5f));
-	boxCollider_DR->SetParent(InGates[3]);
+	boxCollider_DR->SetParent(InGates[7]);
 	boxCollider_DR->Pos().x += 0.0f;
 	boxCollider_DR->Pos().z += 10.0f;
 	boxCollider_DR->Pos().y += 22.5f;
-	
-	InGates[4] = new Model("InGateDoor_L");
-	InGates[4]->Pos().x += 450.0f;
-	InGates[4]->Pos().z += 36.5f;
-	InGates[4]->Pos().y -= 12.5f;
-	InGates[4]->Scale() *= 2.0f;
+
+	InGates[8] = new Model("InGateDoor_L");
+	InGates[8]->Pos().x += 450.0f;
+	InGates[8]->Pos().z += 36.5f;
+	InGates[8]->Pos().y -= 12.5f;
+	InGates[8]->Scale() *= 2.0f;
 	boxCollider_DL = new BoxCollider(Vector3(9, 50, 17.5f));
-	boxCollider_DL->SetParent(InGates[4]);
+	boxCollider_DL->SetParent(InGates[8]);
 	boxCollider_DL->Pos().x += 0.0f;
 	boxCollider_DL->Pos().z -= 10.0f;
 	boxCollider_DL->Pos().y += 22.5f;
 
-	
-	InGates[5] = new Model("Pillar_G"); // R
-	InGates[5]->Rot().y += 3.15f;
-	InGates[5]->Pos().x += 430.0f;
-	InGates[5]->Pos().z -= 56.5f;
-	InGates[5]->Scale() *= 2.0f;
-	boxCollider_PR = new BoxCollider(Vector3(14.5, 37.5, 15));
-	boxCollider_PR->SetParent(InGates[5]);
-	boxCollider_PR->Pos().x -= 2.0f;
-	boxCollider_PR->Pos().y += 17.5f;
-	
-	InGates[6] = new Model("Pillar_G"); // L
-	InGates[6]->Rot().y += 3.15f;
-	InGates[6]->Pos().x += 430.0f;
-	InGates[6]->Pos().z += 56.5f;
-	InGates[6]->Scale() *= 2.0f;
-	boxCollider_PL = new BoxCollider(Vector3(14.5, 37.5, 15));
-	boxCollider_PL->SetParent(InGates[6]);
-	boxCollider_PL->Pos().x -= 2.0f;
-	boxCollider_PL->Pos().y += 17.5f;
-
-	InGates[7] = new Model("Door_deco");
-	InGates[7]->Pos().x += 428.5f;
-	InGates[7]->Pos().y += 75.0f;
-	InGates[7]->Scale() *= 4.0f;
-
-	InGates[8] = new Model("Rug");
-	InGates[8]->Rot().y += 1.575f;
-	InGates[8]->Pos().x += 460.0f;
-	InGates[8]->Pos().y -= 1.0f;
-	InGates[8]->Scale() *= 6.5f;
-
-
+	/////////////////////////////////////////////////////////////////////////////////
 	for (int i = 1; i < Gates.size(); ++i) Gates[i]->SetParent(Gates[0]);
 	for (int i = 0; i < Walls_L.size(); ++i) Walls_L[i]->SetParent(Gates[0]);
 	Walls_LF->SetParent(Gates[0]);
@@ -492,8 +510,10 @@ Dungeon::Dungeon() //: Transform()
 	for (int i = 0; i < Ice_debris.size(); ++i) Ice_debris[i]->SetParent(Gates[0]);
 	Ice_Broken->SetParent(Gates[0]);
 	//TestSky->SetParent(Gates[0]);
+	terrain->SetParent(Gates[0]);
 	Roof->SetParent(Gates[0]);
 	Roofi->SetParent(Gates[0]);
+	Chandelier->SetParent(Gates[0]);
 
 	Gates[0]->Pos().y += 75.0f;
 	for (int i = 0; i < Walls_L.size(); ++i) Walls_L[i]->Pos().y -= 75.0f;
@@ -514,43 +534,250 @@ Dungeon::Dungeon() //: Transform()
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->Pos().y -= 75.0f;
 	Ice_Broken->Pos().y -= 75.0f;
 
+
+	/////////////////////////////////////////////////////////////////////////////
+	TestPos = new SphereCollider(10);
+	TestPos->SetParent(Gates[0]);
+	TestPos->Pos().y -= 75;
+
+	SpawnPoint_A.resize(11);
+	for (int i = 0; i < SpawnPoint_A.size(); ++i)
+	{
+		SpawnPoint_A[i] = Vector3(0, 0, 0);
+	}
+	//SpawnPoint_A[0] = Vector3(405, 0, -56.5);
+	//SpawnPoint_A[1] = Vector3(405, 0, -56.5);
+	//SpawnPoint_A[2] = Vector3(355, 0, 56.5);
+	//SpawnPoint_A[3] = Vector3(355, 0, 0);
+	//SpawnPoint_A[4] = Vector3(355, 0, -56.5);
+	//SpawnPoint_A[5] = Vector3(305, 0, 56.5);
+	//SpawnPoint_A[6] = Vector3(305, 0, 0);
+	//SpawnPoint_A[7] = Vector3(305, 0, -56.5);
+	//SpawnPoint_A[8] = Vector3(255, 0, 56.5);
+	//SpawnPoint_A[9] = Vector3(255, 0, 0);
+	//SpawnPoint_A[10] = Vector3(255, 0, -56.5);
+
+	SpawnPoint_A[0] = Vector3(35.25, 0, 117);
+	SpawnPoint_A[1] = Vector3(54, 0, 117);
+	SpawnPoint_A[2] = Vector3(35.25, 0, 107);
+	SpawnPoint_A[3] = Vector3(44.625, 0, 107);
+	SpawnPoint_A[4] = Vector3(54, 0, 107);
+	SpawnPoint_A[5] = Vector3(35.25, 0, 97);
+	SpawnPoint_A[6] = Vector3(44.625, 0, 97);
+	SpawnPoint_A[7] = Vector3(54, 0, 97);
+	SpawnPoint_A[8] = Vector3(35.25, 0, 87);
+	SpawnPoint_A[9] = Vector3(44.625, 0, 87);
+	SpawnPoint_A[10] = Vector3(54, 0, 87);
+
+
+	SpawnPoint_B.resize(10);
+	for (int i = 0; i < SpawnPoint_B.size(); ++i)
+	{
+		SpawnPoint_B[i] = Vector3(0, 0, 0);
+	}
+	//SpawnPoint_B[0] = Vector3(762.5, 0, 0);
+	//SpawnPoint_B[1] = Vector3(825, 0, 120);
+	//SpawnPoint_B[2] = Vector3(825, 0, -120);
+	//SpawnPoint_B[3] = Vector3(700, 0, 120);
+	//SpawnPoint_B[4] = Vector3(700, 0, -120);
+	//SpawnPoint_B[5] = Vector3(575, 0, 120);
+	//SpawnPoint_B[6] = Vector3(575, 0, -120);
+	//SpawnPoint_B[7] = Vector3(650, 0, 0);
+	//SpawnPoint_B[8] = Vector3(675, 0, 60);
+	//SpawnPoint_B[9] = Vector3(675, 0, -60);
+	
+	SpawnPoint_B[0] = Vector3(44.5, 0, 176.6);
+	SpawnPoint_B[1] = Vector3(25, 0, 187);
+	SpawnPoint_B[2] = Vector3(64, 0, 187);
+	SpawnPoint_B[3] = Vector3(25, 0, 166);
+	SpawnPoint_B[4] = Vector3(64, 0, 166);
+	SpawnPoint_B[5] = Vector3(25, 0, 146);
+	SpawnPoint_B[6] = Vector3(64, 0, 146);
+	SpawnPoint_B[7] = Vector3(44.5, 0, 159);
+	SpawnPoint_B[8] = Vector3(34, 0, 162);
+	SpawnPoint_B[9] = Vector3(55, 0, 162);
+	/////////////////////////////////////////////////////////////////////////////
+
 	Gates[0]->Scale() *= 0.166f;
 	Gates[0]->Pos().y -= 62.5f;
 	Gates[0]->Pos().x += 45.0f;
 	Gates[0]->Pos().z += 50.0f;
 	Gates[0]->Rot().y -= 1.575f;
+	
+	
+	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->UpdateWorld();
+	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->UpdateWorld();
+	for (int i = 0; i < Tiles3.size(); ++i) Tiles3[i]->UpdateWorld();
+
+	for (int i = 0; i < Gates.size() - 1; ++i) Gates[i]->UpdateWorld();
+
+	Roof->UpdateWorld();
+	Roofi->UpdateWorld();
+	Chandelier->UpdateWorld();
+	//TestSky->UpdateWorld();
+
+	for (int i = 0; i < Walls_L.size(); ++i)
+	{
+		Walls_L[i]->UpdateWorld();
+		boxColliders_WL[i]->UpdateWorld();
+	}
+	Walls_LF->UpdateWorld();
+	for (int i = 0; i < Walls_R.size(); ++i)
+	{
+		Walls_R[i]->UpdateWorld();
+		boxColliders_WR[i]->UpdateWorld();
+	}
+	Walls_RF->UpdateWorld();
+	for (int i = 0; i < Walls_B.size(); ++i)
+	{
+		Walls_B[i]->UpdateWorld();
+		boxColliders_WB[i]->UpdateWorld();
+	}
+	Walls_BL->UpdateWorld();
+	Walls_BR->UpdateWorld();
+	Portal->UpdateWorld();
+	Wall_deco->UpdateWorld();
+	Chandelier->UpdateWorld();
+	for (int i = 0; i < Pillar.size(); ++i)
+	{
+		Pillar[i]->UpdateWorld();
+		boxColliders_P[i]->UpdateWorld();
+	}
+	Grownd_Circle->UpdateWorld();
+	for (int i = 0; i < InGates.size()-2; ++i) InGates[i]->UpdateWorld();
+
+
+	boxCollider_G->UpdateWorld();
+	boxCollider_GL->UpdateWorld();
+	boxCollider_GR->UpdateWorld();
+	//boxCollider_GD->UpdateWorld();
+	boxCollider_GP->UpdateWorld();
+	boxCollider_GPI->UpdateWorld();
+	boxCollider_S->UpdateWorld();
+	boxCollider_SI->UpdateWorld();
+	boxCollider_SIC->UpdateWorld();
+	boxCollider_SIL->UpdateWorld();
+	boxCollider_SIR->UpdateWorld();
+
+	boxCollider_PR->UpdateWorld();
+	boxCollider_PL->UpdateWorld();
+
+	boxColliders_WBL->UpdateWorld();
+	boxColliders_WBR->UpdateWorld();
+	boxCollider_WLF->UpdateWorld();
+	boxCollider_WRF->UpdateWorld();
+	boxCollider_WGL->UpdateWorld();
+	boxCollider_WGR->UpdateWorld();
+
+	boxColliders_WD->UpdateWorld();
+	for (int i = 0; i < boxColliders_potal.size(); ++i) boxColliders_potal[i]->UpdateWorld();
+	terrain->UpdateWorld();
 }
 
 Dungeon::~Dungeon()
 {
-	//delete terrain;
+	delete terrain;
 
 	for (int i = 0; i < 4; ++i) delete Gates[i];
-
 	for (int i = 0; i < Walls_L.size(); ++i) delete Walls_L[i];
 	delete Walls_LF;
 	for (int i = 0; i < Walls_R.size(); ++i) delete Walls_R[i];
 	delete Walls_RF;
 	for (int i = 0; i < Walls_R.size(); ++i) delete Walls_B[i];
-
+	delete Walls_BL;
+	delete Walls_BR;
+	delete Portal;
+	delete Wall_deco;
+	delete IceWall;
+	delete IceWallL;
+	delete IceWallR;
+	delete IceWallC;
+	for (int i = 0; i < Ice_debris.size(); ++i) delete Ice_debris[i];
+	delete Ice_Broken;
+	delete Roof;
+	delete Roofi;
+	delete skybox;
+	delete Chandelier;
+	delete light;
+	delete Lamp;
+	for (int i = 0; i < Tiles.size(); ++i) delete Tiles[i];
+	for (int i = 0; i < Tiles2.size(); ++i) delete Tiles2[i];
+	for (int i = 0; i < Tiles3.size(); ++i) delete Tiles3[i];
+	for (int i = 0; i < Pillar.size(); ++i) delete Pillar[i];
 	for (int i = 0; i < InGates.size(); ++i) delete InGates[i];
+
+	delete boxCollider_G;
+	delete boxCollider_GL;
+	delete boxCollider_GR;
+	delete boxCollider_GD;
+	delete boxCollider_GP;
+	delete boxCollider_GPI;
+	delete boxCollider_S;
+	delete boxCollider_SI;
+	delete boxCollider_SIC;
+	delete boxCollider_SIL;
+	delete boxCollider_SIR;
+	delete boxCollider_DL;
+	delete boxCollider_DR;
+	delete boxCollider_PR;
+	delete boxCollider_PL;
+	delete boxCollider_WLF;
+	delete boxCollider_WRF;
+	delete boxCollider_WGL;
+	delete boxCollider_WGR;
+	for (int i = 0; i < boxColliders_WL.size(); ++i) delete boxColliders_WL[i];
+	for (int i = 0; i < boxColliders_WR.size(); ++i) delete boxColliders_WR[i];
+	for (int i = 0; i < boxColliders_WB.size(); ++i) delete boxColliders_WB[i];
+	delete boxColliders_WD;
+	for (int i = 0; i < boxColliders_potal.size(); ++i) delete boxColliders_potal[i];
+	delete boxColliders_WBL;
+	delete boxColliders_WBR;
+	for (int i = 0; i < boxColliders_P.size(); ++i) delete boxColliders_P[i];
+	delete boxColliders_B;
+
+	delete TestPos;
 }
 
 void Dungeon::Update()
 {
+	TestPos->UpdateWorld();
 	//terrain->UpdateWorld();
+	if(!KEY_PRESS(VK_RBUTTON))
+	{
+		//if (KEY_PRESS('W'))TestPos->Pos().x += 50 * DELTA;
+		//if (KEY_PRESS('S'))TestPos->Pos().x -= 50 * DELTA;
+		//if (KEY_PRESS('D'))TestPos->Pos().z -= 50 * DELTA;
+		//if (KEY_PRESS('A'))TestPos->Pos().z += 50 * DELTA;
+		//
+		//if (KEY_PRESS(VK_LEFT)) TestPos->Pos().z += 10 * DELTA;
+		//if (KEY_PRESS(VK_RIGHT)) TestPos->Pos().z -= 10 * DELTA;
+		//if (KEY_PRESS(VK_UP)) TestPos->Pos().x += 10 * DELTA;
+		//if (KEY_PRESS(VK_DOWN)) TestPos->Pos().x -= 10 * DELTA;
+		//
+		//if (KEY_DOWN('1')) TestPos->Pos().z += 50;
+		//if (KEY_DOWN('3')) TestPos->Pos().z -= 50;
+		//if (KEY_DOWN('2')) TestPos->Pos().x += 50;
+		//if (KEY_DOWN('4')) TestPos->Pos().x -= 50;
+		//
+		//if (KEY_DOWN('N')) n += 1;
 
-	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->UpdateWorld();
-	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->UpdateWorld();
-	for (int i = 0; i < Tiles3.size(); ++i) Tiles3[i]->UpdateWorld();
 
-	Roof->UpdateWorld();
-	Roofi->UpdateWorld();
-	//TestSky->UpdateWorld();
+		if (KEY_DOWN('W'))terrain->Pos().x += 5000 * DELTA;
+		if (KEY_DOWN('S'))terrain->Pos().x -= 5000 * DELTA;
+		if (KEY_DOWN('D'))terrain->Pos().z -= 5000 * DELTA;
+		if (KEY_DOWN('A'))terrain->Pos().z += 5000 * DELTA;
+		if (KEY_PRESS('Q'))terrain->Rot().y += 10 * DELTA;
+		if (KEY_PRESS('E'))terrain->Rot().y -= 10 * DELTA;
+	}
+	//TestPos->Pos() = SpawnPoint_P;
 
-	for (int i = 0; i < Gates.size(); ++i) Gates[i]->UpdateWorld();
+
+
+	for (int i = 0; i < Gates.size(); ++i) Gates[5]->UpdateWorld();
+	boxCollider_GD->UpdateWorld();
 	if (open) DoorMove();
 	if (open_I) DoorMove_I();
+
 	if (isClear) 
 	{
 		CrashIceWall();
@@ -564,76 +791,16 @@ void Dungeon::Update()
 		boxColliders_B->UpdateWorld();
 	}
 
-	for (int i = 0; i < Walls_L.size(); ++i) 
-	{
-		Walls_L[i]->UpdateWorld();
-		boxColliders_WL[i]->UpdateWorld();
-	}
-	Walls_LF->UpdateWorld();
-	for (int i = 0; i < Walls_R.size(); ++i) 
-	{
-		Walls_R[i]->UpdateWorld();
-		boxColliders_WR[i]->UpdateWorld();
-	} 
-	Walls_RF->UpdateWorld();
-	for (int i = 0; i < Walls_B.size(); ++i) 
-	{
-		Walls_B[i]->UpdateWorld();
-		boxColliders_WB[i]->UpdateWorld();
-	}
-	Walls_BL->UpdateWorld();
-	Walls_BR->UpdateWorld();
-	Portal->UpdateWorld();
-	Wall_deco->UpdateWorld();
-
-	for (int i = 0; i < Pillar.size(); ++i) 
-	{
-		Pillar[i]->UpdateWorld();
-		boxColliders_P[i]->UpdateWorld();
-	}
-	Grownd_Circle->UpdateWorld();
-	for (int i = 0; i < InGates.size(); ++i) InGates[i]->UpdateWorld();
-
-	if (!KEY_PRESS(VK_RBUTTON))
-	{
-		//if (KEY_PRESS(VK_LEFT)) terrain->Pos().z += 50 * DELTA;
-		//if (KEY_PRESS(VK_RIGHT)) terrain->Pos().z -= 50 * DELTA;
-		//if (KEY_PRESS(VK_UP)) terrain->Pos().x += 50 * DELTA;
-		//if (KEY_PRESS(VK_DOWN)) terrain->Pos().x -= 50 * DELTA;
-	}
-
-	boxCollider_G->UpdateWorld();
-	boxCollider_GL->UpdateWorld();
-	boxCollider_GR->UpdateWorld();
-	boxCollider_GD->UpdateWorld();
-	boxCollider_GP->UpdateWorld();
-	boxCollider_GPI->UpdateWorld();
-	boxCollider_S->UpdateWorld();
-	boxCollider_SI->UpdateWorld();
-	boxCollider_SIC->UpdateWorld();
-	boxCollider_SIL->UpdateWorld();
-	boxCollider_SIR->UpdateWorld();
-
+	for (int i = 7; i < InGates.size(); ++i) InGates[i]->UpdateWorld();
 	boxCollider_DL->UpdateWorld();
 	boxCollider_DR->UpdateWorld();
-	boxCollider_PR->UpdateWorld();
-	boxCollider_PL->UpdateWorld();
-
-	boxColliders_WBL->UpdateWorld();
-	boxColliders_WBR->UpdateWorld();
-	boxCollider_WLF->UpdateWorld();
-	boxCollider_WRF->UpdateWorld();
-	boxCollider_WGL->UpdateWorld();
-	boxCollider_WGR->UpdateWorld();
-
-	boxColliders_WD->UpdateWorld();
-	for (int i = 0; i < boxColliders_potal.size(); ++i) boxColliders_potal[i]->UpdateWorld();
 }
 
 void Dungeon::Render()
 {
-	//terrain->Render();
 	skybox->Render();
+	terrain->Render();
+	TestPos->Render();
 
 	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->Render();
 	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->Render();
@@ -643,6 +810,7 @@ void Dungeon::Render()
 	//TestSky->Render();
 	Roof->Render();
 	Roofi->Render();
+	Chandelier->Render();
 
 	for (int i = 0; i < Gates.size(); ++i) Gates[i]->Render();
 
@@ -667,6 +835,7 @@ void Dungeon::Render()
 	Walls_BR->Render();
 	Portal->Render();
 	Wall_deco->Render();
+	Chandelier->Render();
 	if (!isClear)
 	{
 		IceWall->Render();
@@ -714,6 +883,20 @@ void Dungeon::Render()
 		for (int i = 0; i < Ice_debris.size(); ++i) Ice_debris[i]->Render();
 		Ice_Broken->Render();
 	}
+}
+void Dungeon::GUIRender() 
+{
+	ImGui::Text("TestPos");
+	ImGui::Text("X : %.1f, Y : %.1f, Z : %.1f",
+		TestPos->Pos().x,
+		TestPos->Pos().y,
+		TestPos->Pos().z);
+
+	ImGui::Text("TerrainPos");
+	ImGui::Text("X : %.1f, Y : %.1f, Z : %.1f",
+		terrain->Pos().x,
+		terrain->Pos().y,
+		terrain->Pos().z);
 }
 
 bool Dungeon::IsCollision(Collider* c)
@@ -788,22 +971,22 @@ void Dungeon::DoorMove_I()
 {
 	for (int i = 3; i < Gates.size(); ++i)
 	{
-		if (InGates[3]->Pos().z >= -40.0f)
+		if (InGates[7]->Pos().z >= -40.0f)
 		{
-			InGates[3]->Pos().z -= 5.0f * DELTA;
+			InGates[7]->Pos().z -= 5.0f * DELTA;
 		}
-		if (InGates[3]->Rot().y < 1.575f)
+		if (InGates[7]->Rot().y < 1.575f)
 		{
-			InGates[3]->Rot().y += 0.5f * DELTA;
+			InGates[7]->Rot().y += 0.5f * DELTA;
 		}
 		
-		if (InGates[4]->Pos().z <= 40.0f)
+		if (InGates[8]->Pos().z <= 40.0f)
 		{
-			InGates[4]->Pos().z += 5.0f * DELTA;
+			InGates[8]->Pos().z += 5.0f * DELTA;
 		}
-		if (InGates[4]->Rot().y > -1.575f)
+		if (InGates[8]->Rot().y > -1.575f)
 		{
-			InGates[4]->Rot().y -= 0.5f * DELTA;
+			InGates[8]->Rot().y -= 0.5f * DELTA;
 		}
 	}
 	return;

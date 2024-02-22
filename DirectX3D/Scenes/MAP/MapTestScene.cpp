@@ -31,15 +31,20 @@ MapTestScene::MapTestScene()
 	player->Rot().y -= 1.575f;
 
 	PLAYER = new Model("ProtectionWarrior");
-
-	
-	
+	//PLAYER->Pos() = bossmap->GetSpawnpoint_B();
+	PLAYER->Pos() = bossmap->GetSpawnpoint_BC();
+	PLAYER->Rot().y = bossmap->GetStartBossRot();
+	player->Pos() = bossmap->GetSpawnpoint_P();
 }
 
 MapTestScene::~MapTestScene()
 {
 	delete bossmap;
 	delete Test;
+
+	delete instaning;
+	delete player;
+	delete PLAYER;
 }
 
 void MapTestScene::Update()
@@ -55,10 +60,10 @@ void MapTestScene::Update()
 	if (KEY_DOWN('3'))	bossmap->SetPhase(2);
 	if (KEY_DOWN('4'))	bossmap->SetPhase(3);
 
-	if (bossmap->IsCollision(player->GetCollider())) 
-	{
-	
-	};
+	//if (bossmap->IsCollision(player->GetCollider())) 
+	//{
+	//
+	//};
 	if (!bossmap->IsCollision(player->GetCollider()))
 	{
 		player->Pos().y -= 30 * DELTA;

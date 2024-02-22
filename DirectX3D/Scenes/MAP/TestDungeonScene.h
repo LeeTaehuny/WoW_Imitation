@@ -14,11 +14,16 @@ public:
 
 private:
     Dungeon* dungeon;                                                    
-    SphereCollider* TestSize;
-    //SkyBox* skybox;
-
+   
     ModelAnimatorInstancing* instaning;
     CH_Base_ver2* player;
     Model* PLAYER;
+
+    vector<SphereCollider*> TestMonsterSpawnPos_A;
+    vector<SphereCollider*> TestMonsterSpawnPos_B;
+    //vector<Model*> TestMonsterSpawnPos_A;
+    //vector<Model*> TestMonsterSpawnPos_B;
+
+    //TerrainLOD* terrain;
 };
 

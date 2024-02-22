@@ -29,6 +29,7 @@
 #include "Scenes/DevScene/TestScene.h"
 #include "Scenes/MAP/MapTestScene.h"
 #include "Scenes/MAP/TestDungeonScene.h"
+#include "Scenes/MAP/TestExportRender.h"
 
 // ���� ����� ���� : ���� ��ƼŬ, �ٸ� Ư�� ��ƼŬ(��, ����ũ)
 //                   + ���� ��ƼŬ ���� (�޸� Ŭ������ �߰���)
@@ -70,6 +71,7 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("ParticleConfig", new ParticleConfigScene());
     // * 작업중. //SceneManager::Get()->Create("MirrorScene", new MirrorScene());
     //SceneManager::Get()->Create("WaterScene", new WaterScene());
+    //SceneManager::Get()->Add("WaterScene");
     //SceneManager::Get()->Create("QuadTree", new QuadTreeScene());
     //SceneManager::Get()->Create("Tessellation", new TessellationScene());
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
@@ -78,14 +80,16 @@ GameManager::GameManager()
 
     /////////////////////////////////////////////////////////////////// Choi
     // Test Scenes
-    SceneManager::Get()->Create("BossMap", new MapTestScene());
-    SceneManager::Get()->Add("BossMap");
-    //SceneManager::Get()->Create("TestDungeon", new TestDungeonScene());
-    //SceneManager::Get()->Add("TestDungeon");
+    //SceneManager::Get()->Create("BossMap", new MapTestScene());
+    //SceneManager::Get()->Add("BossMap");
+    SceneManager::Get()->Create("TestDungeon", new TestDungeonScene());
+    SceneManager::Get()->Add("TestDungeon");
 
     // ModelExport
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
     //SceneManager::Get()->Add("ModelExport");
+    //SceneManager::Get()->Create("TestExportRender", new TestExportRender());
+    //SceneManager::Get()->Add("TestExportRender");
 
     // Terrains
     //SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
