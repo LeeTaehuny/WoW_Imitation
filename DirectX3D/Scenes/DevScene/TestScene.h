@@ -46,5 +46,13 @@ private:
 
 
     class QuickSlot* slot;
+
+    ProgressBar* hpBar;
+    ProgressBar* mpBar;
+    Quad* HpFrame;
+
+    class PlayerUI_Bar* p_bar;
+    class MonsterUI_Bar* m_bar;
+    class PartyUI_Bar* p;
 };
 

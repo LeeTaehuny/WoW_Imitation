@@ -1,4 +1,16 @@
 ﻿#pragma once
+
+// 피격 정보를 출력하기 위한 구조체
+struct HitDesc
+{
+    // 출력 On, Off
+    bool isPrint = false;
+    // 피격 데미지
+    string damage = "";
+    // 출력 시간
+    float duration = 1.0f;
+};
+
 class MonsterBase
 {
 public:
@@ -15,6 +27,7 @@ public:
 
     CapsuleCollider* GetCollider() { return collider; }
     Transform* GetTransform() { return transform; }
+    float GetHpPercent() { return curHP / maxHP; }
 
     void targetActiveSerch()
     {
@@ -71,9 +84,9 @@ protected:
     Transform* root;
 
     float moveSpeed = 30;
-    float maxHP = 10;
-    float curHP = 10;
-    float Atk = 600;
+    float maxHP;
+    float curHP;
+    float Atk;
 
     // 방향
     Vector3 velocity;
@@ -84,4 +97,8 @@ protected:
 
     vector<map<float, Event>> totalEvents;
     vector<map<float, Event>::iterator> eventIters;
+
+protected:
+    // 피격시 데미지를 화면에 띄워주기 위한 배열 선언
+    vector<HitDesc> hitText;
 };

@@ -7,6 +7,7 @@
 #include "Objects/Skills/SkillManager.h"
 #include "Objects/Skills/Base/ActiveSkill.h"
 #include "Objects/Monster/MonsterBase.h"
+#include "Objects/UI/PlayerUI_Bar.h"
 #include "Objects/Item/Potion.h"
 
 QuickSlot::QuickSlot(CH_Base_ver2* player) : player(player)
@@ -56,6 +57,39 @@ void QuickSlot::UIRender()
 		slot->Render();
 	}
 
+	int idx = 0;
+	for (QuickSlotItem item : items)
+	{
+		if (item.skill != nullptr)
+		{
+			if (ActiveSkill* s = dynamic_cast<ActiveSkill*>(item.skill))
+			{
+				if (s->GetIsCooldown())
+				{
+					string tempString;
+					tempString = to_string(s->GetCoolTime());
+					tempString.pop_back();
+					tempString.pop_back();
+					tempString.pop_back();
+					tempString.pop_back();
+					tempString.pop_back();
+					Font::Get()->RenderText(tempString, { quickSlots[idx]->GlobalPos().x + 18.0f, quickSlots[idx]->GlobalPos().y + 2.0f });
+				}
+			}
+		}
+		else if (item.item != nullptr)
+		{
+			if (Potion* p = dynamic_cast<Potion*>(item.item))
+			{
+				string tempString;
+				tempString = to_string(p->GetQuantity());
+				Font::Get()->RenderText(tempString, { quickSlots[idx]->GlobalPos().x + 15.0f, quickSlots[idx]->GlobalPos().y - 5.0f }, {3.0f, 3.0f});
+			}
+		}
+
+		idx++;
+	}
+
 	if (mouseImg->Active())
 	{
 		mouseImg->Render();
@@ -73,6 +107,8 @@ void QuickSlot::InitSlot()
 	for (int i = 0; i < 9; i++)
 	{
 		Slot* slot = new Slot(Vector2(45.0f, 45.0f), SlotType::Quick_Slot);
+		slot->GetMaterial()->SetShader(L"Basic/Slot.hlsl");
+		slot->UseColorBuffer();
 		quickSlots.push_back(slot);
 	}
 
@@ -231,6 +267,19 @@ void QuickSlot::UpdateQuickSlot()
 		{
 			Texture* icon = item.skill->GetIcon()->GetMaterial()->GetDiffuseMap();
 			quickSlots[idx]->GetMaterial()->SetDiffuseMap(icon);
+
+			// 스킬이 쿨타임인 경우 비활성화 (어둡게 표시)
+			if (ActiveSkill* s = dynamic_cast<ActiveSkill*>(item.skill))
+			{
+				if (s->GetIsCooldown())
+				{
+					quickSlots[idx]->GetColor() = { 0.3f, 0.3f, 0.3f, 1.0f };
+				}
+				else
+				{
+					quickSlots[idx]->GetColor() = { 1.0f, 1.0f, 1.0f, 1.0f };
+				}
+			}
 		}
 		else
 		{
@@ -320,25 +369,24 @@ void QuickSlot::UseSlotSkill(int index)
 			case UseType::character_Data:
 				// 캐릭터 데이터가 필요한 경우가 뭘까요..?
 				items[index].skill->UseSkill(player->GetTargetCharacter());
-				player->GetStat().mp -= s->GetRequiredMp();
 				break;
 
 			case UseType::collider_Data:
 				items[index].skill->UseSkill(player->GetTargetMonster()->GetCollider());
-				player->GetStat().mp -= s->GetRequiredMp();
 				break;
 
 			case UseType::monster_Data:
 				items[index].skill->UseSkill(player->GetTargetMonster());
-				player->GetStat().mp -= s->GetRequiredMp();
 				break;
 
 			case UseType::NON_Data:
 				items[index].skill->UseSkill();
-				player->GetStat().mp -= s->GetRequiredMp();
 				break;
 			}
 		}
+
+		float percent = (float)player->GetStat().mp / (float)player->GetStat().maxMp;
+		player->GetPlayerUI()->SetMpPercent(percent);
 	}
 }
 
@@ -352,6 +400,22 @@ void QuickSlot::UseSlotItem(int index)
 	{
 		// 아이템 사용
 		items[index].item->Use();
+
+		// 아이템 타입에 따라 UI조정
+		if (Potion* p = dynamic_cast<Potion*>(items[index].item))
+		{
+			if (p->GetPotionType() == PotionType::Hp)
+			{
+				float percent = player->GetStat().hp / player->GetStat().maxHp;
+				player->GetPlayerUI()->SetHpPercent(percent);
+			}
+			else if (p->GetPotionType() == PotionType::Mp)
+			{
+				float percent = (float)player->GetStat().mp / (float)player->GetStat().maxMp;
+				player->GetPlayerUI()->SetMpPercent(percent);
+			}
+		}
+
 		// 사용 처리하기
 		vector<Item*> inv = player->GetInventory()->GetInventory();
 

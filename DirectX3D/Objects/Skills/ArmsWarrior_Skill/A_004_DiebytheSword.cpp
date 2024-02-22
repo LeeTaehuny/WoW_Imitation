@@ -94,6 +94,13 @@ void A_004_DiebytheSword::UseSkill()
 			warrior->SetBuffDefence(true);
 		}
 
+		owner->GetStat().mp -= requiredMp;
+
+		if (owner->GetStat().mp < 0)
+		{
+			owner->GetStat().mp = 0;
+		}
+
 		particle->SetScale(Vector3(2.0f, 2.0f, 2.0f));
 		particle->Play(owner->GetCollider()->GlobalPos());
 	}

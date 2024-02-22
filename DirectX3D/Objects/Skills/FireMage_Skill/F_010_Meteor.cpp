@@ -22,7 +22,7 @@ F_010_Meteor::F_010_Meteor() : ActiveSkill(SkillType::Target)
 	speed = 10.0f;
 
 	// 쿨타임 설정 (45초)
-	MAX_delay = 4.0f;
+	MAX_delay = 45.0f;
 	coolTime = MAX_delay;
 
 	// 선행 스킬
@@ -44,7 +44,7 @@ F_010_Meteor::F_010_Meteor() : ActiveSkill(SkillType::Target)
 
 	// 스킬 지연 발사
 	delayTime = 0.0f;
-	MAX_delayAnim = 1.0f;
+	MAX_delayAnim = 2.0f;
 
 	additiveDamage = 1.0f;
 
@@ -138,6 +138,13 @@ void F_010_Meteor::UseSkill(MonsterBase* monsterbase)
 			isCooldown = true;
 
 			delayTime = 0.0f;
+
+			owner->GetStat().mp -= requiredMp;
+
+			if (owner->GetStat().mp < 0)
+			{
+				owner->GetStat().mp = 0;
+			}
 
 			Init();
 		}

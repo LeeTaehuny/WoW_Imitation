@@ -2,6 +2,8 @@
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
 #include "Objects/Inventory/Inventory.h"
+#include "Objects/UI/PlayerUI_Bar.h"
+#include "Objects/UI/PartyUI_Bar.h"
 
 ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::ArmsWarrior)
@@ -217,7 +219,17 @@ void ArmsWarrior_in::AIUpdate()
 
 void ArmsWarrior_in::OnHit(float damage)
 {
-	stat.hp -= damage;
+	// 방어력 버프 존재 시
+	if (isDefence)
+	{
+		// 방어력 1.3배 적용하기 (추후 뺄셈 연산으로 주기)
+		stat.hp -= damage;
+	}
+	else
+	{
+		stat.hp -= damage;
+	}
+
 
 	if (stat.hp > 0)
 	{
@@ -225,9 +237,15 @@ void ArmsWarrior_in::OnHit(float damage)
 	}
 	else if (stat.hp <= 0)
 	{
+		stat.hp = 0.0f;
 		SetState(DIE);
 		myCollider->SetActive(false);
 	}
+
+	if (creatureType == CreatureType::Player)
+		playerUI->SetHpPercent(stat.hp / stat.maxHp);
+	else
+		CH->GetPartyUI()->SetHpPercent(stat.hp / stat.maxHp, stoi(GetTag().c_str()));
 }
 
 void ArmsWarrior_in::AI_animation_Moving()

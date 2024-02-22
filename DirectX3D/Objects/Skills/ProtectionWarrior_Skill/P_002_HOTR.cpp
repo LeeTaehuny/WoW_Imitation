@@ -159,7 +159,7 @@ void P_002_HOTR::UseSkill(MonsterBase* monsterbase)
 	targetMonster = monsterbase;
 
 	skillDamage = owner->GetStat().damage * 0.85f;
-	owner->GetStat().mp -= requiredMp;
+	
 
 	myCollider->SetActive(true);
 	root->SetWorld(owner->GetInstancing()->GetTransformByNode(owner->GetIndex(), 38));
@@ -180,6 +180,7 @@ void P_002_HOTR::UseSkill(MonsterBase* monsterbase)
 		hitCollider->UpdateWorld();
 		isRun = true;
 		isCooldown = true;
+		owner->GetStat().mp -= requiredMp;
 		animStart = 0;
 	}
 }

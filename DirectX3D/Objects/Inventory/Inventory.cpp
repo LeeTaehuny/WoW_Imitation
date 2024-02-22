@@ -1,6 +1,7 @@
 ﻿#include "Framework.h"
 #include "Inventory.h"
 #include "Objects/Item/Item.h"
+#include "Objects/Item/Potion.h"
 #include "Objects/Inventory/Slot.h"
 #include "Objects/UI/QuickSlot.h"
 
@@ -56,12 +57,6 @@ void Inventory::Update()
 
 	invFrame->Update();
 
-	//if (mouseImg->Active())
-	//{
-	//	mouseImg->Pos() = mousePos;
-	//	mouseImg->UpdateWorld();
-	//}
-
 	if (KEY_UP(VK_LBUTTON))
 	{
 		//mouseImg->SetActive(false);
@@ -91,6 +86,23 @@ void Inventory::UIRender()
 	for (Slot* slot : invSlot)
 	{
 		slot->Render();
+	}
+
+	int idx = 0;
+
+	for (Item* item : inventory)
+	{
+		if (item != nullptr)
+		{
+			if (Potion* p = dynamic_cast<Potion*>(item))
+			{
+				string tempString;
+				tempString = to_string(p->GetQuantity());
+				Font::Get()->RenderText(tempString, { invSlot[idx]->GlobalPos().x + 15.0f, invSlot[idx]->GlobalPos().y - 5.0f }, { 3.0f, 3.0f });
+			}
+		}
+
+		idx++;
 	}
 
 }

@@ -43,7 +43,7 @@ F_005_PhoenixFlame::F_005_PhoenixFlame() : ActiveSkill(SkillType::Target)
 
 	// 스킬 지연 발사
 	delayTime = 0.0f;
-	MAX_delayAnim = 1.0f;
+	MAX_delayAnim = 2.0f;
 
 	additiveDamage = 1.0f;
 
@@ -140,6 +140,13 @@ void F_005_PhoenixFlame::UseSkill(MonsterBase* monsterbase)
 			isCooldown = true;
 
 			delayTime = 0.0f;
+
+			owner->GetStat().mp -= requiredMp;
+
+			if (owner->GetStat().mp < 0)
+			{
+				owner->GetStat().mp = 0;
+			}
 
 			Init();
 		}

@@ -54,6 +54,9 @@ public:
 	CH_Base_ver2* GetPlayerData() { return character[0]; }
 	vector<CH_Base_ver2*> GetCharcterData() { return character; }
 
+	// 파티원 정보 UI 반환용 함수
+	class PartyUI_Bar* GetPartyUI() { return partyUI; }
+
 private:
 	ModelAnimatorInstancing* armswarrior;
 	ModelAnimatorInstancing* paladin;
@@ -70,4 +73,8 @@ private:
 	UINT F_count = 0;
 	UINT M_count = 0;
 	UINT H_count = 0;
+
+
+private:
+	class PartyUI_Bar* partyUI;
 };

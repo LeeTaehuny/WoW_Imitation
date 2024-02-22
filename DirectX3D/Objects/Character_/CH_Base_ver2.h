@@ -85,11 +85,14 @@ public:
 	ProfessionType GetProfessionType() { return professionType; }
 
 	// target
-	class MonsterBase* GetTargetMonster() { if (targetMonster != nullptr) return targetMonster; }
-	CH_Base_ver2* GetTargetCharacter() { if (targetCharacter != nullptr) return targetCharacter; }
+	class MonsterBase* GetTargetMonster() { return targetMonster; }
+	CH_Base_ver2* GetTargetCharacter() { return targetCharacter; }
 
 	// 퀵슬롯
 	class QuickSlot* GetQuickSlot() { return quickSlot; }
+
+	// 플레이어 UI
+	class PlayerUI_Bar* GetPlayerUI() { return playerUI; }
 
 // Member Variable
 protected:
@@ -137,8 +140,14 @@ protected:
 	float curheight = 0.0f;
 
 protected:
+	// 스테이터스
 	Status stat;
+	// UI
+	class PlayerUI_Bar* playerUI;
+	class MonsterUI_Bar* monsterUI;
+	
 	class Weapon* weapon;
+
 
 	Transform* mainHand;
 

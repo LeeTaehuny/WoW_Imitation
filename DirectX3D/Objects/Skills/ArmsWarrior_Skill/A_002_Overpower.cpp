@@ -165,6 +165,13 @@ void A_002_Overpower::UseSkill()
 			isRun = true;
 			isCooldown = true;
 
+			owner->GetStat().mp -= requiredMp;
+
+			if (owner->GetStat().mp < 0)
+			{
+				owner->GetStat().mp = 0;
+			}
+
 			Init();
 		}
 	}

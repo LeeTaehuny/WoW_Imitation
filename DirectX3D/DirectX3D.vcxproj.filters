@@ -234,6 +234,9 @@
     <ClCompile Include="Objects\Monster\Boss\Lich_002_Infest.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.cpp" />
+    <ClCompile Include="Objects\UI\PlayerUI_Bar.cpp" />
+    <ClCompile Include="Objects\UI\MonsterUI_Bar.cpp" />
+    <ClCompile Include="Objects\UI\PartyUI_Bar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.h" />
@@ -264,6 +267,9 @@
     <ClInclude Include="Objects\Monster\Boss\Lich_002_Infest.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.h" />
+    <ClInclude Include="Objects\UI\PlayerUI_Bar.h" />
+    <ClInclude Include="Objects\UI\MonsterUI_Bar.h" />
+    <ClInclude Include="Objects\UI\PartyUI_Bar.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Character_\CH_Manager.h" />

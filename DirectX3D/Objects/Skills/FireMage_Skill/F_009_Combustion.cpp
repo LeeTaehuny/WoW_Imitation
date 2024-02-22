@@ -93,6 +93,13 @@ void F_009_Combustion::UseSkill()
 		{
 			mage->SetDoubleDamage(true);
 		}
+
+		owner->GetStat().mp -= requiredMp;
+
+		if (owner->GetStat().mp < 0)
+		{
+			owner->GetStat().mp = 0;
+		}
 		
 		particle->Play(owner->GlobalPos());
 	}

@@ -2,6 +2,8 @@
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
 #include "Objects/Inventory/Inventory.h"
+#include "Objects/UI/PlayerUI_Bar.h"
+#include "Objects/UI/PartyUI_Bar.h"
 
 MarksmanshipHunter_in::MarksmanshipHunter_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::MarksmanshipHunter)
@@ -182,9 +184,15 @@ void MarksmanshipHunter_in::OnHit(float damage)
 	}
 	else if (stat.hp <= 0)
 	{
+		stat.hp = 0.0f;
 		SetState(DIE);
 		myCollider->SetActive(false);
 	}
+
+	if (creatureType == CreatureType::Player)
+		playerUI->SetHpPercent(stat.hp / stat.maxHp);
+	else
+		CH->GetPartyUI()->SetHpPercent(stat.hp / stat.maxHp, stoi(GetTag().c_str()));
 }
 
 void MarksmanshipHunter_in::AI_animation_Moving()

@@ -9,6 +9,8 @@
 #include "Objects/Skills/FireMage_Skill/F_009_Combustion.h"
 #include "Objects/Skills/FireMage_Skill/F_010_Meteor.h"
 #include "Objects/Inventory/Inventory.h"
+#include "Objects/UI/PlayerUI_Bar.h"
+#include "Objects/UI/PartyUI_Bar.h"
 
 FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::FireMage)
@@ -206,9 +208,15 @@ void FireMage_in::OnHit(float damage)
 	}
 	else if (stat.hp <= 0)
 	{
+		stat.hp = 0.0f;
 		SetState(DIE);
 		myCollider->SetActive(false);
 	}
+
+	if (creatureType == CreatureType::Player)
+		playerUI->SetHpPercent(stat.hp / stat.maxHp);
+	else
+		CH->GetPartyUI()->SetHpPercent(stat.hp / stat.maxHp, stoi(GetTag().c_str()));
 }
 
 void FireMage_in::AI_animation_Moving()

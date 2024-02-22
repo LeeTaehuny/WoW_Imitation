@@ -188,6 +188,13 @@ void A_010_Bladestorm::UseSkill()
 
 		FOR(4) swordTransforms[i]->SetActive(true);
 
+		owner->GetStat().mp -= requiredMp;
+
+		if (owner->GetStat().mp < 0)
+		{
+			owner->GetStat().mp = 0;
+		}
+
 		Init();
 	}
 }

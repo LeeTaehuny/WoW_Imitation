@@ -162,6 +162,13 @@ void A_001_MortalStrike::UseSkill()
 			isRun = true;
 			isCooldown = true;
 
+			owner->GetStat().mp -= requiredMp;
+
+			if (owner->GetStat().mp < 0)
+			{
+				owner->GetStat().mp = 0;
+			}
+
 			Init();
 		}
 	}

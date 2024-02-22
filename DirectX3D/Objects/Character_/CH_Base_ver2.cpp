@@ -3,6 +3,8 @@
 #include "Objects/UI/QuickSlot.h"
 #include "Objects/Item/Weapon.h"
 #include "Objects/UI/StatusUI.h"
+#include "Objects/UI/PlayerUI_Bar.h"
+#include "Objects/UI/MonsterUI_Bar.h"
 #include "CH_Base_ver2.h"
 
 CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionType)
@@ -14,16 +16,52 @@ CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionT
 		inventory = new Inventory(this);
 		statusUI = new StatusUI(this);
 		quickSlot = new QuickSlot(this);
+
+		// HP/MP Bar ï¿½ï¿½ï¿½ï¿½
+		{
+			switch (professionType)
+			{
+			case ProfessionType::ArmsWarrior:
+				playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/A_icon.png");
+				break;
+			case ProfessionType::FireMage:
+				playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/F_icon.png");
+				break;
+			case ProfessionType::HolyPriest:
+				playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/H_icon.png");
+				break;
+			case ProfessionType::MarksmanshipHunter:
+				playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/M_icon.png");
+				break;
+			case ProfessionType::ProtectionWarrior:
+				playerUI = new PlayerUI_Bar(L"Textures/UI/Icons/P_icon.png");
+				break;
+			}
+
+			playerUI->Pos() = { CENTER_X / 3, CENTER_Y + CENTER_Y * 0.7f };
+			playerUI->Scale() = { 1.5f, 1.5f, 1.0f };
+			playerUI->SetHpPercent(1.0f);
+			playerUI->SetMpPercent(1.0f);
+		}
+		
+		// ï¿½ï¿½ï¿½ï¿½ HP bar ï¿½ï¿½ï¿½ï¿½
+		{
+			monsterUI = new MonsterUI_Bar();
+
+			monsterUI->Pos() = { CENTER_X + CENTER_X * 2 / 3 , CENTER_Y + CENTER_Y * 0.7f };
+			monsterUI->Scale() = { 1.0f, 1.0f, 1.0f };
+		}
+
 		break;
 	case CreatureType::NonPlayer:
 		break;
 	}
 
-	// ½ºÅÈ ¼³Á¤ (ÀÓ½Ã)
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ó½ï¿½)
 	stat.maxHp = 1000.0f;
-	stat.hp = 10.0f;//stat.maxHp;
+	stat.hp = stat.maxHp;
 	stat.maxMp = 1000;
-	stat.mp = 1000.0f;//stat.maxMp;
+	stat.mp = stat.maxMp;
 	stat.damage = 100.0f;
 	stat.defence = 100;
 
@@ -41,6 +79,12 @@ void CH_Base_ver2::Update()
 	if (inventory != nullptr) inventory->Update();
 	if (statusUI != nullptr) statusUI->Update();
 	if (quickSlot != nullptr) quickSlot->Update();
+	if (playerUI != nullptr) playerUI->Update();
+	if (targetMonster != nullptr && monsterUI != nullptr)
+	{
+		monsterUI->SetHpPercent(targetMonster->GetHpPercent());
+		monsterUI->Update();
+	}
 
 	if (weapon != nullptr)
 	{
@@ -55,26 +99,26 @@ void CH_Base_ver2::Update()
 		skill->Update();
 	}
 
-	// ÀÓ½Ã ÁöÁ¤ ÄÚµå
+	// ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½
 	if (KEY_DOWN(VK_RBUTTON))
 	{
-		// ¸¶¿ì½º À§Ä¡ÀÇ Ray »ý¼º
+		// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Ä¡ï¿½ï¿½ Ray ï¿½ï¿½ï¿½ï¿½
 		Ray ray = CAM->ScreenPointToRay(mousePos);
 		Contact contact;
 
-		// ¸ó½ºÅÍ ¼±ÅÃ
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		{
-			// ¸ó½ºÅÍ ¹è¿­ ¹Þ±â
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ ï¿½Þ±ï¿½
 			vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
 			vector<MonsterBase*> cols2 = MONSTER->GetSkeleton();
 			vector<MonsterBase*> cols3 = MONSTER->GetSkeleton_Knight();
 
-			// ¸ó½ºÅÍ ¼øÈ¸ÇÏ¸ç Ray Ãæµ¹ ¿¬»ê
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½Ï¸ï¿½ Ray ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½
 			for (MonsterBase* monster : cols1)
 			{
 				if (monster->GetCollider()->IsRayCollision(ray, &contact))
 				{
-					// Ãæµ¹Çß´Ù¸é ÇØ´ç ¸ó½ºÅÍ¸¦ ³» Å¸°ÙÀ¸·Î ¼³Á¤
+					// ï¿½æµ¹ï¿½ß´Ù¸ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					targetMonster = monster;
 					break;
 				}
@@ -84,7 +128,7 @@ void CH_Base_ver2::Update()
 			{
 				if (monster->GetCollider()->IsRayCollision(ray, &contact))
 				{
-					// Ãæµ¹Çß´Ù¸é ÇØ´ç ¸ó½ºÅÍ¸¦ ³» Å¸°ÙÀ¸·Î ¼³Á¤
+					// ï¿½æµ¹ï¿½ß´Ù¸ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					targetMonster = monster;
 					break;
 				}
@@ -94,14 +138,45 @@ void CH_Base_ver2::Update()
 			{
 				if (monster->GetCollider()->IsRayCollision(ray, &contact))
 				{
-					// Ãæµ¹Çß´Ù¸é ÇØ´ç ¸ó½ºÅÍ¸¦ ³» Å¸°ÙÀ¸·Î ¼³Á¤
+					// ï¿½æµ¹ï¿½ß´Ù¸ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					targetMonster = monster;
 					break;
 				}
 			}
 		}
 
-		// TODO : ÇÃ·¹ÀÌ¾î ¼±ÅÃ
+		// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
+		{
+			vector<CH_Base_ver2*> player = CH->GetCharcterData();
+
+			for (CH_Base_ver2* p : player)
+			{
+				if (p == this) continue;
+
+				if (p->GetCollider()->IsRayCollision(ray, &contact))
+				{
+					targetCharacter = p;
+					break;
+				}
+			}
+		}
+	}
+
+	// Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	if (targetMonster != nullptr)
+	{
+		// ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Í°ï¿½ ï¿½×¾ï¿½ï¿½Ö´Ù¸ï¿½?
+		if (!targetMonster->GetTransform()->Active())
+		{
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			targetMonster = nullptr;
+		}
+		// ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½Ö¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½?
+		else if ((targetMonster->GetTransform()->GlobalPos() - this->GlobalPos()).Length() >= 30.0f)
+		{
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			targetMonster = nullptr;
+		}
 	}
 }
 
@@ -124,38 +199,40 @@ void CH_Base_ver2::UIRender()
 	if (statusUI != nullptr) statusUI->UIRender();
 	if (inventory != nullptr) inventory->UIRender();
 	if (quickSlot != nullptr) quickSlot->UIRender();
+	if (playerUI != nullptr) playerUI->PostRender();
+	if (targetMonster != nullptr && monsterUI != nullptr) monsterUI->PostRender();
 }
 
 bool CH_Base_ver2::LearnSkill(SkillBase* skill)
 {
 	if (skill == nullptr) return false;
 
-	// ½ºÅ³ÀÇ ¼±Çà½ºÅ³µé °¡Á®¿À±â
+	// ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½à½ºÅ³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	vector<string> prev = skill->GetPrevSkills();
 
 	for (string p : prev)
 	{
-		// ÇØ´ç ½ºÅ³ÀÇ ¼±Çà ½ºÅ³ÀÌ ÀÌ¹Ì ¹è¿î ½ºÅ³ ¸ñ·Ï¿¡ Á¸ÀçÇÏÁö ¾Ê´Â´Ù¸é?
+		// ï¿½Ø´ï¿½ ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´Ù¸ï¿½?
 		if (prevSkills.find(p) == prevSkills.end())
 		{ 
-			// Á¾·á
+			// ï¿½ï¿½ï¿½ï¿½
 			return false;
 		}
 	}
 
-	// ¿©±â±îÁö ¿À¸é ½ºÅ³À» ¹è¿ï ¼ö ÀÖ´Ù´Â ÀÇ¹Ì
-	// * ½ºÅ³ÀÌ ¸¸¾à ÆÐ½Ãºê ½ºÅ³ÀÌ¶ó¸é?
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´Ù´ï¿½ ï¿½Ç¹ï¿½
+	// * ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð½Ãºï¿½ ï¿½ï¿½Å³ï¿½Ì¶ï¿½ï¿½?
 	if (skill->GetSkillType() == SkillBaseType::Passive)
 	{
-		// ¹Ù·Î ½ºÅ³ »ç¿ë
+		// ï¿½Ù·ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½
 		skill->UseSkill();
 	}
 
-	// ½ºÅ³ ¸®½ºÆ®¿¡ Ãß°¡
+	// ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
 	skill->SetOwner(this);
 	skillList.push_back(skill);
 
-	// ¹è¿î ÀÌ¸§ ¸®½ºÆ®¿¡ ÇØ´ç ½ºÅ³ÀÇ ÀÌ¸§ Ãß°¡
+	// ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½Å³ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ß°ï¿½
 	prevSkills.insert({ skill->GetSkillName(), 0 });
 }
 
