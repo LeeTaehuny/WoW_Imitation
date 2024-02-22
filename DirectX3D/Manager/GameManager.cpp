@@ -39,8 +39,8 @@ GameManager::GameManager()
     SceneManager::Get()->Create("Grid", new GridScene());
     SceneManager::Get()->Add("Grid");
 
-    //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
-    //SceneManager::Get()->Add("ModelExport");
+    SceneManager::Get()->Create("ModelExport", new ModelExportScene());
+    SceneManager::Get()->Add("ModelExport");
 
     //SceneManager::Get()->Create("KIM", new KimScene());
     //SceneManager::Get()->Add("KIM");
