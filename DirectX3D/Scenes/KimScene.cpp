@@ -34,7 +34,7 @@ KimScene::KimScene()
 	MONSTER;
 	ARROW;
 
-	shop = new Shop();
+	//shop = new Shop();
 
 	//MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
 	//MONSTER->SpawnScarecrow(Vector3(10));
@@ -46,7 +46,7 @@ KimScene::KimScene()
 
 	//particle = new ParticleSystem("TextData/Particles/Fire/fireBall.fx");
 
-	//lich = new Boss_LichKing();
+	lich = new Boss_LichKing();
 }
 
 KimScene::~KimScene()
@@ -89,8 +89,8 @@ void KimScene::Update()
 	CH->Update();
 	MONSTER->Update();
 	ARROW->Update();
-	shop->Update();
 	UPDATE(lich);
+	UPDATE(shop);
 }
 
 void KimScene::PreRender()
@@ -110,7 +110,9 @@ void KimScene::PostRender()
 {
 	SKILL->PostRender(); // 우선
 	CH->PostRender(); // 차선
-	shop->UIRender();
+	
+	if (shop != nullptr)
+		shop->UIRender();
 }
 
 void KimScene::GUIRender()

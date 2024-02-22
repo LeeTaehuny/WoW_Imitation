@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Monster\Boss\Lich_005_Remorseless_Winter.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_002_Infest.h" />
@@ -368,6 +369,7 @@
     <ClInclude Include="Objects\Item\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Monster\Boss\Lich_005_Remorseless_Winter.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_002_Infest.cpp" />
