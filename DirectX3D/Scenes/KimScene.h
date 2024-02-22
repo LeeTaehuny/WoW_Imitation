@@ -18,5 +18,8 @@ private:
 
     Boss_LichKing* lich;
 
+    ModelAnimator* val;
+    Sphere* iceball;
+
     class Shop* shop;
 };
