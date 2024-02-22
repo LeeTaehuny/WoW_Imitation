@@ -260,6 +260,9 @@ void Skeleton::targetAttack()
 			Max_attack_deley = 1.5f;
 			attack_deley = Max_attack_deley;
 		}
+		Vector3 im = targetTransform->GetCollider()->GlobalPos() - transform->GlobalPos();
+		transform->Rot().y = atan2(im.x, im.z) + XM_PI;
+		transform->UpdateWorld();
 	}
 	else if (oneAttack == 1 && curState == RUN)
 	{

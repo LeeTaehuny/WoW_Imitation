@@ -43,8 +43,8 @@ void Lich_003_Summon_Drudge_Ghouls::Update()
 			MONSTER->SpawnSkeleton(lichPos);
 			life_skel[3] = MONSTER->GetSkeleton()[MONSTER->GetSkeleton().size() - 1];
 		}
-		int lifeCount = 0;
 
+		int lifeCount = 0;
 		for (int i = 0; i < life_skel.size(); i++)
 		{
 			if (life_skel[i]->GetTransform()->Active())
@@ -66,10 +66,6 @@ void Lich_003_Summon_Drudge_Ghouls::Update()
 
 void Lich_003_Summon_Drudge_Ghouls::Render()
 {
-	if (isRun)
-	{
-		if (animStart <= Max_animStart) return;
-	}
 }
 
 void Lich_003_Summon_Drudge_Ghouls::UseSkill(CH_Base_ver2* chbase)

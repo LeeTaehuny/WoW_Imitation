@@ -36,9 +36,9 @@ Skeleton_Knight::Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* 
 	}
 	velocity = Vector3();
 
-	attackBumwe = new BoxCollider(Vector3(100, 200, 200));
+	attackBumwe = new BoxCollider(Vector3(300, 200, 500));
 	attackBumwe->SetParent(this->transform);
-	attackBumwe->Pos() = Vector3(0, 100, -150);
+	attackBumwe->Pos() = Vector3(0, 100, -50);
 	attackBumwe->SetActive(false);
 
 	attackTarget_serch = new SphereCollider();
@@ -215,22 +215,23 @@ void Skeleton_Knight::Move()
 
 void Skeleton_Knight::targetAttack()
 {
-	if (curState == ATTACK1 || curState == DEATH || curState == HIT) return;
+	if (curState == DEATH || curState == HIT) return;
 	if (attackBumwe->Active())
 	{
 		attack_deley -= DELTA;
 		if (attack_deley <= 0)
 		{
 			attack_deley = Max_attack_deley;
-			if (attackBumwe->IsCollision(targetTransform->GetCollider()))
+			for (CH_Base_ver2* ch : CH->GetCharcterData())
 			{
-				if (oneAttack == 0)
+				if (attackBumwe->IsCollision(ch->GetCollider()))
 				{
-					targetTransform->OnHit(Atk);
-					attackBumwe->SetActive(false);
+					ch->OnHit(Atk);
 					oneAttack++;
 				}
 			}
+			if (oneAttack != 0)
+				attackBumwe->SetActive(false);
 		}
 	}
 	else
@@ -238,14 +239,18 @@ void Skeleton_Knight::targetAttack()
 		attack_deley = Max_attack_deley;
 	}
 
+	if (curState == ATTACK1) return;
 	if (attackRange->IsCollision(targetTransform->GetCollider()) &&
 		oneAttack == 0)
 	{
 		Moving = false;
 		attackBumwe->SetActive(true);
 		SetState(ATTACK1);
+		Vector3 im = targetTransform->GetCollider()->GlobalPos() - transform->GlobalPos();
+		transform->Rot().y = atan2(im.x, im.z) + XM_PI;
+		transform->UpdateWorld();
 	}
-	else if (oneAttack == 1 && curState != ATTACK1)
+	else if (oneAttack >= 1 && curState != ATTACK1)
 	{
 		oneAttack = 0;
 		Moving = true;

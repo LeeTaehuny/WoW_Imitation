@@ -51,8 +51,9 @@ Boss_LichKing::Boss_LichKing() : ModelAnimator("LichKing")
 	}
 
 	lich_SkillList.push_back(new Lich_001_Necrotic_Plague(this));
-	//lich_SkillList.push_back(new Lich_002_Infest(this));
+	lich_SkillList.push_back(new Lich_002_Infest(this));
 	lich_SkillList.push_back(new Lich_003_Summon_Drudge_Ghouls(this));
+	lich_SkillList.push_back(new Lich_004_Summon_Shambling_Horror(this));
 
 	target = CH->GetPlayerData();
 }
@@ -317,9 +318,19 @@ void Boss_LichKing::phaseOne()
 	//	SetState(CASTING);
 	//	lich_SkillList[0]->UseSkill(target);
 	//}
-	if (!lich_SkillList[1]->GetCoolTime())
+	//if (!lich_SkillList[1]->GetCoolTime())
+	//{
+	//	SetState(CASTING);
+	//	lich_SkillList[1]->UseSkill(target);
+	//}
+	//if (!lich_SkillList[2]->GetCoolTime())
+	//{
+	//	SetState(CASTING);
+	//	lich_SkillList[2]->UseSkill();
+	//}
+	if (!lich_SkillList[3]->GetCoolTime())
 	{
 		SetState(CASTING);
-		lich_SkillList[1]->UseSkill();
+		lich_SkillList[3]->UseSkill();
 	}
 }

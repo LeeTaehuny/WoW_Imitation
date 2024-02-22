@@ -46,7 +46,7 @@ KimScene::KimScene()
 
 	//particle = new ParticleSystem("TextData/Particles/Fire/fireBall.fx");
 
-	lich = new Boss_LichKing();
+	//lich = new Boss_LichKing();
 }
 
 KimScene::~KimScene()
@@ -90,7 +90,7 @@ void KimScene::Update()
 	MONSTER->Update();
 	ARROW->Update();
 	shop->Update();
-	lich->Update();
+	UPDATE(lich);
 }
 
 void KimScene::PreRender()
@@ -100,7 +100,7 @@ void KimScene::PreRender()
 
 void KimScene::Render()
 {
-	lich->Render();
+	RENDER(lich);
 	CH->Render();
 	MONSTER->Render();
 	ARROW->Render();
@@ -115,6 +115,6 @@ void KimScene::PostRender()
 
 void KimScene::GUIRender()
 {
-	lich->GUIRender();
+	GUIRENDER(lich);
 	CH->GUIRender();
 }
