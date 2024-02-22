@@ -3,6 +3,7 @@
 #include "Objects/Item/Potion.h"
 #include "Objects/Inventory/Inventory.h"
 #include "Objects/UI/PlayerUI_Bar.h"
+#include "Objects/UI/PartyUI_Bar.h"
 
 ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::ProtectionWarrior)
@@ -208,7 +209,10 @@ void ProtectionWarrior_in::OnHit(float damage)
 		SetState(DIE);
 	}
 
-	playerUI->SetHpPercent(stat.hp / stat.maxHp);
+	if (creatureType == CreatureType::Player)
+		playerUI->SetHpPercent(stat.hp / stat.maxHp);
+	else
+		CH->GetPartyUI()->SetHpPercent(stat.hp / stat.maxHp, stoi(GetTag().c_str()));
 }
 
 void ProtectionWarrior_in::AI_animation_Moving()

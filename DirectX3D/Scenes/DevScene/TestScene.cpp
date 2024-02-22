@@ -4,6 +4,7 @@
 #include "Objects/Skills/SkillManager.h"
 #include "Objects/UI/PlayerUI_Bar.h"
 #include "Objects/UI/MonsterUI_Bar.h"
+#include "Objects/UI/PartyUI_Bar.h"
 
 
 TestScene::TestScene()
@@ -25,23 +26,28 @@ TestScene::TestScene()
 	//Transform* transform = paladin->Add();
 	//player = new FireMage_in(CreatureType::Player, transform, paladin, count++);
 	//CAM->SetTarget(player);
-	
+	//p = new PartyUI_Bar();
 	shop = new Shop();
-	CH->PlayerSpawn(2);
+	CH->PlayerSpawn(3);
 	//MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
 	MONSTER->SpawnScarecrow(Vector3(0, 0, 4));
-	MONSTER->SpawnScarecrow(Vector3(-10));
+	MONSTER->SpawnScarecrow(Vector3(0, 0, 3));
+	MONSTER->SpawnScarecrow(Vector3(0, 0, 2));
 	//MONSTER->SpawnSkeleton(Vector3(10));
 	//MONSTER->SpawnSkeletonKnight(Vector3(20));
 
-	//CH->NonPlayerSpawn(2);
-	//CH->NonPlayerSpawn(1);
+
+	//for (int i = 1; i < CH->GetCharcterData().size(); i++)
+	//{
+	//	p->AddPlayer(i);
+	//}
+
+	//p->Pos() = { CENTER_X + 480.0f, CENTER_Y , 0 };
 	//CH->NonPlayerSpawn(3);
 	//CH->NonPlayerSpawn(5);
 	//CH->NonPlayerSpawn(4);
 	
 
-	//MONSTER->SpawnSkeleton(Vector3(0, 0, 25));
 	
 
 	MONSTER->SetTarget(CH->GetPlayerData());
@@ -49,6 +55,8 @@ TestScene::TestScene()
 	SKILL->Init(CH->GetPlayerData());
 
 	CAM->SetTarget(CH->GetPlayerData());
+
+	
 }
 
 TestScene::~TestScene()
@@ -64,11 +72,31 @@ void TestScene::Update()
 
 	CH->Update();
 
-	if (KEY_DOWN('P'))
-	{
-		CH->GetPlayerData()->OnHit(20.0f);
-	}
-	
+	//if (KEY_DOWN('P'))
+	//{
+	//	int temp = Random(1, 5);
+	//	CH->NonPlayerSpawn(temp);
+	//}
+	//
+	//if (KEY_DOWN('L'))
+	//{
+	//	// 마우스 위치의 Ray 생성
+	//	Ray ray = CAM->ScreenPointToRay(mousePos);
+	//	Contact contact;
+	//
+	//	vector<CH_Base_ver2*> player = CH->GetCharcterData();
+	//
+	//	for (CH_Base_ver2* p : player)
+	//	{
+	//
+	//		if (p->GetCollider()->IsRayCollision(ray, &contact))
+	//		{
+	//			p->OnHit(100);
+	//			break;
+	//		}
+	//	}
+	//}
+
 	//hpBar->UpdateWorld();
 	//mpBar->UpdateWorld();
 	//HpFrame->UpdateWorld();
@@ -81,7 +109,6 @@ void TestScene::PreRender()
 
 void TestScene::Render()
 {
-
 	MONSTER->Render();
 	
 	CH->Render();
@@ -93,6 +120,7 @@ void TestScene::PostRender()
 	shop->UIRender();
 	CH->PostRender();
 	MONSTER->PostRender();
+
 
 	//UI 추가
 	//hpBar->Render();

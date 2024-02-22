@@ -10,6 +10,7 @@
 #include "Objects/Skills/FireMage_Skill/F_010_Meteor.h"
 #include "Objects/Inventory/Inventory.h"
 #include "Objects/UI/PlayerUI_Bar.h"
+#include "Objects/UI/PartyUI_Bar.h"
 
 FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorInstancing* instancing, UINT index)
 	: CH_Base_ver2(type, ProfessionType::FireMage)
@@ -61,6 +62,7 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 
 		skillList.push_back(new F_010_Meteor());
 		skillList[skillList.size() - 1]->SetOwner(this);
+
 		break;
 	}
 	range->SetParent(this);
@@ -220,7 +222,10 @@ void FireMage_in::OnHit(float damage)
 		SetState(DIE);
 	}
 
-	playerUI->SetHpPercent(stat.hp / stat.maxHp);
+	if (creatureType == CreatureType::Player)
+		playerUI->SetHpPercent(stat.hp / stat.maxHp);
+	else
+		CH->GetPartyUI()->SetHpPercent(stat.hp / stat.maxHp, stoi(GetTag().c_str()));
 }
 
 void FireMage_in::AI_animation_Moving()

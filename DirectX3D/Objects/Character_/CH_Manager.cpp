@@ -6,6 +6,7 @@
 #include "Objects/Character_/HolyPriest_in.h"
 #include "Objects/Character_/MarksmanshipHunter_in.h"
 #include "Objects/Character_/ProtectionWarrior_in.h"
+#include "Objects/UI/PartyUI_Bar.h"
 #include "CH_Manager.h"
 
 #define UPDATE(k) if (k != nullptr) k->Update()
@@ -13,6 +14,15 @@
 
 CH_Manager::CH_Manager()
 {
+	InstancingDataArms();
+	InstancingDataFire();
+	InstancingDataHoly();
+	InstancingDataMarksmanship();
+	InstancingDataProtection();
+
+	partyUI = new PartyUI_Bar();
+	partyUI->Pos() = { CENTER_X + 480.0f, CENTER_Y , 0 };
+
 }
 CH_Manager::~CH_Manager()
 {
@@ -44,6 +54,8 @@ void CH_Manager::Update()
 			ch->Update();
 		}
 	}
+	
+	partyUI->Update();
 }
 
 void CH_Manager::PreRender()
@@ -66,6 +78,8 @@ void CH_Manager::PostRender()
 {
 	for (CH_Base_ver2* ch : character)
 		if (ch != nullptr) ch->UIRender();
+
+	partyUI->PostRender();
 }
 
 void CH_Manager::GUIRender()
@@ -231,7 +245,7 @@ void CH_Manager::NonPlayerSpawn(int value)
 		}
 		Transform* transform1 = armswarrior->Add();
 		CH_Base_ver2* un = new ArmsWarrior_in(CreatureType::NonPlayer, transform1, armswarrior, A_count);
-		un->SetTag("arms_" + to_string(nonCount));
+		un->SetTag(to_string(nonCount));
 		character.push_back(un);
 		A_count++;
 	}
@@ -243,7 +257,7 @@ void CH_Manager::NonPlayerSpawn(int value)
 		}
 		Transform* transform1 = paladin->Add();
 		CH_Base_ver2* un = new ProtectionWarrior_in(CreatureType::NonPlayer, transform1, paladin, P_count);
-		un->SetTag("protection_" + to_string(nonCount));
+		un->SetTag(to_string(nonCount));
 		character.push_back(un);
 		P_count++;
 	}
@@ -255,7 +269,7 @@ void CH_Manager::NonPlayerSpawn(int value)
 		}
 		Transform* transform1 = firemage->Add();
 		CH_Base_ver2* un = new FireMage_in(CreatureType::NonPlayer, transform1, firemage, F_count);
-		un->SetTag("fire_" + to_string(nonCount));
+		un->SetTag(to_string(nonCount));
 		character.push_back(un);
 		F_count++;
 	}
@@ -267,7 +281,7 @@ void CH_Manager::NonPlayerSpawn(int value)
 		}
 		Transform* transform1 = marksmanshiphunter->Add();
 		CH_Base_ver2* un = new MarksmanshipHunter_in(CreatureType::NonPlayer, transform1, marksmanshiphunter, M_count);
-		un->SetTag("marksmanship_" + to_string(nonCount));
+		un->SetTag(to_string(nonCount));
 		character.push_back(un);
 		M_count++;
 	}
@@ -279,7 +293,7 @@ void CH_Manager::NonPlayerSpawn(int value)
 		}
 		Transform* transform1 = holypriest->Add();
 		CH_Base_ver2* un = new HolyPriest_in(CreatureType::NonPlayer, transform1, holypriest, H_count);
-		un->SetTag("holy_" + to_string(nonCount));
+		un->SetTag(to_string(nonCount));
 		character.push_back(un);
 		H_count++;
 	}
@@ -291,6 +305,8 @@ void CH_Manager::NonPlayerSpawn(int value)
 	character[character.size() - 1]->SetPlayer(character[0]);
 	MONSTER->SetTarget(character[character.size() - 1]);
 	nonCount++;
+
+	partyUI->AddPlayer(character.size() - 1);
 }
 
 CH_Base_ver2* CH_Manager::SelectHealCharacter(IN CH_Base_ver2* collider)

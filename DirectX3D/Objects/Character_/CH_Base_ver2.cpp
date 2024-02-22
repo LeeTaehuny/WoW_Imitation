@@ -145,7 +145,21 @@ void CH_Base_ver2::Update()
 			}
 		}
 
-		// TODO : 플레이어 선택
+		// 플레이어 선택
+		{
+			vector<CH_Base_ver2*> player = CH->GetCharcterData();
+
+			for (CH_Base_ver2* p : player)
+			{
+				if (p == this) continue;
+
+				if (p->GetCollider()->IsRayCollision(ray, &contact))
+				{
+					targetCharacter = p;
+					break;
+				}
+			}
+		}
 	}
 
 	// 타겟 몬스터 검증

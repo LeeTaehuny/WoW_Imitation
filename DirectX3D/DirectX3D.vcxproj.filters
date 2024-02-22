@@ -231,6 +231,7 @@
     <ClCompile Include="Objects\UI\QuickSlot.cpp" />
     <ClCompile Include="Objects\UI\PlayerUI_Bar.cpp" />
     <ClCompile Include="Objects\UI\MonsterUI_Bar.cpp" />
+    <ClCompile Include="Objects\UI\PartyUI_Bar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.h" />
@@ -258,6 +259,7 @@
     <ClInclude Include="Objects\UI\QuickSlot.h" />
     <ClInclude Include="Objects\UI\PlayerUI_Bar.h" />
     <ClInclude Include="Objects\UI\MonsterUI_Bar.h" />
+    <ClInclude Include="Objects\UI\PartyUI_Bar.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Character_\CH_Manager.h" />
