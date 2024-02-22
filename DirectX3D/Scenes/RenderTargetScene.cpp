@@ -13,7 +13,7 @@ RenderTargetScene::RenderTargetScene()
 
     quad = new Quad(Vector2(500, 500)); //아무것도 없는 사각형 만들기 (그림이 아니다)
     quad->Pos() = { CENTER_X, CENTER_Y };
-    quad->GetMaterial()->SetShader(L"PostEffect/Bloom.hlsl"); // "빛번짐" 효과: 후처리 셰이더 중 하나
+    quad->GetMaterial()->SetShader(L"Effect/Bloom.hlsl"); // "빛번짐" 효과: 후처리 셰이더 중 하나
     quad->GetMaterial()->SetDiffuseMap(Texture::Add(L"Render", renderTarget->GetSRV()));
                      // 매개변수는 "렌더라는 이름으로 지칭할, 렌더 타겟 객체의 실시간 생성 화면"
     quad->UpdateWorld();

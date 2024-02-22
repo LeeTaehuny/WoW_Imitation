@@ -28,11 +28,11 @@ TestScene::TestScene()
 	//CAM->SetTarget(player);
 	//p = new PartyUI_Bar();
 	shop = new Shop();
-	CH->PlayerSpawn(3);
+	//CH->PlayerSpawn(3);
 	//MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
-	MONSTER->SpawnScarecrow(Vector3(0, 0, 4));
-	MONSTER->SpawnScarecrow(Vector3(0, 0, 3));
-	MONSTER->SpawnScarecrow(Vector3(0, 0, 2));
+	//MONSTER->SpawnScarecrow(Vector3(0, 0, 4));
+	//MONSTER->SpawnScarecrow(Vector3(0, 0, 3));
+	//MONSTER->SpawnScarecrow(Vector3(0, 0, 2));
 	//MONSTER->SpawnSkeleton(Vector3(10));
 	//MONSTER->SpawnSkeletonKnight(Vector3(20));
 
@@ -50,11 +50,11 @@ TestScene::TestScene()
 
 	
 
-	MONSTER->SetTarget(CH->GetPlayerData());
+	//MONSTER->SetTarget(CH->GetPlayerData());
 
-	SKILL->Init(CH->GetPlayerData());
+	//SKILL->Init(CH->GetPlayerData());
 
-	CAM->SetTarget(CH->GetPlayerData());
+	//CAM->SetTarget(CH->GetPlayerData());
 
 	
 }
@@ -65,37 +65,37 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
-	SKILL->Update();
+	//SKILL->Update();
 	shop->Update();
 
-	MONSTER->Update();
+	//MONSTER->Update();
 
 	CH->Update();
 
-	//if (KEY_DOWN('P'))
-	//{
-	//	int temp = Random(1, 5);
-	//	CH->NonPlayerSpawn(temp);
-	//}
-	//
-	//if (KEY_DOWN('L'))
-	//{
-	//	// 마우스 위치의 Ray 생성
-	//	Ray ray = CAM->ScreenPointToRay(mousePos);
-	//	Contact contact;
-	//
-	//	vector<CH_Base_ver2*> player = CH->GetCharcterData();
-	//
-	//	for (CH_Base_ver2* p : player)
-	//	{
-	//
-	//		if (p->GetCollider()->IsRayCollision(ray, &contact))
-	//		{
-	//			p->OnHit(100);
-	//			break;
-	//		}
-	//	}
-	//}
+	if (KEY_DOWN('P'))
+	{
+		int temp = Random(1, 5);
+		CH->NonPlayerSpawn(temp);
+	}
+	
+	if (KEY_DOWN('L'))
+	{
+		// 마우스 위치의 Ray 생성
+		Ray ray = CAM->ScreenPointToRay(mousePos);
+		Contact contact;
+	
+		vector<CH_Base_ver2*> player = CH->GetCharcterData();
+	
+		for (CH_Base_ver2* p : player)
+		{
+	
+			if (p->GetCollider()->IsRayCollision(ray, &contact))
+			{
+				p->OnHit(100);
+				break;
+			}
+		}
+	}
 
 	//hpBar->UpdateWorld();
 	//mpBar->UpdateWorld();
@@ -109,17 +109,17 @@ void TestScene::PreRender()
 
 void TestScene::Render()
 {
-	MONSTER->Render();
+	//MONSTER->Render();
 	
 	CH->Render();
 }
 
 void TestScene::PostRender()
 {
-	SKILL->PostRender();
+	//SKILL->PostRender();
 	shop->UIRender();
 	CH->PostRender();
-	MONSTER->PostRender();
+	//MONSTER->PostRender();
 
 
 	//UI 추가

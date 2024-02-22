@@ -354,6 +354,7 @@
     <ClInclude Include="Objects\Monster\Skeleton_Knight.h" />
     <ClInclude Include="Objects\UI\StatusUI.h" />
     <ClInclude Include="Objects\Skills\SkillManager.h" />
+    <ClInclude Include="Scenes\GameScene\SelectScene.h" />
     <ClInclude Include="SkillHeader.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Objects\Test\TestLight.h" />
@@ -434,6 +435,7 @@
     <ClCompile Include="Objects\UI\Button.cpp" />
     <ClCompile Include="Objects\UI\StatusUI.cpp" />
     <ClCompile Include="Objects\Skills\SkillManager.cpp" />
+    <ClCompile Include="Scenes\GameScene\SelectScene.cpp" />
     <ClInclude Include="Scenes\MAP\TestDungeonScene.h" />
   </ItemGroup>
   <ItemGroup>

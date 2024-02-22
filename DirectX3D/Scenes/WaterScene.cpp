@@ -31,8 +31,8 @@ void WaterScene::Update()
 
     water->Update();
 
-    if (KEY_DOWN(VK_F1))
-        SceneManager::Get()->Remove("Start");
+    if (KEY_DOWN(VK_F1)) {}
+    //    SceneManager::Get()->Remove("Start");
 }
 
 void WaterScene::PreRender()

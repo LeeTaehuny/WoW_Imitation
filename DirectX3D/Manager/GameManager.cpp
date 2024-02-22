@@ -30,14 +30,16 @@
 #include "Scenes/MAP/LastBossMap_Scene.h"
 #include "Scenes/MAP/MapTestScene.h"
 #include "Scenes/MAP/TestDungeonScene.h"
+///////////////////////////////////////////
+#include "Scenes/GameScene/SelectScene.h"
 
 
 GameManager::GameManager()
 {
     Create();
 
-    SceneManager::Get()->Create("Grid", new GridScene());
-    SceneManager::Get()->Add("Grid");
+    //SceneManager::Get()->Create("Grid", new GridScene());
+    //SceneManager::Get()->Add("Grid");
 
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
     //SceneManager::Get()->Add("ModelExport");
@@ -72,6 +74,12 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
     //SceneManager::Get()->Create("TestScene", new TestScene());
     //SceneManager::Get()->Add("TestScene");
+
+    SceneManager::Get()->Register("TestScene", new TestScene());
+    SceneManager::Get()->Register("Select", new SelectScene());
+
+
+    SceneManager::Get()->ChangeScene("Select");
 }
 
 GameManager::~GameManager()
@@ -91,10 +99,13 @@ void GameManager::Update()
 
 void GameManager::Render()
 {
-    SceneManager::Get()->PreRender();
+    
     
     Device::Get()->Clear();
     Font::Get()->GetDC()->BeginDraw();
+
+    Environment::Get()->PostSet();
+    SceneManager::Get()->PreRender();
     
     Environment::Get()->Set();    
     SceneManager::Get()->Render();

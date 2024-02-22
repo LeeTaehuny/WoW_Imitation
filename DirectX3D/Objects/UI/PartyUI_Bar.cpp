@@ -21,9 +21,14 @@ void PartyUI_Bar::Update()
 
 void PartyUI_Bar::PostRender()
 {
+	int idx = 1;
 	for (ProgressBar* bar : hpBars)
 	{
 		bar->Render();
+
+		Font::Get()->RenderText(CH->GetCharcterData()[idx]->GetTag(), Vector2(bar->GlobalPos().x - 60.0f, bar->GlobalPos().y + 2.0f));
+
+		idx++;
 	}
 }
 
