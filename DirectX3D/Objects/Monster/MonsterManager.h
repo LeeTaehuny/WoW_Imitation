@@ -19,6 +19,10 @@ public:
     void SpawnSkeletonKnight(Vector3 pos);
     // 허수아비 스폰
     void SpawnScarecrow(Vector3 pos);
+    // 발키리 스폰
+    void SpawnVAlkier(Vector3 pos);
+    // 얼음구슬 스폰
+    void SpawnIceBall(Vector3 pos);
 
     MonsterBase* hitCollision(IN Collider* collider);
 
@@ -29,6 +33,8 @@ public:
     vector<MonsterBase*> GetSkeleton() { return skeleton; }
     vector<MonsterBase*> GetSkeleton_Knight() { return skeleton_Knight; }
     vector<MonsterBase*> GetScarecrow() { return scarecrow; }
+    vector<MonsterBase*> GetVAlkier() { return valkier; }
+    vector<MonsterBase*> GetIceBall() { return valkier; }
 
 public:
     // 몬스터들의 콜라이더 정보를 저장함
@@ -51,4 +57,12 @@ private:
     ModelAnimatorInstancing* scarecrow_body;
     // 스켈레톤 나이트 클래스
     vector<MonsterBase*> scarecrow;
+
+    // 발키리 인스턴싱
+    ModelAnimatorInstancing* valkier_body;
+    // 발키리 클래스
+    vector<MonsterBase*> valkier;
+
+    // 아이스볼 클래스
+    vector<MonsterBase*> iceBall;
 };

@@ -218,6 +218,8 @@ using namespace GameMath;
 #include "Objects/Monster/Skeleton.h"
 #include "Objects/Monster/Skeleton_Knight.h"
 #include "Objects/Monster/Scarecrow.h"
+#include "Objects/Monster/VAlkier.h"
+#include "Objects/Monster/IceBall.h"
 #include "Objects/Monster/MonsterManager.h"
 #include "Objects/Monster/Boss/Boss_LichKing.h"
 

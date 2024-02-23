@@ -238,6 +238,8 @@
     <ClCompile Include="Objects\UI\MonsterUI_Bar.cpp" />
     <ClCompile Include="Objects\UI\PartyUI_Bar.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_005_Remorseless_Winter.cpp" />
+    <ClCompile Include="Objects\Monster\VAlkier.cpp" />
+    <ClCompile Include="Objects\Monster\IceBall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.h" />
@@ -272,6 +274,8 @@
     <ClInclude Include="Objects\UI\MonsterUI_Bar.h" />
     <ClInclude Include="Objects\UI\PartyUI_Bar.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_005_Remorseless_Winter.h" />
+    <ClInclude Include="Objects\Monster\VAlkier.h" />
+    <ClInclude Include="Objects\Monster\IceBall.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Character_\CH_Manager.h" />

@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Monster\IceBall.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_005_Remorseless_Winter.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.h" />
@@ -367,8 +368,10 @@
     <ClInclude Include="Scenes\TessellationScene.h" />
     <ClInclude Include="Scenes\DevScene\TestScene.h" />
     <ClInclude Include="Objects\Item\Weapon.h" />
+    <ClInclude Include="Objects\Monster\VAlkier.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Monster\IceBall.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_005_Remorseless_Winter.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.cpp" />
@@ -436,6 +439,7 @@
     <ClCompile Include="Objects\UI\Button.cpp" />
     <ClCompile Include="Objects\UI\StatusUI.cpp" />
     <ClCompile Include="Objects\Skills\SkillManager.cpp" />
+    <ClCompile Include="Objects\Monster\VAlkier.cpp" />
     <ClInclude Include="Scenes\MAP\TestDungeonScene.h" />
   </ItemGroup>
   <ItemGroup>

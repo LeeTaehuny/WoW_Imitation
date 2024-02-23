@@ -18,18 +18,15 @@
 
 KimScene::KimScene()
 {
-	//CH->PlayerSpawn(2);
-	//CH->GetPlayerData()->EquipWeapon(new Weapon("hammer_1", WeaponType::Hammer));
-	//SKILL->Init(CH->GetPlayerData());
-	//CH->GetPlayerData()->Pos() = Vector3(10);
-	//CH->GetPlayerData()->GetStat().maxHp = 1000;
-	//CH->GetPlayerData()->GetStat().hp = 1000;
-	//CH->GetPlayerData()->Update();
+	CH->PlayerSpawn(2);
+	CH->GetPlayerData()->EquipWeapon(new Weapon("hammer_1", WeaponType::Hammer));
+	SKILL->Init(CH->GetPlayerData());
+	CH->GetPlayerData()->Pos() = Vector3(10);
+	CH->GetPlayerData()->GetStat().maxHp = 1000;
+	CH->GetPlayerData()->GetStat().hp = 1000;
+	CH->GetPlayerData()->Update();
 
-	//CH->NonPlayerSpawn(1);
-	//CH->NonPlayerSpawn(2);
-	//CH->NonPlayerSpawn(1);
-	//CH->NonPlayerSpawn(1);
+	CH->NonPlayerSpawn(2);
 
 	MONSTER;
 	ARROW;
@@ -47,64 +44,55 @@ KimScene::KimScene()
 	//particle = new ParticleSystem("TextData/Particles/Fire/fireBall.fx");
 
 	//lich = new Boss_LichKing();
-
-	val = new ModelAnimator("VAlkier");
-	val->ReadClip("Flying");
-	val->ReadClip("Idle_2");	
-	val->PlayClip(0);
-	val->Scale() *= 0.03f;
-
-	iceball = new Sphere();
-	iceball->GetMaterial()->SetDiffuseMap(L"Textures/Model/iceBall/iceshard.png");
-	iceball->Pos() = Vector3(5);
 }
 
 KimScene::~KimScene()
 {
 	delete lich;
 	delete shop;
-	delete val;
-	delete iceball;
 }
 
 void KimScene::Update()
 {
-	//if (KEY_DOWN(VK_LEFT))
-	//{
-	//	MONSTER->SpawnSkeleton(Vector3());
-	//}
-	//if (KEY_DOWN(VK_RIGHT))
-	//{
-	//	MONSTER->SpawnSkeletonKnight(Vector3());
-	//}
-	//if (KEY_DOWN(VK_DOWN))
-	//{
-	//	MONSTER->SpawnScarecrow(Vector3());
-	//}
-	//
-	//if (KEY_DOWN('X'))
-	//{
-	//	int gang = Random(1, 6);
-	//	CH->NonPlayerSpawn(4);
-	//}
-	//
-	//if (KEY_DOWN(VK_NUMPAD5))
-	//{
-	//	CH->GetPlayerData()->GetStat().hp -= 100;;
-	//}
-	//if (KEY_DOWN(VK_NUMPAD6))
-	//{
-	//	CH->GetCharcterData()[1]->GetStat().hp -= 100;
-	//}
+	if (KEY_DOWN(VK_LEFT))
+	{
+		//MONSTER->SpawnSkeleton(Vector3());
+		MONSTER->SpawnIceBall(Vector3());
+	}
+	if (KEY_DOWN(VK_RIGHT))
+	{
+		MONSTER->SpawnSkeletonKnight(Vector3());
+	}
+	if (KEY_DOWN(VK_DOWN))
+	{
+		MONSTER->SpawnScarecrow(Vector3());
+	}
+	if (KEY_DOWN(VK_UP))
+	{
+		MONSTER->SpawnVAlkier(Vector3());
+	}
+	
+	if (KEY_DOWN('X'))
+	{
+		int gang = Random(1, 6);
+		CH->NonPlayerSpawn(4);
+	}
+	
+	if (KEY_DOWN(VK_NUMPAD5))
+	{
+		CH->GetPlayerData()->GetStat().hp -= 100;;
+	}
+	if (KEY_DOWN(VK_NUMPAD6))
+	{
+		CH->GetCharcterData()[1]->GetStat().hp -= 100;
+	}
 
-	//SKILL->Update();
-	//CH->Update();
-	//MONSTER->Update();
-	//ARROW->Update();
-	//UPDATE(lich);
-	//UPDATE(shop);
-	UPDATE(val);
-	UPDATEWORLD(iceball);
+	SKILL->Update();
+	CH->Update();
+	MONSTER->Update();
+	ARROW->Update();
+	UPDATE(lich);
+	UPDATE(shop);
 }
 
 void KimScene::PreRender()
@@ -115,17 +103,17 @@ void KimScene::PreRender()
 void KimScene::Render()
 {
 	//RENDER(lich);
-	RENDER(val);
-	RENDER(iceball);
-	//CH->Render();
-	//MONSTER->Render();
-	//ARROW->Render();
+	CH->Render();
+	MONSTER->Render();
+	ARROW->Render();
 }
 
 void KimScene::PostRender()
 {
-	//SKILL->PostRender(); // 우선
-	//CH->PostRender(); // 차선
+	SKILL->PostRender(); // 우선
+	CH->PostRender(); // 차선
+
+	MONSTER->PostRender();
 	
 	if (shop != nullptr)
 		shop->UIRender();
@@ -134,5 +122,5 @@ void KimScene::PostRender()
 void KimScene::GUIRender()
 {
 	//GUIRENDER(lich);
-	//CH->GUIRender();
+	CH->GUIRender();
 }
