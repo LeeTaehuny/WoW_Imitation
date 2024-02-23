@@ -4,6 +4,7 @@
 TerrainEditorScene::TerrainEditorScene()
 {
     terrainEditor = new TerrainEditor();
+    //dungeon = new Dungeon();
 
     //ByteAddress();
 }
@@ -11,11 +12,13 @@ TerrainEditorScene::TerrainEditorScene()
 TerrainEditorScene::~TerrainEditorScene()
 {
     delete terrainEditor;
+    //delete dungeon;
 }
 
 void TerrainEditorScene::Update()
 {
     terrainEditor->Update();
+    //dungeon->Update();
 }
 
 void TerrainEditorScene::PreRender()
@@ -25,6 +28,7 @@ void TerrainEditorScene::PreRender()
 void TerrainEditorScene::Render()
 {
     terrainEditor->Render();
+    //dungeon->Render();
 }
 
 void TerrainEditorScene::PostRender()

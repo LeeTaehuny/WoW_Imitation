@@ -23,10 +23,6 @@ TerrainLOD::TerrainLOD(wstring heightFile)
     mesh = new Mesh<VertexType>();
     MakeMesh();
     mesh->CreateMesh();
-
-
-    model = new Model("LastBossMap1");
-    model->Pos() = { 0,500,0 };
 }
 
 TerrainLOD::~TerrainLOD()
@@ -35,8 +31,6 @@ TerrainLOD::~TerrainLOD()
 
     delete terrainBuffer;
     delete heightBuffer;
-
-    delete model;
 }
 
 void TerrainLOD::Render()
@@ -57,8 +51,6 @@ void TerrainLOD::Render()
 
     DC->HSSetShader(nullptr, nullptr, 0);
     DC->DSSetShader(nullptr, nullptr, 0);
-
-    model->Render();
 }
 
 void TerrainLOD::GUIRender()

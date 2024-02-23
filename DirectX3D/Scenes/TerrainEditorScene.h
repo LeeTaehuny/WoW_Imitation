@@ -17,4 +17,5 @@ private:
 
 private:
     TerrainEditor* terrainEditor;
+    Dungeon* dungeon;
 };

@@ -27,12 +27,12 @@
 #include "Scenes/TerrainLODScene.h"
 #include "Scenes/KimScene.h"
 #include "Scenes/DevScene/TestScene.h"
-#include "Scenes/MAP/LastBossMap_Scene.h"
 #include "Scenes/MAP/MapTestScene.h"
 #include "Scenes/MAP/TestDungeonScene.h"
 ///////////////////////////////////////////
 #include "Scenes/GameScene/SelectScene.h"
 
+#include "Scenes/MAP/TestExportRender.h"
 
 GameManager::GameManager()
 {
@@ -56,6 +56,7 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("Instancing", new IntancingScene());
     //SceneManager::Get()->Create("HumanTest", new HumanScene());
     //SceneManager::Get()->Create("Game", new GameScene());
+    //SceneManager::Get()->Add("Game");
     //SceneManager::Get()->Create("RenderTarget", new RenderTargetScene());
     //SceneManager::Get()->Create("GeometryBuffer", new GBufferScene());
     //SceneManager::Get()->Create("ShadowScene", new ShadowScene());
@@ -69,6 +70,7 @@ GameManager::GameManager()
 
     // * 작업중. //SceneManager::Get()->Create("MirrorScene", new MirrorScene());
     //SceneManager::Get()->Create("WaterScene", new WaterScene());
+    //SceneManager::Get()->Add("WaterScene");
     //SceneManager::Get()->Create("QuadTree", new QuadTreeScene());
     //SceneManager::Get()->Create("Tessellation", new TessellationScene());
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
@@ -80,6 +82,28 @@ GameManager::GameManager()
 
 
     SceneManager::Get()->ChangeScene("Select");
+
+
+    /////////////////////////////////////////////////////////////////// Choi
+    // Test Scenes
+    //SceneManager::Get()->Create("BossMap", new MapTestScene());
+    //SceneManager::Get()->Add("BossMap");
+    SceneManager::Get()->Create("TestDungeon", new TestDungeonScene());
+    SceneManager::Get()->Add("TestDungeon");
+
+    // ModelExport
+    //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
+    //SceneManager::Get()->Add("ModelExport");
+    //SceneManager::Get()->Create("TestExportRender", new TestExportRender());
+    //SceneManager::Get()->Add("TestExportRender");
+
+    // Terrains
+    //SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
+    //SceneManager::Get()->Add("Terrain");
+    //SceneManager::Get()->Create("Terrain", new TerrainScene());
+    //SceneManager::Get()->Add("Terrain");
+    //SceneManager::Get()->Create("Terrain", new TerrainLODScene());
+    //SceneManager::Get()->Create("LOD", new TerrainLODScene());
 }
 
 GameManager::~GameManager()
