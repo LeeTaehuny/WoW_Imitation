@@ -12,8 +12,8 @@ class Boss_LichKing : public ModelAnimator
 
     struct Stat
     {
-        UINT Max_hp = 17400000;
-        UINT cur_hp = Max_hp;
+        float Max_hp = 17400;
+        float cur_hp = Max_hp;
         float damage = 300.0f;
         float Armor = 100.0f;
         float moveSpeed = 2.0f;
@@ -47,6 +47,7 @@ private: // 멤버 변수
     void targetActiveSerch();
 
     void phaseOne();
+    void phaseTwo();
 
 private:
     Collider* myCollider;
@@ -71,4 +72,9 @@ private:
     // 스킬을 저장하기 위한 벡터
     vector<class Lich_000_Base*> lich_SkillList;
     CH_Base_ver2* target;
+
+private: // 두 번째 페이즈에서 사용하기 위한 변수들
+    int first = 0;
+
+    Collider* fieldzero;
 };

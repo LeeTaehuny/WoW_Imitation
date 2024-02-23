@@ -26,15 +26,12 @@ KimScene::KimScene()
 	CH->GetPlayerData()->GetStat().hp = 1000;
 	CH->GetPlayerData()->Update();
 
-	//CH->NonPlayerSpawn(1);
 	CH->NonPlayerSpawn(2);
-	//CH->NonPlayerSpawn(1);
-	//CH->NonPlayerSpawn(1);
 
 	MONSTER;
 	ARROW;
 
-	shop = new Shop();
+	//shop = new Shop();
 
 	//MONSTER->SpawnScarecrow(Vector3(0, 0, 5));
 	//MONSTER->SpawnScarecrow(Vector3(10));
@@ -59,7 +56,8 @@ void KimScene::Update()
 {
 	if (KEY_DOWN(VK_LEFT))
 	{
-		MONSTER->SpawnSkeleton(Vector3());
+		//MONSTER->SpawnSkeleton(Vector3());
+		MONSTER->SpawnIceBall(Vector3());
 	}
 	if (KEY_DOWN(VK_RIGHT))
 	{
@@ -69,13 +67,17 @@ void KimScene::Update()
 	{
 		MONSTER->SpawnScarecrow(Vector3());
 	}
+	if (KEY_DOWN(VK_UP))
+	{
+		MONSTER->SpawnVAlkier(Vector3());
+	}
 	
 	if (KEY_DOWN('X'))
 	{
 		int gang = Random(1, 6);
 		CH->NonPlayerSpawn(4);
 	}
-
+	
 	if (KEY_DOWN(VK_NUMPAD5))
 	{
 		CH->GetPlayerData()->GetStat().hp -= 100;;
@@ -89,8 +91,8 @@ void KimScene::Update()
 	CH->Update();
 	MONSTER->Update();
 	ARROW->Update();
-	shop->Update();
 	UPDATE(lich);
+	UPDATE(shop);
 }
 
 void KimScene::PreRender()
@@ -100,7 +102,7 @@ void KimScene::PreRender()
 
 void KimScene::Render()
 {
-	RENDER(lich);
+	//RENDER(lich);
 	CH->Render();
 	MONSTER->Render();
 	ARROW->Render();
@@ -110,11 +112,15 @@ void KimScene::PostRender()
 {
 	SKILL->PostRender(); // 우선
 	CH->PostRender(); // 차선
-	shop->UIRender();
+
+	MONSTER->PostRender();
+	
+	if (shop != nullptr)
+		shop->UIRender();
 }
 
 void KimScene::GUIRender()
 {
-	GUIRENDER(lich);
+	//GUIRENDER(lich);
 	CH->GUIRender();
 }

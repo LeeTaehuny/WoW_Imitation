@@ -3,12 +3,15 @@
 
 ModelExportScene::ModelExportScene()
 {
-    string name = "LichKing";
+    string name = "VAlkier";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
 
-    //AnimationClip(name, "Die_1");
-    //AnimationClip(name, "Attack_1");
+    Model_MER_MESH(name);
+    AnimationClip(name, "Flying");
+    AnimationClip(name, "Idle_1");
+    AnimationClip(name, "Idle_2");
+    AnimationClip(name, "Idle_3");
     //AnimationClip(name, "Attack_2");
     //AnimationClip(name, "Attack_3");
     //AnimationClip(name, "Attack_4");

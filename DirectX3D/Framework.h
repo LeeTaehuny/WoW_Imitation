@@ -218,6 +218,8 @@ using namespace GameMath;
 #include "Objects/Monster/Skeleton.h"
 #include "Objects/Monster/Skeleton_Knight.h"
 #include "Objects/Monster/Scarecrow.h"
+#include "Objects/Monster/VAlkier.h"
+#include "Objects/Monster/IceBall.h"
 #include "Objects/Monster/MonsterManager.h"
 #include "Objects/Monster/Boss/Boss_LichKing.h"
 
@@ -226,6 +228,7 @@ using namespace GameMath;
 #include "Objects/Monster/Boss/Lich_002_Infest.h"
 #include "Objects/Monster/Boss/Lich_003_Summon_Drudge_Ghouls.h"
 #include "Objects/Monster/Boss/Lich_004_Summon_Shambling_Horror.h"
+#include "Objects/Monster/Boss/Lich_005_Remorseless_Winter.h"
 
 // 스킬 배이스
 #include "Objects/Skills/Base/SkillBase.h"
