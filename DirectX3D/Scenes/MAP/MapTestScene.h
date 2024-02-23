@@ -15,5 +15,9 @@ public:
 private:
     BossMap* bossmap;
     SphereCollider* Test;
+
+    ModelAnimatorInstancing* instaning;
+    CH_Base_ver2* player;
+    Model* PLAYER;
 };
 

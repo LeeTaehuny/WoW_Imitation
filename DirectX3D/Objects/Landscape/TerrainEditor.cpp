@@ -7,7 +7,7 @@ TerrainEditor::TerrainEditor()
     material->SetDiffuseMap(L"Textures/Landscape/Tile_Ice.png");// base
     zeroMap = Texture::Add(L"Textures/Landscape/Tile_Ice.png");
 
-    firstMap = Texture::Add(L"Textures/Landscape/Dirt2.png"); // add 
+    firstMap = Texture::Add(L"Textures/Landscape/Tile_Dungeon.png"); // add 
     secondMap = Texture::Add(L"Textures/Landscape/Dirt.png");
     thirdMap = Texture::Add(L"Textures/Landscape/Dirt3.png");
 

@@ -13,6 +13,10 @@ ModelExportScene::ModelExportScene()
     //AnimationClip(name, "Attack_3");
     //AnimationClip(name, "Attack_4");
 	
+    //string name = "Chandelier";
+    //string file = "Models/FBX/" + name + ".fbx";
+    //ModelExporter* exporter;
+
     //exporter = new ModelExporter(name, file);
     //exporter->ExportMaterial();
     //exporter->ExportMesh();

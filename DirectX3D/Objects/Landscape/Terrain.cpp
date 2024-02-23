@@ -7,10 +7,18 @@ Terrain::Terrain()
     material->SetSpecularMap(L"Textures/Landscape/Fieldstone_SM.tga");
     //material->SetNormalMap(L"Textures/Landscape/Fieldstone_NM.tga");
       
-    heightMap = Texture::Add(L"Textures/HeightMaps/AStarMap.png");
+    //heightMap = Texture::Add(L"Textures/HeightMaps/AStarMap.png");
+    heightMap = Texture::Add(L"Textures/HeightMaps/TestTerrain_A.png");
     alphaMap = Texture::Add(L"Textures/AlphaMaps/TestAlphaMap.png");
     secondMap = Texture::Add(L"Textures/Landscape/Dirt.png");
     thirdMap = Texture::Add(L"Textures/Landscape/Dirt3.png");
+
+    // Test Adds
+    //material->SetSpecularMap(L"Textures/Landscape/Tile_Ice.png");
+    //heightMap = Texture::Add(L"Textures/HeightMaps/TestTerrain_A.png");
+    //alphaMap = Texture::Add(L"Textures/AlphaMaps/TestTerrain_H.png");
+    //secondMap = Texture::Add(L"Textures/Landscape/Dirt.png");
+    //thirdMap = Texture::Add(L"Textures/Landscape/Dirt3.png");
 
     mesh = new Mesh<VertexType>();
     MakeMesh();
