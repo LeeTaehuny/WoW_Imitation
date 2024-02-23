@@ -44,8 +44,8 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
     //SceneManager::Get()->Add("ModelExport");
 
-    SceneManager::Get()->Create("KIM", new KimScene());
-    SceneManager::Get()->Add("KIM");
+    SceneManager::Get()->Register("KIM", new KimScene());
+    SceneManager::Get()->ChangeScene("KIM");
 
     //SceneManager::Get()->Create("Cube", new CubeScene());
     //SceneManager::Get()->Create("Sphere", new SphereScene());
@@ -77,19 +77,19 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("TestScene", new TestScene());
     //SceneManager::Get()->Add("TestScene");
 
-    SceneManager::Get()->Register("TestScene", new TestScene());
-    SceneManager::Get()->Register("Select", new SelectScene());
-
-
-    SceneManager::Get()->ChangeScene("Select");
+    //SceneManager::Get()->Register("TestScene", new TestScene());
+    //SceneManager::Get()->Register("Select", new SelectScene());
+    //
+    //
+    //SceneManager::Get()->ChangeScene("Select");
 
 
     /////////////////////////////////////////////////////////////////// Choi
     // Test Scenes
     //SceneManager::Get()->Create("BossMap", new MapTestScene());
     //SceneManager::Get()->Add("BossMap");
-    SceneManager::Get()->Create("TestDungeon", new TestDungeonScene());
-    SceneManager::Get()->Add("TestDungeon");
+    //SceneManager::Get()->Create("TestDungeon", new TestDungeonScene());
+    //SceneManager::Get()->Add("TestDungeon");
 
     // ModelExport
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
