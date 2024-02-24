@@ -397,7 +397,18 @@ void ArmsWarrior_in::Moving()
 void ArmsWarrior_in::Jump()
 {
 	// �������� �ƴ϶�� ����
-	if (!isJump) return;
+	if (!isJump)
+	{
+		jumpVelocity -= 1.8f * gravityMult * DELTA;
+		Pos().y += jumpVelocity;
+
+		if (Pos().y < curheight)
+		{
+			Pos().y = curheight;
+			jumpVelocity = 0;
+		}
+		return;
+	}
 
 	jumpVelocity -= 1.8f * gravityMult * DELTA;
 	Pos().y += jumpVelocity;

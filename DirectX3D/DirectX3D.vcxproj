@@ -367,6 +367,7 @@
     <ClInclude Include="Scenes\TessellationScene.h" />
     <ClInclude Include="Scenes\DevScene\TestScene.h" />
     <ClInclude Include="Objects\Item\Weapon.h" />
+    <ClInclude Include="Scenes\GameScene\TownScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.cpp" />
@@ -436,6 +437,7 @@
     <ClCompile Include="Objects\UI\StatusUI.cpp" />
     <ClCompile Include="Objects\Skills\SkillManager.cpp" />
     <ClCompile Include="Scenes\GameScene\SelectScene.cpp" />
+    <ClCompile Include="Scenes\GameScene\TownScene.cpp" />
     <ClInclude Include="Scenes\MAP\TestDungeonScene.h" />
   </ItemGroup>
   <ItemGroup>

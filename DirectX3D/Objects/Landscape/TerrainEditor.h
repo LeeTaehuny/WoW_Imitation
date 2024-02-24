@@ -16,7 +16,7 @@ private:
     typedef VertexUVNormalTangentAlpha VertexType;
 
     const float MIN_HEIGHT = 0.0f;
-    const float MAX_HEIGHT = 250.0f;
+    const float MAX_HEIGHT = 20.0f;
 
     const UINT MAX_SIZE = 500;
 

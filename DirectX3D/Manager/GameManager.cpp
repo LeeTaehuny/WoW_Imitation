@@ -32,6 +32,7 @@
 #include "Scenes/MAP/TestDungeonScene.h"
 ///////////////////////////////////////////
 #include "Scenes/GameScene/SelectScene.h"
+#include "Scenes/GameScene/TownScene.h"
 
 
 GameManager::GameManager()
@@ -75,8 +76,8 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("TestScene", new TestScene());
     //SceneManager::Get()->Add("TestScene");
 
-    SceneManager::Get()->Register("TestScene", new TestScene());
     SceneManager::Get()->Register("Select", new SelectScene());
+    SceneManager::Get()->Register("Town", new TownScene());
 
 
     SceneManager::Get()->ChangeScene("Select");

@@ -8,7 +8,6 @@ private:
 
 public:
     Terrain();
-    Terrain(string mapFile);
     ~Terrain();
 
     void Render();
