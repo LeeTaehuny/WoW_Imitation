@@ -28,7 +28,7 @@ void Lich_003_Summon_Drudge_Ghouls::Update()
 		if (JustOne == 0)
 		{
 			JustOne++;
-			Vector3 lichPos = lich->Pos();
+			Vector3 lichPos = lich->GetTransform()->Pos();
 			lichPos.z -= 5;
 			lichPos.x -= 5;
 			MONSTER->SpawnSkeleton(lichPos);

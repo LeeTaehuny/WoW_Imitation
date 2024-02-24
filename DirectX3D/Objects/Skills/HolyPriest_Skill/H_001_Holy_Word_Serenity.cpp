@@ -93,7 +93,8 @@ void H_001_Holy_Word_Serenity::Render()
 void H_001_Holy_Word_Serenity::UseSkill(CH_Base_ver2* chbase)
 {
 	if (isCooldown || chbase == nullptr ||
-		owner->GetStat().mp < requiredMp) return;
+		owner->GetStat().mp < requiredMp ||
+		!owner->GetWeapon()) return;
 
 	if (HolyPriest_in* c = dynamic_cast<HolyPriest_in*>(owner))
 	{

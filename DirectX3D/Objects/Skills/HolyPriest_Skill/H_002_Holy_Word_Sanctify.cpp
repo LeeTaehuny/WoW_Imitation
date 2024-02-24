@@ -143,7 +143,8 @@ void H_002_Holy_Word_Sanctify::Render()
 
 void H_002_Holy_Word_Sanctify::UseSkill()
 {
-	if (isCooldown || owner->GetStat().mp < requiredMp) return;
+	if (isCooldown || owner->GetStat().mp < requiredMp ||
+		!owner->GetWeapon()) return;
 
 	hitCollider->SetActive(true);
 	hitCollider->Pos() = owner->GlobalPos();

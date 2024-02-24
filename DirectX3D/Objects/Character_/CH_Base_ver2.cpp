@@ -113,6 +113,7 @@ void CH_Base_ver2::Update()
 			vector<MonsterBase*> cols2 = MONSTER->GetSkeleton();
 			vector<MonsterBase*> cols3 = MONSTER->GetSkeleton_Knight();
 			vector<MonsterBase*> cols4 = MONSTER->GetVAlkier();
+			MonsterBase* lich = MONSTER->GetBoss();
 
 			// ���� ��ȸ�ϸ� Ray �浹 ����
 			for (MonsterBase* monster : cols1)
@@ -153,6 +154,11 @@ void CH_Base_ver2::Update()
 					targetMonster = monster;
 					break;
 				}
+			}
+
+			if (lich->GetCollider()->IsRayCollision(ray, &contact))
+			{
+				targetMonster = lich;
 			}
 		}
 

@@ -92,7 +92,8 @@ void H_000_Basic_Atttack::Render()
 
 void H_000_Basic_Atttack::UseSkill(MonsterBase* monsterbase)
 {
-	if (isRun || isCooldown || monsterbase == nullptr) return;
+	if (isRun || isCooldown || monsterbase == nullptr ||
+		!owner->GetWeapon()) return;
 
 	if (HolyPriest_in* c = dynamic_cast<HolyPriest_in*>(owner))
 	{

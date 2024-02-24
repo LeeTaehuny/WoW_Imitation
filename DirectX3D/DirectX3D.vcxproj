@@ -142,6 +142,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Monster\Boss\Lich_006_Summon_IceSphere.h" />
+    <ClInclude Include="Scenes\GameScene\LichKingRaidScene.h" />
     <ClInclude Include="Objects\Monster\IceBall.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_005_Remorseless_Winter.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.h" />
@@ -368,6 +370,8 @@
     <ClInclude Include="Objects\Monster\VAlkier.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Monster\Boss\Lich_006_Summon_IceSphere.cpp" />
+    <ClCompile Include="Scenes\GameScene\LichKingRaidScene.cpp" />
     <ClCompile Include="Objects\Monster\IceBall.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_005_Remorseless_Winter.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.cpp" />

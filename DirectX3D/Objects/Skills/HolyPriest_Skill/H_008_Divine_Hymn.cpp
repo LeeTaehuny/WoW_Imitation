@@ -128,7 +128,7 @@ void H_008_Divine_Hymn::Render()
 
 void H_008_Divine_Hymn::UseSkill()
 {
-	if (isCooldown) return;
+	if (isCooldown || !owner->GetWeapon()) return;
 
 	if (!isRun)
 	{

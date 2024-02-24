@@ -38,6 +38,7 @@ MonsterManager::~MonsterManager()
 	delete skeleton_body;
 	delete skeletonKnight_body;
 	delete scarecrow_body;
+	delete lichKimg;
 
 	for (MonsterBase* skel : skeleton)
 		delete skel;
@@ -58,6 +59,8 @@ void MonsterManager::Update()
 	skeletonKnight_body->Update();
 	scarecrow_body->Update();
 	valkier_body->Update();
+
+	if (lichKimg) lichKimg->Update();
 
 	for (MonsterBase* skel : skeleton)
 	{
@@ -86,6 +89,7 @@ void MonsterManager::Render()
 	skeletonKnight_body->Render();
 	scarecrow_body->Render();
 	valkier_body->Render();
+	if (lichKimg) lichKimg->Render();
 
 	for (MonsterBase* skel : skeleton)
 		RENDER(skel);
@@ -111,6 +115,13 @@ void MonsterManager::PostRender()
 		skel->PostRender();
 	for (MonsterBase* skel : iceBall)
 		skel->PostRender();
+
+	if (lichKimg) lichKimg->PostRender();
+}
+
+void MonsterManager::GUIRender()
+{
+	
 }
 
 void MonsterManager::SetTarget(CH_Base_ver2* transform)
@@ -236,6 +247,12 @@ void MonsterManager::SpawnIceBall(Vector3 pos)
 	valkier.push_back(skel);
 	valkier[valkier.size() - 1]->Spawn(pos);
 }
+void MonsterManager::SpawnBoss(Vector3 pos)
+{
+	lichKimg = new Boss_LichKing();
+	lichKimg->Spawn(Vector3());
+	lichKimg->Update();
+}
 
 MonsterBase* MonsterManager::hitCollision(IN Collider* collider)
 {
@@ -309,6 +326,17 @@ MonsterBase* MonsterManager::hitCollision(IN Collider* collider)
 				imer = imerjer;
 				imsi = iceBall[i];
 			}
+		}
+	}
+	if (collider->IsCollision(lichKimg->GetCollider()))
+	{
+		Vector3 mol = lichKimg->GetTransform()->GlobalPos() - collider->GlobalPos();
+
+		float imerjer = mol.Length();
+		if (imer >= imerjer)
+		{
+			imer = imerjer;
+			imsi = lichKimg;
 		}
 	}
 

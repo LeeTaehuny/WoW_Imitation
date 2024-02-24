@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class Boss_LichKing : public ModelAnimator
+class Boss_LichKing : public MonsterBase
 {
     enum State
     {
@@ -12,27 +12,25 @@ class Boss_LichKing : public ModelAnimator
 
     struct Stat
     {
-        float Max_hp = 17400;
-        float cur_hp = Max_hp;
         float damage = 300.0f;
         float Armor = 100.0f;
-        float moveSpeed = 2.0f;
     };
 
 public:
 	Boss_LichKing();
 	~Boss_LichKing();
 
-    void Update();
+    virtual void Update() override;
+    virtual void Render() override;
+    virtual void PostRender() override;
     void PreRender();
-    void Render();
-    void PostRender();
     void GUIRender();
 
     Stat GetStat() { return Lich_Stat; }
     void SetState(State state);
 
-    void Hit(float damage, int targetNumber = 0);
+    virtual void Spawn(Vector3 pos) override;
+    virtual void Hit(float amount = 1) override;
 
     vector<CH_Base_ver2*> characterData;
 private: // 멤버 변수
@@ -50,9 +48,9 @@ private: // 멤버 변수
     void phaseTwo();
 
 private:
-    Collider* myCollider;
+    ModelAnimator* lichking;
+
     Collider* Frost_Collider;
-    Collider* atk_serch;
     State curState;
     int fom = 0;
 

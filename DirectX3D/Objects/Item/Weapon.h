@@ -40,7 +40,7 @@ private:
 private:
 	CH_Base_ver2* owner;
 	// 무기의 데미지를 저장하기 위한 변수
-	int damage;
+	int damage = 0;
 	// 플레이어의 공격력을 저장하기 위한 임시 변수
 	int playerDamage;
 

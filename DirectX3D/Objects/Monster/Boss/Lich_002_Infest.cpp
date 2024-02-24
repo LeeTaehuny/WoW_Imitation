@@ -6,7 +6,7 @@ Lich_002_Infest::Lich_002_Infest(Boss_LichKing* lich)
 	this->lich = lich;
 
 	hitCollider = new SphereCollider();
-	hitCollider->SetParent(this->lich);
+	hitCollider->SetParent(this->lich->GetTransform());
 	hitCollider->Scale().x *= 4000;
 	hitCollider->Scale().z *= 4000;
 	hitCollider->Scale().y *= 200;

@@ -68,6 +68,8 @@ VAlkier::VAlkier(Transform* transform, ModelAnimatorInstancing* instancing, UINT
 	maxHP = 500.0f;
 	curHP = maxHP;
 	Atk = 0.0f;
+
+	tong = new SphereCollider(53);
 }
 
 VAlkier::~VAlkier()
@@ -78,6 +80,7 @@ VAlkier::~VAlkier()
 	delete targetTransform;
 	delete attackBumwe;
 	delete attackTarget_serch;
+	delete tong;
 }
 
 void VAlkier::Update()
@@ -102,6 +105,7 @@ void VAlkier::Render()
 {
 	collider->Render();
 	attackRange->Render();
+	tong->Render();
 }
 
 void VAlkier::PostRender()
@@ -215,15 +219,25 @@ void VAlkier::Move()
 
 void VAlkier::targetAttack()
 {
-	velocity = (transform->GlobalPos() - Vector3()).GetNormalized();
+	tong->UpdateWorld();
+	if (tong->IsCollision(collider))
+	{
+		velocity = (transform->GlobalPos() - Vector3()).GetNormalized();
 
-	transform->Pos() += velocity * 2.5f * DELTA;
-	transform->Rot().y = atan2(velocity.x, velocity.z) + XM_PI;
+		transform->Pos() += velocity * 2.5f * DELTA;
+		transform->Pos().y = 3;
+		transform->Rot().y = atan2(velocity.x, velocity.z) + XM_PI;
 
-	Vector3 drive = transform->Pos();
-	drive.y -= 1.5f;
-	targetTransform->Pos() = drive;
-	targetTransform->UpdateWorld();
+		Vector3 drive = transform->Pos();
+		drive.y -= 1.5f;
+		targetTransform->Pos() = drive;
+		targetTransform->UpdateWorld();
+	}
+	else
+	{
+		transform->SetActive(false);
+		collider->SetActive(false);
+	}
 }
 
 void VAlkier::UpdateUI()

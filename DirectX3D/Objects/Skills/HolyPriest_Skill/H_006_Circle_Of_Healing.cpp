@@ -158,7 +158,8 @@ void H_006_Circle_Of_Healing::Render()
 void H_006_Circle_Of_Healing::UseSkill(CH_Base_ver2* chbase)
 {
 	if (isCooldown || chbase == nullptr ||
-		owner->GetStat().mp < requiredMp) return;
+		owner->GetStat().mp < requiredMp ||
+		!owner->GetWeapon()) return;
 
 	skillDamage = owner->GetStat().damage * 0.99f;
 	owner->GetStat().mp -= requiredMp;

@@ -39,5 +39,6 @@ private:
 
 private: // 공격을 위한 변수 모음
     bool TaxiMode = false;
+    Collider* tong;
 
 };

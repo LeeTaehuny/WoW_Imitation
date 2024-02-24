@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "Objects/Item/Weapon.h"
 
 // 성기사(보호)
 #include "Objects/Skills/ProtectionWarrior_Skill/P_001_Avengers_Shield.h"

@@ -25,7 +25,7 @@ void Lich_004_Summon_Shambling_Horror::Update()
 		if (JustOne == 0)
 		{
 			JustOne++;
-			Vector3 lichPos = lich->Pos();
+			Vector3 lichPos = lich->GetTransform()->Pos();
 			lichPos.x -= 5;
 			MONSTER->SpawnSkeletonKnight(lichPos);
 			life_skel = MONSTER->GetSkeleton_Knight()[MONSTER->GetSkeleton_Knight().size() - 1];

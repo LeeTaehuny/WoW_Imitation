@@ -1,5 +1,6 @@
 ﻿#include "Framework.h"
 #include "KimScene.h"
+
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
 #include "Objects/Inventory/Inventory.h"
@@ -18,15 +19,15 @@
 
 KimScene::KimScene()
 {
-	CH->PlayerSpawn(2);
-	CH->GetPlayerData()->EquipWeapon(new Weapon("hammer_1", WeaponType::Hammer));
+	CH->PlayerSpawn(5);
+	CH->GetPlayerData()->EquipWeapon(new Weapon("staff_1", WeaponType::Staff));
 	SKILL->Init(CH->GetPlayerData());
 	CH->GetPlayerData()->Pos() = Vector3(10);
 	CH->GetPlayerData()->GetStat().maxHp = 1000;
 	CH->GetPlayerData()->GetStat().hp = 1000;
 	CH->GetPlayerData()->Update();
 
-	CH->NonPlayerSpawn(2);
+	CH->NonPlayerSpawn(3);
 
 	MONSTER;
 	ARROW;
