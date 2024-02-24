@@ -23,6 +23,8 @@ public:
     void SpawnVAlkier(Vector3 pos);
     // 얼음구슬 스폰
     void SpawnIceBall(Vector3 pos);
+    // 리치왕 스폰
+    void SpawnLickKing(Vector3 pos);
 
     MonsterBase* hitCollision(IN Collider* collider);
 
@@ -35,6 +37,7 @@ public:
     vector<MonsterBase*> GetScarecrow() { return scarecrow; }
     vector<MonsterBase*> GetVAlkier() { return valkier; }
     vector<MonsterBase*> GetIceBall() { return valkier; }
+    MonsterBase* GetLichKing() { return LickKing; }
 
 public:
     // 몬스터들의 콜라이더 정보를 저장함
@@ -65,4 +68,6 @@ private:
 
     // 아이스볼 클래스
     vector<MonsterBase*> iceBall;
+
+    MonsterBase* LickKing;
 };

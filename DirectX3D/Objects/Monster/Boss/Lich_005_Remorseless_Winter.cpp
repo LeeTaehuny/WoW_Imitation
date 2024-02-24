@@ -31,7 +31,7 @@ void Lich_005_Remorseless_Winter::Update()
 
 		if (particle->IsPlay())
 		{
-			particle->SetPos(lich->Pos());
+			particle->SetPos(lich->GetTransform()->Pos());
 			particle->Update();
 		}
 		else
@@ -82,6 +82,6 @@ void Lich_005_Remorseless_Winter::UseSkill(CH_Base_ver2* chbase)
 	isRun = true;
 	animStart = 0;
 
-	hitCollider->Pos() = lich->Pos();
+	hitCollider->Pos() = lich->GetTransform()->Pos();
 	hitCollider->UpdateWorld();
 }

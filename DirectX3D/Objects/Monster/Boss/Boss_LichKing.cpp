@@ -1,27 +1,32 @@
 ﻿#include "Framework.h"
 #include "Boss_LichKing.h"
 
-Boss_LichKing::Boss_LichKing() : ModelAnimator("LichKing")
+Boss_LichKing::Boss_LichKing()
 {
-	ReadClip("Walking");
-	ReadClip("Attack_1");
-	ReadClip("Idle");
-	ReadClip("Hit");
-	ReadClip("Die");
-	ReadClip("Casting");
+	transform = new Transform();
 
-	Scale() *= 0.015f;
-	ModelAnimator::Update();
-	SetTag("LichKing");
+	lichking = new ModelAnimator("LichKing");
+	lichking->SetParent(transform);
+
+	lichking->ReadClip("Walking");
+	lichking->ReadClip("Attack_1");
+	lichking->ReadClip("Idle");
+	lichking->ReadClip("Hit");
+	lichking->ReadClip("Die");
+	lichking->ReadClip("Casting");
+
+	lichking->Scale() *= 0.015f;
+	lichking->Update();
+	lichking->SetTag("LichKing");
 
 	myCollider = new SphereCollider();
-	myCollider->SetParent(this);
+	myCollider->SetParent(transform);
 	myCollider->Scale() *= 150.5f;
 	myCollider->Pos().y += 100;
 	myCollider->UpdateWorld();
 	
 	atk_serch = new SphereCollider();
-	atk_serch->SetParent(this);
+	atk_serch->SetParent(transform);
 	atk_serch->Scale() *= 1200;
 	atk_serch->UpdateWorld();
 
@@ -37,10 +42,10 @@ Boss_LichKing::Boss_LichKing() : ModelAnimator("LichKing")
 	Frost_Collider->SetActive(false);
 
 	{
-		GetClip((int)ATTACK)->SetEvent(bind(&Boss_LichKing::End_ATK, this), 0.9f);
-		GetClip((int)HIT)->SetEvent(bind(&Boss_LichKing::End_HIT, this), 0.9f);
-		GetClip((int)DIE)->SetEvent(bind(&Boss_LichKing::End_DIE, this), 0.9f);
-		GetClip((int)CASTING)->SetEvent(bind(&Boss_LichKing::End_CAST, this), 0.9f);
+		lichking->GetClip((int)ATTACK)->SetEvent(bind(&Boss_LichKing::End_ATK, this), 0.9f);
+		lichking->GetClip((int)HIT)->SetEvent(bind(&Boss_LichKing::End_HIT, this), 0.9f);
+		lichking->GetClip((int)DIE)->SetEvent(bind(&Boss_LichKing::End_DIE, this), 0.9f);
+		lichking->GetClip((int)CASTING)->SetEvent(bind(&Boss_LichKing::End_CAST, this), 0.9f);
 	}
 
 	SetState(IDLE);
@@ -71,6 +76,7 @@ Boss_LichKing::~Boss_LichKing()
 	delete Frost_Collider;
 	delete atk_serch;
 	delete fieldzero;
+	delete lichking;
 
 	for (Lich_000_Base* lich : lich_SkillList)
 		delete lich;
@@ -78,7 +84,7 @@ Boss_LichKing::~Boss_LichKing()
 
 void Boss_LichKing::Update()
 {
-	if (!isActive) return;
+	if (!transform->Active()) return;
 
 	// 공격이나 스킬 사용후 잠깐의 휴식을 주기 위한 부분?
 	if (lasting)
@@ -86,9 +92,9 @@ void Boss_LichKing::Update()
 		lasting_time -= DELTA;
 		if (lasting_time >= 0) 
 		{
-			mainHand->SetWorld(GetTransformByNode(24));
+			mainHand->SetWorld(lichking->GetTransformByNode(24));
 			Frost->UpdateWorld();
-			ModelAnimator::Update();
+			lichking->Update();
 
 			for (int i = 0; i < lich_SkillList.size(); i++)
 			{
@@ -124,11 +130,11 @@ void Boss_LichKing::Update()
 	{
 		lich_SkillList[i]->Update();
 	}
-	mainHand->SetWorld(GetTransformByNode(24));
+	mainHand->SetWorld(lichking->GetTransformByNode(24));
 	Frost->UpdateWorld();
 	myCollider->UpdateWorld();
 	Frost_Collider->UpdateWorld();
-	ModelAnimator::Update();
+	lichking->Update();
 }
 
 void Boss_LichKing::PreRender()
@@ -138,13 +144,13 @@ void Boss_LichKing::PreRender()
 
 void Boss_LichKing::Render()
 {
-	if (!isActive) return;
+	if (!transform->Active()) return;
 
 	Frost->Render();
 	myCollider->Render();
 	Frost_Collider->Render();
 	atk_serch->Render();
-	ModelAnimator::Render();
+	lichking->Render();
 
 	float Yvalue = 300;
 	FOR(character_Damage_Data.size())
@@ -166,9 +172,9 @@ void Boss_LichKing::PostRender()
 
 void Boss_LichKing::GUIRender()
 {
-	if (ImGui::TreeNode((tag).c_str()))
+	if (ImGui::TreeNode((lichking->GetTag()).c_str()))
 	{
-		Transform::GUIRender();
+		transform->GUIRender();
 
 		string Mtag = "Lich_";
 		ImGui::Text((Mtag + "_HP : " + to_string(Lich_Stat.cur_hp)).c_str());
@@ -177,6 +183,14 @@ void Boss_LichKing::GUIRender()
 
 		ImGui::TreePop();
 	}
+}
+
+void Boss_LichKing::Spawn(Vector3 pos)
+{
+}
+
+void Boss_LichKing::Hit(float amount)
+{
 }
 
 void Boss_LichKing::SetState(State state)
@@ -192,7 +206,7 @@ void Boss_LichKing::SetState(State state)
 	}
 
 	curState = state;
-	PlayClip(state);
+	lichking->PlayClip(state);
 }
 
 void Boss_LichKing::Hit(float damage, int targetNumber)
@@ -220,10 +234,10 @@ void Boss_LichKing::Moving()
 	if (curState == ATTACK || curState == CASTING || curState == HIT || curState == DIE) return;
 	if (target == nullptr || first != 0) return;
 
-	Vector3 direction = (target->GlobalPos() - GlobalPos()).GetNormalized();
+	Vector3 direction = (target->GlobalPos() - transform->GlobalPos()).GetNormalized();
 
-	Rot().y = atan2(direction.x, direction.z) + XM_PI;
-	Pos() += direction * Lich_Stat.moveSpeed  * DELTA;
+	transform->Rot().y = atan2(direction.x, direction.z) + XM_PI;
+	transform->Pos() += direction * Lich_Stat.moveSpeed  * DELTA;
 	SetState(WALKING);
 }
 void Boss_LichKing::Attack()
@@ -272,7 +286,8 @@ void Boss_LichKing::End_HIT()
 }
 void Boss_LichKing::End_DIE()
 {
-	isActive = false;
+	transform->SetActive(false);
+	lichking->SetActive(false);
 }
 void Boss_LichKing::End_CAST()
 {
@@ -368,10 +383,10 @@ void Boss_LichKing::phaseTwo()
 
 	if (!fieldzero->IsCollision(myCollider))
 	{
-		Vector3 direction = (fieldzero->GlobalPos() - GlobalPos()).GetNormalized();
+		Vector3 direction = (fieldzero->GlobalPos() - transform->GlobalPos()).GetNormalized();
 
-		Rot().y = atan2(direction.x, direction.z) + XM_PI;
-		Pos() += direction * Lich_Stat.moveSpeed * DELTA;
+		transform->Rot().y = atan2(direction.x, direction.z) + XM_PI;
+		transform->Pos() += direction * Lich_Stat.moveSpeed * DELTA;
 		SetState(WALKING);
 	}
 	else

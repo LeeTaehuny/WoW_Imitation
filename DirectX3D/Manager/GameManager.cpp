@@ -31,6 +31,7 @@
 #include "Scenes/MAP/TestDungeonScene.h"
 ///////////////////////////////////////////
 #include "Scenes/GameScene/SelectScene.h"
+#include "Scenes/GameScene/LichKimgBossScene.h"
 
 #include "Scenes/MAP/TestExportRender.h"
 
@@ -41,11 +42,14 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("Grid", new GridScene());
     //SceneManager::Get()->Add("Grid");
 
-    //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
-    //SceneManager::Get()->Add("ModelExport");
+    //SceneManager::Get()->Register("ModelExport", new ModelExportScene());
+    //SceneManager::Get()->ChangeScene("ModelExport");
 
-    SceneManager::Get()->Register("KIM", new KimScene());
-    SceneManager::Get()->ChangeScene("KIM");
+    //SceneManager::Get()->Register("KIM", new KimScene());
+    //SceneManager::Get()->ChangeScene("KIM");
+
+    SceneManager::Get()->Register("Boss", new LichKimgBossScene());
+    SceneManager::Get()->ChangeScene("Boss");
 
     //SceneManager::Get()->Create("Cube", new CubeScene());
     //SceneManager::Get()->Create("Sphere", new SphereScene());

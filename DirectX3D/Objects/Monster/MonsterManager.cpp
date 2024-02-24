@@ -38,6 +38,7 @@ MonsterManager::~MonsterManager()
 	delete skeleton_body;
 	delete skeletonKnight_body;
 	delete scarecrow_body;
+	delete LickKing;
 
 	for (MonsterBase* skel : skeleton)
 		delete skel;
@@ -58,6 +59,7 @@ void MonsterManager::Update()
 	skeletonKnight_body->Update();
 	scarecrow_body->Update();
 	valkier_body->Update();
+	if (LickKing) LickKing->Update();
 
 	for (MonsterBase* skel : skeleton)
 	{
@@ -86,6 +88,7 @@ void MonsterManager::Render()
 	skeletonKnight_body->Render();
 	scarecrow_body->Render();
 	valkier_body->Render();
+	if (LickKing) LickKing->Render();
 
 	for (MonsterBase* skel : skeleton)
 		RENDER(skel);
@@ -111,6 +114,8 @@ void MonsterManager::PostRender()
 		skel->PostRender();
 	for (MonsterBase* skel : iceBall)
 		skel->PostRender();
+
+	if (LickKing) LickKing->PostRender();
 }
 
 void MonsterManager::SetTarget(CH_Base_ver2* transform)
@@ -235,6 +240,10 @@ void MonsterManager::SpawnIceBall(Vector3 pos)
 	//monsterCollider.push_back(skel->collider);
 	valkier.push_back(skel);
 	valkier[valkier.size() - 1]->Spawn(pos);
+}
+void MonsterManager::SpawnLickKing(Vector3 pos)
+{
+	LickKing = new Boss_LichKing();
 }
 
 MonsterBase* MonsterManager::hitCollision(IN Collider* collider)
