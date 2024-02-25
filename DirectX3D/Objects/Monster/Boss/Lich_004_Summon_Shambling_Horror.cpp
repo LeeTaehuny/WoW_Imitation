@@ -4,7 +4,7 @@
 Lich_004_Summon_Shambling_Horror::Lich_004_Summon_Shambling_Horror(Boss_LichKing* lich)
 {
 	this->lich = lich;
-	MAX_delay = 120;
+	MAX_delay = 20;
 	coolTime = MAX_delay;
 
 	Max_animStart = 0.45f;
@@ -42,6 +42,9 @@ void Lich_004_Summon_Shambling_Horror::Render()
 void Lich_004_Summon_Shambling_Horror::UseSkill(CH_Base_ver2* chbase)
 {
 	if (isCooldown) return;
+
+	MAX_delay = 90;
+	coolTime = MAX_delay;
 
 	isRun = true;
 	isCooldown = true;

@@ -10,6 +10,12 @@ Lich_002_Infest::Lich_002_Infest(Boss_LichKing* lich)
 	hitCollider->Scale().x *= 4000;
 	hitCollider->Scale().z *= 4000;
 	hitCollider->Scale().y *= 200;
+
+	MAX_delay = 30;
+	coolTime = MAX_delay;
+	Max_animStart = 0.45f;
+	isCooldown = true;
+	isRun = false;
 }
 
 Lich_002_Infest::~Lich_002_Infest()

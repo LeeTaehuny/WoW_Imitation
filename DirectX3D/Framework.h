@@ -230,7 +230,8 @@ using namespace GameMath;
 #include "Objects/Monster/Boss/Lich_004_Summon_Shambling_Horror.h"
 #include "Objects/Monster/Boss/Lich_005_Remorseless_Winter.h"
 #include "Objects/Monster/Boss/Lick_006_Summon_IceSphere.h"
-#include "Objects/Monster/Boss/Lich_007_Pain_and_Suffering.h"
+#include "Objects/Monster/Boss/Lich_007_Defile.h"
+#include "Objects/Monster/Boss/Lick_008_Summon_Dark_Valkyr.h"
 
 // 스킬 배이스
 #include "Objects/Skills/Base/SkillBase.h"

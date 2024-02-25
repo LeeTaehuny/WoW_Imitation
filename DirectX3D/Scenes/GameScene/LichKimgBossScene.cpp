@@ -10,7 +10,7 @@
 
 LichKimgBossScene::LichKimgBossScene()
 {
-	map = new BossMap();
+	
 }
 
 LichKimgBossScene::~LichKimgBossScene()
@@ -25,7 +25,13 @@ void LichKimgBossScene::Start()
 	CH->GetPlayerData()->EquipWeapon(new Weapon("staff_1", WeaponType::Staff));
 	SKILL->Init(CH->GetPlayerData());
 
+
+	map = new BossMap();
 	MONSTER->SpawnLickKing(Vector3());
+	if (Boss_LichKing* c = dynamic_cast<Boss_LichKing*>(MONSTER->GetLichKing()))
+	{
+		c->SetBossMap(map);
+	}
 }
 
 void LichKimgBossScene::Update()

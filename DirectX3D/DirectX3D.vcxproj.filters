@@ -406,7 +406,10 @@
     <ClInclude Include="Objects\Monster\Boss\Lick_006_Summon_IceSphere.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Monster\Boss\Lich_007_Pain_and_Suffering.h">
+    <ClInclude Include="Objects\Monster\Boss\Lich_007_Defile.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Monster\Boss\Lick_008_Summon_Dark_Valkyr.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -768,7 +771,10 @@
     <ClCompile Include="Objects\Monster\Boss\Lick_006_Summon_IceSphere.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Monster\Boss\Lich_007_Pain_and_Suffering.cpp">
+    <ClCompile Include="Objects\Monster\Boss\Lich_007_Defile.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Monster\Boss\Lick_008_Summon_Dark_Valkyr.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

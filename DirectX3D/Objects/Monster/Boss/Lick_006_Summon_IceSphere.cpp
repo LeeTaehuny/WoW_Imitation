@@ -5,11 +5,11 @@ Lick_006_Summon_IceSphere::Lick_006_Summon_IceSphere(Boss_LichKing* lich)
 {
 	this->lich = lich;
 
-	MAX_delay = 120;
+	MAX_delay = 20;
 	coolTime = MAX_delay;
 
 	Max_animStart = 0.45f;
-	isCooldown = false;
+	isCooldown = true;
 }
 
 Lick_006_Summon_IceSphere::~Lick_006_Summon_IceSphere()
@@ -38,10 +38,6 @@ void Lick_006_Summon_IceSphere::Update()
 
 void Lick_006_Summon_IceSphere::Render()
 {
-	if (isRun)
-	{
-		if (animStart <= Max_animStart) return;
-	}
 }
 
 void Lick_006_Summon_IceSphere::UseSkill(CH_Base_ver2* chbase)

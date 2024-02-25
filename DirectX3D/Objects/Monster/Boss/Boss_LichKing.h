@@ -36,6 +36,8 @@ public:
     void Hit(float damage, int targetNumber = 0);
 
     vector<CH_Base_ver2*> characterData;
+
+    void SetBossMap(class BossMap* map) { this->map = map; }
 private: // 멤버 변수
     void Moving();
     void Attack();
@@ -48,7 +50,10 @@ private: // 멤버 변수
     void targetActiveSerch();
 
     void phaseOne();
+    void phaseSait();
     void phaseTwo();
+    void phaseSait2();
+    void phaseThree();
 
 private:
     ModelAnimator* lichking;
@@ -66,6 +71,11 @@ private:
     UINT phase = 1;
     float vidul;
 
+    float Max_atk_del = 1.5f;
+    float atk_del = Max_atk_del;
+
+    class BossMap* map;
+
     Stat Lich_Stat;
 
     bool lasting = false;
@@ -82,4 +92,12 @@ private: // 두 번째 페이즈에서 사용하기 위한 변수들
     int first = 0;
 
     Collider* fieldzero;
+
+private: // 세 번째 페이즈에서 사용하기 위한 변수들
+    int thr_first = -1;
+
+private: // 마지막 페이즈에서 사용하기 위한 변수들
+    float sumon1 = 3;
+    float skill1 = 7;
+
 };

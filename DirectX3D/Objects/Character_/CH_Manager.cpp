@@ -232,7 +232,7 @@ void CH_Manager::PlayerSpawn(int value)
 		return;
 	}
 
-	//CAM->SetTarget(character[0]);
+	CAM->SetTarget(character[0]);
 	MONSTER->SetTarget(character[0]);
 }
 void CH_Manager::NonPlayerSpawn(int value)

@@ -23,6 +23,6 @@ private:
 	bool skillend = false;
 
 	// 60초만 작동하도록 하게하기 위한 변수
-	float Max_runTime = 60.0f;
+	float Max_runTime = 10.0f;
 	float runTime = Max_runTime;
 };

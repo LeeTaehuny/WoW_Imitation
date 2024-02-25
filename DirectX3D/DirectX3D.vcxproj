@@ -142,7 +142,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Objects\Monster\Boss\Lich_007_Pain_and_Suffering.h" />
+    <ClInclude Include="Objects\Monster\Boss\Lick_008_Summon_Dark_Valkyr.h" />
+    <ClInclude Include="Objects\Monster\Boss\Lich_007_Defile.h" />
     <ClInclude Include="Objects\Monster\Boss\Lick_006_Summon_IceSphere.h" />
     <ClInclude Include="Scenes\GameScene\LichKimgBossScene.h" />
     <ClInclude Include="Objects\Monster\IceBall.h" />
@@ -371,7 +372,8 @@
     <ClInclude Include="Objects\Monster\VAlkier.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Objects\Monster\Boss\Lich_007_Pain_and_Suffering.cpp" />
+    <ClCompile Include="Objects\Monster\Boss\Lick_008_Summon_Dark_Valkyr.cpp" />
+    <ClCompile Include="Objects\Monster\Boss\Lich_007_Defile.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lick_006_Summon_IceSphere.cpp" />
     <ClCompile Include="Scenes\GameScene\LichKimgBossScene.cpp" />
     <ClCompile Include="Objects\Monster\IceBall.cpp" />
