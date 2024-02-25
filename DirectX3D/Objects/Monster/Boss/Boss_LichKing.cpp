@@ -19,15 +19,15 @@ Boss_LichKing::Boss_LichKing()
 	lichking->Update();
 	lichking->SetTag("LichKing");
 
-	myCollider = new SphereCollider();
-	myCollider->SetParent(transform);
-	myCollider->Scale() *= 150.5f;
-	myCollider->Pos().y += 100;
-	myCollider->UpdateWorld();
+	collider = new CapsuleCollider();
+	collider->SetParent(transform);
+	//collider->Scale() *= 150.5f;
+	collider->Pos().y += 1;
+	collider->UpdateWorld();
 	
 	atk_serch = new SphereCollider();
 	atk_serch->SetParent(transform);
-	atk_serch->Scale() *= 1200;
+	atk_serch->Scale() *= 100;
 	atk_serch->UpdateWorld();
 
 	mainHand = new Transform();
@@ -61,22 +61,35 @@ Boss_LichKing::Boss_LichKing()
 	lich_SkillList.push_back(new Lich_003_Summon_Drudge_Ghouls(this));
 	lich_SkillList.push_back(new Lich_004_Summon_Shambling_Horror(this));
 	lich_SkillList.push_back(new Lich_005_Remorseless_Winter(this));
+	lich_SkillList.push_back(new Lick_006_Summon_IceSphere(this));
 
 	target = CH->GetPlayerData();
 
 	fieldzero = new SphereCollider();
 	fieldzero->Scale() *= 0.001f;
 	fieldzero->UpdateWorld();
+
+	moveSpeed = 2;
+	maxHP = 2000.0f;
+	curHP = maxHP;
+
+	hitText.resize(20);
 }
 Boss_LichKing::~Boss_LichKing()
 {
 	delete mainHand;
 	delete Frost;
-	delete myCollider;
+	delete collider;
 	delete Frost_Collider;
 	delete atk_serch;
 	delete fieldzero;
 	delete lichking;
+
+	delete attackRange;
+	delete root;
+	delete targetTransform;
+	delete attackBumwe;
+	delete attackTarget_serch;
 
 	for (Lich_000_Base* lich : lich_SkillList)
 		delete lich;
@@ -85,6 +98,11 @@ Boss_LichKing::~Boss_LichKing()
 void Boss_LichKing::Update()
 {
 	if (!transform->Active()) return;
+	if (curState == DIE)
+	{
+		lichking->Update();
+		return;
+	}
 
 	// 공격이나 스킬 사용후 잠깐의 휴식을 주기 위한 부분?
 	if (lasting)
@@ -109,18 +127,18 @@ void Boss_LichKing::Update()
 		}
 	}
 	// 체력 비율을 내기 위한 변수
-	float vidul = Lich_Stat.cur_hp / Lich_Stat.Max_hp;
-	if (vidul >= 0.7f)
+	vidul = curHP / maxHP;
+	if (phase == 1)
 	{
 		phaseOne();
 	}
-	else if (vidul < 0.7f)
+	else if (phase == 2)
 	{
 		phaseTwo();
 	}
 
 	if (KEY_DOWN('C'))
-		Lich_Stat.cur_hp -= 1000;
+		curHP -= 1000;
 
 	Moving();
 	Attack();
@@ -132,8 +150,9 @@ void Boss_LichKing::Update()
 	}
 	mainHand->SetWorld(lichking->GetTransformByNode(24));
 	Frost->UpdateWorld();
-	myCollider->UpdateWorld();
+	collider->UpdateWorld();
 	Frost_Collider->UpdateWorld();
+	transform->UpdateWorld();
 	lichking->Update();
 }
 
@@ -147,7 +166,7 @@ void Boss_LichKing::Render()
 	if (!transform->Active()) return;
 
 	Frost->Render();
-	myCollider->Render();
+	collider->Render();
 	Frost_Collider->Render();
 	atk_serch->Render();
 	lichking->Render();
@@ -167,7 +186,26 @@ void Boss_LichKing::Render()
 
 void Boss_LichKing::PostRender()
 {
-	
+	if (!transform->Active()) return;
+
+	for (HitDesc& hit : hitText)
+	{
+		// 출력 Off면 출력 X
+		if (!hit.isPrint) continue;
+
+		// 지속시간 감소 및 출력 여부 체크
+		hit.duration -= DELTA;
+
+		if (hit.duration <= 0.0f)
+		{
+			hit.isPrint = false;
+		}
+
+		// 몬스터의 위치 구하기
+		Vector3 screenPos = CAM->WorldToScreen(collider->GlobalPos());
+		// 출력 (남은 시간에 비례해서 점점 올라가게 설정하기)
+		Font::Get()->RenderText(hit.damage, { screenPos.x + 15.0f , screenPos.y - (50.0f * hit.duration) + 55.0f });
+	}
 }
 
 void Boss_LichKing::GUIRender()
@@ -177,9 +215,9 @@ void Boss_LichKing::GUIRender()
 		transform->GUIRender();
 
 		string Mtag = "Lich_";
-		ImGui::Text((Mtag + "_HP : " + to_string(Lich_Stat.cur_hp)).c_str());
-		ImGui::Text((Mtag + "_HP_ratio : " + to_string(Lich_Stat.cur_hp / Lich_Stat.Max_hp)).c_str());
-		ImGui::Text((Mtag + "_MP : " + to_string(Lich_Stat.damage)).c_str());
+		ImGui::Text((Mtag + "_HP : " + to_string(curHP)).c_str());
+		ImGui::Text((Mtag + "_HP_ratio : " + to_string(curHP / maxHP)).c_str());
+		ImGui::Text((Mtag + "_MP : " + to_string(Atk)).c_str());
 
 		ImGui::TreePop();
 	}
@@ -187,10 +225,44 @@ void Boss_LichKing::GUIRender()
 
 void Boss_LichKing::Spawn(Vector3 pos)
 {
+	transform->SetActive(true);
+	collider->SetActive(true);
+	SetState(IDLE);
+	curHP = maxHP;
+	transform->Pos() = pos;
 }
 
 void Boss_LichKing::Hit(float amount)
 {
+	float damage_armor = amount - Lich_Stat.Armor;
+
+	if (damage_armor > 0)
+	{
+		curHP -= damage_armor;
+	}
+
+	if (curHP <= 0)
+	{
+		SetState(DIE);
+	}
+	else
+	{
+		SetState(IDLE);
+	}
+
+	for (int i = 0; i < hitText.size(); i++)
+	{
+		// 출력 off 상태이면
+		if (!hitText[i].isPrint)
+		{
+			// 출력 설정하기
+			hitText[i].isPrint = true;
+			hitText[i].duration = 1.0f;
+			hitText[i].damage = to_string((int)amount);
+
+			break;
+		}
+	}
 }
 
 void Boss_LichKing::SetState(State state)
@@ -209,26 +281,6 @@ void Boss_LichKing::SetState(State state)
 	lichking->PlayClip(state);
 }
 
-void Boss_LichKing::Hit(float damage, int targetNumber)
-{
-	float damage_armor = damage - Lich_Stat.Armor;
-	
-	if (damage_armor > 0)
-	{
-		Lich_Stat.Max_hp -= damage_armor;
-		character_Damage_Data[targetNumber] = damage_armor;
-	}	
-
-	if (Lich_Stat.cur_hp <= 0)
-	{
-		SetState(DIE);
-	}
-	else
-	{
-		SetState(IDLE);
-	}
-}
-
 void Boss_LichKing::Moving()
 {
 	if (curState == ATTACK || curState == CASTING || curState == HIT || curState == DIE) return;
@@ -237,14 +289,14 @@ void Boss_LichKing::Moving()
 	Vector3 direction = (target->GlobalPos() - transform->GlobalPos()).GetNormalized();
 
 	transform->Rot().y = atan2(direction.x, direction.z) + XM_PI;
-	transform->Pos() += direction * Lich_Stat.moveSpeed  * DELTA;
+	transform->Pos() += direction * moveSpeed  * DELTA;
 	SetState(WALKING);
 }
 void Boss_LichKing::Attack()
 {
 	if (curState == HIT || curState == DIE) return;
 
-	if (myCollider->IsCollision(target->GetCollider()))
+	if (collider->IsCollision(target->GetCollider()))
 	{
 		Frost_Collider->SetActive(true);
 		SetState(ATTACK);
@@ -352,6 +404,12 @@ void Boss_LichKing::targetActiveSerch()
 
 void Boss_LichKing::phaseOne()
 {
+	if (vidul < 0.7f)
+	{
+		phase = 2;
+		return;
+	}
+
 	//if (!lich_SkillList[0]->GetCoolTime())
 	//{
 	//	SetState(CASTING);
@@ -381,12 +439,12 @@ void Boss_LichKing::phaseTwo()
 		fieldzero->Scale() *= 0.01f;
 	}
 
-	if (!fieldzero->IsCollision(myCollider))
+	if (!fieldzero->IsCollision(collider))
 	{
 		Vector3 direction = (fieldzero->GlobalPos() - transform->GlobalPos()).GetNormalized();
 
 		transform->Rot().y = atan2(direction.x, direction.z) + XM_PI;
-		transform->Pos() += direction * Lich_Stat.moveSpeed * DELTA;
+		transform->Pos() += direction * moveSpeed * DELTA;
 		SetState(WALKING);
 	}
 	else
@@ -395,6 +453,10 @@ void Boss_LichKing::phaseTwo()
 		{
 			SetState(IDLE);
 			lich_SkillList[4]->UseSkill();
+		}
+		if (!lich_SkillList[5]->GetCoolTime() && lich_SkillList[4]->GetisRun())
+		{
+			lich_SkillList[5]->UseSkill();
 		}
 	}
 }

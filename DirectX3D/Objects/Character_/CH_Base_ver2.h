@@ -42,7 +42,7 @@ public:
 	// NPC�� ������Ʈ
 	virtual void AIUpdate() = 0;
 	// �ٸ� �ݶ��̴��� �浹���� ��
-	virtual void OnHit(float damage) = 0;
+	virtual void OnHit(float damage, bool motion = false) = 0;
 
 	bool LearnSkill(class SkillBase* skill);
 
@@ -93,6 +93,8 @@ public:
 
 	// 플레이어 UI
 	class PlayerUI_Bar* GetPlayerUI() { return playerUI; }
+
+	CreatureType GetcreatureType() { return creatureType; }
 
 // Member Variable
 protected:

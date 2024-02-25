@@ -244,6 +244,7 @@ void MonsterManager::SpawnIceBall(Vector3 pos)
 void MonsterManager::SpawnLickKing(Vector3 pos)
 {
 	LickKing = new Boss_LichKing();
+	LickKing->Spawn(pos);
 }
 
 MonsterBase* MonsterManager::hitCollision(IN Collider* collider)
@@ -318,6 +319,17 @@ MonsterBase* MonsterManager::hitCollision(IN Collider* collider)
 				imer = imerjer;
 				imsi = iceBall[i];
 			}
+		}
+	}
+	if (collider->IsCollision(LickKing->GetCollider()))
+	{
+		Vector3 mol = LickKing->GetTransform()->GlobalPos() - collider->GlobalPos();
+
+		float imerjer = mol.Length();
+		if (imer >= imerjer)
+		{
+			imer = imerjer;
+			imsi = LickKing;
 		}
 	}
 

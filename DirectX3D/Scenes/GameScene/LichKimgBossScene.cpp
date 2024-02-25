@@ -21,12 +21,20 @@ LichKimgBossScene::~LichKimgBossScene()
 void LichKimgBossScene::Start()
 {
 	CH->PlayerSpawn(5);
-	CH->GetPlayerData()->EquipWeapon(new Weapon("hammer_1", WeaponType::Hammer));
+	//CH->GetPlayerData()->EquipWeapon(new Weapon("hammer_1", WeaponType::Hammer));
+	CH->GetPlayerData()->EquipWeapon(new Weapon("staff_1", WeaponType::Staff));
 	SKILL->Init(CH->GetPlayerData());
+
+	MONSTER->SpawnLickKing(Vector3());
 }
 
 void LichKimgBossScene::Update()
 {
+	if (KEY_DOWN(VK_LEFT))
+	{
+		MONSTER->SpawnSkeleton(Vector3());
+		//MONSTER->SpawnIceBall(Vector3());
+	}
 	if (KEY_DOWN(VK_RIGHT))
 	{
 		MONSTER->SpawnSkeletonKnight(Vector3());
@@ -34,6 +42,7 @@ void LichKimgBossScene::Update()
 
 	map->Update();
 
+	SKILL->Update();
 	CH->Update();
 	MONSTER->Update();
 }
@@ -53,6 +62,7 @@ void LichKimgBossScene::Render()
 
 void LichKimgBossScene::PostRender()
 {
+	SKILL->PostRender();
 	CH->PostRender();
 	MONSTER->PostRender();
 }

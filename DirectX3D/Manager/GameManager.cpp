@@ -50,6 +50,9 @@ GameManager::GameManager()
 
     SceneManager::Get()->Register("Boss", new LichKimgBossScene());
     SceneManager::Get()->ChangeScene("Boss");
+    
+    //SceneManager::Get()->Register("ParticleConfig", new ParticleConfigScene());
+    //SceneManager::Get()->ChangeScene("ParticleConfig");
 
     //SceneManager::Get()->Create("Cube", new CubeScene());
     //SceneManager::Get()->Create("Sphere", new SphereScene());
@@ -69,8 +72,7 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("Billboard", new BillboardScene());
     //SceneManager::Get()->Create("Particle", new ParticleScene());
 
-    //SceneManager::Get()->Create("ParticleConfig", new ParticleConfigScene());
-    //SceneManager::Get()->Add("ParticleConfig");
+    
 
     // * 작업중. //SceneManager::Get()->Create("MirrorScene", new MirrorScene());
     //SceneManager::Get()->Create("WaterScene", new WaterScene());

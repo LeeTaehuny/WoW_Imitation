@@ -25,4 +25,9 @@ private: // 공격을 위한 변수 모음
     Sphere* iceball;
 
     bool TaxiMode = false;
+
+    ParticleSystem* particle;
+    float Max_tickTime = 0.5f;
+    float tickTime = Max_tickTime;
+    Collider* nomarATK;
 };

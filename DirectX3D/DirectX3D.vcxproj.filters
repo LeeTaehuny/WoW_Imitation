@@ -403,6 +403,12 @@
     <ClInclude Include="Scenes\GameScene\LichKimgBossScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Monster\Boss\Lick_006_Summon_IceSphere.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Monster\Boss\Lich_007_Pain_and_Suffering.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX3D.cpp">
@@ -757,6 +763,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\GameScene\LichKimgBossScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Monster\Boss\Lick_006_Summon_IceSphere.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Monster\Boss\Lich_007_Pain_and_Suffering.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

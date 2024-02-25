@@ -197,13 +197,14 @@ void ProtectionWarrior_in::AIUpdate()
 	range->UpdateWorld();
 }
 
-void ProtectionWarrior_in::OnHit(float damage)
+void ProtectionWarrior_in::OnHit(float damage, bool motion)
 {
 	stat.hp -= damage;
 
 	if (stat.hp > 0)
 	{
-		SetState(HIT);
+		if (!motion)
+			SetState(HIT);
 	}
 	else if (stat.hp <= 0)
 	{

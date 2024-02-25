@@ -30,7 +30,7 @@ private:
 	// NPC용 업데이트
 	virtual void AIUpdate() override;
 	// 충돌 판정 함수
-	virtual void OnHit(float damage) override;
+	virtual void OnHit(float damage, bool motion = false) override;
 
 	virtual void AI_animation_Moving() override;
 

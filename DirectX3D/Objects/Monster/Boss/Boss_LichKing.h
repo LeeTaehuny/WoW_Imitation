@@ -12,8 +12,6 @@ class Boss_LichKing : public MonsterBase
 
     struct Stat
     {
-        float Max_hp = 17400;
-        float cur_hp = Max_hp;
         float damage = 300.0f;
         float Armor = 100.0f;
         float moveSpeed = 2.0f;
@@ -55,7 +53,6 @@ private: // 멤버 변수
 private:
     ModelAnimator* lichking;
 
-    Collider* myCollider;
     Collider* Frost_Collider;
     Collider* atk_serch;
     State curState;
@@ -65,6 +62,9 @@ private:
     Model* Frost;
 
 private:
+
+    UINT phase = 1;
+    float vidul;
 
     Stat Lich_Stat;
 

@@ -4,7 +4,7 @@
 Lich_004_Summon_Shambling_Horror::Lich_004_Summon_Shambling_Horror(Boss_LichKing* lich)
 {
 	this->lich = lich;
-	MAX_delay = 5;
+	MAX_delay = 120;
 	coolTime = MAX_delay;
 
 	Max_animStart = 0.45f;
@@ -28,16 +28,10 @@ void Lich_004_Summon_Shambling_Horror::Update()
 			Vector3 lichPos = lich->GetTransform()->Pos();
 			lichPos.x -= 5;
 			MONSTER->SpawnSkeletonKnight(lichPos);
-			life_skel = MONSTER->GetSkeleton_Knight()[MONSTER->GetSkeleton_Knight().size() - 1];
-		}
-
-		if (!life_skel->GetTransform()->Active())
-		{
-			isRun = false;
 		}
 	}
 
-	if (isCooldown && !isRun)
+	if (isCooldown)
 		Lich_000_Base::Cooldown();
 }
 
