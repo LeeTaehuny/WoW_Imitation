@@ -97,9 +97,6 @@ public:
 	// 플레이어 UI
 	class PlayerUI_Bar* GetPlayerUI() { return playerUI; }
 
-	// 터레인
-	void SetTerrain(class Terrain* t) { terrain = t; }
-
 // Member Variable
 protected:
 	CreatureType creatureType;
@@ -107,8 +104,6 @@ protected:
 
 	// �÷��̾� ������ �浹 �ݶ��̴�
 	Collider* myCollider;
-
-	class Terrain* terrain;
 
 	class Inventory* inventory;
 	class StatusUI* statusUI;

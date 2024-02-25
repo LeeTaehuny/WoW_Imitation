@@ -98,7 +98,7 @@ void Inventory::UIRender()
 			{
 				string tempString;
 				tempString = to_string(p->GetQuantity());
-				Font::Get()->RenderText(tempString, { invSlot[idx]->GlobalPos().x + 15.0f, invSlot[idx]->GlobalPos().y - 5.0f }, { 3.0f, 3.0f });
+				Font::Get()->RenderText(tempString, { invSlot[idx]->GlobalPos().x + 15.0f, invSlot[idx]->GlobalPos().y - 5.0f });
 			}
 		}
 
