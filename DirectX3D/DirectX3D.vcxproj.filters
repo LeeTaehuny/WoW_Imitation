@@ -400,10 +400,7 @@
     <ClInclude Include="Objects\Monster\MonsterManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Character_\MarksmanshipHunter.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\MAP\TestExportRender.h">
+    <ClInclude Include="Scenes\GameScene\DungeonScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -759,7 +756,7 @@
     <ClCompile Include="Scenes\MAP\TestDungeonScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\MAP\TestExportRender.cpp">
+    <ClCompile Include="Scenes\GameScene\DungeonScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -836,10 +833,6 @@
     <ClCompile Include="Objects\Character_\CH_Base_ver2.cpp" />
     <ClCompile Include="Objects\Skills\Base\ActiveSkill.cpp" />
     <ClCompile Include="Objects\Skills\FireBall.cpp" />
-    <ClCompile Include="Objects\Character_\ArmsWarrior.cpp" />
-    <ClCompile Include="Objects\Character_\FireMage.cpp" />
-    <ClCompile Include="Objects\Character_\HolyPriest.cpp" />
-    <ClCompile Include="Objects\Character_\ProtectionWarrior.cpp" />
     <ClCompile Include="Objects\Monster\MonsterManager.cpp" />
     <ClCompile Include="Objects\Inventory\Slot.cpp" />
     <ClCompile Include="Objects\UI\Button.cpp" />
@@ -1078,10 +1071,6 @@
     <ClInclude Include="Objects\Character_\CH_Base_ver2.h" />
     <ClInclude Include="Objects\Skills\Base\ActiveSkill.h" />
     <ClInclude Include="Objects\Skills\FireBall.h" />
-    <ClInclude Include="Objects\Character_\ArmsWarrior.h" />
-    <ClInclude Include="Objects\Character_\FireMage.h" />
-    <ClInclude Include="Objects\Character_\HolyPriest.h" />
-    <ClInclude Include="Objects\Character_\ProtectionWarrior.h" />
     <ClInclude Include="Objects\Monster\MonsterBase.h" />
     <ClInclude Include="Objects\Monster\MonsterManager.h" />
     <ClInclude Include="Objects\Monster\Skeleton.h" />

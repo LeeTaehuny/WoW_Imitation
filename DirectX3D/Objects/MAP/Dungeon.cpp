@@ -289,6 +289,10 @@ Dungeon::Dungeon() //: Transform()
 	Portal->Pos().y -= 7.0;
 	Portal->Scale() *= 6;
 	boxColliders_potal.resize(2);
+	PotalCollider = new SphereCollider(3);
+	PotalCollider->SetParent(Portal);
+	PotalCollider->Pos().y += 2.5f;
+
 	for (int i = 0; i < boxColliders_potal.size(); ++i) 
 	{
 		boxColliders_potal[i] = new BoxCollider(Vector3(3.5, 5, 6.5));
@@ -646,6 +650,24 @@ Dungeon::Dungeon() //: Transform()
 	Grownd_Circle->UpdateWorld();
 	for (int i = 0; i < InGates.size()-2; ++i) InGates[i]->UpdateWorld();
 
+	Tree.resize(2);
+	Tree[0] = new Model("Tree");
+	Tree[0]->Rot().y += 1.575f;
+	Tree[0]->Pos().y -= 75;
+	Tree[0]->Pos().x += 100;
+	Tree[0]->Pos().z += 200;
+	Tree[0]->Scale() *= 2;
+	Tree[0]->SetParent(Gates[0]);
+	Tree[1] = new Model("Tree2");
+	Tree[0]->Scale() *= 3;
+	Tree[1]->Rot().y -= 1.575f;
+	Tree[1]->Pos().y -= 75;
+	Tree[1]->Pos().x += 100;
+	Tree[1]->Pos().z -= 200;
+	Tree[1]->Scale() *= 3;
+	Tree[1]->SetParent(Gates[0]);
+	for (int i = 0; i < Tree.size(); ++i) Tree[i]->UpdateWorld();
+
 
 	boxCollider_G->UpdateWorld();
 	boxCollider_GL->UpdateWorld();
@@ -672,6 +694,8 @@ Dungeon::Dungeon() //: Transform()
 	boxColliders_WD->UpdateWorld();
 	for (int i = 0; i < boxColliders_potal.size(); ++i) boxColliders_potal[i]->UpdateWorld();
 	terrain->UpdateWorld();
+
+	PotalCollider->UpdateWorld();
 }
 
 Dungeon::~Dungeon()
@@ -834,6 +858,7 @@ void Dungeon::Render()
 	Walls_BL->Render();
 	Walls_BR->Render();
 	Portal->Render();
+	//PotalCollider->Render();
 	Wall_deco->Render();
 	Chandelier->Render();
 	if (!isClear)
@@ -850,6 +875,8 @@ void Dungeon::Render()
 	}
 	Grownd_Circle->Render();
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->Render();
+
+	for (int i = 0; i < Tree.size(); ++i) Tree[i]->Render();
 
 	//boxCollider_G->Render();
 	//boxCollider_GL->Render();
@@ -915,37 +942,100 @@ bool Dungeon::IsCollision(Collider* c)
 	
 	if (boxCollider_WGL->PushCollision(c)) return true;
 	if (boxCollider_WGR->PushCollision(c)) return true;
-	if (boxCollider_DL->PushCollision(c)) return true;
-	if (boxCollider_DR->PushCollision(c)) return true;
-	if (boxCollider_PR->PushCollision(c)) return true;
-	if (boxCollider_PL->PushCollision(c)) return true;
+	if (boxCollider_DL->PushCollision(c)) 
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
+	if (boxCollider_DR->PushCollision(c)) 
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
+	if (boxCollider_PR->PushCollision(c)) 
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
+	if (boxCollider_PL->PushCollision(c)) 
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
 
 	for (int i = 0; i < Walls_L.size(); ++i)
 	{
-		if (boxColliders_WL[i]->PushCollision(c)) return true;
+		if (boxColliders_WL[i]->PushCollision(c)) 
+		{
+			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+			return true;
+		} 
 	}
 	if (boxCollider_WLF->PushCollision(c)) return true;
 	for (int i = 0; i < Walls_R.size(); ++i)
 	{
-		if (boxColliders_WR[i]->PushCollision(c)) return true;
+		if (boxColliders_WR[i]->PushCollision(c)) 
+		{
+			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+			return true;
+		}
 	}
-	if (boxCollider_WRF->PushCollision(c)) return true;
+	if (boxCollider_WRF->PushCollision(c))
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
 	for (int i = 0; i < Walls_B.size(); ++i)
 	{
-		if (boxColliders_WB[i]->PushCollision(c)) return true;
+		if (boxColliders_WB[i]->PushCollision(c)) 
+		{
+			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+			return true;
+		}
 	}
-	if (boxColliders_WBL->PushCollision(c)) return true;
-	if (boxColliders_WBR->PushCollision(c)) return true;
+	if (boxColliders_WBL->PushCollision(c)) 
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
+	if (boxColliders_WBR->PushCollision(c)) 
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
 	for (int i = 0; i < Pillar.size(); ++i) 
 	{
-		if (boxColliders_P[i]->PushCollision(c)) return true;
+		if (boxColliders_P[i]->PushCollision(c)) 
+		{
+			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+			return true;
+		}
 	}
-	if (boxColliders_WD->PushCollision(c)) return true;
+	if (boxColliders_WD->PushCollision(c)) 
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
 	for (int i = 0; i < boxColliders_potal.size(); ++i) 
 	{
-		if (boxColliders_potal[i]->PushCollision(c)) return true;
+		if (boxColliders_potal[i]->PushCollision(c)) 
+		{
+			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+			return true;
+		}
 	}
-	if (boxColliders_B->PushCollision(c)) return true;
+	if (boxColliders_B->PushCollision(c)) 
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
+
+	return false;
+}
+
+bool Dungeon::PotalCollision(CapsuleCollider* C) 
+{
+	if (PotalCollider->IsCapsuleCollision(C)) return true;
 
 	return false;
 }
