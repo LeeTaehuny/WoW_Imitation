@@ -70,4 +70,10 @@ private:
     vector<MonsterBase*> iceBall;
 
     MonsterBase* LickKing;
+
+private:
+    UINT skeleton_Count = 0;
+    UINT skeleton_Night_Count = 0;
+    UINT scarecrow_Count = 0;
+    UINT Valkier_Count = 0;
 };

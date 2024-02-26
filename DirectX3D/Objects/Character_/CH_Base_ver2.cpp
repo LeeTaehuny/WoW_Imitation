@@ -217,7 +217,7 @@ void CH_Base_ver2::UIRender()
 	if (inventory != nullptr) inventory->UIRender();
 	if (quickSlot != nullptr) quickSlot->UIRender();
 	if (playerUI != nullptr) playerUI->PostRender();
-	if (targetMonster != nullptr && monsterUI != nullptr) monsterUI->PostRender();
+	if (targetMonster != nullptr && monsterUI != nullptr && targetMonster->GetMonsterType() == MonsterType::MON) monsterUI->PostRender();
 }
 
 bool CH_Base_ver2::LearnSkill(SkillBase* skill)

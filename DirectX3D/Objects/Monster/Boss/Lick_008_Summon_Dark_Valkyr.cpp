@@ -23,9 +23,7 @@ void Lick_008_Summon_Dark_Valkyr::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
-		Vector3 lichPos = lich->GetTransform()->Pos();
-		//lichPos.y += 5;
-		MONSTER->SpawnVAlkier(lichPos);
+		MONSTER->SpawnVAlkier(lich->GetTransform()->Pos());
 
 		isRun = false;
 		return;

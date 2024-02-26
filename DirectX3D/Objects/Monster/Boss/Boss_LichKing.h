@@ -67,6 +67,9 @@ private:
     Model* Frost;
 
 private:
+    Quad* frame;
+    Quad* face;
+    ProgressBar* hp_bar;
 
     UINT phase = 1;
     float vidul;
@@ -94,10 +97,14 @@ private: // 두 번째 페이즈에서 사용하기 위한 변수들
     Collider* fieldzero;
 
 private: // 세 번째 페이즈에서 사용하기 위한 변수들
-    int thr_first = -1;
+    int thr_first = 0;
 
 private: // 마지막 페이즈에서 사용하기 위한 변수들
+    int for_first = 0;
+
     float sumon1 = 3;
     float skill1 = 7;
 
+private:
+    int fiv_first = 0;
 };

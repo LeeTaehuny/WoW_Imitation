@@ -3,6 +3,8 @@
 
 Boss_LichKing::Boss_LichKing()
 {
+	type = LICH;
+
 	transform = new Transform();
 
 	lichking = new ModelAnimator("LichKing");
@@ -74,12 +76,31 @@ Boss_LichKing::Boss_LichKing()
 	fieldzero->Scale() *= 0.001f;
 	fieldzero->UpdateWorld();
 
+	lasting = true;
 	moveSpeed = 2;
 	maxHP = 3300.0f;
 	curHP = maxHP;
 	Lich_Stat.damage = 300.0f;
 
 	hitText.resize(20);
+
+	frame = new Quad(L"Textures/UI/lich_hp_bar.png");
+	frame->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.9f);
+	frame->Scale() *= 1.25f;
+	frame->UpdateWorld();
+
+	face = new Quad(L"Textures/UI/lichpace.png");
+	face->SetParent(frame);
+	face->Scale() *= 0.1f;
+	face->Pos().x -= 152;
+	face->UpdateWorld();
+
+	hp_bar = new ProgressBar(L"Textures/UI/hp_bar.png", L"Textures/UI/hp_bar_BG.png");
+	hp_bar->SetParent(frame);
+	hp_bar->Pos().x += 5;
+	hp_bar->Pos().y -= 1;
+	hp_bar->Scale().x *= 0.9f;
+	hp_bar->UpdateWorld();
 }
 Boss_LichKing::~Boss_LichKing()
 {
@@ -90,6 +111,9 @@ Boss_LichKing::~Boss_LichKing()
 	delete atk_serch;
 	delete fieldzero;
 	delete lichking;
+	delete frame;
+	delete hp_bar;
+	delete face;
 
 	delete attackRange;
 	delete root;
@@ -103,6 +127,10 @@ Boss_LichKing::~Boss_LichKing()
 
 void Boss_LichKing::Update()
 {
+	vidul = curHP / maxHP;
+	hp_bar->SetAmount(vidul);
+	hp_bar->UpdateWorld();
+
 	if (!transform->Active()) return;
 	if (curState == DIE)
 	{
@@ -133,8 +161,7 @@ void Boss_LichKing::Update()
 		}
 	}
 	// 체력 비율을 내기 위한 변수
-	vidul = curHP / maxHP;
-
+	
 	switch (phase)
 	{
 	case 1:
@@ -209,6 +236,15 @@ void Boss_LichKing::Render()
 void Boss_LichKing::PostRender()
 {
 	if (!transform->Active()) return;
+
+	hp_bar->Render();
+	face->Render();
+	frame->Render();
+
+	int imvola = vidul * 100;
+	if (imvola < 0) imvola = 0;
+	string rito = to_string(imvola);
+	Font::Get()->RenderText(rito, { 645, 652 });
 
 	for (HitDesc& hit : hitText)
 	{
@@ -346,26 +382,24 @@ void Boss_LichKing::End_ATK()
 	SetState(IDLE);
 	Frost_Collider->SetActive(false);
 
-	atk_serch->UpdateWorld();
-	float atk_leng = FLT_MAX;
-	CH_Base_ver2* lom = nullptr;
-	for (int i = 0; i < characterData.size(); ++i)
 	{
-		if (atk_serch->IsCollision(characterData[i]->GetCollider()))
+		atk_serch->UpdateWorld();
+		float atk_leng = FLT_MAX;
+		CH_Base_ver2* lom = CH->GetPlayerData();
+		for (int i = 0; i < characterData.size(); ++i)
 		{
-			Vector3 leng = characterData[i]->GlobalPos() - atk_serch->GlobalPos();
-			float min = leng.Length();
-
-			if (atk_leng >= min)
+			if (atk_serch->IsCollision(characterData[i]->GetCollider()))
 			{
-				atk_leng = min;
-				lom = characterData[i];
+				Vector3 leng = characterData[i]->GlobalPos() - atk_serch->GlobalPos();
+				float min = leng.Length();
+
+				if (atk_leng >= min)
+				{
+					atk_leng = min;
+					lom = characterData[i];
+				}
 			}
 		}
-	}
-
-	if (lom != nullptr)
-	{
 		target = lom;
 		lasting = true;
 	}
@@ -384,43 +418,41 @@ void Boss_LichKing::End_CAST()
 	SetState(IDLE);
 	Frost_Collider->SetActive(false);
 
-	atk_serch->UpdateWorld();
-	float atk_leng = FLT_MAX;
-	CH_Base_ver2* lom = nullptr;
-	for (int i = 0; i < characterData.size(); ++i)
 	{
-		if (atk_serch->IsCollision(characterData[i]->GetCollider()))
+		atk_serch->UpdateWorld();
+		float atk_leng = FLT_MAX;
+		CH_Base_ver2* lom = CH->GetPlayerData();
+		for (int i = 0; i < characterData.size(); ++i)
 		{
-			Vector3 leng = characterData[i]->GlobalPos() - atk_serch->GlobalPos();
-			float min = leng.Length();
-
-			if (atk_leng >= min)
+			if (atk_serch->IsCollision(characterData[i]->GetCollider()))
 			{
-				atk_leng = min;
-				lom = characterData[i];
+				Vector3 leng = characterData[i]->GlobalPos() - atk_serch->GlobalPos();
+				float min = leng.Length();
+
+				if (atk_leng >= min)
+				{
+					atk_leng = min;
+					lom = characterData[i];
+				}
 			}
 		}
-	}
-
-	if (lom != nullptr)
-	{
 		target = lom;
 		lasting = true;
-	}
+	}	
 
-	if (thr_first == 0)
+	if (phase == 3 && thr_first == 1)
 	{
 		thr_first++;
 		map->SetPhase(1);
 	}
-	else if (thr_first == 2)
+	if (phase == 4 && for_first == 1)
 	{
-		thr_first++;
+		for_first++;
 		map->SetPhase(2);
 	}
-	else if (thr_first == 4)
+	if (phase == 5 && fiv_first == 1)
 	{
-		thr_first++;
+		fiv_first++;
 		map->SetPhase(3);
 	}
 }
@@ -432,7 +464,7 @@ void Boss_LichKing::targetActiveSerch()
 		atk_serch->UpdateWorld();
 		float atk_leng = FLT_MAX;
 		vector<CH_Base_ver2*> characterData = CH->GetCharcterData();
-		CH_Base_ver2* lom = nullptr;
+		CH_Base_ver2* lom = CH->GetPlayerData();
 		for (int i = 0; i < characterData.size(); ++i)
 		{
 			if (!characterData[i]->GetCollider()->Active()) continue;
@@ -448,11 +480,8 @@ void Boss_LichKing::targetActiveSerch()
 				}
 			}
 		}
-		if (lom != nullptr)
-		{
-			target = lom;
-			lasting = true;
-		}
+		target = lom;
+		lasting = true;
 	}
 }
 
@@ -505,7 +534,7 @@ void Boss_LichKing::phaseSait()
 	{
 		if (Lich_005_Remorseless_Winter* c = dynamic_cast<Lich_005_Remorseless_Winter*>(lich_SkillList[4]))
 		{
-			if (c->GetSkillEnd())
+			if (c->GetSkillEnd() && phase == 2)
 			{
 				phase++;
 				c->ChangeSkillEnd();
@@ -527,12 +556,11 @@ void Boss_LichKing::phaseSait()
 }
 void Boss_LichKing::phaseTwo()
 {
-	if (thr_first == -1)
+	if (thr_first <= 1)
 	{
-		thr_first = 0;
+		thr_first = 1;
 		SetState(CASTING);
 	}
-	if (thr_first != 1) return;
 
 	if (vidul < 0.4f)
 	{
@@ -554,12 +582,13 @@ void Boss_LichKing::phaseTwo()
 }
 void Boss_LichKing::phaseSait2()
 {
-	if (thr_first == 1)
+	if (for_first <= 1)
 	{
-		thr_first = 2;
+		for_first = 1;
 		SetState(CASTING);
 	}
 
+	if (curState == CASTING) return;
 	if (!fieldzero->IsCollision(collider))
 	{
 		Vector3 direction = (fieldzero->GlobalPos() - transform->GlobalPos()).GetNormalized();
@@ -594,14 +623,14 @@ void Boss_LichKing::phaseSait2()
 }
 void Boss_LichKing::phaseThree()
 {
-	if (thr_first == 3)
+	if (fiv_first <= 1)
 	{
-		thr_first = 4;
+		fiv_first = 1;
 		SetState(CASTING);
 	}
 
 	sumon1 -= DELTA;
-	if (sumon1 >= 0) 
+	if (sumon1 <= 0) 
 	{
 		sumon1 = 0;
 		return;
@@ -613,7 +642,7 @@ void Boss_LichKing::phaseThree()
 	}
 
 	skill1 -= DELTA;
-	if (skill1 >= 0) 
+	if (skill1 <= 0) 
 	{
 		skill1 = 0;
 		return;

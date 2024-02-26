@@ -19,10 +19,10 @@ CH_Manager::CH_Manager()
 	//InstancingDataHoly();
 	//InstancingDataMarksmanship();
 	//InstancingDataProtection();
+	ARROW;
 
 	partyUI = new PartyUI_Bar();
 	partyUI->Pos() = { CENTER_X + 480.0f, CENTER_Y , 0 };
-
 }
 CH_Manager::~CH_Manager()
 {
@@ -51,10 +51,11 @@ void CH_Manager::Update()
 			if (KEY_DOWN('Z'))
 				ch->SetAttackOrder();
 
+			ARROW->Update();
 			ch->Update();
 		}
 	}
-	
+
 	partyUI->Update();
 }
 
@@ -71,7 +72,13 @@ void CH_Manager::Render()
 	RENDER(holypriest);
 
 	for (CH_Base_ver2* ch : character)
-		if (ch != nullptr) ch->Render();
+	{
+		if (ch != nullptr)
+		{
+			ARROW->Render();
+			ch->Render();
+		}
+	}
 }
 
 void CH_Manager::PostRender()
@@ -311,7 +318,7 @@ void CH_Manager::NonPlayerSpawn(int value)
 
 CH_Base_ver2* CH_Manager::SelectHealCharacter(IN CH_Base_ver2* collider)
 {
-	
+
 
 	return nullptr;
 }

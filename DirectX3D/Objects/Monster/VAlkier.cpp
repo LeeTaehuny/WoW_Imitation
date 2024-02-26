@@ -45,7 +45,7 @@ VAlkier::VAlkier(Transform* transform, ModelAnimatorInstancing* instancing, UINT
 		attackTarget_serch->UpdateWorld();
 		float atk_leng = FLT_MAX;
 		vector<CH_Base_ver2*> characterData = CH->GetCharcterData();
-		CH_Base_ver2* lom = nullptr;
+		CH_Base_ver2* lom = target[0];
 		for (int i = 0; i < characterData.size(); ++i)
 		{
 			if (attackTarget_serch->IsCollision(characterData[i]->GetCollider()))
@@ -60,10 +60,7 @@ VAlkier::VAlkier(Transform* transform, ModelAnimatorInstancing* instancing, UINT
 				}
 			}
 		}
-		if (lom != nullptr)
-		{
-			targetTransform = lom;
-		}
+		targetTransform = lom;
 	}
 	hitText.resize(20);
 
@@ -87,6 +84,12 @@ VAlkier::~VAlkier()
 void VAlkier::Update()
 {
 	if (!transform->Active()) return;
+	if (curHP <= 0)
+	{
+		transform->SetActive(false);
+		collider->SetActive(false);
+		return;
+	}
 
 	if (!TaxiMode)
 		Move();

@@ -20,11 +20,10 @@ LichKimgBossScene::~LichKimgBossScene()
 
 void LichKimgBossScene::Start()
 {
-	CH->PlayerSpawn(5);
+	CH->PlayerSpawn(4);
 	//CH->GetPlayerData()->EquipWeapon(new Weapon("hammer_1", WeaponType::Hammer));
 	CH->GetPlayerData()->EquipWeapon(new Weapon("staff_1", WeaponType::Staff));
 	SKILL->Init(CH->GetPlayerData());
-
 
 	map = new BossMap();
 	MONSTER->SpawnLickKing(Vector3());
