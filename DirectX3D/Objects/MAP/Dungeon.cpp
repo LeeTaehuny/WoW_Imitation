@@ -10,8 +10,6 @@ Dungeon::Dungeon() //: Transform()
 	terrain->Pos().x = 200.0f;
 	terrain->Pos().z = -658.0f;
 	
-	
-
 	skybox = new SkyBox(L"Textures/Landscape/Space.dds");
 	skybox->UpdateWorld();
 	//TestSky = new Model("SkyBox_D");
@@ -667,6 +665,14 @@ Dungeon::Dungeon() //: Transform()
 	Tree[1]->Scale() *= 3;
 	Tree[1]->SetParent(Gates[0]);
 	for (int i = 0; i < Tree.size(); ++i) Tree[i]->UpdateWorld();
+	boxColliders_Tree.resize(2);
+	boxColliders_Tree[0] = new BoxCollider(Vector3(3.75, 7.5, 3));
+	boxColliders_Tree[0]->SetParent(Tree[0]);
+	boxColliders_Tree[0]->Pos().y += 3.75;
+	boxColliders_Tree[0]->Pos().z += 0.25;
+	boxColliders_Tree[1] = new BoxCollider(Vector3(5, 10, 5));
+	boxColliders_Tree[1]->SetParent(Tree[1]);
+	boxColliders_Tree[1]->Pos().y += 5;
 
 
 	boxCollider_G->UpdateWorld();
@@ -694,6 +700,8 @@ Dungeon::Dungeon() //: Transform()
 	boxColliders_WD->UpdateWorld();
 	for (int i = 0; i < boxColliders_potal.size(); ++i) boxColliders_potal[i]->UpdateWorld();
 	terrain->UpdateWorld();
+
+	for (int i = 0; i < boxColliders_Tree.size(); ++i) boxColliders_Tree[i]->UpdateWorld();
 
 	PotalCollider->UpdateWorld();
 }
@@ -758,41 +766,43 @@ Dungeon::~Dungeon()
 	delete boxColliders_WBR;
 	for (int i = 0; i < boxColliders_P.size(); ++i) delete boxColliders_P[i];
 	delete boxColliders_B;
+	for (int i = 0; i < boxColliders_Tree.size(); ++i) delete boxColliders_Tree[i];
+	delete PotalCollider;
 
 	delete TestPos;
 }
 
 void Dungeon::Update()
 {
-	TestPos->UpdateWorld();
+	//TestPos->UpdateWorld();
 	//terrain->UpdateWorld();
-	if(!KEY_PRESS(VK_RBUTTON))
-	{
-		//if (KEY_PRESS('W'))TestPos->Pos().x += 50 * DELTA;
-		//if (KEY_PRESS('S'))TestPos->Pos().x -= 50 * DELTA;
-		//if (KEY_PRESS('D'))TestPos->Pos().z -= 50 * DELTA;
-		//if (KEY_PRESS('A'))TestPos->Pos().z += 50 * DELTA;
-		//
-		//if (KEY_PRESS(VK_LEFT)) TestPos->Pos().z += 10 * DELTA;
-		//if (KEY_PRESS(VK_RIGHT)) TestPos->Pos().z -= 10 * DELTA;
-		//if (KEY_PRESS(VK_UP)) TestPos->Pos().x += 10 * DELTA;
-		//if (KEY_PRESS(VK_DOWN)) TestPos->Pos().x -= 10 * DELTA;
-		//
-		//if (KEY_DOWN('1')) TestPos->Pos().z += 50;
-		//if (KEY_DOWN('3')) TestPos->Pos().z -= 50;
-		//if (KEY_DOWN('2')) TestPos->Pos().x += 50;
-		//if (KEY_DOWN('4')) TestPos->Pos().x -= 50;
-		//
-		//if (KEY_DOWN('N')) n += 1;
-
-
-		if (KEY_DOWN('W'))terrain->Pos().x += 5000 * DELTA;
-		if (KEY_DOWN('S'))terrain->Pos().x -= 5000 * DELTA;
-		if (KEY_DOWN('D'))terrain->Pos().z -= 5000 * DELTA;
-		if (KEY_DOWN('A'))terrain->Pos().z += 5000 * DELTA;
-		if (KEY_PRESS('Q'))terrain->Rot().y += 10 * DELTA;
-		if (KEY_PRESS('E'))terrain->Rot().y -= 10 * DELTA;
-	}
+	//if(!KEY_PRESS(VK_RBUTTON))
+	//{
+	//	//if (KEY_PRESS('W'))TestPos->Pos().x += 50 * DELTA;
+	//	//if (KEY_PRESS('S'))TestPos->Pos().x -= 50 * DELTA;
+	//	//if (KEY_PRESS('D'))TestPos->Pos().z -= 50 * DELTA;
+	//	//if (KEY_PRESS('A'))TestPos->Pos().z += 50 * DELTA;
+	//	//
+	//	//if (KEY_PRESS(VK_LEFT)) TestPos->Pos().z += 10 * DELTA;
+	//	//if (KEY_PRESS(VK_RIGHT)) TestPos->Pos().z -= 10 * DELTA;
+	//	//if (KEY_PRESS(VK_UP)) TestPos->Pos().x += 10 * DELTA;
+	//	//if (KEY_PRESS(VK_DOWN)) TestPos->Pos().x -= 10 * DELTA;
+	//	//
+	//	//if (KEY_DOWN('1')) TestPos->Pos().z += 50;
+	//	//if (KEY_DOWN('3')) TestPos->Pos().z -= 50;
+	//	//if (KEY_DOWN('2')) TestPos->Pos().x += 50;
+	//	//if (KEY_DOWN('4')) TestPos->Pos().x -= 50;
+	//	//
+	//	//if (KEY_DOWN('N')) n += 1;
+	//
+	//
+	//	if (KEY_DOWN('W'))terrain->Pos().x += 5000 * DELTA;
+	//	if (KEY_DOWN('S'))terrain->Pos().x -= 5000 * DELTA;
+	//	if (KEY_DOWN('D'))terrain->Pos().z -= 5000 * DELTA;
+	//	if (KEY_DOWN('A'))terrain->Pos().z += 5000 * DELTA;
+	//	if (KEY_PRESS('Q'))terrain->Rot().y += 10 * DELTA;
+	//	if (KEY_PRESS('E'))terrain->Rot().y -= 10 * DELTA;
+	//}
 	//TestPos->Pos() = SpawnPoint_P;
 
 
@@ -824,7 +834,7 @@ void Dungeon::Render()
 {
 	skybox->Render();
 	terrain->Render();
-	TestPos->Render();
+	//TestPos->Render();
 
 	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->Render();
 	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->Render();
@@ -878,6 +888,7 @@ void Dungeon::Render()
 
 	for (int i = 0; i < Tree.size(); ++i) Tree[i]->Render();
 
+	//for (int i = 0; i < boxColliders_Tree.size(); ++i) boxColliders_Tree[i]->Render();
 	//boxCollider_G->Render();
 	//boxCollider_GL->Render();
 	//boxCollider_GR->Render();
@@ -1029,13 +1040,21 @@ bool Dungeon::IsCollision(Collider* c)
 		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 		return true;
 	}
+	for (int i = 0; i < boxColliders_Tree.size(); ++i) 
+	{
+		if (boxColliders_Tree[i]->PushCollision(c)) 
+		{
+			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+			return true;
+		}
+	}
 
 	return false;
 }
 
-bool Dungeon::PotalCollision(CapsuleCollider* C) 
+bool Dungeon::PotalCollision(Collider* C)
 {
-	if (PotalCollider->IsCapsuleCollision(C)) return true;
+	if (PotalCollider->IsCapsuleCollision((CapsuleCollider*) C)) return true;
 
 	return false;
 }

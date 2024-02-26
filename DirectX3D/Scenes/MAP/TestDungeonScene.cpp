@@ -37,18 +37,24 @@ TestDungeonScene::TestDungeonScene()
 
 
 
-	//TestMonsterSpawnPos_A.resize(11);
-	//for (int i = 0; i < TestMonsterSpawnPos_A.size(); ++i)
-	//{
-	//	TestMonsterSpawnPos_A = dungeon->SpawnMonsters_A();
-	//	MONSTER->SpawnSkeleton(TestMonsterSpawnPos_A[i]);
-	//}
-	//TestMonsterSpawnPos_B.resize(10);
-	//for (int i = 0; i < TestMonsterSpawnPos_B.size(); ++i) 
-	//{
-	//	TestMonsterSpawnPos_B = dungeon->SpawnMonsters_B();
-	//	MONSTER->SpawnSkeletonKnight(TestMonsterSpawnPos_B[i]);
-	//}
+	TestMonsterSpawnPos_A.resize(11);
+	for (int i = 0; i < TestMonsterSpawnPos_A.size(); ++i)
+	{
+		TestMonsterSpawnPos_A[i] = new Model("ProtectionWarrior");
+		TestMonsterSpawnPos_A[i]->Rot().y += 1.575f;
+		vector<Vector3> spawnPoints = dungeon->SpawnMonsters_A();
+		TestMonsterSpawnPos_A[i]->Pos() = spawnPoints[i];
+		//MONSTER->SpawnSkeleton(TestMonsterSpawnPos_A[i]);
+	}
+	TestMonsterSpawnPos_B.resize(10);
+	for (int i = 0; i < TestMonsterSpawnPos_B.size(); ++i) 
+	{
+		TestMonsterSpawnPos_B[i] = new Model("ProtectionWarrior");
+		TestMonsterSpawnPos_B[i]->Rot().y += 1.575f;
+		vector<Vector3> spawnPoints = dungeon->SpawnMonsters_B();
+		TestMonsterSpawnPos_B[i]->Pos() = spawnPoints[i];
+		//MONSTER->SpawnSkeletonKnight(TestMonsterSpawnPos_B[i]);
+	}
 	
 
 
@@ -62,7 +68,7 @@ TestDungeonScene::TestDungeonScene()
 	//	vector<Vector3> spawnPoints = dungeon->SpawnMonsters_A();
 	//	if (i < spawnPoints.size())
 	//	{
-	//		//TestMonsterSpawnPos_A[i]->Pos() = spawnPoints[i];
+	//		TestMonsterSpawnPos_A[i]->Pos() = spawnPoints[i];
 	//		
 	//	}
 	//	else
@@ -73,7 +79,7 @@ TestDungeonScene::TestDungeonScene()
 
 	//TestMonsterSpawnPos_B.resize(10);
 	//for (int i = 0; i < TestMonsterSpawnPos_B.size(); ++i) TestMonsterSpawnPos_B[i] = new SphereCollider(2);
-	////for (int i = 0; i < TestMonsterSpawnPos_B.size(); ++i) TestMonsterSpawnPos_B[i] = new Model("ProtectionWarrior");
+	//for (int i = 0; i < TestMonsterSpawnPos_B.size(); ++i) TestMonsterSpawnPos_B[i] = new Model("ProtectionWarrior");
 	//for (int i = 0; i < TestMonsterSpawnPos_B.size(); ++i)
 	//{
 	//	TestMonsterSpawnPos_B[i]->Rot().y += 1.575f;
@@ -87,9 +93,9 @@ TestDungeonScene::TestDungeonScene()
 	//		//좌표 개수가 모델 개수보다 적을 경우
 	//	}
 	//}
-	
-	//for (int i = 0; i < TestMonsterSpawnPos_A.size(); ++i) TestMonsterSpawnPos_A[i]->UpdateWorld();
-	//for (int i = 0; i < TestMonsterSpawnPos_B.size(); ++i) TestMonsterSpawnPos_B[i]->UpdateWorld();
+	//
+	for (int i = 0; i < TestMonsterSpawnPos_A.size(); ++i) TestMonsterSpawnPos_A[i]->UpdateWorld();
+	for (int i = 0; i < TestMonsterSpawnPos_B.size(); ++i) TestMonsterSpawnPos_B[i]->UpdateWorld();
 
 
 }
@@ -128,6 +134,7 @@ void TestDungeonScene::Update()
 	//} 
 	//if (player->Pos().y > 0) player->Pos().y = 0;
 	if (dungeon->IsCollision(player->GetCollider()));
+	if (dungeon->PotalCollision(player->GetCollider()));
 
 	//CAM->SetTarget(dungeon);
 	////CAM->TargetOptionLoad("Follow");
@@ -145,8 +152,8 @@ void TestDungeonScene::Render()
 	//for (int i = 0; i < TestMonsterSpawnPos_B.size(); ++i) MONSTER->Render();
 	//MONSTER->Render();
 
-	//for (int i = 0; i < TestMonsterSpawnPos_A.size(); ++i) TestMonsterSpawnPos_A[i]->Render();
-	//for (int i = 0; i < TestMonsterSpawnPos_B.size(); ++i) TestMonsterSpawnPos_B[i]->Render();
+	for (int i = 0; i < TestMonsterSpawnPos_A.size(); ++i) TestMonsterSpawnPos_A[i]->Render();
+	for (int i = 0; i < TestMonsterSpawnPos_B.size(); ++i) TestMonsterSpawnPos_B[i]->Render();
 }
 
 void TestDungeonScene::PreRender()
