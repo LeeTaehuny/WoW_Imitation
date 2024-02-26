@@ -123,6 +123,33 @@ void M_010_Wailing_Arrow::Update()
 							monster[i]->Hit(skillDamage);
 						}
 					}
+					monster = MONSTER->GetVAlkier();
+					for (int i = 0; i < monster.size(); ++i)
+					{
+						if (monster[i] == monsterTarget) continue;
+
+						if (hitCollider->IsCollision(monster[i]->GetCollider()))
+						{
+							monster[i]->Hit(skillDamage);
+						}
+					}
+					monster = MONSTER->GetIceBall();
+					for (int i = 0; i < monster.size(); ++i)
+					{
+						if (monster[i] == monsterTarget) continue;
+
+						if (hitCollider->IsCollision(monster[i]->GetCollider()))
+						{
+							monster[i]->Hit(skillDamage);
+						}
+					}
+					if (monsterTarget != MONSTER->GetLichKing())
+					{
+						if (hitCollider->IsCollision(MONSTER->GetLichKing()->GetCollider()))
+						{
+							MONSTER->GetLichKing()->Hit(skillDamage);
+						}
+					}					
 				}
 			}
 

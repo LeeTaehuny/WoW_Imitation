@@ -11,7 +11,7 @@ VAlkier::VAlkier(Transform* transform, ModelAnimatorInstancing* instancing, UINT
 
 	root = new Transform();
 
-	collider = new CapsuleCollider(10, 10);
+	collider = new CapsuleCollider(100, 100);
 	collider->SetParent(this->transform);
 	collider->Pos() = { 0.0f, 50.0f, 0.0f };
 	attackRange = new SphereCollider(5);

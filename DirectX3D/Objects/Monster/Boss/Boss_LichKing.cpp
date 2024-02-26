@@ -442,16 +442,25 @@ void Boss_LichKing::End_CAST()
 
 	if (phase == 3 && thr_first == 1)
 	{
+		lasting = false;
+		lasting_time = Max_lasting_time;
+
 		thr_first++;
 		map->SetPhase(1);
 	}
 	if (phase == 4 && for_first == 1)
 	{
+		lasting = false;
+		lasting_time = Max_lasting_time;
+
 		for_first++;
 		map->SetPhase(2);
 	}
 	if (phase == 5 && fiv_first == 1)
 	{
+		lasting = false;
+		lasting_time = Max_lasting_time;
+
 		fiv_first++;
 		map->SetPhase(3);
 	}
@@ -527,7 +536,7 @@ void Boss_LichKing::phaseSait()
 		Vector3 direction = (fieldzero->GlobalPos() - transform->GlobalPos()).GetNormalized();
 
 		transform->Rot().y = atan2(direction.x, direction.z) + XM_PI;
-		transform->Pos() += direction * moveSpeed * DELTA;
+		transform->Pos() += direction * (moveSpeed * 5) * DELTA;
 		SetState(WALKING);
 	}
 	else
@@ -561,6 +570,7 @@ void Boss_LichKing::phaseTwo()
 		thr_first = 1;
 		SetState(CASTING);
 	}
+	if (thr_first != 2) return;
 
 	if (vidul < 0.4f)
 	{
@@ -582,23 +592,24 @@ void Boss_LichKing::phaseTwo()
 }
 void Boss_LichKing::phaseSait2()
 {
-	if (for_first <= 1)
-	{
-		for_first = 1;
-		SetState(CASTING);
-	}
-
 	if (curState == CASTING) return;
 	if (!fieldzero->IsCollision(collider))
 	{
 		Vector3 direction = (fieldzero->GlobalPos() - transform->GlobalPos()).GetNormalized();
 
 		transform->Rot().y = atan2(direction.x, direction.z) + XM_PI;
-		transform->Pos() += direction * moveSpeed * DELTA;
+		transform->Pos() += direction * (moveSpeed * 5) * DELTA;
 		SetState(WALKING);
 	}
 	else
 	{
+		if (for_first <= 1)
+		{
+			for_first = 1;
+			SetState(CASTING);
+		}
+		if (for_first != 2) return;
+
 		if (Lich_005_Remorseless_Winter* c = dynamic_cast<Lich_005_Remorseless_Winter*>(lich_SkillList[4]))
 		{
 			if (c->GetSkillEnd())
@@ -628,6 +639,7 @@ void Boss_LichKing::phaseThree()
 		fiv_first = 1;
 		SetState(CASTING);
 	}
+	if (fiv_first != 2) return;
 
 	sumon1 -= DELTA;
 	if (sumon1 <= 0) 
