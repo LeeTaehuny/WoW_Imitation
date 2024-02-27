@@ -119,7 +119,6 @@ Boss_LichKing::~Boss_LichKing()
 	delete root;
 	delete targetTransform;
 	delete attackBumwe;
-	delete attackTarget_serch;
 
 	for (Lich_000_Base* lich : lich_SkillList)
 		delete lich;
@@ -468,18 +467,19 @@ void Boss_LichKing::End_CAST()
 
 void Boss_LichKing::targetActiveSerch()
 {
+	if (!target) return;
 	if (!target->GetCollider()->Active())
 	{
-		attackTarget_serch->UpdateWorld();
+		atk_serch->UpdateWorld();
 		float atk_leng = FLT_MAX;
 		vector<CH_Base_ver2*> characterData = CH->GetCharcterData();
 		CH_Base_ver2* lom = CH->GetPlayerData();
 		for (int i = 0; i < characterData.size(); ++i)
 		{
 			if (!characterData[i]->GetCollider()->Active()) continue;
-			if (attackTarget_serch->IsCollision(characterData[i]->GetCollider()))
+			if (atk_serch->IsCollision(characterData[i]->GetCollider()))
 			{
-				Vector3 leng = characterData[i]->GlobalPos() - attackTarget_serch->GlobalPos();
+				Vector3 leng = characterData[i]->GlobalPos() - atk_serch->GlobalPos();
 				float min = leng.Length();
 
 				if (atk_leng >= min)

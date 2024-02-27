@@ -63,6 +63,9 @@ void F_004_Scorch::Update()
 			vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
 			vector<MonsterBase*> cols2 = MONSTER->GetSkeleton();
 			vector<MonsterBase*> cols3 = MONSTER->GetSkeleton_Knight();
+			vector<MonsterBase*> cols4 = MONSTER->GetVAlkier();
+			vector<MonsterBase*> cols5 = MONSTER->GetIceBall();
+			MonsterBase* cols6 = MONSTER->GetLichKing();
 
 			for (MonsterBase* monster : cols1)
 			{
@@ -99,6 +102,48 @@ void F_004_Scorch::Update()
 					// 충돌한 몬스터들에게 데미지 주기
 					// * 매개변수로 owner의 공격력과 번호 저장하기
 					monster->Hit(skillDamage);
+
+					hitParticleSystem->Play(target->GlobalPos());
+					isRun = false;
+					return;
+				}
+			}
+
+			for (MonsterBase* monster : cols4)
+			{
+				if (monster->GetCollider() == target)
+				{
+					// 충돌한 몬스터들에게 데미지 주기
+					// * 매개변수로 owner의 공격력과 번호 저장하기
+					monster->Hit(skillDamage);
+
+					hitParticleSystem->Play(target->GlobalPos());
+					isRun = false;
+					return;
+				}
+			}
+
+			for (MonsterBase* monster : cols5)
+			{
+				if (monster->GetCollider() == target)
+				{
+					// 충돌한 몬스터들에게 데미지 주기
+					// * 매개변수로 owner의 공격력과 번호 저장하기
+					monster->Hit(skillDamage);
+
+					hitParticleSystem->Play(target->GlobalPos());
+					isRun = false;
+					return;
+				}
+			}
+
+			if (cols6)
+			{
+				if (cols6->GetCollider() == target)
+				{
+					// 충돌한 몬스터들에게 데미지 주기
+					// * 매개변수로 owner의 공격력과 번호 저장하기
+					cols6->Hit(skillDamage);
 
 					hitParticleSystem->Play(target->GlobalPos());
 					isRun = false;

@@ -162,28 +162,31 @@ void Weapon::Update()
 
 		// 리치왕
 		{
-			if (find(hit.begin(), hit.end(), cols6) != hit.end())
+			if (cols6)
 			{
-				return;
-			}
-
-			if (collider->IsCollision(cols6->GetCollider()))
-			{
-				// 충돌한 몬스터들에게 데미지 주기
-				// TODO : 플레이어 인덱스 정보 추가하기
-				cols6->Hit(damage + playerDamage);
-				hit.push_back(cols6);
-
-				// 만약 플레이어가 전사고, isLifeDrain변수가 켜져있다면 피흡
-				if (ArmsWarrior_in* warrior = dynamic_cast<ArmsWarrior_in*>(owner))
+				if (find(hit.begin(), hit.end(), cols6) != hit.end())
 				{
-					if (warrior->GetBuffLifeDrain())
+					return;
+				}
+
+				if (collider->IsCollision(cols6->GetCollider()))
+				{
+					// 충돌한 몬스터들에게 데미지 주기
+					// TODO : 플레이어 인덱스 정보 추가하기
+					cols6->Hit(damage + playerDamage);
+					hit.push_back(cols6);
+
+					// 만약 플레이어가 전사고, isLifeDrain변수가 켜져있다면 피흡
+					if (ArmsWarrior_in* warrior = dynamic_cast<ArmsWarrior_in*>(owner))
 					{
-						// 입힌 피해의 15% 회복
-						warrior->AddHp((damage + playerDamage) * 0.15f);
+						if (warrior->GetBuffLifeDrain())
+						{
+							// 입힌 피해의 15% 회복
+							warrior->AddHp((damage + playerDamage) * 0.15f);
+						}
 					}
 				}
-			}
+			}			
 		}
 	}
 }

@@ -205,5 +205,5 @@ void LichKimgBossScene::BO_Die_Change_Town()
 void LichKimgBossScene::Scene_Chnage()
 {
 	// 나중에 마을 씬으로 변경해줄 필요 있음
-	SceneManager::Get()->ChangeScene("KIM");
+	SceneManager::Get()->ChangeScene("Town");
 }
