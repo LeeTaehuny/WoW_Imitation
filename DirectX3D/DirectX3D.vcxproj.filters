@@ -410,6 +410,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Monster\Boss\Lick_008_Summon_Dark_Valkyr.h">
+    <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\GameScene\DungeonScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -775,6 +778,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Monster\Boss\Lick_008_Summon_Dark_Valkyr.cpp">
+	  <Filter>소스 파일</Filter>
+	</ClCompile>
+    <ClCompile Include="Scenes\GameScene\DungeonScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

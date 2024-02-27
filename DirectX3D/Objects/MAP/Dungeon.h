@@ -16,6 +16,7 @@ public:
 	Vector3 GetSpawnPoint_P() { return SpawnPoint_P; }
 
 	bool IsCollision(Collider* c);
+	bool PotalCollision(Collider* c);
 
 	vector<Vector3> SpawnMonsters_A()
 	{
@@ -53,9 +54,9 @@ private:
 	Model* Walls_RF;
 
 	vector<Model*> Walls_B;
-
 	Model* Walls_BL;
 	Model* Walls_BR;
+
 	Model* Portal;
 	Model* Wall_deco;
 	Model* IceWall;
@@ -66,6 +67,7 @@ private:
 	Model* Ice_Broken;
 
 	vector<Model*> Pillar;
+	vector<Model*> Tree;
 
 	Model* Roof;
 	Model* Roofi;
@@ -124,7 +126,9 @@ private:
 	BoxCollider* boxColliders_WBL;
 	BoxCollider* boxColliders_WBR;
 	vector<BoxCollider*> boxColliders_P;
+	SphereCollider* PotalCollider;
 	BoxCollider* boxColliders_B;
+	vector<BoxCollider*> boxColliders_Tree;
 
 	int n = 0;
 	int n1 = 0;
