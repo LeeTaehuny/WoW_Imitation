@@ -168,6 +168,17 @@ void HolyPriest_in::PlayerUpdate()
 	Control();
 	//Casting();
 
+	if (one_atk_sound)
+	{
+		one_atk_time -= DELTA;
+		if (one_atk_time <= 0)
+		{
+			one_atk_time = Max_one_atk_time;
+			Audio::Get()->Play("HP_atk");
+			one_atk_sound = false;
+		}
+	}
+
 	// �浹ü ������Ʈ
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
@@ -177,6 +188,17 @@ void HolyPriest_in::AIUpdate()
 {
 	if (!myPlayer) return;
 	if (curState == HIT || curState == DIE) return;
+
+	if (one_atk_sound02)
+	{
+		one_atk_time -= DELTA;
+		if (one_atk_time <= 0)
+		{
+			one_atk_time = Max_one_atk_time;
+			Audio::Get()->Play("HP_atk");
+			one_atk_sound02 = false;
+		}
+	}
 
 	if (use002skill)
 	{
@@ -312,12 +334,16 @@ void HolyPriest_in::OnHit(float damage, bool motion)
 	{
 		if (!motion)
 			SetState(HIT);
+
+		Audio::Get()->Play("HP_hit");
 	}
 	else if (stat.hp <= 0)
 	{
 		stat.hp = 0.0f;
 		SetState(DIE);
 		myCollider->SetActive(false);
+
+		Audio::Get()->Play("HP_die");
 	}
 
 	if (creatureType == CreatureType::Player)
@@ -507,8 +533,9 @@ void HolyPriest_in::Attack()
 	// ����, ���, �ǰ�, ���� ������ ��� ����
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
-	if (KEY_DOWN(VK_LBUTTON) && weapon != nullptr)
+	if (KEY_DOWN(VK_LBUTTON) && weapon != nullptr && targetMonster)
 	{
+		one_atk_sound = true;
 		skillList[0]->UseSkill(targetMonster);
 	}
 }
@@ -602,6 +629,7 @@ void HolyPriest_in::ai_attack()
 		poldirect = monsterSelectData->GetCollider()->GlobalPos() - this->GlobalPos();
 		this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
 
+		one_atk_sound02 = true;
 		skillList[0]->UseSkill(monsterSelectData);
 	}
 	else if (atk)
@@ -638,6 +666,7 @@ void HolyPriest_in::ai_attack()
 			}
 		}
 
+		one_atk_sound02 = true;
 		skillList[0]->UseSkill(monsterSelectData);
 	}
 }

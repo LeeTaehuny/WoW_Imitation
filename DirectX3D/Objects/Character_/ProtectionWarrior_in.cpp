@@ -150,6 +150,17 @@ void ProtectionWarrior_in::PlayerUpdate()
 	Control();
 	//Casting();
 
+	if (one_atk_sound)
+	{
+		one_atk_time -= DELTA;
+		if (one_atk_time <= 0)
+		{
+			one_atk_time = Max_one_atk_time;
+			Audio::Get()->Play("PW_atk");
+			one_atk_sound = false;
+		}
+	}
+
 	// 충돌체 업데이트
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
@@ -159,6 +170,17 @@ void ProtectionWarrior_in::AIUpdate()
 {
 	if (!myPlayer) return;
 	if (curState == HIT || curState == DIE) return;
+
+	if (one_atk_sound02)
+	{
+		one_atk_time -= DELTA;
+		if (one_atk_time <= 0)
+		{
+			one_atk_time = Max_one_atk_time;
+			Audio::Get()->Play("PW_atk");
+			one_atk_sound02 = false;
+		}
+	}
 
 	if (atkGannnnn)
 	{
@@ -215,12 +237,15 @@ void ProtectionWarrior_in::OnHit(float damage, bool motion)
 	{
 		if (!motion)
 			SetState(HIT);
+
+		Audio::Get()->Play("PW_hit");
 	}
 	else if (stat.hp <= 0)
 	{
 		stat.hp = 0.0f;
 		SetState(DIE);
 		myCollider->SetActive(false);
+		Audio::Get()->Play("PW_die");
 	}
 
 	if (creatureType == CreatureType::Player)
@@ -418,6 +443,7 @@ void ProtectionWarrior_in::Attack()
 	{
 		SetState(ATTACK1);
 
+		one_atk_sound = true;
 		weapon->GetCollider()->SetActive(true);
 		weapon->SetDamage(stat.damage);
 	}
@@ -535,15 +561,14 @@ void ProtectionWarrior_in::ai_attack()
 		if (attackRange->IsCollision(saveMonsterCollider))
 		{
 			SetState(ATTACK1);
-			// 무기가 존재하는 경우
-			if (weapon)
-			{
-				// 무기의 콜라이더를 켜주고, 플레이어의 데미지를 전달
-				weapon->GetCollider()->SetActive(true);
-				weapon->SetDamage(stat.damage);
-			}
+			
+			// 무기의 콜라이더를 켜주고, 플레이어의 데미지를 전달
+			weapon->GetCollider()->SetActive(true);
+			weapon->SetDamage(stat.damage);
+			
 			impact = 0;
 			atkGannnnn = true;
+			one_atk_sound02 = true;
 		}
 		else
 		{

@@ -21,6 +21,18 @@ CH_Manager::CH_Manager()
 	//InstancingDataProtection();
 	ARROW;
 
+	Audio::Get()->Add("PW_atk", "Sounds/ProtectionWarrior/attack.ogg");
+	Audio::Get()->Add("PW_die", "Sounds/ProtectionWarrior/die.ogg");
+	Audio::Get()->Add("PW_hit", "Sounds/ProtectionWarrior/hit.ogg");
+
+	Audio::Get()->Add("HP_atk", "Sounds/HolyPriest/attack.ogg");
+	Audio::Get()->Add("HP_die", "Sounds/HolyPriest/die.ogg");
+	Audio::Get()->Add("HP_hit", "Sounds/HolyPriest/hit.ogg");
+
+	Audio::Get()->Add("MH_atk", "Sounds/MarksmanshipHunter/attack.ogg");
+	Audio::Get()->Add("MH_die", "Sounds/MarksmanshipHunter/die.ogg");
+	Audio::Get()->Add("MH_hit", "Sounds/MarksmanshipHunter/hit.ogg");
+
 	partyUI = new PartyUI_Bar();
 	partyUI->Pos() = { CENTER_X + 480.0f, CENTER_Y , 0 };
 }

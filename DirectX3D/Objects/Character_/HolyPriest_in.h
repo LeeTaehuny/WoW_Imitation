@@ -69,5 +69,12 @@ private:
 	float Max_pressSkill = 5.0f;
 	float pressSkill = Max_pressSkill;
 	bool isRun008skill;
+
+private:
+
+	bool one_atk_sound = false;
+	bool one_atk_sound02 = false;
+	float Max_one_atk_time = 0.4f;
+	float one_atk_time = Max_one_atk_time;
 };
 
