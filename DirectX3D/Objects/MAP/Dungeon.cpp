@@ -3,21 +3,19 @@
 
 Dungeon::Dungeon() //: Transform()
 {
-	//Audio::Get()->Add("BGM", "Sounds/icecrownraid_theforgeofsouls.ogg", true); // 브금으로 북소리를 등록
-
-	//terrain = new Terrain();
+	// 터레인
 	terrain = new TerrainLOD(L"Textures/HeightMaps/TestTerrain_H.png");
 	terrain->Rot().y += 1.575f;
 	terrain->Scale() *= 1.75f;
 	terrain->Pos().x = 200.0f;
 	terrain->Pos().z = -658.0f;
-	
+
+
+	// 스카이박스
 	skybox = new SkyBox(L"Textures/Landscape/Space.dds");
 	skybox->UpdateWorld();
-	//TestSky = new Model("SkyBox_D");
-	//TestSky->Scale() *= 60.0f;
-	//TestSky->Pos().y += 100.0f;
 
+	// 타일
 	Tiles.resize(98);
 	float xgap = 6.0f;
 	float zgap = 6.0f;
@@ -85,98 +83,116 @@ Dungeon::Dungeon() //: Transform()
 		}
 	}
 
+
+	// 지붕(천장)
 	Roof = new Model("Roof");
 	Roof->Pos().y -= 1.5;
 	Roof->Pos().x += 765;
 	Roof->Scale().y *= 22.5f;
 	Roof->Scale().x *= 25.0f;
 	Roof->Scale().z *= 20.0f;
-	Roofi = new Model("Roof");
-	//Roofi->Pos().y -= 1.5;
+	Roofi = new Model("Roof"); // 지붕(천장) 내부
 	Roofi->Pos().x += 765;
 	Roofi->Pos().y += 200;
 	Roofi->Scale().x *= 25.0f;
 	Roofi->Scale().z *= 20.0f;
 	Roofi->Rot().x -= 3.15f;
 
-	Gates.resize(6);
+
+	// 성문 앞부분
+	Core = new Model("Gate");
+	Core->Pos().y += 3.245f;
+	Core->Scale() *= 0.166f;
+	Core->Scale().y *= 2.75f;
+	Core->Scale().z *= 1.2f;
+	Core->Pos().y += 5.65f;
+	Core->Pos().x += 45.0f;
+	Core->Pos().z += 50.0f;
+	Core->Rot().y -= 1.575f;
+	Core->UpdateWorld();
+
+	Gates.resize(4);
 	Gates[0] = new Model("Gate");
-	boxCollider_G = new BoxCollider(Vector3(35, 120, 230));
-	boxCollider_G->SetParent(Gates[0]);
-	boxCollider_G->Pos().y -= 80;
-	boxCollider_GL = new BoxCollider(Vector3(35, 30, 95));
-	boxCollider_GL->SetParent(Gates[0]);
+	//boxCollider_G = new BoxCollider(Vector3(35, 120, 230));
+	//boxCollider_G->SetParent(Core);
+	//boxCollider_G->Pos().y -= 80;
+	boxCollider_GL = new BoxCollider(Vector3(35, 38.5, 95));
+	boxCollider_GL->SetParent(Core);
 	boxCollider_GL->Pos().z -= 65;
-	boxCollider_GR = new BoxCollider(Vector3(35, 30, 95));
-	boxCollider_GR->SetParent(Gates[0]);
+	boxCollider_GL->Pos().y -= 1;
+	boxCollider_GR = new BoxCollider(Vector3(35, 38.5, 95));
+	boxCollider_GR->SetParent(Core);
 	boxCollider_GR->Pos().z += 65;
+	boxCollider_GR->Pos().y -= 1;
 
 	Gates[1] = new Model("Gate_Prop");
 	Gates[1]->Pos().y -= 75.0f;
 	Gates[1]->Pos().x -= 38.0f;
-	boxCollider_GP = new BoxCollider(Vector3(55, 125, 80));
-	boxCollider_GP->SetParent(Gates[1]);
-	boxCollider_GP->Pos().y -= 7.0;
+	//boxCollider_GP = new BoxCollider(Vector3(55, 125, 80));
+	//boxCollider_GP->SetParent(Core);
+	//boxCollider_GP->Pos().y -= 7.0;
 
 	Gates[2] = new Model("Gate_Prop");
 	Gates[2]->Rot().y += 3.15f;
 	Gates[2]->Pos().y -= 85.5f;
 	Gates[2]->Pos().x += 49.5f;
-	boxCollider_GPI = new BoxCollider(Vector3(55, 125, 80));
-	boxCollider_GPI->SetParent(Gates[2]);
-	boxCollider_GPI->Pos().y -= 7.0;
+	//boxCollider_GPI = new BoxCollider(Vector3(55, 125, 80));
+	//boxCollider_GPI->SetParent(Core);
+	//boxCollider_GPI->Pos().y -= 7.0;
 
+	// 계단
+	//Gates[3] = new Model("Gate_Stairs2");
+	//Gates[3]->Pos().y -= 70.0f;
+	//Gates[3]->Pos().x -= 127.5f;
+	//boxCollider_S = new BoxCollider(Vector3(125, 150, 60));
+	//boxCollider_S->SetParent(Gates[3]);
+	//boxCollider_S->Rot().z -= 1.125f;
+	//boxCollider_S->Pos().y -= 37.5f;
+	//boxCollider_S->Pos().x += 30.0f;
+	//
+	//Gates[4] = new Model("Gate_Stairs");
+	//Gates[4]->Rot().y += 3.15f;
+	//Gates[4]->Pos().y -= 70.0f;
+	//Gates[4]->Pos().x += 140.0f;
+	//boxCollider_SI = new BoxCollider(Vector3(80, 70, 45));
+	//boxCollider_SI->SetParent(Gates[4]);
+	//boxCollider_SI->Rot().z -= 1.125f;
+	//boxCollider_SI->Pos().y -= 9.5f;
+	//boxCollider_SI->Pos().x += 50.0f;
+	//boxCollider_SIC = new BoxCollider(Vector3(57.5, 50, 42.5));
+	//boxCollider_SIC->SetParent(Gates[4]);
+	//boxCollider_SIC->Pos().x -= 25.0f;
+	//boxCollider_SIC->Pos().y -= 13.5f;
+	//
+	//boxCollider_SIL = new BoxCollider(Vector3(50.0, 62.5, 45.5));
+	//boxCollider_SIL->SetParent(Gates[4]);
+	//boxCollider_SIL->Pos().x -= 20.0f;
+	//boxCollider_SIL->Pos().y -= 25.0f;
+	//boxCollider_SIL->Pos().z -= 32.5f;
+	//boxCollider_SIL->Rot().x += 0.95f;
+	//
+	//boxCollider_SIR = new BoxCollider(Vector3(50.0, 62.5, 45.5));
+	//boxCollider_SIR->SetParent(Gates[4]);
+	//boxCollider_SIR->Pos().x -= 20.0f;
+	//boxCollider_SIR->Pos().y -= 25.0f;
+	//boxCollider_SIR->Pos().z += 32.5f;
+	//boxCollider_SIR->Rot().x -= 0.95f;
 
-	Gates[3] = new Model("Gate_Stairs2");
-	Gates[3]->Pos().y -= 70.0f;
-	Gates[3]->Pos().x -= 127.5f;
-	boxCollider_S = new BoxCollider(Vector3(125, 150, 60));
-	boxCollider_S->SetParent(Gates[3]);
-	boxCollider_S->Rot().z -= 1.125f;
-	boxCollider_S->Pos().y -= 37.5f;
-	boxCollider_S->Pos().x += 30.0f;
-
-	Gates[4] = new Model("Gate_Stairs");
-	Gates[4]->Rot().y += 3.15f;
-	Gates[4]->Pos().y -= 70.0f;
-	Gates[4]->Pos().x += 140.0f;
-	boxCollider_SI = new BoxCollider(Vector3(80, 70, 45));
-	boxCollider_SI->SetParent(Gates[4]);
-	boxCollider_SI->Rot().z -= 1.125f;
-	boxCollider_SI->Pos().y -= 9.5f;
-	boxCollider_SI->Pos().x += 50.0f;
-	boxCollider_SIC = new BoxCollider(Vector3(57.5, 50, 42.5));
-	boxCollider_SIC->SetParent(Gates[4]);
-	boxCollider_SIC->Pos().x -= 25.0f;
-	boxCollider_SIC->Pos().y -= 13.5f;
-
-	boxCollider_SIL = new BoxCollider(Vector3(50.0, 62.5, 45.5));
-	boxCollider_SIL->SetParent(Gates[4]);
-	boxCollider_SIL->Pos().x -= 20.0f;
-	boxCollider_SIL->Pos().y -= 25.0f;
-	boxCollider_SIL->Pos().z -= 32.5f;
-	boxCollider_SIL->Rot().x += 0.95f;
-
-	boxCollider_SIR = new BoxCollider(Vector3(50.0, 62.5, 45.5));
-	boxCollider_SIR->SetParent(Gates[4]);
-	boxCollider_SIR->Pos().x -= 20.0f;
-	boxCollider_SIR->Pos().y -= 25.0f;
-	boxCollider_SIR->Pos().z += 32.5f;
-	boxCollider_SIR->Rot().x -= 0.95f;
-	
-
-	Gates[5] = new Model("Gate_Door");
-	Gates[5]->Scale() *= 9.0f;
-	Gates[5]->Pos().y -= 20.5f; // close
+	// 성문
+	Gates[3] = new Model("Gate_Door");
+	Gates[3]->Scale() *= 9.0f;
+	Gates[3]->Pos().y -= 20.5f; // close
 	boxCollider_GD = new BoxCollider(Vector3(2, 5, 4));
-	boxCollider_GD->SetParent(Gates[5]);
+	boxCollider_GD->SetParent(Gates[3]);
 	boxCollider_GD->Pos().y += 2.5f;
 
+	//for (int i = 1; i < Gates.size(); ++i)  Gates[i]->Pos().y += 9.5f;
 	//////////////////////////////////////////////
 
+	// 벽(왼쪽)
 	Walls_L.resize(8);
 	boxColliders_WL.resize(8);
-	for (int i = 0; i < Walls_L.size(); ++i) 
+	for (int i = 0; i < Walls_L.size(); ++i)
 	{
 		Walls_L[i] = new Model("Wall");
 		boxColliders_WL[i] = new BoxCollider(Vector3(35, 150, 120));
@@ -204,18 +220,16 @@ Dungeon::Dungeon() //: Transform()
 	Walls_LF->Pos().y += 10.0f;
 	boxCollider_WLF = new BoxCollider(Vector3(35, 150, 120));
 	boxCollider_WLF->SetParent(Walls_LF);
-
 	//////////////////////////////////////////////
-
+	// 벽(오른쪽)
 	Walls_R.resize(8);
 	boxColliders_WR.resize(8);
-	for (int i = 0; i < Walls_R.size(); ++i) 
+	for (int i = 0; i < Walls_R.size(); ++i)
 	{
 		Walls_R[i] = new Model("Wall");
 		boxColliders_WR[i] = new BoxCollider(Vector3(35, 150, 120));
 		boxColliders_WR[i]->SetParent(Walls_R[i]);
 	}
-		
 
 	for (int i = 0; i < Walls_R.size(); ++i)
 	{
@@ -238,17 +252,16 @@ Dungeon::Dungeon() //: Transform()
 	Walls_RF->Pos().y += 10.0f;
 	boxCollider_WRF = new BoxCollider(Vector3(35, 150, 120));
 	boxCollider_WRF->SetParent(Walls_RF);
-
 	//////////////////////////////////////////////
-
+	// 벽(뒤쪽)
 	Walls_B.resize(4);
 	boxColliders_WB.resize(4);
-	for (int i = 0; i < Walls_B.size(); ++i) 
+	for (int i = 0; i < Walls_B.size(); ++i)
 	{
 		Walls_B[i] = new Model("Wall");
 		boxColliders_WB[i] = new BoxCollider(Vector3(35, 150, 120));
 		boxColliders_WB[i]->SetParent(Walls_B[i]);
-	} 
+	}
 	for (int i = 0; i < Walls_B.size(); ++i)
 	{
 		Walls_B[i]->Rot().y -= 3.15f;
@@ -265,7 +278,7 @@ Dungeon::Dungeon() //: Transform()
 	}
 	Walls_B[1]->Pos().x += 117.5;
 	Walls_B[2]->Pos().x += 117.5;
-	
+
 	Walls_BL = new Model("Wall");
 	Walls_BL->Rot().y += 1.575f;
 	Walls_BL->Pos().y += 10.0f;
@@ -281,9 +294,9 @@ Dungeon::Dungeon() //: Transform()
 	boxColliders_WBL->SetParent(Walls_BL);
 	boxColliders_WBR = new BoxCollider(Vector3(35, 150, 120));
 	boxColliders_WBR->SetParent(Walls_BR);
-	
-
 	//////////////////////////////////////////////////
+
+	// 오브젝트들
 	Portal = new Model("Portal");
 	Portal->Pos().x += 1005;
 	Portal->Pos().y -= 7.0;
@@ -293,7 +306,7 @@ Dungeon::Dungeon() //: Transform()
 	PotalCollider->SetParent(Portal);
 	PotalCollider->Pos().y += 2.5f;
 
-	for (int i = 0; i < boxColliders_potal.size(); ++i) 
+	for (int i = 0; i < boxColliders_potal.size(); ++i)
 	{
 		boxColliders_potal[i] = new BoxCollider(Vector3(3.5, 5, 6.5));
 		boxColliders_potal[i]->SetParent(Portal);
@@ -315,7 +328,7 @@ Dungeon::Dungeon() //: Transform()
 
 	Pillar.resize(6);
 	boxColliders_P.resize(6);
-	for (int i = 0; i < Pillar.size(); ++i) 
+	for (int i = 0; i < Pillar.size(); ++i)
 	{
 		Pillar[i] = new Model("Pillar");
 		boxColliders_P[i] = new BoxCollider(Vector3(3.75, 10, 3.75));
@@ -366,6 +379,7 @@ Dungeon::Dungeon() //: Transform()
 	boxColliders_B->Pos().y += 12.0;
 	boxColliders_B->SetParent(IceWall);
 
+	// 전등
 	Chandelier = new Model("Chandelier");
 	Chandelier->Pos() = Roofi->Pos();
 	Chandelier->Scale() *= 6;
@@ -379,21 +393,21 @@ Dungeon::Dungeon() //: Transform()
 	light->pos.z = 177;
 	light->pos.y = 22.5;
 	light->range = 300;
-	
+
 	Ice_debris.resize(12);
 	Ice_debris[0] = new Model("Ice_debris1");	// 얼음파편 입니다
 	Ice_debris[1] = new Model("Ice_debris2");
 	Ice_debris[2] = new Model("Ice_debris3");
 	Ice_debris[3] = new Model("Ice_debris4");
-	Ice_debris[4] = new Model("Ice_debris1");	
+	Ice_debris[4] = new Model("Ice_debris1");
 	Ice_debris[5] = new Model("Ice_debris2");
 	Ice_debris[6] = new Model("Ice_debris3");
 	Ice_debris[7] = new Model("Ice_debris4");
-	Ice_debris[8] = new Model("Ice_debris1");	
+	Ice_debris[8] = new Model("Ice_debris1");
 	Ice_debris[9] = new Model("Ice_debris2");
 	Ice_debris[10] = new Model("Ice_debris3");
 	Ice_debris[11] = new Model("Ice_debris4");
-	for (int i = 0; i < 4; ++i) 
+	for (int i = 0; i < 4; ++i)
 	{
 		Ice_debris[i]->Pos().y += 580.0f;
 		Ice_debris[i]->Pos().x += 955.0;
@@ -403,7 +417,7 @@ Dungeon::Dungeon() //: Transform()
 	{
 		Ice_debris[i]->Pos().y += 530.0f;
 		Ice_debris[i]->Pos().x += 955.0;
-		Ice_debris[i]->Pos().z -=150;
+		Ice_debris[i]->Pos().z -= 150;
 		Ice_debris[i]->Scale() *= 1.5f;
 	}
 	for (int i = 8; i < 12; ++i)
@@ -418,14 +432,14 @@ Dungeon::Dungeon() //: Transform()
 	Ice_Broken->Pos().x += 955.0;
 	Ice_Broken->Pos().y -= 5.0;
 	Ice_Broken->Scale() *= 1.5f;
-
 	//////////////////////////////////////////////
 
+	// 내부 성문(앞)
 	InGates.resize(9);
 	InGates[0] = new Model("InGate");
 	InGates[0]->Pos().x += 460.0f;
 	InGates[0]->Pos().y += 10.0f;
-	
+
 	InGates[1] = new Model("Wall"); // L
 	InGates[1]->Pos().x += 460.0f;
 	InGates[1]->Pos().y += 10.0f;
@@ -439,7 +453,7 @@ Dungeon::Dungeon() //: Transform()
 	InGates[2]->Pos().z -= 95.0f;
 	boxCollider_WGR = new BoxCollider(Vector3(35, 150, 120));
 	boxCollider_WGR->SetParent(InGates[2]);
-	
+
 	InGates[3] = new Model("Pillar_G"); // R
 	InGates[3]->Rot().y += 3.15f;
 	InGates[3]->Pos().x += 430.0f;
@@ -449,7 +463,7 @@ Dungeon::Dungeon() //: Transform()
 	boxCollider_PR->SetParent(InGates[3]);
 	boxCollider_PR->Pos().x -= 2.0f;
 	boxCollider_PR->Pos().y += 17.5f;
-	
+
 	InGates[4] = new Model("Pillar_G"); // L
 	InGates[4]->Rot().y += 3.15f;
 	InGates[4]->Pos().x += 430.0f;
@@ -492,9 +506,10 @@ Dungeon::Dungeon() //: Transform()
 	boxCollider_DL->Pos().x += 0.0f;
 	boxCollider_DL->Pos().z -= 10.0f;
 	boxCollider_DL->Pos().y += 22.5f;
-
 	/////////////////////////////////////////////////////////////////////////////////
-	for (int i = 1; i < Gates.size(); ++i) Gates[i]->SetParent(Gates[0]);
+
+	// 부모 지정
+	for (int i = 1; i < Gates.size(); ++i) Gates[i]->SetParent(Core);
 	for (int i = 0; i < Walls_L.size(); ++i) Walls_L[i]->SetParent(Gates[0]);
 	Walls_LF->SetParent(Gates[0]);
 	for (int i = 0; i < Walls_R.size(); ++i) Walls_R[i]->SetParent(Gates[0]);
@@ -513,12 +528,12 @@ Dungeon::Dungeon() //: Transform()
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->SetParent(Gates[0]);
 	for (int i = 0; i < Ice_debris.size(); ++i) Ice_debris[i]->SetParent(Gates[0]);
 	Ice_Broken->SetParent(Gates[0]);
-	//TestSky->SetParent(Gates[0]);
 	terrain->SetParent(Gates[0]);
 	Roof->SetParent(Gates[0]);
 	Roofi->SetParent(Gates[0]);
 	Chandelier->SetParent(Gates[0]);
 
+	// 위치 조절
 	Gates[0]->Pos().y += 75.0f;
 	for (int i = 0; i < Walls_L.size(); ++i) Walls_L[i]->Pos().y -= 75.0f;
 	Walls_LF->Pos().y -= 75.0f;
@@ -537,13 +552,72 @@ Dungeon::Dungeon() //: Transform()
 	Grownd_Circle->Pos().y -= 75.0f;
 	for (int i = 0; i < InGates.size(); ++i) InGates[i]->Pos().y -= 75.0f;
 	Ice_Broken->Pos().y -= 75.0f;
+	///////////////////////////////////////////////////////////////////////////
 
-
-	/////////////////////////////////////////////////////////////////////////////
 	TestPos = new SphereCollider(10);
 	TestPos->SetParent(Gates[0]);
 	TestPos->Pos().y -= 75;
 
+	EdgeGuard.resize(10);
+	for (int i = 0; i < EdgeGuard.size(); ++i)
+	{
+		EdgeGuard[i] = new BoxCollider(Vector3(70, 80, 15));
+		EdgeGuard[i]->SetParent(Gates[0]);
+		EdgeGuard[i]->Pos().y -= 75;
+
+		if (i % 2 == 0)	EdgeGuard[i]->Rot().y += 0.75f;
+		else EdgeGuard[i]->Rot().y -= 0.75f;
+
+		EdgeGuard[i]->Pos().y += 40;
+	}
+
+	EdgeGuard[0]->Pos().x = 442;
+	EdgeGuard[0]->Pos().z = 108;
+	EdgeGuard[1]->Pos().x = 442;
+	EdgeGuard[1]->Pos().z = -108;
+	EdgeGuard[2]->Pos().x = 15;
+	EdgeGuard[2]->Pos().z = -109;
+	EdgeGuard[3]->Pos().x = 15;
+	EdgeGuard[3]->Pos().z = 109;
+	EdgeGuard[4]->Pos().x = 928.7;
+	EdgeGuard[4]->Pos().z = 229;
+	EdgeGuard[5]->Pos().x = 928.7;
+	EdgeGuard[5]->Pos().z = -229;
+	EdgeGuard[6]->Pos().x = 480.8;
+	EdgeGuard[6]->Pos().z = -229;
+	EdgeGuard[7]->Pos().x = 480.8;
+	EdgeGuard[7]->Pos().z = 229;
+	EdgeGuard[8]->Pos().x = 1045;
+	EdgeGuard[8]->Pos().z = 106;
+	EdgeGuard[9]->Pos().x = 1045;
+	EdgeGuard[9]->Pos().z = -106;
+
+	Gatesharp.resize(4);
+	for (int i = 0; i < Gatesharp.size(); ++i)
+	{
+		if (i % 2 == 0)
+		{
+			Gatesharp[i] = new BoxCollider(Vector3(4.25, 30, 4.25));
+			Gatesharp[i]->Pos().y += 15;
+		}
+		else
+		{
+			Gatesharp[i] = new BoxCollider(Vector3(7.5, 30, 7.5));
+			Gatesharp[i]->Pos().y += 15;
+		}
+		Gatesharp[i]->SetParent(Gates[0]);
+		Gatesharp[i]->Pos().y -= 75;
+	}
+	Gatesharp[0]->Pos().x += 64.5;
+	Gatesharp[0]->Pos().z += 34.3;
+	Gatesharp[2]->Pos().x += 64.5;
+	Gatesharp[2]->Pos().z -= 36.2;
+	Gatesharp[1]->Pos().x -= 52;
+	Gatesharp[1]->Pos().z += 36;
+	Gatesharp[3]->Pos().x -= 52;
+	Gatesharp[3]->Pos().z -= 34.5;
+
+	// 몬스터 스폰 좌표 지정
 	SpawnPoint_A.resize(11);
 	for (int i = 0; i < SpawnPoint_A.size(); ++i)
 	{
@@ -589,7 +663,7 @@ Dungeon::Dungeon() //: Transform()
 	//SpawnPoint_B[7] = Vector3(650, 0, 0);
 	//SpawnPoint_B[8] = Vector3(675, 0, 60);
 	//SpawnPoint_B[9] = Vector3(675, 0, -60);
-	
+
 	SpawnPoint_B[0] = Vector3(44.5, 0, 176.6);
 	SpawnPoint_B[1] = Vector3(25, 0, 187);
 	SpawnPoint_B[2] = Vector3(64, 0, 187);
@@ -602,13 +676,15 @@ Dungeon::Dungeon() //: Transform()
 	SpawnPoint_B[9] = Vector3(55, 0, 162);
 	/////////////////////////////////////////////////////////////////////////////
 
+	// 부모의 위치조절
 	Gates[0]->Scale() *= 0.166f;
 	Gates[0]->Pos().y -= 62.5f;
 	Gates[0]->Pos().x += 45.0f;
 	Gates[0]->Pos().z += 50.0f;
 	Gates[0]->Rot().y -= 1.575f;
-	
-	
+	/////////////////////////////////////////////////////////////////////////////
+
+	// 생성자에서 업데이트
 	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->UpdateWorld();
 	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->UpdateWorld();
 	for (int i = 0; i < Tiles3.size(); ++i) Tiles3[i]->UpdateWorld();
@@ -618,7 +694,6 @@ Dungeon::Dungeon() //: Transform()
 	Roof->UpdateWorld();
 	Roofi->UpdateWorld();
 	Chandelier->UpdateWorld();
-	//TestSky->UpdateWorld();
 
 	for (int i = 0; i < Walls_L.size(); ++i)
 	{
@@ -648,7 +723,37 @@ Dungeon::Dungeon() //: Transform()
 		boxColliders_P[i]->UpdateWorld();
 	}
 	Grownd_Circle->UpdateWorld();
-	for (int i = 0; i < InGates.size()-2; ++i) InGates[i]->UpdateWorld();
+	for (int i = 0; i < InGates.size() - 2; ++i) InGates[i]->UpdateWorld();
+	terrain->UpdateWorld();
+
+	//boxCollider_G->UpdateWorld();
+	boxCollider_GL->UpdateWorld();
+	boxCollider_GR->UpdateWorld();
+	//boxCollider_GP->UpdateWorld();
+	//boxCollider_GPI->UpdateWorld();
+
+	// 계단의 콜라이더
+	//boxCollider_S->UpdateWorld();
+	//boxCollider_SI->UpdateWorld();
+	//boxCollider_SIC->UpdateWorld();
+	//boxCollider_SIL->UpdateWorld();
+	//boxCollider_SIR->UpdateWorld();
+
+	boxCollider_PR->UpdateWorld();
+	boxCollider_PL->UpdateWorld();
+
+	boxColliders_WBL->UpdateWorld();
+	boxColliders_WBR->UpdateWorld();
+	boxCollider_WLF->UpdateWorld();
+	boxCollider_WRF->UpdateWorld();
+	boxCollider_WGL->UpdateWorld();
+	boxCollider_WGR->UpdateWorld();
+
+	boxColliders_WD->UpdateWorld();
+	for (int i = 0; i < boxColliders_potal.size(); ++i) boxColliders_potal[i]->UpdateWorld();
+	for (int i = 0; i < boxColliders_Tree.size(); ++i) boxColliders_Tree[i]->UpdateWorld();
+
+	PotalCollider->UpdateWorld();
 
 	Tree.resize(2);
 	Tree[0] = new Model("Tree");
@@ -675,37 +780,8 @@ Dungeon::Dungeon() //: Transform()
 	boxColliders_Tree[1] = new BoxCollider(Vector3(5, 10, 5));
 	boxColliders_Tree[1]->SetParent(Tree[1]);
 	boxColliders_Tree[1]->Pos().y += 5;
-
-
-	boxCollider_G->UpdateWorld();
-	boxCollider_GL->UpdateWorld();
-	boxCollider_GR->UpdateWorld();
-	//boxCollider_GD->UpdateWorld();
-	boxCollider_GP->UpdateWorld();
-	boxCollider_GPI->UpdateWorld();
-	boxCollider_S->UpdateWorld();
-	boxCollider_SI->UpdateWorld();
-	boxCollider_SIC->UpdateWorld();
-	boxCollider_SIL->UpdateWorld();
-	boxCollider_SIR->UpdateWorld();
-
-	boxCollider_PR->UpdateWorld();
-	boxCollider_PL->UpdateWorld();
-
-	boxColliders_WBL->UpdateWorld();
-	boxColliders_WBR->UpdateWorld();
-	boxCollider_WLF->UpdateWorld();
-	boxCollider_WRF->UpdateWorld();
-	boxCollider_WGL->UpdateWorld();
-	boxCollider_WGR->UpdateWorld();
-
-	boxColliders_WD->UpdateWorld();
-	for (int i = 0; i < boxColliders_potal.size(); ++i) boxColliders_potal[i]->UpdateWorld();
-	terrain->UpdateWorld();
-
-	for (int i = 0; i < boxColliders_Tree.size(); ++i) boxColliders_Tree[i]->UpdateWorld();
-
-	PotalCollider->UpdateWorld();
+	for (int i = 0; i < EdgeGuard.size(); ++i) EdgeGuard[i]->UpdateWorld();
+	for (int i = 0; i < Gatesharp.size(); ++i) Gatesharp[i]->UpdateWorld();
 }
 
 Dungeon::~Dungeon()
@@ -740,17 +816,17 @@ Dungeon::~Dungeon()
 	for (int i = 0; i < Pillar.size(); ++i) delete Pillar[i];
 	for (int i = 0; i < InGates.size(); ++i) delete InGates[i];
 
-	delete boxCollider_G;
+	//delete boxCollider_G;
 	delete boxCollider_GL;
 	delete boxCollider_GR;
 	delete boxCollider_GD;
-	delete boxCollider_GP;
-	delete boxCollider_GPI;
-	delete boxCollider_S;
-	delete boxCollider_SI;
-	delete boxCollider_SIC;
-	delete boxCollider_SIL;
-	delete boxCollider_SIR;
+	//delete boxCollider_GP;
+	//delete boxCollider_GPI;
+	//delete boxCollider_S;
+	//delete boxCollider_SI;
+	//delete boxCollider_SIC;
+	//delete boxCollider_SIL;
+	//delete boxCollider_SIR;
 	delete boxCollider_DL;
 	delete boxCollider_DR;
 	delete boxCollider_PR;
@@ -769,6 +845,9 @@ Dungeon::~Dungeon()
 	for (int i = 0; i < boxColliders_P.size(); ++i) delete boxColliders_P[i];
 	delete boxColliders_B;
 	for (int i = 0; i < boxColliders_Tree.size(); ++i) delete boxColliders_Tree[i];
+	for (int i = 0; i < EdgeGuard.size(); ++i) delete EdgeGuard[i];
+	for (int i = 0; i < Gatesharp.size(); ++i) delete Gatesharp[i];
+
 	delete PotalCollider;
 
 	delete TestPos;
@@ -807,14 +886,15 @@ void Dungeon::Update()
 	//}
 	//TestPos->Pos() = SpawnPoint_P;
 
+	Audio::Get()->Update();
 
-
-	for (int i = 0; i < Gates.size(); ++i) Gates[5]->UpdateWorld();
+	// 문, 얼음 업데이트
+	for (int i = 1; i < Gates.size(); ++i) Gates[3]->UpdateWorld();
 	boxCollider_GD->UpdateWorld();
 	if (open) DoorMove();
 	if (open_I) DoorMove_I();
 
-	if (isClear) 
+	if (isClear)
 	{
 		CrashIceWall();
 	}
@@ -836,33 +916,31 @@ void Dungeon::Render()
 {
 	skybox->Render();
 	terrain->Render();
-	//TestPos->Render();
 
 	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->Render();
 	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->Render();
 	for (int i = 0; i < Tiles3.size(); ++i) Tiles3[i]->Render();
 
-	
-	//TestSky->Render();
 	Roof->Render();
 	Roofi->Render();
 	Chandelier->Render();
 
-	for (int i = 0; i < Gates.size(); ++i) Gates[i]->Render();
+	Core->Render();
+	for (int i = 1; i < Gates.size(); ++i) Gates[i]->Render();
 
-	for (int i = 0; i < Walls_L.size(); ++i) 
+	for (int i = 0; i < Walls_L.size(); ++i)
 	{
 		Walls_L[i]->Render();
 		//boxColliders_WL[i]->Render();
 	}
 	Walls_LF->Render();
-	for (int i = 0; i < Walls_R.size(); ++i) 
+	for (int i = 0; i < Walls_R.size(); ++i)
 	{
 		Walls_R[i]->Render();
 		//boxColliders_WR[i]->Render();
-	} 
+	}
 	Walls_RF->Render();
-	for (int i = 0; i < Walls_B.size(); ++i) 
+	for (int i = 0; i < Walls_B.size(); ++i)
 	{
 		Walls_B[i]->Render();
 		//boxColliders_WB[i]->Render();
@@ -902,7 +980,7 @@ void Dungeon::Render()
 	//boxCollider_SIC->Render();
 	//boxCollider_SIL->Render();
 	//boxCollider_SIR->Render();
-	//
+
 	//boxCollider_DL->Render();
 	//boxCollider_DR->Render();
 	//boxCollider_PR->Render();
@@ -914,9 +992,11 @@ void Dungeon::Render()
 	//boxColliders_WBR->Render();
 	//boxCollider_WLF->Render();
 	//boxCollider_WRF->Render();
-	//
+
 	//boxColliders_WD->Render();
 	//for (int i = 0; i < boxColliders_potal.size(); ++i) boxColliders_potal[i]->Render();
+	//for (int i = 0; i < EdgeGuard.size(); ++i) EdgeGuard[i]->Render();
+	//for (int i = 0; i < Gatesharp.size(); ++i) Gatesharp[i]->Render();
 	//boxColliders_B->Render();
 	if (isClear)
 	{
@@ -924,7 +1004,7 @@ void Dungeon::Render()
 		Ice_Broken->Render();
 	}
 }
-void Dungeon::GUIRender() 
+void Dungeon::GUIRender()
 {
 	ImGui::Text("TestPos");
 	ImGui::Text("X : %.1f, Y : %.1f, Z : %.1f",
@@ -941,36 +1021,58 @@ void Dungeon::GUIRender()
 
 bool Dungeon::IsCollision(Collider* c)
 {
-	if (boxCollider_G->PushCollision(c)) return true;
-	if (boxCollider_GP->PushCollision(c)) return true;
-	if (boxCollider_GPI->PushCollision(c)) return true;
-	if (boxCollider_GR->PushCollision(c)) return true;
-	if (boxCollider_GL->PushCollision(c)) return true;
-	if (boxCollider_GD->PushCollision(c)) return true;
-	if (boxCollider_S->PushCollision(c)) return true;
-	if (boxCollider_SI->PushCollision(c)) return true;
-	if (boxCollider_SIC->PushCollision(c)) return true;
-	if (boxCollider_SIL->PushCollision(c)) return true;
-	if (boxCollider_SIR->PushCollision(c)) return true;
-	
-	if (boxCollider_WGL->PushCollision(c)) return true;
-	if (boxCollider_WGR->PushCollision(c)) return true;
-	if (boxCollider_DL->PushCollision(c)) 
+	//if (boxCollider_G->PushCollision(c)) return true;
+	//계단
+	//if (boxCollider_GP->PushCollision(c)) return true;
+	//if (boxCollider_GPI->PushCollision(c)) return true;
+	//if (boxCollider_S->PushCollision(c)) return true;
+	//if (boxCollider_SI->PushCollision(c)) return true;
+	//if (boxCollider_SIC->PushCollision(c)) return true;
+	//if (boxCollider_SIL->PushCollision(c)) return true;
+	//if (boxCollider_SIR->PushCollision(c)) return true;
+
+
+	if (boxCollider_GR->PushCollision(c))
 	{
 		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 		return true;
 	}
-	if (boxCollider_DR->PushCollision(c)) 
+	if (boxCollider_GL->PushCollision(c))
 	{
 		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 		return true;
 	}
-	if (boxCollider_PR->PushCollision(c)) 
+	if (boxCollider_GD->PushCollision(c))
 	{
 		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 		return true;
 	}
-	if (boxCollider_PL->PushCollision(c)) 
+	if (boxCollider_WGL->PushCollision(c)) 
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
+	if (boxCollider_WGR->PushCollision(c))
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
+	if (boxCollider_DL->PushCollision(c))
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
+	if (boxCollider_DR->PushCollision(c))
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
+	if (boxCollider_PR->PushCollision(c))
+	{
+		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+		return true;
+	}
+	if (boxCollider_PL->PushCollision(c))
 	{
 		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 		return true;
@@ -978,16 +1080,16 @@ bool Dungeon::IsCollision(Collider* c)
 
 	for (int i = 0; i < Walls_L.size(); ++i)
 	{
-		if (boxColliders_WL[i]->PushCollision(c)) 
+		if (boxColliders_WL[i]->PushCollision(c))
 		{
 			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 			return true;
-		} 
+		}
 	}
 	if (boxCollider_WLF->PushCollision(c)) return true;
 	for (int i = 0; i < Walls_R.size(); ++i)
 	{
-		if (boxColliders_WR[i]->PushCollision(c)) 
+		if (boxColliders_WR[i]->PushCollision(c))
 		{
 			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 			return true;
@@ -1000,51 +1102,67 @@ bool Dungeon::IsCollision(Collider* c)
 	}
 	for (int i = 0; i < Walls_B.size(); ++i)
 	{
-		if (boxColliders_WB[i]->PushCollision(c)) 
+		if (boxColliders_WB[i]->PushCollision(c))
 		{
 			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 			return true;
 		}
 	}
-	if (boxColliders_WBL->PushCollision(c)) 
+	if (boxColliders_WBL->PushCollision(c))
 	{
 		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 		return true;
 	}
-	if (boxColliders_WBR->PushCollision(c)) 
+	if (boxColliders_WBR->PushCollision(c))
 	{
 		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 		return true;
 	}
-	for (int i = 0; i < Pillar.size(); ++i) 
+	for (int i = 0; i < Pillar.size(); ++i)
 	{
-		if (boxColliders_P[i]->PushCollision(c)) 
+		if (boxColliders_P[i]->PushCollision(c))
 		{
 			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 			return true;
 		}
 	}
-	if (boxColliders_WD->PushCollision(c)) 
+	if (boxColliders_WD->PushCollision(c))
 	{
 		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 		return true;
 	}
-	for (int i = 0; i < boxColliders_potal.size(); ++i) 
+	for (int i = 0; i < boxColliders_potal.size(); ++i)
 	{
-		if (boxColliders_potal[i]->PushCollision(c)) 
+		if (boxColliders_potal[i]->PushCollision(c))
 		{
 			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 			return true;
 		}
 	}
-	if (boxColliders_B->PushCollision(c)) 
+	if (boxColliders_B->PushCollision(c))
 	{
 		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 		return true;
 	}
-	for (int i = 0; i < boxColliders_Tree.size(); ++i) 
+	for (int i = 0; i < boxColliders_Tree.size(); ++i)
 	{
-		if (boxColliders_Tree[i]->PushCollision(c)) 
+		if (boxColliders_Tree[i]->PushCollision(c))
+		{
+			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+			return true;
+		}
+	}
+	for (int i = 0; i < EdgeGuard.size(); ++i) 
+	{
+		if (EdgeGuard[i]->PushCollision(c))
+		{
+			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
+			return true;
+		}
+	}
+	for (int i = 0; i < Gatesharp.size(); ++i)
+	{
+		if (Gatesharp[i]->PushCollision(c))
 		{
 			if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
 			return true;
@@ -1056,23 +1174,24 @@ bool Dungeon::IsCollision(Collider* c)
 
 bool Dungeon::PotalCollision(Collider* C)
 {
-	if (PotalCollider->IsCapsuleCollision((CapsuleCollider*) C)) return true;
+	if (PotalCollider->IsCapsuleCollision((CapsuleCollider*)C)) return true;
 
 	return false;
 }
 
 void Dungeon::DoorMove()
 {
-	if (Gates[5]->Pos().y <= 15.5f) 
+	if (Gates[3]->Pos().y <= 15.5f)
 	{
-		Gates[5]->Pos().y += 5 * DELTA;
+		Gates[3]->Pos().y += 7.0 * DELTA;
 		boxCollider_GD->Pos().y += 0.01 * DELTA;
-	} 
+	}
 
-	if (Gates[5]->Pos().y > 15.5f)
+	if (Gates[3]->Pos().y > 15.5f)
 	{
-		Gates[5]->Pos().y = 15.5f;
+		Gates[3]->Pos().y = 15.5f;
 		boxCollider_GD->Pos().y = 2.5f;
+		Audio::Get()->Pause("Open_Gate");
 		open = true;
 	}
 	return;
@@ -1090,7 +1209,12 @@ void Dungeon::DoorMove_I()
 		{
 			InGates[7]->Rot().y += 0.5f * DELTA;
 		}
-		
+		if (InGates[7]->Rot().y >= 1.575f) 
+		{
+			Audio::Get()->Pause("Open_Door");
+			Audio::Get()->Pause("in_Dungeon");
+		}
+
 		if (InGates[8]->Pos().z <= 40.0f)
 		{
 			InGates[8]->Pos().z += 5.0f * DELTA;
@@ -1105,6 +1229,10 @@ void Dungeon::DoorMove_I()
 
 void Dungeon::CrashIceWall()
 {
+	Time -= 1.0 * DELTA;
+	if(Time <= 0) 	Audio::Get()->Pause("IceWall_Break");
+	Audio::Get()->Pause("in_Dungeon2");
+	
 	IceWall->SetActive(false);
 	IceWallL->SetActive(false);
 	IceWallR->SetActive(false);
@@ -1114,12 +1242,11 @@ void Dungeon::CrashIceWall()
 	for (int i = 0; i < Ice_debris.size(); ++i) Ice_debris[i]->UpdateWorld();
 	Ice_Broken->UpdateWorld();
 
-	for (int i = 0; i < Ice_debris.size(); ++i) 
+	for (int i = 0; i < Ice_debris.size(); ++i)
 	{
-		if (Ice_debris[i]->Pos().y > 390.0) 
+		if (Ice_debris[i]->Pos().y > 390.0)
 		{
 			Ice_debris[i]->Pos().y -= 150 * DELTA;
 		}
 	}
-	
 }

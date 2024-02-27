@@ -25,5 +25,7 @@ private:
     vector<Model*> TestMonsterSpawnPos_A;
     vector<Model*> TestMonsterSpawnPos_B;
     //Model* TestModel;
+
+    float Time = 7.0f;
 };
 

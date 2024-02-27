@@ -46,6 +46,7 @@ private:
 	TerrainLOD* terrain;
 
 	vector<Model*> Gates;
+	Model* Core;
 
 	vector<Model*> Walls_L;
 	Model* Walls_LF;
@@ -97,17 +98,18 @@ private:
 	bool open_I = false;
 	bool isClear = false;
 
-	BoxCollider* boxCollider_G;
+	//BoxCollider* boxCollider_G;
 	BoxCollider* boxCollider_GL;
 	BoxCollider* boxCollider_GR;
 	BoxCollider* boxCollider_GD;
-	BoxCollider* boxCollider_GP;
-	BoxCollider* boxCollider_GPI;
-	BoxCollider* boxCollider_S;
-	BoxCollider* boxCollider_SI;
-	BoxCollider* boxCollider_SIC;
-	BoxCollider* boxCollider_SIL;
-	BoxCollider* boxCollider_SIR;
+	//BoxCollider* boxCollider_GP;
+	//BoxCollider* boxCollider_GPI;
+	// °è´Ü
+	//BoxCollider* boxCollider_S;
+	//BoxCollider* boxCollider_SI;
+	//BoxCollider* boxCollider_SIC;
+	//BoxCollider* boxCollider_SIL;
+	//BoxCollider* boxCollider_SIR;
 
 	BoxCollider* boxCollider_DL;
 	BoxCollider* boxCollider_DR;
@@ -129,7 +131,11 @@ private:
 	SphereCollider* PotalCollider;
 	BoxCollider* boxColliders_B;
 	vector<BoxCollider*> boxColliders_Tree;
+	vector<BoxCollider*> EdgeGuard;
+	vector<BoxCollider*> Gatesharp;
 
 	int n = 0;
 	int n1 = 0;
+
+	float Time = 7.0f;
 };

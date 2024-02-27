@@ -41,6 +41,7 @@ private:
 	BoxCollider* StairCollider;
 	BoxCollider* Chair_Ground;
 	BoxCollider* Chair;
+	vector<BoxCollider*> StairGuard;
 
 	void Fall();
 	void ZeroSet();

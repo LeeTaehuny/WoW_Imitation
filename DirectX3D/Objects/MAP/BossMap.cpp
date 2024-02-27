@@ -25,7 +25,7 @@ BossMap::BossMap()
 	Phase2[2] = new Model("IceEdge2");
 	Phase2[3] = new Model("IceEdge3");
 	Phase2[4] = new Model("IceEdge4");
-	
+
 	Phase2[5] = new Model("Ice_debris1");	// 얼음파편 입니다
 	Phase2[6] = new Model("Ice_debris2");
 	Phase2[7] = new Model("Ice_debris3");
@@ -37,7 +37,7 @@ BossMap::BossMap()
 	Phase2[6]->Pos().y = 295.0f;
 	Phase2[7]->Pos().y = 295.0f;
 	Phase2[8]->Pos().y = 295.0f;
-	
+
 
 
 	fixeds.resize(2);							// 페이즈가 바뀌어도 변화하지 않는 것들
@@ -55,6 +55,22 @@ BossMap::BossMap()
 	Chair = new BoxCollider(Vector3(10, 10, 10));
 	Chair->Pos().y += 20.0f;
 	Chair->Pos().x += 80.0f;
+
+	StairGuard.resize(3);
+	for (int i = 0; i < StairGuard.size(); ++i)
+	{
+		StairGuard[i] = new BoxCollider(Vector3(15, 30, 30));
+	}
+	StairGuard[0]->Pos().y += 15;
+	StairGuard[0]->Pos().x += 52.5;
+	StairGuard[1]->Pos().y += 15;
+	StairGuard[1]->Pos().x += 60;
+	StairGuard[1]->Pos().z -= 22.5;
+	StairGuard[1]->Rot().y -= 0.75;
+	StairGuard[2]->Pos().y += 15;
+	StairGuard[2]->Pos().x += 60;
+	StairGuard[2]->Pos().z += 22.5;
+	StairGuard[2]->Rot().y += 0.75;
 
 	disappears.resize(4);							// 1페이즈 이후에 사라지는 얼음기둥(갈비뼈모양) 입니다
 	disappears_C.resize(4);
@@ -90,6 +106,12 @@ BossMap::BossMap()
 	//FOR(2)
 	//	blendState[i] = new BlendState();
 	//blendState[1]->Alpha(true);
+
+	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->UpdateWorld();	// 페이즈가 넘어가도 변화하지 않는것들은 그냥 업데이트 합니다
+	StairCollider->UpdateWorld();
+	Chair_Ground->UpdateWorld();
+	Chair->UpdateWorld();
+	for (int i = 0; i < StairGuard.size(); ++i) StairGuard[i]->UpdateWorld();
 }
 
 BossMap::~BossMap()
@@ -111,12 +133,6 @@ void BossMap::Update()
 	//	PhaseNum += 1;
 	//}
 
-
-	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->UpdateWorld();	// 페이즈가 넘어가도 변화하지 않는것들은 그냥 업데이트 합니다
-	StairCollider->UpdateWorld();
-	Chair_Ground->UpdateWorld();
-	Chair->UpdateWorld();
-
 	switch (PhaseNum) // 페이즈 넘버에따라 엑티브와 업데이트 여부를 판단하여 수행합니다
 	{
 	case 0:
@@ -124,8 +140,8 @@ void BossMap::Update()
 		Phase1->SetActive(true);
 		GroundColider1->SetActive(true);
 		GroundColider1->UpdateWorld();
-	
-		for (int i = 0; i < disappears.size(); i++) 
+
+		for (int i = 0; i < disappears.size(); i++)
 		{
 			disappears[i]->UpdateWorld();
 			disappears_C[i]->UpdateWorld();
@@ -158,11 +174,12 @@ void BossMap::Update()
 void BossMap::Render()
 {
 	skybox->Render();
-	
+
 	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->Render(); // 페이즈가 넘어가도 변화하지 않는것들은 그냥 랜더 합니다
 	//StairCollider->Render();
 	//Chair_Ground->Render();
 	//Chair->Render();
+	//for (int i = 0; i < StairGuard.size(); ++i) StairGuard[i]->Render();
 
 	//blendState[1]->SetState();
 
@@ -171,7 +188,7 @@ void BossMap::Render()
 	case 0:
 		Phase1->Render();
 		//GroundColider1->Render();
-		for (int i = 0; i < disappears.size(); i++) 
+		for (int i = 0; i < disappears.size(); i++)
 		{
 			disappears[i]->Render();
 			//disappears_C[i]->Render();
@@ -191,50 +208,56 @@ void BossMap::Render()
 		//GroundColider2->Render();
 		NoneRender();
 	}
-	
+
 	//blendState[0]->SetState();
 }
 
 bool BossMap::IsCollision(Collider* c)
 {
-	if (StairCollider->PushCollision(c)) 
+	if (StairCollider->PushCollision(c))
 	{
 		c->GetParent()->Pos().y += 0.1f;
 		return true;
 	}
-	//else 
-	//{
-	//	c->GetParent()->Pos().y -= 1.0f * DELTA;
-	//}
 	if (Chair_Ground->PushCollision(c)) return true;
 	if (Chair->PushCollision(c)) return true;
+	for (int i = 0; i < StairGuard.size(); ++i)
+	{
+		if (StairGuard[i]->PushCollision(c))
+		{
+			if (c->GetParent()->Pos().y < 0)
+			{
+				c->GetParent()->Pos().y = 0;
+			}
+		}
+	}
 
 	if (PhaseNum == 0)
 	{
-		for (int i = 0; i < disappears.size(); i++) 
+		for (int i = 0; i < disappears.size(); i++)
 		{
-			if (disappears_C[i]->PushCollision((CapsuleCollider*)c)) 
+			if (disappears_C[i]->PushCollision((CapsuleCollider*)c))
 			{
-				if (c->GetParent()->Pos().y < 0) 
+				if (c->GetParent()->Pos().y < 0)
 				{
 					c->GetParent()->Pos().y = 0;
 				}
 
 				return true;
 			}
-			
+
 		}
 	}
 	if (PhaseNum == 0 || PhaseNum == 2)
 	{
-		if (GroundColider1->IsCapsuleCollision((CapsuleCollider*)c)) 
+		if (GroundColider1->IsCapsuleCollision((CapsuleCollider*)c))
 		{
 			return true;
 		}
 	}
-	if (PhaseNum == 1 || PhaseNum == 3) 
+	if (PhaseNum == 1 || PhaseNum == 3)
 	{
-		if (GroundColider2->IsCapsuleCollision((CapsuleCollider*)c)) 
+		if (GroundColider2->IsCapsuleCollision((CapsuleCollider*)c))
 		{
 			return true;
 		}
