@@ -257,7 +257,11 @@ void LichKimgBossScene::Scene_Chnage()
 		mon1[i]->GetCollider()->SetActive(false);
 	}
 
-	Audio::Get()->Stop("main_bgm");
+	bossData->GetTransform()->SetActive(false);
+	bossData->GetCollider()->SetActive(false);
+
+	Audio::Get()->Stop("bossScene_main_bgm");
+	Audio::Get()->Stop("bossScene_end");
 
 	SceneManager::Get()->ChangeScene("Town");
 }
