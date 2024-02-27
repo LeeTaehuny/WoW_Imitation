@@ -43,4 +43,8 @@ public:
 
 private:
     State curState = IDLE;
+
+    float Max_one_atk_time = 0.5f;
+    float one_atk_time = Max_one_atk_time;
+    bool isOne_sound = false;
 };

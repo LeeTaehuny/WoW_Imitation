@@ -32,6 +32,21 @@ MonsterManager::MonsterManager()
 	valkier_body = new ModelAnimatorInstancing("VAlkier");
 	valkier_body->ReadClip("Idle_2");
 	valkier_body->ReadClip("Flying");
+
+	Audio::Get()->Add("iceBall_die", "Sounds/Monster/iceBall/die.ogg");
+	Audio::Get()->Add("iceBall_hit", "Sounds/Monster/iceBall/hit.ogg");
+
+	Audio::Get()->Add("skeleton_hit", "Sounds/Monster/Skeleton/hit.ogg");
+	Audio::Get()->Add("skeleton_die", "Sounds/Monster/Skeleton/Death.ogg");
+	Audio::Get()->Add("skeleton_atk", "Sounds/Monster/Skeleton/Attack.ogg");
+
+	Audio::Get()->Add("skeleton_Night_atk", "Sounds/Monster/Skeleton_Night/Attack.ogg");
+	Audio::Get()->Add("skeleton_Night_die", "Sounds/Monster/Skeleton_Night/die.ogg");
+	Audio::Get()->Add("skeleton_Night_hit", "Sounds/Monster/Skeleton_Night/hit.ogg");
+
+	Audio::Get()->Add("valkyr_hit", "Sounds/Monster/Valkyr/hit.ogg");
+	Audio::Get()->Add("valkyr_die", "Sounds/Monster/Valkyr/die.ogg");
+	Audio::Get()->Add("valkyr_wing", "Sounds/Monster/Valkyr/wing.ogg");
 }
 MonsterManager::~MonsterManager()
 {
@@ -61,25 +76,45 @@ void MonsterManager::Update()
 	valkier_body->Update();
 	if (LickKing) LickKing->Update();
 
-	for (MonsterBase* skel : skeleton)
+	for (int i = 0; i < skeleton.size(); i++)
 	{
-		UPDATE(skel);
+		if (!skeleton[i]->GetTransform()->Active())
+		{
+			skeleton.erase(skeleton.begin() + i);
+			break;
+		}
+		UPDATE(skeleton[i]);
 	}
-	for (MonsterBase* skel : skeleton_Knight)
+	for (int i = 0; i < skeleton_Knight.size(); i++)
 	{
-		UPDATE(skel);
+		if (!skeleton_Knight[i]->GetTransform()->Active())
+		{
+			skeleton_Knight.erase(skeleton_Knight.begin() + i);
+			break;
+		}
+		UPDATE(skeleton_Knight[i]);
 	}
 	for (MonsterBase* skel : scarecrow)
 	{
 		UPDATE(skel);
-	}
-	for (MonsterBase* skel : valkier)
+	}	
+	for (int i = 0; i < valkier.size(); i++)
 	{
-		UPDATE(skel);
+		if (!valkier[i]->GetTransform()->Active())
+		{
+			valkier.erase(valkier.begin() + i);
+			break;
+		}
+		UPDATE(valkier[i]);
 	}
-	for (MonsterBase* skel : iceBall)
+	for (int i = 0; i < iceBall.size(); i++)
 	{
-		UPDATE(skel);
+		if (!iceBall[i]->GetTransform()->Active())
+		{
+			iceBall.erase(iceBall.begin() + i);
+			break;
+		}
+		UPDATE(iceBall[i]);
 	}
 }
 void MonsterManager::Render()
@@ -120,7 +155,8 @@ void MonsterManager::PostRender()
 
 void MonsterManager::GUIRender()
 {
-
+	//string nowSize = "skeleton count : " + to_string(skeleton.size());
+	//ImGui::Text((nowSize).c_str());
 }
 
 void MonsterManager::SetTarget(CH_Base_ver2* transform)

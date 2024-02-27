@@ -100,6 +100,7 @@ void LichKimgBossScene::Start()
 		}
 	}
 
+	map->SetPhase(0);
 	if (!MONSTER->GetLichKing())
 	{
 		MONSTER->SpawnLickKing(Vector3());
@@ -207,6 +208,8 @@ void LichKimgBossScene::PostRender()
 void LichKimgBossScene::GUIRender()
 {
 	CH->GUIRender();
+
+	MONSTER->GUIRender();
 }
 
 void LichKimgBossScene::Change_Town()

@@ -142,10 +142,12 @@ void Skeleton_Knight::Hit(float amount)
 		SetState(DEATH);
 		collider->SetActive(false);
 		curHP = 0.0f;
+		Audio::Get()->Play("skeleton_Night_die");
 	}
 	else
 	{
 		SetState(HIT);
+		Audio::Get()->Play("skeleton_Night_hit");
 	}
 
 	for (int i = 0; i < hitText.size(); i++)
@@ -256,7 +258,20 @@ void Skeleton_Knight::targetAttack()
 		attack_deley = Max_attack_deley;
 	}
 
-	if (curState == ATTACK1) return;
+	if (curState == ATTACK1) 
+	{
+		if (isOne_sound)
+		{
+			one_atk_time -= DELTA;
+			if (one_atk_time <= 0)
+			{
+				isOne_sound = false;
+				one_atk_time = Max_one_atk_time;
+				Audio::Get()->Play("skeleton_Night_atk");
+			}
+		}
+		return;
+	}
 	if (attackRange->IsCollision(targetTransform->GetCollider()) &&
 		oneAttack == 0)
 	{
@@ -266,6 +281,10 @@ void Skeleton_Knight::targetAttack()
 		Vector3 im = targetTransform->GetCollider()->GlobalPos() - transform->GlobalPos();
 		transform->Rot().y = atan2(im.x, im.z) + XM_PI;
 		transform->UpdateWorld();
+
+		Max_one_atk_time = Max_attack_deley * 0.5f;
+		one_atk_time = Max_one_atk_time;
+		isOne_sound = true;
 	}
 	else if (oneAttack >= 1 && curState != ATTACK1)
 	{

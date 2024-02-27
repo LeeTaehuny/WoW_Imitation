@@ -6,6 +6,7 @@ Skeleton::Skeleton(Transform* transform, ModelAnimatorInstancing* instancing, UI
 	this->instancing = instancing;
 	this->index = index;
 	this->target = target;
+	transform->SetActive(true);
 
 	root = new Transform();
 
@@ -144,10 +145,12 @@ void Skeleton::Hit(float amount)
 		SetState(DEATH);
 		collider->SetActive(false);
 		curHP = 0.0f;
+		Audio::Get()->Play("skeleton_die");
 	}
 	else
 	{
 		SetState(HIT);
+		Audio::Get()->Play("skeleton_hit");
 	}
 
 	for (int i = 0; i < hitText.size(); i++)
@@ -210,7 +213,6 @@ void Skeleton::EndHit()
 void Skeleton::EndDeath()
 {
 	transform->SetActive(false);
-	//collider->SetActive(false);
 }
 
 void Skeleton::SetState(State state)
@@ -257,7 +259,21 @@ void Skeleton::targetAttack()
 		attack_deley = Max_attack_deley;
 	}
 
-	if (curState == ATTACK1 || curState == ATTACK2) return;
+
+	if (curState == ATTACK1 || curState == ATTACK2) 
+	{
+		if (isOne_sound)
+		{
+			one_atk_time -= DELTA;
+			if (one_atk_time <= 0)
+			{
+				isOne_sound = false;
+				one_atk_time = Max_one_atk_time;
+				Audio::Get()->Play("skeleton_atk");
+			}
+		}
+		return;
+	}
 	if (attackRange->IsCollision(targetTransform->GetCollider()) &&
 		oneAttack == 0)
 	{
@@ -269,12 +285,20 @@ void Skeleton::targetAttack()
 			SetState(ATTACK1);
 			Max_attack_deley = 0.9f;
 			attack_deley = Max_attack_deley;
+
+			Max_one_atk_time = Max_attack_deley * 0.5f;
+			one_atk_time = Max_one_atk_time;
+			isOne_sound = true;
 		}
 		else if (ron == 2)
 		{
 			SetState(ATTACK2);
 			Max_attack_deley = 1.5f;
 			attack_deley = Max_attack_deley;
+
+			Max_one_atk_time = Max_attack_deley * 0.5f;
+			one_atk_time = Max_one_atk_time;
+			isOne_sound = true;
 		}
 		Vector3 im = targetTransform->GetCollider()->GlobalPos() - transform->GlobalPos();
 		transform->Rot().y = atan2(im.x, im.z) + XM_PI;
