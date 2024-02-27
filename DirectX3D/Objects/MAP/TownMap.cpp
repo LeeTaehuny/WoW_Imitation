@@ -30,7 +30,7 @@ void TownMap::Init()
     terrain = new Terrain();
     terrain->UpdateWorld();
     shop = new Shop();
-    portal = new Model("Portal");
+    portal = new Model("TownPortal");
     portal->SetShader(L"Light/ItemLight.hlsl");
     sky = new SkyBox(L"Textures/Landscape/BlueSky.dds");
     portalImage = new Quad(Vector2(60, 60));

@@ -91,6 +91,11 @@ void SkillManager::Update()
 		}
 	}
 
+	if (KEY_DOWN(VK_ESCAPE) && skillTreeFrame->Active())
+	{
+		skillTreeFrame->SetActive(false);
+	}
+
 	if (!skillTreeFrame->Active()) return;
 
 	if (KEY_UP(VK_LBUTTON))

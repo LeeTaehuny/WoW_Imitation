@@ -14,6 +14,11 @@ TownScene::TownScene()
     loding->Pos() = Vector3(CENTER_X, CENTER_Y);
     loding->SetActive(false);
     loding->UpdateWorld();
+
+    int height = townMap->GetHeight(Vector3(80.0f, 0.0f, 185.0f));
+    MONSTER->SpawnScarecrow(Vector3(80.0f, height, 185.0f));
+    MONSTER->SpawnScarecrow(Vector3(85.0f, height, 175.0f));
+    MONSTER->SpawnScarecrow(Vector3(65.0f, height, 180.0f));
 }
 
 TownScene::~TownScene()
@@ -29,12 +34,6 @@ void TownScene::Start()
 	CH->GetPlayerData()->Rot() = Vector3(0.0f, 7.3f, 0.0f);
 	SKILL->Init(CH->GetPlayerData());
 	CAM->SetTarget(CH->GetPlayerData());
-
-    int height = townMap->GetHeight(Vector3(80.0f, 0.0f, 185.0f));
-    MONSTER->SpawnScarecrow(Vector3(80.0f, height, 185.0f));
-    MONSTER->SpawnScarecrow(Vector3(85.0f, height, 175.0f));
-    MONSTER->SpawnScarecrow(Vector3(65.0f, height, 180.0f));
-
 }
 
 void TownScene::Update()
@@ -95,5 +94,5 @@ void TownScene::Loding()
     if (!isReady) return;
 
     // 다음 씬으로 전환
-    SceneManager::Get()->ChangeScene("Boss");
+    SceneManager::Get()->ChangeScene("DungeonScene");
 }
