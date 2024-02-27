@@ -33,5 +33,5 @@ void P_008_Guardian_Of_Ancient_Kings::Render()
 
 void P_008_Guardian_Of_Ancient_Kings::UseSkill()
 {
-	owner->GetStat().defence *= 5;
+	owner->GetStat().defence *= 1.2;
 }

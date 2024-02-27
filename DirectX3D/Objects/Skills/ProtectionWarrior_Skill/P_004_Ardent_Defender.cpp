@@ -36,5 +36,5 @@ void P_004_Ardent_Defender::Render()
 
 void P_004_Ardent_Defender::UseSkill()
 {
-	owner->GetStat().defence *= 2;
+	owner->GetStat().defence *= 1.1f;
 }
