@@ -22,7 +22,7 @@ GameManager::GameManager()
     SceneManager::Get()->Register("Town", new TownScene());
     SceneManager::Get()->Register("DungeonScene", new DungeonScene());
     SceneManager::Get()->Register("Boss", new LichKimgBossScene());
-
+    
     SceneManager::Get()->ChangeScene("Select");
 }
 

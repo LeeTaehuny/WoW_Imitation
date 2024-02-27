@@ -276,6 +276,7 @@ void ProtectionWarrior_in::Control()
 			SetState(JUMP);
 			jumpVelocity = jumpForce;
 			isJump = true;
+			//curheight = 0.0f;
 		}
 	}
 

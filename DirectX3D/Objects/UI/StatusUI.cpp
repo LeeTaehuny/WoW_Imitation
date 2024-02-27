@@ -53,6 +53,11 @@ void StatusUI::Update()
 		}
 	}
 
+	if (KEY_DOWN(VK_ESCAPE) && Active())
+	{
+		SetActive(false);
+	}
+
 	if (player == nullptr) return;
 	if (!Active()) return;
 

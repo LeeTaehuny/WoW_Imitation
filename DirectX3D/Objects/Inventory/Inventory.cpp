@@ -44,6 +44,11 @@ void Inventory::Update()
 		}
 	}
 
+	if (KEY_DOWN(VK_ESCAPE) && Active())
+	{
+		SetActive(false);
+	}
+
 	if (!Active()) return;
 
 	// 인벤토리 업데이트
@@ -220,7 +225,7 @@ void Inventory::InitInventory()
 	// 인벤토리 프레임 설정
 	invFrame = new Slot(L"Textures/UI/Inventory.png", SlotType::Inventory_Frame);
 	invFrame->Scale() *= 1.75f;
-	invFrame->Pos() = { CENTER_X, CENTER_Y, 1.0f };
+	invFrame->Pos() = { CENTER_X + 320.0f, CENTER_Y - 40.0f, 1.0f };
 
 	// 인벤토리 내용 초기화
 	inventory.resize(28);

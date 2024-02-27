@@ -6,8 +6,8 @@ ModelExportScene::ModelExportScene()
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
 
-    //string name = "Skeleton";
-    //Model_MER_MESH(name);
+    string name = "TownPortal";
+    Model_MER_MESH(name);
     ////AnimationClip(name, "Attack_3");
     ////string name = "VAlkier";
     ////string file = "Models/FBX/" + name + ".fbx";
