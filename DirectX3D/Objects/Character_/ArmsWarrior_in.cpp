@@ -63,6 +63,14 @@ ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAni
 	}
 	this->SetActive(true);
 
+	// Status
+	stat.maxHp = 1500.0f;
+	stat.hp = stat.maxHp;
+	stat.maxMp = 500;
+	stat.mp = stat.maxMp;
+	stat.damage = 150.0f;
+	stat.defence = 100;
+
 	mainHandBoneIndex = 37;
 }
 
@@ -222,12 +230,15 @@ void ArmsWarrior_in::OnHit(float damage)
 	// 방어력 버프 존재 시
 	if (isDefence)
 	{
-		// 방어력 1.3배 적용하기 (추후 뺄셈 연산으로 주기)
-		stat.hp -= damage;
+		float def = ((stat.defence * 1.3f) / (stat.defence + 100)) * 100;
+
+		stat.hp -= (damage - damage * def);
 	}
 	else
 	{
-		stat.hp -= damage;
+		float def = stat.defence / (stat.defence + 100) * 100;
+
+		stat.hp -= (damage - damage * def);
 	}
 
 

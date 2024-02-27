@@ -59,6 +59,14 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 	this->SetActive(true);
 
 	mainHandBoneIndex = 37;
+
+	// Status
+	stat.maxHp = 2000.0f;
+	stat.hp = stat.maxHp;
+	stat.maxMp = 500;
+	stat.mp = stat.maxMp;
+	stat.damage = 100.0f;
+	stat.defence = 100;
 }
 
 ProtectionWarrior_in::~ProtectionWarrior_in()
@@ -199,7 +207,9 @@ void ProtectionWarrior_in::AIUpdate()
 
 void ProtectionWarrior_in::OnHit(float damage)
 {
-	stat.hp -= damage;
+	float def = stat.defence / (stat.defence + 100) * 100;
+
+	stat.hp -= (damage - damage * def);
 
 	if (stat.hp > 0)
 	{

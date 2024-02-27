@@ -21,7 +21,7 @@ void SkillManager::Init(CH_Base_ver2* player)
 	// 프레임 생성
 	skillTreeFrame = new Slot(L"Textures/UI/skillTreeBase.png", SlotType::SkillTree_Frame);
 	skillTreeFrame->Scale() *= 1.5f;
-	skillTreeFrame->Pos() = { CENTER_X / 2.0f, CENTER_Y, 1.0f };
+	skillTreeFrame->Pos() = { CENTER_X / 2.0f + 40.0f, CENTER_Y - 40.0f, 1.0f };
 
 
 	// 슬롯 생성

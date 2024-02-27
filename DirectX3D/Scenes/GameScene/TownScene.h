@@ -16,6 +16,13 @@ public:
 	virtual void GUIRender() override;
 
 private:
+	void Loding();
+
+private:
 	class TownMap* townMap;
+	// 로딩 화면
+	class Quad* loding;
+	// 로딩을 위한 판별용 변수
+	bool isReady;
 };
 

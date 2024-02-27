@@ -1,6 +1,7 @@
 ﻿#include "Framework.h"
 #include "TownMap.h"
 #include "Objects/Shop/Shop.h"
+#include "Objects/Shop/Guild.h"
 
 TownMap::TownMap()
 {
@@ -35,7 +36,7 @@ void TownMap::Init()
     portalImage = new Quad(Vector2(60, 60));
     portalImage->GetMaterial()->SetDiffuseMap(L"Textures/Etc/portal.png");
     collider = new BoxCollider(Vector3(60, 60, 3));
-    
+    guild = new Guild();
 
     CreateBillboard();
 
@@ -49,11 +50,14 @@ void TownMap::Init()
     collider->Rot() = portalImage->Rot();
     shop->Pos() = Vector3(167, height, 167);
     shop->UpdateWorld();
+    guild->Pos() = Vector3(135, height, 165);
+    guild->UpdateWorld();
 }
 
 void TownMap::Update()
 {
     shop->Update();
+    guild->Update();
     portal->UpdateWorld();
     portalImage->UpdateWorld();
 
@@ -71,6 +75,7 @@ void TownMap::Render()
 
     terrain->Render();
     shop->Render();
+    guild->Render();
 
     portal->Render();
 
@@ -86,6 +91,7 @@ void TownMap::Render()
 void TownMap::PostRender()
 {
     shop->UIRender();
+    guild->UIRender();
 }
 
 void TownMap::GUIRender()

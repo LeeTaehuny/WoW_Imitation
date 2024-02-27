@@ -12,7 +12,7 @@ StatusUI::StatusUI(class CH_Base_ver2* player) : player(player)
 	// 스탯 창 프레임 설정
 	statusFrame = new Slot(L"Textures/UI/status.png", SlotType::Status_Frame);
 	statusFrame->Scale() *= 1.5f;
-	statusFrame->Pos() = { CENTER_X / 2.0f, CENTER_Y, 1.0f };
+	statusFrame->Pos() = { CENTER_X / 2.0f + 40.0f, CENTER_Y - 40.0f, 1.0f };
 
 	weaponSlot = new Slot(Vector2(33.0f, 33.0f), SlotType::Inventory_Slot);
 	weaponSlot->GetMaterial()->SetDiffuseMap(L"Textures/Color/Black.png");

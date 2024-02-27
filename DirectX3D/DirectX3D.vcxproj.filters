@@ -240,6 +240,7 @@
     <ClCompile Include="Scenes\GameScene\SelectScene.cpp" />
     <ClCompile Include="Scenes\GameScene\TownScene.cpp" />
     <ClCompile Include="Objects\MAP\TownMap.cpp" />
+    <ClCompile Include="Objects\Shop\Guild.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Skills\HolyPriest_Skill\H_004_Holy_Word_Chastise.h" />
@@ -276,6 +277,7 @@
     <ClInclude Include="Scenes\GameScene\SelectScene.h" />
     <ClInclude Include="Scenes\GameScene\TownScene.h" />
     <ClInclude Include="Objects\MAP\TownMap.h" />
+    <ClInclude Include="Objects\Shop\Guild.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Character_\CH_Manager.h" />

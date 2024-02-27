@@ -78,6 +78,13 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 
 	mainHandBoneIndex = 23;
 
+	// Status
+	stat.maxHp = 700.0f;
+	stat.hp = stat.maxHp;
+	stat.maxMp = 1000;
+	stat.mp = stat.maxMp;
+	stat.damage = 100.0f;
+	stat.defence = 100;
 
 }
 
@@ -200,7 +207,9 @@ void FireMage_in::AIUpdate()
 
 void FireMage_in::OnHit(float damage)
 {
-	stat.hp -= damage;
+	float def = stat.defence / (stat.defence + 100) * 100;
+
+	stat.hp -= (damage - damage * def);
 
 	if (stat.hp > 0)
 	{

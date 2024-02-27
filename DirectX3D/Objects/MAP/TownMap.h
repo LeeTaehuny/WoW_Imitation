@@ -24,6 +24,7 @@ private:
 private:
 	class Terrain* terrain;
 	class Shop* shop;
+	class Guild* guild;
 	class Model* portal;
 	class SkyBox* sky;
 	class Quad* portalImage;

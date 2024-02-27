@@ -283,7 +283,7 @@ void QuickSlot::UpdateQuickSlot()
 		}
 		else
 		{
-			quickSlots[idx]->GetMaterial()->SetDiffuseMap(L"Textures/Color/White.png");
+			quickSlots[idx]->GetMaterial()->SetDiffuseMap(L"Textures/Color/Black.png");
 		}
 
 		idx++;

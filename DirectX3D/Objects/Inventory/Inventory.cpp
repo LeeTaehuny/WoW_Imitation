@@ -235,7 +235,7 @@ void Inventory::InitInventory()
 		Slot* slot = new Slot(Vector2(33.0f, 33.0f), SlotType::Inventory_Slot);
 		slot->GetMaterial()->SetDiffuseMap(L"Textures/Color/Black.png");
 		slot->SetParent(invFrame);
-		slot->Pos() = { -143.0f + (idxX * 47.5f), 45.0f - (idxY * 40.5f), 2.0f };
+		slot->Pos() = { -143.0f + (idxX * 47.5f), 45.0f - (idxY * 42.5f), 2.0f };
 		invSlot[i] = slot;
 	}
 

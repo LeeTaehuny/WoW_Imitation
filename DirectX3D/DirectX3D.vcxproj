@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Shop\Guild.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_002_Infest.h" />
@@ -371,6 +372,7 @@
     <ClInclude Include="Objects\MAP\TownMap.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Shop\Guild.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_002_Infest.cpp" />

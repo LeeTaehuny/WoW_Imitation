@@ -112,6 +112,9 @@ void Shop::Render()
 
 void Shop::UIRender()
 {
+	Vector3 screenPos = CAM->WorldToScreen(shop->GlobalPos());
+	Font::Get()->RenderText("SHOP", { screenPos.x + 30.0f, screenPos.y + 150.0f });
+
 	if (!Active()) return;
 
 	shopFrame->Render();
