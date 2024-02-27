@@ -19,10 +19,12 @@ private:
     CH_Base_ver2* player;
     Model* PLAYER;
 
-    vector<SphereCollider*> TestMonsterSpawnPos_A;
-    vector<SphereCollider*> TestMonsterSpawnPos_B;
-    //vector<Model*> TestMonsterSpawnPos_A;
-    //vector<Model*> TestMonsterSpawnPos_B;
+    //vector<Vector3> TestMonsterSpawnPos_A;
+    //vector<Vector3> TestMonsterSpawnPos_B;
+    //vector<SphereCollider*> TestMonsterSpawnPos_A;
+    //vector<SphereCollider*> TestMonsterSpawnPos_B;
+    vector<Model*> TestMonsterSpawnPos_A;
+    vector<Model*> TestMonsterSpawnPos_B;
 
     //TerrainLOD* terrain;
 };

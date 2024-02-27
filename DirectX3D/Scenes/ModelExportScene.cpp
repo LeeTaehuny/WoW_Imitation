@@ -9,18 +9,26 @@ ModelExportScene::ModelExportScene()
 
     Model_MER_MESH(name);
     //AnimationClip(name, "Attack_3");
+    //string name = "VAlkier";
+    //string file = "Models/FBX/" + name + ".fbx";
+    //ModelExporter* exporter;
+
+    //Model_MER_MESH(name);
+    //AnimationClip(name, "Flying");
+    //AnimationClip(name, "Idle_1");
+    //AnimationClip(name, "Idle_2");
+    //AnimationClip(name, "Idle_3");
     //AnimationClip(name, "Attack_2");
     //AnimationClip(name, "Attack_3");
     //AnimationClip(name, "Attack_4");
 	
-    //string name = "Chandelier";
-    //string file = "Models/FBX/" + name + ".fbx";
-    //ModelExporter* exporter;
-
-    //exporter = new ModelExporter(name, file);
-    //exporter->ExportMaterial();
-    //exporter->ExportMesh();
-    //delete exporter;   
+    string name = "Tree2";
+    string file = "Models/FBX/" + name + ".fbx";
+    ModelExporter* exporter;
+    exporter = new ModelExporter(name, file);
+    exporter->ExportMaterial();
+    exporter->ExportMesh();
+    delete exporter;   
    
     //clipName = "Dying";
     //file = "Models/Animations/" + name + "/" + clipName + ".fbx";

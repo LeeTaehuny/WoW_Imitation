@@ -32,6 +32,8 @@
 ///////////////////////////////////////////
 #include "Scenes/GameScene/SelectScene.h"
 #include "Scenes/GameScene/LichKingRaidScene.h"
+#include "Scenes/GameScene/DungeonScene.h"
+
 
 #include "Scenes/MAP/TestExportRender.h"
 
@@ -47,10 +49,8 @@ GameManager::GameManager()
 
     //SceneManager::Get()->Register("KIM", new KimScene());
     //SceneManager::Get()->ChangeScene("KIM");
-
     SceneManager::Get()->Register("Boss", new LichKingRaidScene());
     SceneManager::Get()->ChangeScene("Boss");
-
     //SceneManager::Get()->Create("Cube", new CubeScene());
     //SceneManager::Get()->Create("Sphere", new SphereScene());
     //SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
@@ -92,14 +92,14 @@ GameManager::GameManager()
     // Test Scenes
     //SceneManager::Get()->Create("BossMap", new MapTestScene());
     //SceneManager::Get()->Add("BossMap");
-    //SceneManager::Get()->Create("TestDungeon", new TestDungeonScene());
-    //SceneManager::Get()->Add("TestDungeon");
+    //SceneManager::Get()->Register("TestDungeon", new TestDungeonScene());
+    //SceneManager::Get()->ChangeScene("TestDungeon");
 
     // ModelExport
     //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
     //SceneManager::Get()->Add("ModelExport");
-    //SceneManager::Get()->Create("TestExportRender", new TestExportRender());
-    //SceneManager::Get()->Add("TestExportRender");
+    //SceneManager::Get()->Register("TestExportRender", new TestExportRender());
+    //SceneManager::Get()->ChangeScene("TestExportRender");
 
     // Terrains
     //SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
@@ -108,6 +108,13 @@ GameManager::GameManager()
     //SceneManager::Get()->Add("Terrain");
     //SceneManager::Get()->Create("Terrain", new TerrainLODScene());
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
+
+    //GameScene
+    SceneManager::Get()->Register("DungeonScene", new DungeonScene());
+    SceneManager::Get()->ChangeScene("DungeonScene");
+    //SceneManager::Get()->Register("BossMapScene", new BossMapScene());
+    //SceneManager::Get()->ChangeScene("BossMapScene");
+
 }
 
 GameManager::~GameManager()

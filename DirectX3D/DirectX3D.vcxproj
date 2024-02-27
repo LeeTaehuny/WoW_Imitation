@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="Objects\Monster\Boss\Lich_006_Summon_IceSphere.h" />
     <ClInclude Include="Scenes\GameScene\LichKingRaidScene.h" />
+    <ClInclude Include="Scenes\GameScene\DungeonScene.h" />
     <ClInclude Include="Objects\Monster\IceBall.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_005_Remorseless_Winter.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.h" />
@@ -372,6 +373,7 @@
   <ItemGroup>
     <ClCompile Include="Objects\Monster\Boss\Lich_006_Summon_IceSphere.cpp" />
     <ClCompile Include="Scenes\GameScene\LichKingRaidScene.cpp" />
+    <ClCompile Include="Scenes\GameScene\DungeonScene.cpp" />
     <ClCompile Include="Objects\Monster\IceBall.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_005_Remorseless_Winter.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.cpp" />
