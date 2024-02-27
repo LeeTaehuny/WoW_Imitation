@@ -3,6 +3,8 @@
 
 Dungeon::Dungeon() //: Transform()
 {
+	//Audio::Get()->Add("BGM", "Sounds/icecrownraid_theforgeofsouls.ogg", true); // 브금으로 북소리를 등록
+
 	//terrain = new Terrain();
 	terrain = new TerrainLOD(L"Textures/HeightMaps/TestTerrain_H.png");
 	terrain->Rot().y += 1.575f;
