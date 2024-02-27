@@ -198,13 +198,14 @@ void FireMage_in::AIUpdate()
 	range->UpdateWorld();
 }
 
-void FireMage_in::OnHit(float damage)
+void FireMage_in::OnHit(float damage, bool motion)
 {
 	stat.hp -= damage;
 
 	if (stat.hp > 0)
 	{
-		SetState(HIT);
+		if (!motion)
+			SetState(HIT);
 	}
 	else if (stat.hp <= 0)
 	{

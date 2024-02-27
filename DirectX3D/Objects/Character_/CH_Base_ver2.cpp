@@ -113,7 +113,7 @@ void CH_Base_ver2::Update()
 			vector<MonsterBase*> cols2 = MONSTER->GetSkeleton();
 			vector<MonsterBase*> cols3 = MONSTER->GetSkeleton_Knight();
 			vector<MonsterBase*> cols4 = MONSTER->GetVAlkier();
-			MonsterBase* lich = MONSTER->GetBoss();
+			MonsterBase* cols5 = MONSTER->GetLichKing();
 
 			// ���� ��ȸ�ϸ� Ray �浹 ����
 			for (MonsterBase* monster : cols1)
@@ -156,9 +156,9 @@ void CH_Base_ver2::Update()
 				}
 			}
 
-			if (lich->GetCollider()->IsRayCollision(ray, &contact))
+			if (cols5->GetCollider()->IsRayCollision(ray, &contact))
 			{
-				targetMonster = lich;
+				targetMonster = cols5;
 			}
 		}
 
@@ -217,7 +217,7 @@ void CH_Base_ver2::UIRender()
 	if (inventory != nullptr) inventory->UIRender();
 	if (quickSlot != nullptr) quickSlot->UIRender();
 	if (playerUI != nullptr) playerUI->PostRender();
-	if (targetMonster != nullptr && monsterUI != nullptr) monsterUI->PostRender();
+	if (targetMonster != nullptr && monsterUI != nullptr && targetMonster->GetMonsterType() == MonsterType::MON) monsterUI->PostRender();
 }
 
 bool CH_Base_ver2::LearnSkill(SkillBase* skill)

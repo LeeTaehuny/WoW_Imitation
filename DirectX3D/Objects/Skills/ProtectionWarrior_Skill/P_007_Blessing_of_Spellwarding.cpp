@@ -34,5 +34,5 @@ void P_007_Blessing_of_Spellwarding::Render()
 
 void P_007_Blessing_of_Spellwarding::UseSkill()
 {
-	owner->GetStat().defence *= 2;
+	owner->GetStat().defence *= 1.2f;
 }

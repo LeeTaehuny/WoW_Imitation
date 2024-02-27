@@ -17,14 +17,14 @@ IceBall::IceBall(vector<CH_Base_ver2*> target)
 
 	attackTarget_serch = new SphereCollider();
 	attackTarget_serch->SetParent(this->transform);
-	attackTarget_serch->Scale() *= 1200;
+	attackTarget_serch->Scale() *= 300;
 
 	// 현재 몬스터와 가장 가까운 캐릭터를 판별하기 위한 부분
 	{
 		attackTarget_serch->UpdateWorld();
 		float atk_leng = FLT_MAX;
 		vector<CH_Base_ver2*> characterData = CH->GetCharcterData();
-		CH_Base_ver2* lom = nullptr;
+		CH_Base_ver2* lom = target[0];
 		for (int i = 0; i < characterData.size(); ++i)
 		{
 			if (attackTarget_serch->IsCollision(characterData[i]->GetCollider()))
@@ -39,10 +39,7 @@ IceBall::IceBall(vector<CH_Base_ver2*> target)
 				}
 			}
 		}
-		if (lom != nullptr)
-		{
-			targetTransform = lom;
-		}
+		targetTransform = lom;
 	}
 	hitText.resize(20);
 
@@ -50,6 +47,12 @@ IceBall::IceBall(vector<CH_Base_ver2*> target)
 	maxHP = 500.0f;
 	curHP = maxHP;
 	Atk = 10.0f;
+
+	// 첫 번째 스킬
+	{
+		particle = new ParticleSystem("TextData/Particles/LichKing/iceball/ice01.fx");
+		nomarATK = new SphereCollider();
+	}
 }
 
 IceBall::~IceBall()
@@ -60,11 +63,19 @@ IceBall::~IceBall()
 	delete targetTransform;
 	delete attackBumwe;
 	delete attackTarget_serch;
+	delete particle;
+	delete nomarATK;
 }
 
 void IceBall::Update()
 {
 	if (!transform->Active()) return;
+	if (curHP <= 0)
+	{
+		transform->SetActive(false);
+		collider->SetActive(false);
+		return;
+	}
 
 	Move();
 	targetAttack();
@@ -78,9 +89,14 @@ void IceBall::Update()
 
 void IceBall::Render()
 {
+	if (!transform->Active()) return;
 	iceball->Render();
 	collider->Render();
 	attackRange->Render();
+	nomarATK->Render();
+
+	if (particle->IsPlay())
+		particle->Render();
 }
 
 void IceBall::PostRender()
@@ -145,13 +161,38 @@ void IceBall::Move()
 	velocity = (targetTransform->GlobalPos() - transform->GlobalPos()).GetNormalized();
 
 	transform->Pos() += velocity * 2 * DELTA;
+	transform->Pos().y = 3;
 	transform->Rot().y = atan2(velocity.x, velocity.z) + XM_PI;
 	transform->UpdateWorld();
 }
 
 void IceBall::targetAttack()
 {
-	
+	if (!targetTransform) return;
+
+	if (particle->IsPlay())
+	{
+		particle->SetPos(targetTransform->Pos());
+		particle->Update();
+	}
+	else
+	{
+		particle->Play(Vector3());
+	}
+
+	tickTime -= DELTA;
+	if (tickTime <= 0)
+	{
+		tickTime = Max_tickTime;
+		nomarATK->UpdateWorld();
+		for (CH_Base_ver2* ch : CH->GetCharcterData())
+		{
+			if (nomarATK->IsCollision(ch->GetCollider()))
+			{
+				ch->OnHit(Atk, true);
+			}
+		}
+	}
 }
 
 void IceBall::UpdateUI()

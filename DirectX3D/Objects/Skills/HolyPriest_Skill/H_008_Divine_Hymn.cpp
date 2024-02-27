@@ -1,6 +1,9 @@
 ﻿#include "Framework.h"
 #include "H_008_Divine_Hymn.h"
 
+#include "Objects/UI/PlayerUI_Bar.h"
+#include "Objects/UI/PartyUI_Bar.h"
+
 H_008_Divine_Hymn::H_008_Divine_Hymn() : ActiveSkill(SkillType::NonTarget)
 {
 	skillName = "H_008_Divine_Hymn";
@@ -90,6 +93,12 @@ void H_008_Divine_Hymn::Update()
 			if (hitCollider->IsCollision(ch->GetCollider()))
 			{
 				ch->GetStat().hp += skillDamage * DELTA;
+
+				//if (ch->GetcreatureType() == CreatureType::Player)
+				//	ch->GetPlayerUI()->SetHpPercent(ch->GetStat().hp / ch->GetStat().maxHp);
+				//else
+				//	CH->GetPartyUI()->SetHpPercent(ch->GetStat().hp / ch->GetStat().maxHp, stoi(ch->GetTag().c_str()));
+
 				if (owner->GetStat().hp >= owner->GetStat().maxHp)
 				{
 					owner->GetStat().hp = owner->GetStat().maxHp;
@@ -102,7 +111,12 @@ void H_008_Divine_Hymn::Update()
 		{
 			tickTime = Max_tickTime;
 			owner->GetStat().mp -= requiredMp;
-
+			
+			if (owner->GetcreatureType() == CreatureType::Player)
+			{
+				owner->GetPlayerUI()->SetMpPercent(owner->GetStat().mp / owner->GetStat().maxMp);
+			}
+			
 			if (owner->GetStat().mp <= 0)
 			{
 				isRun = false;

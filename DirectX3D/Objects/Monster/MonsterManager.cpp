@@ -39,6 +39,7 @@ MonsterManager::~MonsterManager()
 	delete skeletonKnight_body;
 	delete scarecrow_body;
 	delete lichKimg;
+	delete LickKing;
 
 	for (MonsterBase* skel : skeleton)
 		delete skel;
@@ -59,6 +60,7 @@ void MonsterManager::Update()
 	skeletonKnight_body->Update();
 	scarecrow_body->Update();
 	valkier_body->Update();
+	if (LickKing) LickKing->Update();
 
 	if (lichKimg) lichKimg->Update();
 
@@ -90,6 +92,7 @@ void MonsterManager::Render()
 	scarecrow_body->Render();
 	valkier_body->Render();
 	if (lichKimg) lichKimg->Render();
+	if (LickKing) LickKing->Render();
 
 	for (MonsterBase* skel : skeleton)
 		RENDER(skel);
@@ -121,7 +124,7 @@ void MonsterManager::PostRender()
 
 void MonsterManager::GUIRender()
 {
-	
+
 }
 
 void MonsterManager::SetTarget(CH_Base_ver2* transform)
@@ -131,117 +134,46 @@ void MonsterManager::SetTarget(CH_Base_ver2* transform)
 
 void MonsterManager::SpawnSkeleton(Vector3 pos)
 {
-	int curindex = 0;
-	if (skeleton.size() == 0){}
-	else
-	{
-		for (UINT i = 0; i < skeleton.size(); ++i)
-		{
-			if (skeleton[i]->GetmyNumber() == curindex)
-			{
-				curindex++;
-				continue;
-			}
-			else if (skeleton[i]->GetmyNumber() != curindex) break;
-		}
-	}	
-
 	Transform* transform = skeleton_body->Add();
 	transform->Scale() *= 0.01f;
-	Skeleton* skel = new Skeleton(transform, skeleton_body, curindex, targets);
+	Skeleton* skel = new Skeleton(transform, skeleton_body, skeleton_Count, targets);
 	//monsterCollider.push_back(skel->collider);
 	skeleton.push_back(skel);
 	skeleton[skeleton.size() - 1]->Spawn(pos);
+	skeleton_Count++;
 }
 void MonsterManager::SpawnSkeletonKnight(Vector3 pos)
 {
-	int curindex = 0;
-	if (skeleton_Knight.size() == 0) {}
-	else
-	{
-		for (UINT i = 0; i < skeleton_Knight.size(); ++i)
-		{
-			if (skeleton_Knight[i]->GetmyNumber() == curindex)
-			{
-				curindex++;
-				continue;
-			}
-			else if (skeleton_Knight[i]->GetmyNumber() != curindex) break;
-		}
-	}
-
 	Transform* transform = skeletonKnight_body->Add();
 	transform->Scale() *= 0.02f;
-	Skeleton_Knight* skel = new Skeleton_Knight(transform, skeletonKnight_body, curindex, targets);
+	Skeleton_Knight* skel = new Skeleton_Knight(transform, skeletonKnight_body, skeleton_Night_Count, targets);
 	//monsterCollider.push_back(skel->collider);
 	skeleton_Knight.push_back(skel);
 	skeleton_Knight[skeleton_Knight.size() - 1]->Spawn(pos);
+	skeleton_Night_Count++;
 }
 void MonsterManager::SpawnScarecrow(Vector3 pos)
 {
-	int curindex = 0;
-	if (scarecrow.size() == 0) {}
-	else
-	{
-		for (UINT i = 0; i < scarecrow.size(); ++i)
-		{
-			if (scarecrow[i]->GetmyNumber() == curindex)
-			{
-				curindex++;
-				continue;
-			}
-			else if (scarecrow[i]->GetmyNumber() != curindex) break;
-		}
-	}
-
 	Transform* transform = scarecrow_body->Add();
 	transform->Scale() *= 0.02f;
-	Scarecrow* skel = new Scarecrow(transform, scarecrow_body, curindex, targets);
+	Scarecrow* skel = new Scarecrow(transform, scarecrow_body, scarecrow_Count, targets);
 	//monsterCollider.push_back(skel->collider);
 	scarecrow.push_back(skel);
 	scarecrow[scarecrow.size() - 1]->Spawn(pos);
+	scarecrow_Count++;
 }
 void MonsterManager::SpawnVAlkier(Vector3 pos)
 {
-	int curindex = 0;
-	if (valkier.size() == 0) {}
-	else
-	{
-		for (UINT i = 0; i < valkier.size(); ++i)
-		{
-			if (valkier[i]->GetmyNumber() == curindex)
-			{
-				curindex++;
-				continue;
-			}
-			else if (valkier[i]->GetmyNumber() != curindex) break;
-		}
-	}
-
 	Transform* transform = valkier_body->Add();
 	transform->Scale() *= 0.02f;
-	VAlkier* skel = new VAlkier(transform, valkier_body, curindex, targets);
+	VAlkier* skel = new VAlkier(transform, valkier_body, Valkier_Count, targets);
 	//monsterCollider.push_back(skel->collider);
 	valkier.push_back(skel);
 	valkier[valkier.size() - 1]->Spawn(pos);
+	Valkier_Count++;
 }
 void MonsterManager::SpawnIceBall(Vector3 pos)
 {
-	int curindex = 0;
-	if (iceBall.size() == 0) {}
-	else
-	{
-		for (UINT i = 0; i < iceBall.size(); ++i)
-		{
-			if (iceBall[i]->GetmyNumber() == curindex)
-			{
-				curindex++;
-				continue;
-			}
-			else if (iceBall[i]->GetmyNumber() != curindex) break;
-		}
-	}
-
 	IceBall* skel = new IceBall(targets);
 	//monsterCollider.push_back(skel->collider);
 	valkier.push_back(skel);
@@ -252,6 +184,10 @@ void MonsterManager::SpawnBoss(Vector3 pos)
 	lichKimg = new Boss_LichKing();
 	lichKimg->Spawn(Vector3());
 	lichKimg->Update();
+void MonsterManager::SpawnLickKing(Vector3 pos)
+{
+	LickKing = new Boss_LichKing();
+	LickKing->Spawn(pos);
 }
 
 MonsterBase* MonsterManager::hitCollision(IN Collider* collider)
@@ -331,12 +267,17 @@ MonsterBase* MonsterManager::hitCollision(IN Collider* collider)
 	if (collider->IsCollision(lichKimg->GetCollider()))
 	{
 		Vector3 mol = lichKimg->GetTransform()->GlobalPos() - collider->GlobalPos();
+	}
+	if (collider->IsCollision(LickKing->GetCollider()))
+	{
+		Vector3 mol = LickKing->GetTransform()->GlobalPos() - collider->GlobalPos();
 
 		float imerjer = mol.Length();
 		if (imer >= imerjer)
 		{
 			imer = imerjer;
 			imsi = lichKimg;
+			imsi = LickKing;
 		}
 	}
 

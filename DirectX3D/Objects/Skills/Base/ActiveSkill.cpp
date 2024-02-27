@@ -77,6 +77,9 @@ void ActiveSkill::TargetUpdate()
 		vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
 		vector<MonsterBase*> cols2 = MONSTER->GetSkeleton();
 		vector<MonsterBase*> cols3 = MONSTER->GetSkeleton_Knight();
+		vector<MonsterBase*> cols4 = MONSTER->GetVAlkier();
+		vector<MonsterBase*> cols5 = MONSTER->GetIceBall();
+		MonsterBase* cols6 = MONSTER->GetLichKing();
 
 		for (MonsterBase* monster : cols1)
 		{
@@ -108,6 +111,33 @@ void ActiveSkill::TargetUpdate()
 			}
 		}
 
+		for (MonsterBase* monster : cols4)
+		{
+			if (hitCollider->IsCollision(monster->GetCollider()))
+			{
+				// 충돌한 몬스터들에게 데미지 주기
+				// * 매개변수로 owner의 공격력과 번호 저장하기
+				monster->Hit(skillDamage);
+			}
+		}
+
+		for (MonsterBase* monster : cols5)
+		{
+			if (hitCollider->IsCollision(monster->GetCollider()))
+			{
+				// 충돌한 몬스터들에게 데미지 주기
+				// * 매개변수로 owner의 공격력과 번호 저장하기
+				monster->Hit(skillDamage);
+			}
+		}
+
+		if (hitCollider->IsCollision(cols6->GetCollider()))
+		{
+			// 충돌한 몬스터들에게 데미지 주기
+			// * 매개변수로 owner의 공격력과 번호 저장하기
+			cols6->Hit(skillDamage);
+		}
+
 		hitCollider->SetActive(false);
 	}
 }
@@ -120,6 +150,9 @@ void ActiveSkill::NonTargetUpdate()
 	vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
 	vector<MonsterBase*> cols2 = MONSTER->GetSkeleton();
 	vector<MonsterBase*> cols3 = MONSTER->GetSkeleton_Knight();
+	vector<MonsterBase*> cols4 = MONSTER->GetVAlkier();
+	vector<MonsterBase*> cols5 = MONSTER->GetIceBall();
+	MonsterBase* cols6 = MONSTER->GetLichKing();
 	
 	for (MonsterBase* monster : cols1)
 	{
@@ -151,7 +184,32 @@ void ActiveSkill::NonTargetUpdate()
 		}
 	}
 
-	// TODO : 보스 제작 후 보스의 콜라이더도 추가
+	for (MonsterBase* monster : cols4)
+	{
+		if (hitCollider->IsCollision(monster->GetCollider()))
+		{
+			// 충돌한 몬스터들에게 데미지 주기
+			// * 매개변수로 owner의 공격력과 번호 저장하기
+			monster->Hit(skillDamage);
+		}
+	}
+
+	for (MonsterBase* monster : cols5)
+	{
+		if (hitCollider->IsCollision(monster->GetCollider()))
+		{
+			// 충돌한 몬스터들에게 데미지 주기
+			// * 매개변수로 owner의 공격력과 번호 저장하기
+			monster->Hit(skillDamage);
+		}
+	}
+
+	if (hitCollider->IsCollision(cols6->GetCollider()))
+	{
+		// 충돌한 몬스터들에게 데미지 주기
+		// * 매개변수로 owner의 공격력과 번호 저장하기
+		cols6->Hit(skillDamage);
+	}
 
 	hitCollider->SetActive(false);
 	

@@ -11,10 +11,10 @@ VAlkier::VAlkier(Transform* transform, ModelAnimatorInstancing* instancing, UINT
 
 	root = new Transform();
 
-	collider = new CapsuleCollider(10, 10);
+	collider = new CapsuleCollider(100, 100);
 	collider->SetParent(this->transform);
 	collider->Pos() = { 0.0f, 50.0f, 0.0f };
-	attackRange = new SphereCollider(50);
+	attackRange = new SphereCollider(5);
 	attackRange->SetParent(root);
 
 	motion = instancing->GetMotion(index);
@@ -37,12 +37,15 @@ VAlkier::VAlkier(Transform* transform, ModelAnimatorInstancing* instancing, UINT
 	attackTarget_serch->SetParent(this->transform);
 	attackTarget_serch->Scale() *= 1200;
 
+	tong = new SphereCollider(55);
+	tong->UpdateWorld();
+
 	// 현재 몬스터와 가장 가까운 캐릭터를 판별하기 위한 부분
 	{
 		attackTarget_serch->UpdateWorld();
 		float atk_leng = FLT_MAX;
 		vector<CH_Base_ver2*> characterData = CH->GetCharcterData();
-		CH_Base_ver2* lom = nullptr;
+		CH_Base_ver2* lom = target[0];
 		for (int i = 0; i < characterData.size(); ++i)
 		{
 			if (attackTarget_serch->IsCollision(characterData[i]->GetCollider()))
@@ -57,10 +60,7 @@ VAlkier::VAlkier(Transform* transform, ModelAnimatorInstancing* instancing, UINT
 				}
 			}
 		}
-		if (lom != nullptr)
-		{
-			targetTransform = lom;
-		}
+		targetTransform = lom;
 	}
 	hitText.resize(20);
 
@@ -86,11 +86,19 @@ VAlkier::~VAlkier()
 void VAlkier::Update()
 {
 	if (!transform->Active()) return;
+	if (curHP <= 0)
+	{
+		transform->SetActive(false);
+		collider->SetActive(false);
+		return;
+	}
 
 	if (!TaxiMode)
 		Move();
 	else
 		targetAttack();
+
+	if (!targetTransform) return;
 
 	ExecuteEvent();
 	MonsterBase::targetActiveSerch();
@@ -98,11 +106,12 @@ void VAlkier::Update()
 
 	root->SetWorld(instancing->GetTransformByNode(index, 3));
 	collider->UpdateWorld();
-	attackRange->UpdateWorld();
 }
 
 void VAlkier::Render()
 {
+	if (!transform->Active()) return;
+
 	collider->Render();
 	attackRange->Render();
 	tong->Render();
@@ -210,6 +219,7 @@ void VAlkier::Move()
 	transform->Pos() += velocity * 5 * DELTA;
 	transform->Rot().y = atan2(velocity.x, velocity.z) + XM_PI;
 
+	attackRange->UpdateWorld();
 	if (attackRange->IsCollision(targetTransform->GetCollider()))
 	{
 		TaxiMode = true;
@@ -225,7 +235,7 @@ void VAlkier::targetAttack()
 		velocity = (transform->GlobalPos() - Vector3()).GetNormalized();
 
 		transform->Pos() += velocity * 2.5f * DELTA;
-		transform->Pos().y = 3;
+		transform->Pos().y = 5;
 		transform->Rot().y = atan2(velocity.x, velocity.z) + XM_PI;
 
 		Vector3 drive = transform->Pos();
@@ -235,9 +245,10 @@ void VAlkier::targetAttack()
 	}
 	else
 	{
+		targetTransform = nullptr;
 		transform->SetActive(false);
 		collider->SetActive(false);
-	}
+	}	
 }
 
 void VAlkier::UpdateUI()

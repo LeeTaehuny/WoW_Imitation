@@ -26,6 +26,9 @@ void Weapon::Update()
 		vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
 		vector<MonsterBase*> cols2 = MONSTER->GetSkeleton();
 		vector<MonsterBase*> cols3 = MONSTER->GetSkeleton_Knight();
+		vector<MonsterBase*> cols4 = MONSTER->GetVAlkier();
+		vector<MonsterBase*> cols5 = MONSTER->GetIceBall();
+		MonsterBase* cols6 = MONSTER->GetLichKing();
 
 		for (MonsterBase* monster : cols1)
 		{
@@ -92,6 +95,84 @@ void Weapon::Update()
 				// TODO : 플레이어 인덱스 정보 추가하기
 				monster->Hit(damage + playerDamage);
 				hit.push_back(monster);
+
+				// 만약 플레이어가 전사고, isLifeDrain변수가 켜져있다면 피흡
+				if (ArmsWarrior_in* warrior = dynamic_cast<ArmsWarrior_in*>(owner))
+				{
+					if (warrior->GetBuffLifeDrain())
+					{
+						// 입힌 피해의 15% 회복
+						warrior->AddHp((damage + playerDamage) * 0.15f);
+					}
+				}
+			}
+		}
+
+		for (MonsterBase* monster : cols4)
+		{
+			if (find(hit.begin(), hit.end(), monster) != hit.end())
+			{
+				continue;
+			}
+
+			if (collider->IsCollision(monster->GetCollider()))
+			{
+				// 충돌한 몬스터들에게 데미지 주기
+				// TODO : 플레이어 인덱스 정보 추가하기
+				monster->Hit(damage + playerDamage);
+				hit.push_back(monster);
+
+				// 만약 플레이어가 전사고, isLifeDrain변수가 켜져있다면 피흡
+				if (ArmsWarrior_in* warrior = dynamic_cast<ArmsWarrior_in*>(owner))
+				{
+					if (warrior->GetBuffLifeDrain())
+					{
+						// 입힌 피해의 15% 회복
+						warrior->AddHp((damage + playerDamage) * 0.15f);
+					}
+				}
+			}
+		}
+
+		for (MonsterBase* monster : cols5)
+		{
+			if (find(hit.begin(), hit.end(), monster) != hit.end())
+			{
+				continue;
+			}
+
+			if (collider->IsCollision(monster->GetCollider()))
+			{
+				// 충돌한 몬스터들에게 데미지 주기
+				// TODO : 플레이어 인덱스 정보 추가하기
+				monster->Hit(damage + playerDamage);
+				hit.push_back(monster);
+
+				// 만약 플레이어가 전사고, isLifeDrain변수가 켜져있다면 피흡
+				if (ArmsWarrior_in* warrior = dynamic_cast<ArmsWarrior_in*>(owner))
+				{
+					if (warrior->GetBuffLifeDrain())
+					{
+						// 입힌 피해의 15% 회복
+						warrior->AddHp((damage + playerDamage) * 0.15f);
+					}
+				}
+			}
+		}
+
+		// 리치왕
+		{
+			if (find(hit.begin(), hit.end(), cols6) != hit.end())
+			{
+				return;
+			}
+
+			if (collider->IsCollision(cols6->GetCollider()))
+			{
+				// 충돌한 몬스터들에게 데미지 주기
+				// TODO : 플레이어 인덱스 정보 추가하기
+				cols6->Hit(damage + playerDamage);
+				hit.push_back(cols6);
 
 				// 만약 플레이어가 전사고, isLifeDrain변수가 켜져있다면 피흡
 				if (ArmsWarrior_in* warrior = dynamic_cast<ArmsWarrior_in*>(owner))

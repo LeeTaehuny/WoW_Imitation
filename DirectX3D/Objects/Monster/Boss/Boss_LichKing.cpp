@@ -3,8 +3,10 @@
 
 Boss_LichKing::Boss_LichKing()
 {
+	type = LICH;
+
 	transform = new Transform();
-	
+
 	lichking = new ModelAnimator("LichKing");
 	lichking->SetParent(transform);
 
@@ -20,25 +22,28 @@ Boss_LichKing::Boss_LichKing()
 	lichking->SetTag("LichKing");
 
 	collider = new CapsuleCollider();
-	collider->SetParent(lichking);
-	collider->Scale() *= 150.5f;
-	collider->Pos().y += 100;
+	collider->SetParent(transform);
+	collider->Pos().y += 1;
 	collider->UpdateWorld();
+
+	attackRange = new SphereCollider();
+	attackRange->SetParent(transform);
+	attackRange->Scale() *= 5;
 	
-	attackTarget_serch= new SphereCollider();
-	attackTarget_serch->SetParent(lichking);
-	attackTarget_serch->Scale() *= 1200;
-	attackTarget_serch->UpdateWorld();
+	atk_serch = new SphereCollider();
+	atk_serch->SetParent(transform);
+	atk_serch->Scale() *= 100;
+	atk_serch->UpdateWorld();
 
 	mainHand = new Transform();
 
 	Frost = new Model("Frostmourne");
 	Frost->SetParent(mainHand);
 	Frost->Scale() *= 100.5f;
-	Frost_Collider = new SphereCollider();
-	Frost_Collider->SetParent(Frost);
-	Frost_Collider->Scale() *= 0.5f;
-	Frost_Collider->Pos() = Vector3(1);
+	Frost_Collider = new BoxCollider();
+	Frost_Collider->SetParent(transform);
+	Frost_Collider->Scale() = Vector3(2.5f, 5, 5);
+	Frost_Collider->Pos() = Vector3(0, 0, -2);
 	Frost_Collider->SetActive(false);
 
 	{
@@ -61,6 +66,9 @@ Boss_LichKing::Boss_LichKing()
 	lich_SkillList.push_back(new Lich_003_Summon_Drudge_Ghouls(this));
 	lich_SkillList.push_back(new Lich_004_Summon_Shambling_Horror(this));
 	lich_SkillList.push_back(new Lich_005_Remorseless_Winter(this));
+	lich_SkillList.push_back(new Lick_006_Summon_IceSphere(this));
+	lich_SkillList.push_back(new Lich_007_Defile(this));
+	lich_SkillList.push_back(new Lick_008_Summon_Dark_Valkyr(this));
 
 	target = CH->GetPlayerData();
 
@@ -68,12 +76,31 @@ Boss_LichKing::Boss_LichKing()
 	fieldzero->Scale() *= 0.001f;
 	fieldzero->UpdateWorld();
 
+	lasting = true;
+	moveSpeed = 2;
+	maxHP = 3300.0f;
+	curHP = maxHP;
+	Lich_Stat.damage = 300.0f;
+
 	hitText.resize(20);
 
-	maxHP = 17400;
-	curHP = maxHP;
-	moveSpeed = 2;
-	Atk = 500;
+	frame = new Quad(L"Textures/UI/lich_hp_bar.png");
+	frame->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.9f);
+	frame->Scale() *= 1.25f;
+	frame->UpdateWorld();
+
+	face = new Quad(L"Textures/UI/lichpace.png");
+	face->SetParent(frame);
+	face->Scale() *= 0.1f;
+	face->Pos().x -= 152;
+	face->UpdateWorld();
+
+	hp_bar = new ProgressBar(L"Textures/UI/hp_bar.png", L"Textures/UI/hp_bar_BG.png");
+	hp_bar->SetParent(frame);
+	hp_bar->Pos().x += 5;
+	hp_bar->Pos().y -= 1;
+	hp_bar->Scale().x *= 0.9f;
+	hp_bar->UpdateWorld();
 }
 Boss_LichKing::~Boss_LichKing()
 {
@@ -83,10 +110,16 @@ Boss_LichKing::~Boss_LichKing()
 	delete Frost_Collider;
 	delete attackTarget_serch;
 	delete fieldzero;
+	delete lichking;
+	delete frame;
+	delete hp_bar;
+	delete face;
+
 	delete attackRange;
 	delete root;
 	delete targetTransform;
 	delete attackBumwe;
+	delete attackTarget_serch;
 
 	for (Lich_000_Base* lich : lich_SkillList)
 		delete lich;
@@ -94,8 +127,16 @@ Boss_LichKing::~Boss_LichKing()
 
 void Boss_LichKing::Update()
 {
-	if (!lichking->Active() || curState == DIE) return;
+	vidul = curHP / maxHP;
+	hp_bar->SetAmount(vidul);
+	hp_bar->UpdateWorld();
 
+	if (!transform->Active()) return;
+	if (curState == DIE)
+	{
+		lichking->Update();
+		return;
+	}
 
 	// 공격이나 스킬 사용후 잠깐의 휴식을 주기 위한 부분?
 	if (lasting)
@@ -120,18 +161,32 @@ void Boss_LichKing::Update()
 		}
 	}
 	// 체력 비율을 내기 위한 변수
-	float vidul = curHP / maxHP;
-	if (vidul >= 0.7f)
+	
+	switch (phase)
 	{
+	case 1:
 		phaseOne();
-	}
-	else if (vidul < 0.7f)
-	{
+		break;
+	
+	case 2:
+		phaseSait();
+		break;
+	
+	case 3:
 		phaseTwo();
+		break;
+	
+	case 4:
+		phaseSait2();
+		break;
+	
+	case 5:
+		phaseThree();
+		break;
+	
+	default:
+		break;
 	}
-
-	if (KEY_DOWN('C'))
-		curHP -= 1000;
 
 	Moving();
 	Attack();
@@ -161,8 +216,9 @@ void Boss_LichKing::Render()
 	Frost->Render();
 	collider->Render();
 	Frost_Collider->Render();
-	attackTarget_serch->Render();
+	atk_serch->Render();
 	lichking->Render();
+	attackRange->Render();
 
 	float Yvalue = 300;
 	FOR(character_Damage_Data.size())
@@ -180,6 +236,15 @@ void Boss_LichKing::Render()
 void Boss_LichKing::PostRender()
 {
 	if (!transform->Active()) return;
+
+	hp_bar->Render();
+	face->Render();
+	frame->Render();
+
+	int imvola = vidul * 100;
+	if (imvola < 0) imvola = 0;
+	string rito = to_string(imvola);
+	Font::Get()->RenderText(rito, { 645, 652 });
 
 	for (HitDesc& hit : hitText)
 	{
@@ -210,9 +275,51 @@ void Boss_LichKing::GUIRender()
 		string Mtag = "Lich_";
 		ImGui::Text((Mtag + "_HP : " + to_string(curHP)).c_str());
 		ImGui::Text((Mtag + "_HP_ratio : " + to_string(curHP / maxHP)).c_str());
-		ImGui::Text((Mtag + "_MP : " + to_string(Lich_Stat.damage)).c_str());
+		ImGui::Text((Mtag + "_MP : " + to_string(Atk)).c_str());
 
 		ImGui::TreePop();
+	}
+}
+
+void Boss_LichKing::Spawn(Vector3 pos)
+{
+	transform->SetActive(true);
+	collider->SetActive(true);
+	SetState(IDLE);
+	curHP = maxHP;
+	transform->Pos() = pos;
+}
+
+void Boss_LichKing::Hit(float amount)
+{
+	float damage_armor = amount - Lich_Stat.Armor;
+
+	if (damage_armor > 0)
+	{
+		curHP -= damage_armor;
+	}
+
+	if (curHP <= 0)
+	{
+		SetState(DIE);
+	}
+	else
+	{
+		SetState(IDLE);
+	}
+
+	for (int i = 0; i < hitText.size(); i++)
+	{
+		// 출력 off 상태이면
+		if (!hitText[i].isPrint)
+		{
+			// 출력 설정하기
+			hitText[i].isPrint = true;
+			hitText[i].duration = 1.0f;
+			hitText[i].damage = to_string((int)amount);
+
+			break;
+		}
 	}
 }
 
@@ -277,7 +384,7 @@ void Boss_LichKing::Hit(float amount)
 void Boss_LichKing::Moving()
 {
 	if (curState == ATTACK || curState == CASTING || curState == HIT || curState == DIE) return;
-	if (target == nullptr || first != 0) return;
+	if (target == nullptr || phase == 2 || phase == 4) return;
 
 	Vector3 direction = (target->GlobalPos() - transform->GlobalPos()).GetNormalized();
 
@@ -289,11 +396,27 @@ void Boss_LichKing::Attack()
 {
 	if (curState == HIT || curState == DIE) return;
 
-	if (collider->IsCollision(target->GetCollider()))
+	attackRange->UpdateWorld();
+	if (attackRange->IsCollision(target->GetCollider()))
 	{
 		Frost_Collider->SetActive(true);
 		SetState(ATTACK);
 	}
+
+	if (Frost_Collider->Active())
+	{
+		atk_del -= DELTA;
+		if (atk_del <= 0)
+		{
+			atk_del = Max_atk_del;
+			if (Frost_Collider->IsCollision(target->GetCollider()))
+			{
+				target->OnHit(Lich_Stat.damage);
+				Frost_Collider->SetActive(false);
+			}
+		}
+	}
+	else atk_del = Max_atk_del;
 }
 
 void Boss_LichKing::End_ATK()
@@ -301,26 +424,24 @@ void Boss_LichKing::End_ATK()
 	SetState(IDLE);
 	Frost_Collider->SetActive(false);
 
-	attackTarget_serch->UpdateWorld();
-	float atk_leng = FLT_MAX;
-	CH_Base_ver2* lom = nullptr;
-	for (int i = 0; i < characterData.size(); ++i)
 	{
-		if (attackTarget_serch->IsCollision(characterData[i]->GetCollider()))
+		atk_serch->UpdateWorld();
+		float atk_leng = FLT_MAX;
+		CH_Base_ver2* lom = CH->GetPlayerData();
+		for (int i = 0; i < characterData.size(); ++i)
 		{
-			Vector3 leng = characterData[i]->GlobalPos() - attackTarget_serch->GlobalPos();
-			float min = leng.Length();
-
-			if (atk_leng >= min)
+			if (atk_serch->IsCollision(characterData[i]->GetCollider()))
 			{
-				atk_leng = min;
-				lom = characterData[i];
+				Vector3 leng = characterData[i]->GlobalPos() - atk_serch->GlobalPos();
+				float min = leng.Length();
+
+				if (atk_leng >= min)
+				{
+					atk_leng = min;
+					lom = characterData[i];
+				}
 			}
 		}
-	}
-
-	if (lom != nullptr)
-	{
 		target = lom;
 		lasting = true;
 	}
@@ -332,34 +453,58 @@ void Boss_LichKing::End_HIT()
 void Boss_LichKing::End_DIE()
 {
 	transform->SetActive(false);
+	lichking->SetActive(false);
 }
 void Boss_LichKing::End_CAST()
 {
 	SetState(IDLE);
 	Frost_Collider->SetActive(false);
 
-	attackTarget_serch->UpdateWorld();
-	float atk_leng = FLT_MAX;
-	CH_Base_ver2* lom = nullptr;
-	for (int i = 0; i < characterData.size(); ++i)
 	{
-		if (attackTarget_serch->IsCollision(characterData[i]->GetCollider()))
+		atk_serch->UpdateWorld();
+		float atk_leng = FLT_MAX;
+		CH_Base_ver2* lom = CH->GetPlayerData();
+		for (int i = 0; i < characterData.size(); ++i)
 		{
-			Vector3 leng = characterData[i]->GlobalPos() - attackTarget_serch->GlobalPos();
-			float min = leng.Length();
-
-			if (atk_leng >= min)
+			if (atk_serch->IsCollision(characterData[i]->GetCollider()))
 			{
-				atk_leng = min;
-				lom = characterData[i];
+				Vector3 leng = characterData[i]->GlobalPos() - atk_serch->GlobalPos();
+				float min = leng.Length();
+
+				if (atk_leng >= min)
+				{
+					atk_leng = min;
+					lom = characterData[i];
+				}
 			}
 		}
-	}
-
-	if (lom != nullptr)
-	{
 		target = lom;
 		lasting = true;
+	}	
+
+	if (phase == 3 && thr_first == 1)
+	{
+		lasting = false;
+		lasting_time = Max_lasting_time;
+
+		thr_first++;
+		map->SetPhase(1);
+	}
+	if (phase == 4 && for_first == 1)
+	{
+		lasting = false;
+		lasting_time = Max_lasting_time;
+
+		for_first++;
+		map->SetPhase(2);
+	}
+	if (phase == 5 && fiv_first == 1)
+	{
+		lasting = false;
+		lasting_time = Max_lasting_time;
+
+		fiv_first++;
+		map->SetPhase(3);
 	}
 }
 
@@ -370,7 +515,7 @@ void Boss_LichKing::targetActiveSerch()
 		attackTarget_serch->UpdateWorld();
 		float atk_leng = FLT_MAX;
 		vector<CH_Base_ver2*> characterData = CH->GetCharcterData();
-		CH_Base_ver2* lom = nullptr;
+		CH_Base_ver2* lom = CH->GetPlayerData();
 		for (int i = 0; i < characterData.size(); ++i)
 		{
 			if (!characterData[i]->GetCollider()->Active()) continue;
@@ -386,38 +531,41 @@ void Boss_LichKing::targetActiveSerch()
 				}
 			}
 		}
-		if (lom != nullptr)
-		{
-			target = lom;
-			lasting = true;
-		}
+		target = lom;
+		lasting = true;
 	}
 }
 
 void Boss_LichKing::phaseOne()
 {
-	//if (!lich_SkillList[0]->GetCoolTime())
-	//{
-	//	SetState(CASTING);
-	//	lich_SkillList[0]->UseSkill(target);
-	//}
+	if (vidul < 0.7f)
+	{
+		phase = 2;
+		return;
+	}
+
+	if (!lich_SkillList[0]->GetCoolTime())
+	{
+		SetState(CASTING);
+		lich_SkillList[0]->UseSkill(target);
+	}
 	//if (!lich_SkillList[1]->GetCoolTime())
 	//{
 	//	SetState(CASTING);
 	//	lich_SkillList[1]->UseSkill(target);
 	//}
-	//if (!lich_SkillList[2]->GetCoolTime())
-	//{
-	//	SetState(CASTING);
-	//	lich_SkillList[2]->UseSkill();
-	//}
-	//if (!lich_SkillList[3]->GetCoolTime())
-	//{
-	//	SetState(CASTING);
-	//	lich_SkillList[3]->UseSkill();
-	//}
+	if (!lich_SkillList[2]->GetCoolTime())
+	{
+		SetState(CASTING);
+		lich_SkillList[2]->UseSkill();
+	}
+	if (!lich_SkillList[3]->GetCoolTime())
+	{
+		SetState(CASTING);
+		lich_SkillList[3]->UseSkill();
+	}
 }
-void Boss_LichKing::phaseTwo()
+void Boss_LichKing::phaseSait()
 {
 	if (first == 0)
 	{
@@ -430,15 +578,132 @@ void Boss_LichKing::phaseTwo()
 		Vector3 direction = (fieldzero->GlobalPos() - transform->GlobalPos()).GetNormalized();
 
 		transform->Rot().y = atan2(direction.x, direction.z) + XM_PI;
-		transform->Pos() += direction * moveSpeed * DELTA;
+		transform->Pos() += direction * (moveSpeed * 5) * DELTA;
 		SetState(WALKING);
 	}
 	else
 	{
-		if (!lich_SkillList[4]->GetCoolTime())
+		if (Lich_005_Remorseless_Winter* c = dynamic_cast<Lich_005_Remorseless_Winter*>(lich_SkillList[4]))
 		{
-			SetState(IDLE);
-			lich_SkillList[4]->UseSkill();
+			if (c->GetSkillEnd() && phase == 2)
+			{
+				phase++;
+				c->ChangeSkillEnd();
+				return;
+			}
+
+			if (!c->GetCoolTime())
+			{
+				SetState(IDLE);
+				c->UseSkill();
+			}
 		}
+
+		if (!lich_SkillList[5]->GetCoolTime() && lich_SkillList[4]->GetisRun())
+		{
+			lich_SkillList[5]->UseSkill();
+		}
+	}
+}
+void Boss_LichKing::phaseTwo()
+{
+	if (thr_first <= 1)
+	{
+		thr_first = 1;
+		SetState(CASTING);
+	}
+	if (thr_first != 2) return;
+
+	if (vidul < 0.4f)
+	{
+		phase = 4;
+		return;
+	}
+
+	if (!lich_SkillList[6]->GetCoolTime() || !lich_SkillList[6]->GetisRun())
+	{
+		SetState(CASTING);
+		lich_SkillList[6]->UseSkill(target);
+	}
+
+	if (!lich_SkillList[7]->GetCoolTime())
+	{
+		SetState(CASTING);
+		lich_SkillList[7]->UseSkill(target);
+	}
+}
+void Boss_LichKing::phaseSait2()
+{
+	if (curState == CASTING) return;
+	if (!fieldzero->IsCollision(collider))
+	{
+		Vector3 direction = (fieldzero->GlobalPos() - transform->GlobalPos()).GetNormalized();
+
+		transform->Rot().y = atan2(direction.x, direction.z) + XM_PI;
+		transform->Pos() += direction * (moveSpeed * 5) * DELTA;
+		SetState(WALKING);
+	}
+	else
+	{
+		if (for_first <= 1)
+		{
+			for_first = 1;
+			SetState(CASTING);
+		}
+		if (for_first != 2) return;
+
+		if (Lich_005_Remorseless_Winter* c = dynamic_cast<Lich_005_Remorseless_Winter*>(lich_SkillList[4]))
+		{
+			if (c->GetSkillEnd())
+			{
+				phase++;
+				c->ChangeSkillEnd();
+				return;
+			}
+
+			if (!c->GetCoolTime())
+			{
+				SetState(IDLE);
+				c->UseSkill();
+			}
+		}
+
+		if (!lich_SkillList[5]->GetCoolTime() && lich_SkillList[4]->GetisRun())
+		{
+			lich_SkillList[5]->UseSkill();
+		}
+	}
+}
+void Boss_LichKing::phaseThree()
+{
+	if (fiv_first <= 1)
+	{
+		fiv_first = 1;
+		SetState(CASTING);
+	}
+	if (fiv_first != 2) return;
+
+	sumon1 -= DELTA;
+	if (sumon1 <= 0) 
+	{
+		sumon1 = 0;
+		return;
+	}
+	if (!lich_SkillList[3]->GetCoolTime())
+	{
+		SetState(CASTING);
+		lich_SkillList[3]->UseSkill();
+	}
+
+	skill1 -= DELTA;
+	if (skill1 <= 0) 
+	{
+		skill1 = 0;
+		return;
+	}
+	if (!lich_SkillList[6]->GetCoolTime())
+	{
+		SetState(CASTING);
+		lich_SkillList[6]->UseSkill(target);
 	}
 }

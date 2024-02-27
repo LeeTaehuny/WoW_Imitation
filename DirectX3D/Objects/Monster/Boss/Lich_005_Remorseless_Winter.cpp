@@ -45,6 +45,7 @@ void Lich_005_Remorseless_Winter::Update()
 			runTime = Max_runTime;
 			tickTime = Max_tickTime;
 			isRun = false;
+			skillend = true;
 			return;
 		}
 
@@ -57,7 +58,7 @@ void Lich_005_Remorseless_Winter::Update()
 			{
 				if (hitCollider->IsCollision(ch->GetCollider()))
 				{
-					ch->OnHit(lich->GetStat().damage * 0.1f);
+					ch->OnHit(lich->GetStat().damage * 0.1f, true);
 				}
 			}
 		}
@@ -77,7 +78,7 @@ void Lich_005_Remorseless_Winter::Render()
 
 void Lich_005_Remorseless_Winter::UseSkill(CH_Base_ver2* chbase)
 {
-	if (isRun) return;
+	if (isRun || skillend) return;
 
 	isRun = true;
 	animStart = 0;

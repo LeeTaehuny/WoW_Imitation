@@ -294,13 +294,14 @@ void HolyPriest_in::AIUpdate()
 	range->UpdateWorld();
 }
 
-void HolyPriest_in::OnHit(float damage)
+void HolyPriest_in::OnHit(float damage, bool motion)
 {
 	stat.hp -= damage;
 
 	if (stat.hp > 0)
 	{
-		SetState(HIT);
+		if (!motion)
+			SetState(HIT);
 	}
 	else if (stat.hp <= 0)
 	{

@@ -19,18 +19,18 @@
 
 KimScene::KimScene()
 {
-	CH->PlayerSpawn(5);
-	CH->GetPlayerData()->EquipWeapon(new Weapon("staff_1", WeaponType::Staff));
-	SKILL->Init(CH->GetPlayerData());
-	CH->GetPlayerData()->Pos() = Vector3(10);
-	CH->GetPlayerData()->GetStat().maxHp = 1000;
-	CH->GetPlayerData()->GetStat().hp = 1000;
-	CH->GetPlayerData()->Update();
-
-	CH->NonPlayerSpawn(3);
-
-	MONSTER;
-	ARROW;
+	//CH->PlayerSpawn(2);
+	//CH->GetPlayerData()->EquipWeapon(new Weapon("hammer_1", WeaponType::Hammer));
+	//SKILL->Init(CH->GetPlayerData());
+	//CH->GetPlayerData()->Pos() = Vector3(10);
+	//CH->GetPlayerData()->GetStat().maxHp = 1000;
+	//CH->GetPlayerData()->GetStat().hp = 1000;
+	//CH->GetPlayerData()->Update();
+	//
+	//CH->NonPlayerSpawn(2);
+	//
+	//MONSTER;
+	//ARROW;
 
 	//shop = new Shop();
 
@@ -55,45 +55,7 @@ KimScene::~KimScene()
 
 void KimScene::Update()
 {
-	if (KEY_DOWN(VK_LEFT))
-	{
-		//MONSTER->SpawnSkeleton(Vector3());
-		MONSTER->SpawnIceBall(Vector3());
-	}
-	if (KEY_DOWN(VK_RIGHT))
-	{
-		MONSTER->SpawnSkeletonKnight(Vector3());
-	}
-	if (KEY_DOWN(VK_DOWN))
-	{
-		MONSTER->SpawnScarecrow(Vector3());
-	}
-	if (KEY_DOWN(VK_UP))
-	{
-		MONSTER->SpawnVAlkier(Vector3());
-	}
-	
-	if (KEY_DOWN('X'))
-	{
-		int gang = Random(1, 6);
-		CH->NonPlayerSpawn(4);
-	}
-	
-	if (KEY_DOWN(VK_NUMPAD5))
-	{
-		CH->GetPlayerData()->GetStat().hp -= 100;;
-	}
-	if (KEY_DOWN(VK_NUMPAD6))
-	{
-		CH->GetCharcterData()[1]->GetStat().hp -= 100;
-	}
-
-	SKILL->Update();
 	CH->Update();
-	MONSTER->Update();
-	ARROW->Update();
-	UPDATE(lich);
-	UPDATE(shop);
 }
 
 void KimScene::PreRender()
@@ -103,25 +65,15 @@ void KimScene::PreRender()
 
 void KimScene::Render()
 {
-	//RENDER(lich);
 	CH->Render();
-	MONSTER->Render();
-	ARROW->Render();
 }
 
 void KimScene::PostRender()
 {
-	SKILL->PostRender(); // 우선
-	CH->PostRender(); // 차선
-
-	MONSTER->PostRender();
-	
-	if (shop != nullptr)
-		shop->UIRender();
+	CH->PostRender();
 }
 
 void KimScene::GUIRender()
 {
-	//GUIRENDER(lich);
 	CH->GUIRender();
 }

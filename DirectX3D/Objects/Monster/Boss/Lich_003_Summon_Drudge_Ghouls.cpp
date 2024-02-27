@@ -32,35 +32,16 @@ void Lich_003_Summon_Drudge_Ghouls::Update()
 			lichPos.z -= 5;
 			lichPos.x -= 5;
 			MONSTER->SpawnSkeleton(lichPos);
-			life_skel[0] = MONSTER->GetSkeleton()[MONSTER->GetSkeleton().size() - 1];
 			lichPos.z += 10;
 			MONSTER->SpawnSkeleton(lichPos);
-			life_skel[1] = MONSTER->GetSkeleton()[MONSTER->GetSkeleton().size() - 1];
 			lichPos.x += 10;
 			MONSTER->SpawnSkeleton(lichPos);
-			life_skel[2] = MONSTER->GetSkeleton()[MONSTER->GetSkeleton().size() - 1];
 			lichPos.z -= 10;
 			MONSTER->SpawnSkeleton(lichPos);
-			life_skel[3] = MONSTER->GetSkeleton()[MONSTER->GetSkeleton().size() - 1];
-		}
-
-		int lifeCount = 0;
-		for (int i = 0; i < life_skel.size(); i++)
-		{
-			if (life_skel[i]->GetTransform()->Active())
-			{
-				lifeCount++;
-			}
-		}
-
-		if (lifeCount == 0)
-		{
-			JustOne = 0;
-			isRun = false;
 		}
 	}
 
-	if (isCooldown && !isRun)
+	if (isCooldown)
 		Lich_000_Base::Cooldown();
 }
 
@@ -72,6 +53,8 @@ void Lich_003_Summon_Drudge_Ghouls::UseSkill(CH_Base_ver2* chbase)
 {
 	if (isCooldown) return;
 
+	MAX_delay = 35;
+	coolTime = MAX_delay;
 	isRun = true;
 	isCooldown = true;
 	animStart = 0;

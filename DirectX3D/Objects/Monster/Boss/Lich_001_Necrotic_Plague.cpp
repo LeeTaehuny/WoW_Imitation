@@ -10,10 +10,11 @@ Lich_001_Necrotic_Plague::Lich_001_Necrotic_Plague(Boss_LichKing* lich)
 	Yad->Scale() *= 5;
 	Yad->UpdateWorld();
 
-	MAX_delay = 120;
+	MAX_delay = 30;
 	coolTime = MAX_delay;
 	Max_animStart = 0.45f;
 	isCooldown = true;
+	isRun = false;
 }
 
 Lich_001_Necrotic_Plague::~Lich_001_Necrotic_Plague()
@@ -125,6 +126,9 @@ void Lich_001_Necrotic_Plague::UseSkill(CH_Base_ver2* chbase)
 	isRun = true;
 	isCooldown = true;
 	tickDamageCount = 0;
+
+	MAX_delay = 60;
+	coolTime = MAX_delay;
 
 	charcter_HP_LastData = characterData->GetStat().hp;
 	charcter_HP_ratio = characterData->GetStat().maxHp * 0.3f;

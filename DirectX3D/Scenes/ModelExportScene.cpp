@@ -3,12 +3,11 @@
 
 ModelExportScene::ModelExportScene()
 {
-    string name = "HolyPriest";
     //string file = "Models/FBX/" + name + ".fbx";
     //ModelExporter* exporter;
 
+    string name = "Skeleton";
     Model_MER_MESH(name);
-    //AnimationClip(name, "Attack_3");
     //AnimationClip(name, "Attack_2");
     //AnimationClip(name, "Attack_3");
     //AnimationClip(name, "Attack_4");

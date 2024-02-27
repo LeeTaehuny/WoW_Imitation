@@ -173,6 +173,37 @@ void M_008_Multi_Shot::UseSkill(MonsterBase* monsterbase)
 			ThisNumber++;
 		}
 	}
+	monster = MONSTER->GetVAlkier();
+	for (int i = 0; i < monster.size(); ++i)
+	{
+		if (monsters[0] == monster[i]) continue;
+
+		if (hitCollider->IsCollision(monster[i]->GetCollider()))
+		{
+			if (ThisNumber >= 20) break;
+			monsters[ThisNumber] = monster[i];
+			ThisNumber++;
+		}
+	}
+	monster = MONSTER->GetIceBall();
+	for (int i = 0; i < monster.size(); ++i)
+	{
+		if (monsters[0] == monster[i]) continue;
+
+		if (hitCollider->IsCollision(monster[i]->GetCollider()))
+		{
+			if (ThisNumber >= 20) break;
+			monsters[ThisNumber] = monster[i];
+			ThisNumber++;
+		}
+	}
+	if (hitCollider->IsCollision(MONSTER->GetLichKing()->GetCollider()))
+	{
+		if (monsters[0] != MONSTER->GetLichKing())
+		{
+			MONSTER->GetLichKing()->Hit(skillDamage);
+		}		
+	}
 
 	if (ThisNumber < 5)
 		skillDamage = owner->GetStat().damage * 0.5f;

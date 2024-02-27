@@ -26,6 +26,7 @@ public:
     void SpawnIceBall(Vector3 pos);
     // 리치왕 스폰
     void SpawnBoss(Vector3 pos);
+    void SpawnLickKing(Vector3 pos);
 
     MonsterBase* hitCollision(IN Collider* collider);
 
@@ -38,6 +39,7 @@ public:
     vector<MonsterBase*> GetScarecrow() { return scarecrow; }
     vector<MonsterBase*> GetVAlkier() { return valkier; }
     vector<MonsterBase*> GetIceBall() { return valkier; }
+    MonsterBase* GetLichKing() { return LickKing; }
 
     MonsterBase* GetBoss() { return lichKimg; }
 
@@ -72,4 +74,11 @@ private:
     vector<MonsterBase*> iceBall;
 
     class MonsterBase* lichKimg;
+    MonsterBase* LickKing;
+
+private:
+    UINT skeleton_Count = 0;
+    UINT skeleton_Night_Count = 0;
+    UINT scarecrow_Count = 0;
+    UINT Valkier_Count = 0;
 };

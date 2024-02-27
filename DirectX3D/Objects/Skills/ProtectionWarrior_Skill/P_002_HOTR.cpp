@@ -83,40 +83,65 @@ void P_002_HOTR::Update()
 			//hitCollider->Scale().y += ful * DELTA;
 			hitCollider->Scale().z += ful * DELTA;
 
-			vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
-			for (MonsterBase* monster : cols1)
-			{
-				if (hitCollider->IsCollision(monster->GetCollider()))
-				{
-					// 충돌한 몬스터들에게 데미지 주기
-					// * 매개변수로 owner의 공격력과 번호 저장하기
-					monster->Hit(skillDamage);
-				}
-			}
-			cols1 = MONSTER->GetSkeleton();
-			for (MonsterBase* monster : cols1)
-			{
-				if (hitCollider->IsCollision(monster->GetCollider()))
-				{
-					// 충돌한 몬스터들에게 데미지 주기
-					// * 매개변수로 owner의 공격력과 번호 저장하기
-					monster->Hit(skillDamage);
-				}
-			}
-			cols1 = MONSTER->GetSkeleton_Knight();
-			for (MonsterBase* monster : cols1)
-			{
-				if (hitCollider->IsCollision(monster->GetCollider()))
-				{
-					// 충돌한 몬스터들에게 데미지 주기
-					// * 매개변수로 owner의 공격력과 번호 저장하기
-					monster->Hit(skillDamage);
-				}
-			}
-
 			// 히트 범위가 일정 수준을 넘어가면 액티브를 끄면서 동작 정지
 			if (hitCollider->Scale().x >= 7)
 			{
+				vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
+				for (MonsterBase* monster : cols1)
+				{
+					if (hitCollider->IsCollision(monster->GetCollider()))
+					{
+						// 충돌한 몬스터들에게 데미지 주기
+						// * 매개변수로 owner의 공격력과 번호 저장하기
+						monster->Hit(skillDamage);
+					}
+				}
+				cols1 = MONSTER->GetSkeleton();
+				for (MonsterBase* monster : cols1)
+				{
+					if (hitCollider->IsCollision(monster->GetCollider()))
+					{
+						// 충돌한 몬스터들에게 데미지 주기
+						// * 매개변수로 owner의 공격력과 번호 저장하기
+						monster->Hit(skillDamage);
+					}
+				}
+				cols1 = MONSTER->GetSkeleton_Knight();
+				for (MonsterBase* monster : cols1)
+				{
+					if (hitCollider->IsCollision(monster->GetCollider()))
+					{
+						// 충돌한 몬스터들에게 데미지 주기
+						// * 매개변수로 owner의 공격력과 번호 저장하기
+						monster->Hit(skillDamage);
+					}
+				}
+				cols1 = MONSTER->GetVAlkier();
+				for (MonsterBase* monster : cols1)
+				{
+					if (hitCollider->IsCollision(monster->GetCollider()))
+					{
+						// 충돌한 몬스터들에게 데미지 주기
+						// * 매개변수로 owner의 공격력과 번호 저장하기
+						monster->Hit(skillDamage);
+					}
+				}
+				cols1 = MONSTER->GetIceBall();
+				for (MonsterBase* monster : cols1)
+				{
+					if (hitCollider->IsCollision(monster->GetCollider()))
+					{
+						// 충돌한 몬스터들에게 데미지 주기
+						// * 매개변수로 owner의 공격력과 번호 저장하기
+						monster->Hit(skillDamage);
+					}
+				}
+				if (hitCollider->IsCollision(MONSTER->GetLichKing()->GetCollider()))
+				{
+					// 충돌한 몬스터들에게 데미지 주기
+					// * 매개변수로 owner의 공격력과 번호 저장하기
+					MONSTER->GetLichKing()->Hit(skillDamage);
+				}
 				hitCollider->SetActive(false);
 			}
 		}

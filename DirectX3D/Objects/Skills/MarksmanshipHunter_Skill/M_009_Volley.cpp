@@ -108,6 +108,26 @@ void M_009_Volley::Update()
 					monster[i]->Hit(skillDamage);
 				}
 			}
+			monster = MONSTER->GetVAlkier();
+			for (int i = 0; i < monster.size(); ++i)
+			{
+				if (hitCollider->IsCollision(monster[i]->GetCollider()))
+				{
+					monster[i]->Hit(skillDamage);
+				}
+			}
+			monster = MONSTER->GetIceBall();
+			for (int i = 0; i < monster.size(); ++i)
+			{
+				if (hitCollider->IsCollision(monster[i]->GetCollider()))
+				{
+					monster[i]->Hit(skillDamage);
+				}
+			}
+			if (hitCollider->IsCollision(MONSTER->GetLichKing()->GetCollider()))
+			{
+				MONSTER->GetLichKing()->Hit(skillDamage);
+			}
 		}
 
 		runTime += DELTA;

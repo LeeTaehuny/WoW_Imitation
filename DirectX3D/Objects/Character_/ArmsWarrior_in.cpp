@@ -217,7 +217,7 @@ void ArmsWarrior_in::AIUpdate()
 	range->UpdateWorld();
 }
 
-void ArmsWarrior_in::OnHit(float damage)
+void ArmsWarrior_in::OnHit(float damage, bool motion)
 {
 	// 방어력 버프 존재 시
 	if (isDefence)
@@ -233,12 +233,14 @@ void ArmsWarrior_in::OnHit(float damage)
 
 	if (stat.hp > 0)
 	{
-		SetState(HIT);
+		if (!motion)
+			SetState(HIT);
 	}
 	else if (stat.hp <= 0)
 	{
+		
 		stat.hp = 0.0f;
-		SetState(DIE);
+		SetState(DIE);		
 		myCollider->SetActive(false);
 	}
 

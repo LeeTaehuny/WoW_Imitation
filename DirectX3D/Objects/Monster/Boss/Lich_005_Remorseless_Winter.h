@@ -9,6 +9,9 @@ public:
 	virtual void Render() override;
 	virtual void UseSkill(CH_Base_ver2* chbase = nullptr) override;
 
+	bool GetSkillEnd() { return skillend; }
+	void ChangeSkillEnd() { skillend = !skillend; }
+
 private:
 	ParticleSystem* particle;
 	Collider* hitCollider;
@@ -17,7 +20,9 @@ private:
 	float Max_tickTime = 0.5f;
 	float tickTime = Max_tickTime;
 
+	bool skillend = false;
+
 	// 60초만 작동하도록 하게하기 위한 변수
-	float Max_runTime = 60.0f;
+	float Max_runTime = 10.0f;
 	float runTime = Max_runTime;
 };
