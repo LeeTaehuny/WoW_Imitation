@@ -414,17 +414,12 @@ void ProtectionWarrior_in::Attack()
 	// 인벤토리가 열려있으면 공격 X
 	if (creatureType == CreatureType::Player && inventory->Active()) return;
 
-	if (KEY_DOWN(VK_LBUTTON))
+	if (KEY_DOWN(VK_LBUTTON) && weapon != nullptr)
 	{
 		SetState(ATTACK1);
 
-		// 무기가 존재하는 경우
-		if (weapon)
-		{
-			// 무기의 콜라이더를 켜주고, 플레이어의 데미지를 전달
-			weapon->GetCollider()->SetActive(true);
-			weapon->SetDamage(stat.damage);
-		}
+		weapon->GetCollider()->SetActive(true);
+		weapon->SetDamage(stat.damage);
 	}
 }
 

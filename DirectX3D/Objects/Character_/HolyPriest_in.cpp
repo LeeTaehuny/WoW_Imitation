@@ -507,7 +507,7 @@ void HolyPriest_in::Attack()
 	// ����, ���, �ǰ�, ���� ������ ��� ����
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
-	if (KEY_DOWN(VK_LBUTTON))
+	if (KEY_DOWN(VK_LBUTTON) && weapon != nullptr)
 	{
 		skillList[0]->UseSkill(targetMonster);
 	}

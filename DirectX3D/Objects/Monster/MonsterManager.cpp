@@ -255,17 +255,20 @@ MonsterBase* MonsterManager::hitCollision(IN Collider* collider)
 			}
 		}
 	}
-	if (collider->IsCollision(LickKing->GetCollider()))
+	if (LickKing)
 	{
-		Vector3 mol = LickKing->GetTransform()->GlobalPos() - collider->GlobalPos();
-
-		float imerjer = mol.Length();
-		if (imer >= imerjer)
+		if (collider->IsCollision(LickKing->GetCollider()))
 		{
-			imer = imerjer;
-			imsi = LickKing;
+			Vector3 mol = LickKing->GetTransform()->GlobalPos() - collider->GlobalPos();
+
+			float imerjer = mol.Length();
+			if (imer >= imerjer)
+			{
+				imer = imerjer;
+				imsi = LickKing;
+			}
 		}
-	}
+	}	
 
 	return imsi;
 }

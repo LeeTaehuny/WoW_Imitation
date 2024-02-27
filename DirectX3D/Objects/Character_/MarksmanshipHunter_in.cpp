@@ -391,7 +391,7 @@ void MarksmanshipHunter_in::Attack()
 	if (!weapon) return;
 
 	// �Ϲݰ���
-	if (KEY_DOWN(VK_LBUTTON))
+	if (KEY_DOWN(VK_LBUTTON) && weapon != nullptr)
 	{
 		skillList[0]->UseSkill(targetMonster);
 	}
