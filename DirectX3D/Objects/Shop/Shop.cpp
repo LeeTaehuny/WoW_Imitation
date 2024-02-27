@@ -64,6 +64,9 @@ Shop::Shop()
 	}
 
 	SetActive(false);
+
+	// 음원 등록
+	Audio::Get()->Add("Purchase", "Sounds/Shop/Purchase.wav", false, false, false);
 }
 
 Shop::~Shop()
@@ -229,12 +232,20 @@ void Shop::PurchaseItem(string itemName, Inventory* inventory)
 			{
 				Item* item = CreateWeapon(weapon->GetName(), weapon->GetWeaponType());
 				inventory->AddItem(item);
+
+				// 음원 재생
+				Audio::Get()->Play("Purchase", 1.0f);
+
 				return;
 			}
 			else if (Potion* potion = dynamic_cast<Potion*>(item))
 			{
 				Item* item = CreatePotion(potion->GetName(), potion->GetPotionType());
 				inventory->AddItem(item);
+
+				// 음원 재생
+				Audio::Get()->Play("Purchase", 1.0f);
+
 				return;
 			}
 		}
@@ -247,4 +258,7 @@ void Shop::SellItem(int itemIndex, Inventory* inventory)
 
 	// 해당 인덱스의 아이템 삭제
 	inventory->DeleteItem(itemIndex);
+
+	// 음원 재생
+	Audio::Get()->Play("Purchase", 1.0f);
 }

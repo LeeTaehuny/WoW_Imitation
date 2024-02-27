@@ -86,6 +86,10 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 	stat.damage = 100.0f;
 	stat.defence = 100;
 
+	// 음원 등록
+	Audio::Get()->Add("MageAttack", "Sounds/FireMage/attack.wav", false, false, true);
+	Audio::Get()->Add("MageHit", "Sounds/FireMage/hit.wav", false, false, true);
+	Audio::Get()->Add("MageDeath", "Sounds/FireMage/death.wav", false, false, true);
 }
 
 FireMage_in::~FireMage_in()
@@ -111,6 +115,28 @@ void FireMage_in::Update()
 	case CreatureType::NonPlayer:
 		AIUpdate();
 		break;
+	}
+
+	// 공격 음원 재생
+	if (isPlayAttackSound && !isRun)
+	{
+		attackSoundDelay += DELTA;
+		if (attackSoundDelay >= 0.3f)
+		{
+			attackSoundDelay = 0.0f;
+			// 음원 재생
+			Audio::Get()->Play("MageAttack", Pos(), 1.0f);
+
+			// 재생했다고 표시
+			isRun = true;
+		}
+	}
+	// 만약 재생했으면서, 사운드 재생이 끝난 상황이라면? 
+	if (isRun && !Audio::Get()->IsPlaySound("WarriorAttack"))
+	{
+		// 변수 초기화
+		isRun = false;
+		isPlayAttackSound = false;
 	}
 
 	FOR(skillList.size())
@@ -215,12 +241,16 @@ void FireMage_in::OnHit(float damage, bool motion)
 	{
 		if (!motion)
 			SetState(HIT);
+
+		Audio::Get()->Play("MageHit", Pos(), 1.0f);
 	}
 	else if (stat.hp <= 0)
 	{
 		stat.hp = 0.0f;
 		SetState(DIE);
 		myCollider->SetActive(false);
+
+		Audio::Get()->Play("MageDeath", Pos(), 1.0f);
 	}
 
 	if (creatureType == CreatureType::Player)
@@ -407,13 +437,21 @@ void FireMage_in::Jump()
 
 void FireMage_in::Attack()
 {
-	// ����, ���, �ǰ�, ���� ������ ��� ����
+	// 점프, 사망, 피격, 공격 상태라면 리턴
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
+
+	// 무기가 없으면 리턴
+	if (weapon == nullptr) return;
 
 	if (KEY_DOWN(VK_LBUTTON))
 	{
-		// TODO : ���Ÿ� ���� �����
-		skillList[0]->UseSkill(targetMonster);
+		if (targetMonster)
+		{
+			// 원거리 공격
+			skillList[0]->UseSkill(targetMonster);
+			// 음원 재생 설정
+			isPlayAttackSound = true;
+		}
 	}
 }
 
@@ -511,6 +549,8 @@ void FireMage_in::ai_attack()
 	}
 
 	skillList[0]->UseSkill(monsterSelectData);
+	// 음원 재생 설정
+	isPlayAttackSound = true;
 }
 
 void FireMage_in::SetState(State state)
@@ -533,6 +573,7 @@ void FireMage_in::EndHit()
 
 void FireMage_in::EndDie()
 {
+	SetState(IDLE1);
 	SetActive(false);
 }
 

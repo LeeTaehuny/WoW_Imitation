@@ -52,14 +52,12 @@ private:
 	void Jump();
 	void Attack();
 	void ai_attack();
-	//void Casting();
 
 // 이벤트 함수
 private:
 	void EndATK();
 	void EndHit();
 	void EndDie();
-	//void EndCasting();
 
 private:
 	// 버프용 변수 (방어력 1.3배)
@@ -78,4 +76,10 @@ private:
 	int impact = 0;
 	bool atkGannnnn = false;
 	int imsiSkillStart = 0;
+
+private:
+	// 공격 음원 재생 여부
+	bool isPlayAttackSound = false;
+	bool isRun = false;
+	float attackSoundDelay = 0.0f;
 };

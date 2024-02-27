@@ -3,6 +3,7 @@
 #include "Framework/Model/ModelAnimator.h"
 #include "Objects/Basic/Quad.h"
 #include "Objects/UI/Button.h"
+#include "Objects/Skills/SkillManager.h"
 
 SelectScene::SelectScene()
 {
@@ -13,6 +14,9 @@ SelectScene::SelectScene()
 	// 멤버 변수 초기화
 	saveIndex = -1;
 	isReady = false;
+
+	// 음원 등록
+	Audio::Get()->Add("SelectBGM", "Sounds/SelectScene/SelectBGM.wav", true, true, false);
 }
 
 SelectScene::~SelectScene()
@@ -31,6 +35,9 @@ void SelectScene::Start()
 	CAM->Pos() = Vector3(0.0f, 0.0f, -30.0f);
 	// 카메라 회전 조정
 	CAM->Rot() = Vector3(0.0f, 0.0f, 0.0f);
+
+	// 음원 재생
+	Audio::Get()->Play("SelectBGM", 1.0f);
 }
 
 void SelectScene::Update()
@@ -209,6 +216,10 @@ void SelectScene::Loding()
 
 	// 캐릭터 매니저 조기 로딩 및 플레이어 스폰
 	CH_Manager::Get()->PlayerSpawn(saveIndex);
+
+	SKILL->Init(CH->GetPlayerData());
+	// 음원 정지
+	Audio::Get()->Stop("SelectBGM");
 
 	// 다음 씬으로 전환
 	SceneManager::Get()->ChangeScene("Town");

@@ -526,6 +526,7 @@ void MarksmanshipHunter_in::EndHit()
 
 void MarksmanshipHunter_in::EndDie()
 {
+	SetState(IDLE1);
 	SetActive(false);
 }
 

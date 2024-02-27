@@ -662,6 +662,7 @@ void HolyPriest_in::EndHit()
 
 void HolyPriest_in::EndDie()
 {
+	SetState(IDLE1);
 	SetActive(false);
 }
 

@@ -588,6 +588,7 @@ void ProtectionWarrior_in::EndHit()
 
 void ProtectionWarrior_in::EndDie()
 {
+	SetState(IDLE1);
 	SetActive(false);
 }
 

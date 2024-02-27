@@ -33,6 +33,9 @@ public:
 	CapsuleCollider* GetCollider() { return collider; }
 	Transform* GetTransform() { return transform; }
 	float GetHpPercent() { return curHP / maxHP; }
+	float GetCurHP() { return curHP; }
+	float GetMaxHP() { return maxHP; }
+	void SetCurHp(float value) { curHP = value; }
 
 	MonsterType GetMonsterType() { return type; }
 
