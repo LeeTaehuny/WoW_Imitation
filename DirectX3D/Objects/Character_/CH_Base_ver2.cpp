@@ -148,10 +148,13 @@ void CH_Base_ver2::Update()
 				}
 			}
 
-			if (cols5->GetCollider()->IsRayCollision(ray, &contact))
+			if (cols5)
 			{
-				targetMonster = cols5;
-			}
+				if (cols5->GetCollider()->IsRayCollision(ray, &contact))
+				{
+					targetMonster = cols5;
+				}
+			}			
 		}
 
 		// �÷��̾� ����

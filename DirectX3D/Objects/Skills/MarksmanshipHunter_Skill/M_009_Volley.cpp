@@ -124,9 +124,12 @@ void M_009_Volley::Update()
 					monster[i]->Hit(skillDamage);
 				}
 			}
-			if (hitCollider->IsCollision(MONSTER->GetLichKing()->GetCollider()))
+			if (MONSTER->GetLichKing())
 			{
-				MONSTER->GetLichKing()->Hit(skillDamage);
+				if (hitCollider->IsCollision(MONSTER->GetLichKing()->GetCollider()))
+				{
+					MONSTER->GetLichKing()->Hit(skillDamage);
+				}
 			}
 		}
 

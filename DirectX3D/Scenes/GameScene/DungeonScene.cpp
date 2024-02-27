@@ -3,7 +3,7 @@
 
 DungeonScene::DungeonScene()
 {
-	dungeon = new Dungeon();
+	
 }
 
 DungeonScene::~DungeonScene()
@@ -13,6 +13,8 @@ DungeonScene::~DungeonScene()
 
 void DungeonScene::Start()
 {
+	dungeon = new Dungeon();
+
 	// 플레이어 위치 조정
 	//player->Rot().y += 3.15f;
 	//PLAYER->Pos() = dungeon->GetSpawnPoint_P();

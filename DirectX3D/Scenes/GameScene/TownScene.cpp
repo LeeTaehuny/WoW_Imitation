@@ -95,5 +95,5 @@ void TownScene::Loding()
     if (!isReady) return;
 
     // 다음 씬으로 전환
-    //SceneManager::Get()->ChangeScene("Select");
+    SceneManager::Get()->ChangeScene("Boss");
 }

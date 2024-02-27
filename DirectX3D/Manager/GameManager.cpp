@@ -1,83 +1,27 @@
 ﻿#include "Framework.h"
 
-#include "Scenes/CubeScene.h"
-#include "Scenes/GridScene.h"
-#include "Scenes/SphereScene.h"
 #include "Scenes/TerrainEditorScene.h"
-#include "Scenes/TerrainScene.h"
-#include "Scenes/CollisionScene.h"
 #include "Scenes/ModelExportScene.h"
 #include "Scenes/ModelRenderScene.h"
-#include "Scenes/ModelAnimationScene.h"
-#include "Scenes/IntancingScene.h"
-#include "Scenes/HumanScene.h"
-#include "Scenes/GameScene.h"
-#include "Scenes/RenderTargetScene.h"
-#include "Scenes/GBufferScene.h"
-#include "Scenes/ShadowScene.h"
-#include "Scenes/AStarScene.h"
-#include "Scenes/LightScene.h"
-#include "Scenes/BillboardScene.h"
-#include "Scenes/ParticleScene.h"
 #include "Scenes/ParticleConfigScene.h"
-#include "Scenes/MirrorScene.h"
-#include "Scenes/WaterScene.h"
-#include "Scenes/QuadTreeScene.h"
-#include "Scenes/TessellationScene.h"
-#include "Scenes/TerrainLODScene.h"
-#include "Scenes/KimScene.h"
-#include "Scenes/DevScene/TestScene.h"
-#include "Scenes/MAP/MapTestScene.h"
-#include "Scenes/MAP/TestDungeonScene.h"
 ///////////////////////////////////////////
 #include "Scenes/GameScene/SelectScene.h"
-#include "Scenes/GameScene/LichKingRaidScene.h"
+#include "Scenes/GameScene/LichKimgBossScene.h"
 #include "Scenes/GameScene/DungeonScene.h"
 #include "Scenes/GameScene/TownScene.h"
-
-
-#include "Scenes/MAP/TestExportRender.h"
 
 GameManager::GameManager()
 {
     Create();
 
-
     //SceneManager::Get()->Register("ModelExport", new ModelExportScene());
     //SceneManager::Get()->ChangeScene("ModelExport");    
-
-
-    /////////////////////////////////////////////////////////////////// Choi
-    // Test Scenes
-    //SceneManager::Get()->Create("BossMap", new MapTestScene());
-    //SceneManager::Get()->Add("BossMap");
-    //SceneManager::Get()->Register("TestDungeon", new TestDungeonScene());
-    //SceneManager::Get()->ChangeScene("TestDungeon");
-
-    // ModelExport
-    //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
-    //SceneManager::Get()->Add("ModelExport");
-    //SceneManager::Get()->Register("TestExportRender", new TestExportRender());
-    //SceneManager::Get()->ChangeScene("TestExportRender");
-
-    // Terrains
-    //SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
-    //SceneManager::Get()->Add("Terrain");
-    //SceneManager::Get()->Create("Terrain", new TerrainScene());
-    //SceneManager::Get()->Add("Terrain");
-    //SceneManager::Get()->Create("Terrain", new TerrainLODScene());
-    //SceneManager::Get()->Create("LOD", new TerrainLODScene());
-
-    //GameScene
-    
-    //SceneManager::Get()->Register("BossMapScene", new BossMapScene());
-    //SceneManager::Get()->ChangeScene("BossMapScene");
 
     ///////////////////////////////////////////////////////////////////////////
     SceneManager::Get()->Register("Select", new SelectScene());
     SceneManager::Get()->Register("Town", new TownScene());
     SceneManager::Get()->Register("DungeonScene", new DungeonScene());
-    SceneManager::Get()->Register("Boss", new LichKingRaidScene());
+    SceneManager::Get()->Register("Boss", new LichKimgBossScene());
 
     SceneManager::Get()->ChangeScene("Select");
 }

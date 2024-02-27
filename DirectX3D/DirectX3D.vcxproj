@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -231,11 +231,9 @@
     <ClInclude Include="Objects\UI\QuickSlot.h" />
     <ClInclude Include="Objects\UI\PlayerUI_Bar.h" />
     <ClInclude Include="Objects\UI\PartyUI_Bar.h" />
-    <ClInclude Include="Scenes\KimScene.h" />
     <ClInclude Include="Objects\Inventory\Slot.h" />
     <ClInclude Include="Objects\UI\Button.h" />
     <ClInclude Include="Objects\MAP\Dungeon.h" />
-    <ClInclude Include="Scenes\MAP\MapTestScene.h" />
     <ClInclude Include="Objects\MAP\BossMap.h" />
     <ClInclude Include="Framework\Environment\Reflection.h" />
     <ClInclude Include="Framework\Environment\Refraction.h" />
@@ -244,18 +242,13 @@
     <ClInclude Include="Objects\Inventory\Inventory.h" />
     <ClInclude Include="Objects\Item\Item.h" />
     <ClInclude Include="Objects\Item\Potion.h" />
-    <ClInclude Include="Scenes\MirrorScene.h" />
     <ClInclude Include="Objects\Algorithm\AStar.h" />
     <ClInclude Include="Objects\Particle\ParticleSystem.h" />
     <ClInclude Include="Objects\Particle\Particle.h" />
     <ClInclude Include="Objects\Particle\Rain.h" />
     <ClInclude Include="Objects\Landscape\QuadTreeTerrain.h" />
     <ClInclude Include="Objects\Static\Reflector.h" />
-    <ClInclude Include="Scenes\QuadTreeScene.h" />
     <ClInclude Include="Scenes\ParticleConfigScene.h" />
-    <ClInclude Include="Scenes\ParticleScene.h" />
-    <ClInclude Include="Scenes\BillboardScene.h" />
-    <ClInclude Include="Scenes\AStarScene.h" />
     <ClInclude Include="DirectX3D.h" />
     <ClInclude Include="Objects\Character\Fox.h" />
     <ClInclude Include="Framework.h" />
@@ -334,23 +327,10 @@
     <ClInclude Include="Objects\Manager\RobotManager.h" />
     <ClInclude Include="Objects\UI\ProgressBar.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="Scenes\CollisionScene.h" />
-    <ClInclude Include="Scenes\CubeScene.h" />
-    <ClInclude Include="Scenes\GameScene.h" />
-    <ClInclude Include="Scenes\GBufferScene.h" />
-    <ClInclude Include="Scenes\GridScene.h" />
-    <ClInclude Include="Scenes\HumanScene.h" />
-    <ClInclude Include="Scenes\IntancingScene.h" />
-    <ClInclude Include="Scenes\LightScene.h" />
-    <ClInclude Include="Scenes\ModelAnimationScene.h" />
     <ClInclude Include="Scenes\ModelExportScene.h" />
     <ClInclude Include="Scenes\ModelRenderScene.h" />
-    <ClInclude Include="Scenes\RenderTargetScene.h" />
     <ClInclude Include="Scenes\Scene.h" />
-    <ClInclude Include="Scenes\ShadowScene.h" />
-    <ClInclude Include="Scenes\SphereScene.h" />
     <ClInclude Include="Scenes\TerrainEditorScene.h" />
-    <ClInclude Include="Scenes\TerrainScene.h" />
     <ClInclude Include="Objects\Particle\Sprite.h" />
     <ClInclude Include="Objects\Particle\Snow.h" />
     <ClInclude Include="Objects\Particle\Spark.h" />
@@ -363,12 +343,9 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Objects\Test\TestLight.h" />
     <ClInclude Include="Objects\Particle\Trail.h" />
-    <ClInclude Include="Scenes\WaterScene.h" />
     <ClInclude Include="Objects\Landscape\Water.h" />
     <ClInclude Include="Objects\Landscape\TerrainData.h" />
     <ClInclude Include="Objects\Landscape\TerrainLOD.h" />
-    <ClInclude Include="Scenes\TerrainLODScene.h" />
-    <ClInclude Include="Scenes\TessellationScene.h" />
     <ClInclude Include="Scenes\DevScene\TestScene.h" />
     <ClInclude Include="Objects\Item\Weapon.h" />
     <ClInclude Include="Objects\Monster\VAlkier.h" />
@@ -456,7 +433,6 @@
     <ClCompile Include="Objects\Monster\VAlkier.cpp" />
     <ClCompile Include="Scenes\GameScene\TownScene.cpp" />
     <ClCompile Include="Objects\MAP\TownMap.cpp" />
-    <ClInclude Include="Scenes\MAP\TestDungeonScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Objects\MAP\Dungeon.cpp" />
@@ -472,7 +448,6 @@
     <ClCompile Include="Objects\UI\QuickSlot.cpp" />
     <ClCompile Include="Objects\UI\PlayerUI_Bar.cpp" />
     <ClCompile Include="Objects\UI\PartyUI_Bar.cpp" />
-    <ClCompile Include="Scenes\MAP\MapTestScene.cpp" />
     <ClCompile Include="Objects\MAP\BossMap.cpp" />
     <ClCompile Include="Framework\Environment\Reflection.cpp" />
     <ClCompile Include="Framework\Environment\Refraction.cpp" />
@@ -484,22 +459,16 @@
     <ClCompile Include="Objects\Monster\Scarecrow.cpp" />
     <ClCompile Include="Objects\Character_\ProtectionWarrior_in.cpp" />
     <ClCompile Include="Objects\Skills\Base\PassiveSkill.cpp" />
-    <ClCompile Include="Scenes\KimScene.cpp" />
     <ClCompile Include="Objects\Inventory\Inventory.cpp" />
     <ClCompile Include="Objects\Item\Item.cpp" />
     <ClCompile Include="Objects\Item\Potion.cpp" />
-    <ClCompile Include="Scenes\MirrorScene.cpp" />
     <ClCompile Include="Objects\Algorithm\AStar.cpp" />
     <ClCompile Include="Objects\Particle\ParticleSystem.cpp" />
     <ClCompile Include="Objects\Particle\Particle.cpp" />
     <ClCompile Include="Objects\Particle\Rain.cpp" />
     <ClCompile Include="Objects\Landscape\QuadTreeTerrain.cpp" />
     <ClCompile Include="Objects\Static\Reflector.cpp" />
-    <ClCompile Include="Scenes\QuadTreeScene.cpp" />
     <ClCompile Include="Scenes\ParticleConfigScene.cpp" />
-    <ClCompile Include="Scenes\ParticleScene.cpp" />
-    <ClCompile Include="Scenes\BillboardScene.cpp" />
-    <ClCompile Include="Scenes\AStarScene.cpp" />
     <ClCompile Include="DirectX3D.cpp" />
     <ClCompile Include="Objects\Character\Fox.cpp" />
     <ClCompile Include="Framework.cpp">
@@ -572,38 +541,21 @@
     <ClCompile Include="Objects\Manager\KunaiManager.cpp" />
     <ClCompile Include="Objects\Manager\RobotManager.cpp" />
     <ClCompile Include="Objects\UI\ProgressBar.cpp" />
-    <ClCompile Include="Scenes\CollisionScene.cpp" />
-    <ClCompile Include="Scenes\CubeScene.cpp" />
-    <ClCompile Include="Scenes\GameScene.cpp" />
-    <ClCompile Include="Scenes\GBufferScene.cpp" />
-    <ClCompile Include="Scenes\GridScene.cpp" />
-    <ClCompile Include="Scenes\HumanScene.cpp" />
-    <ClCompile Include="Scenes\IntancingScene.cpp" />
-    <ClCompile Include="Scenes\LightScene.cpp" />
-    <ClCompile Include="Scenes\ModelAnimationScene.cpp" />
     <ClCompile Include="Scenes\ModelExportScene.cpp" />
     <ClCompile Include="Scenes\ModelRenderScene.cpp" />
-    <ClCompile Include="Scenes\RenderTargetScene.cpp" />
-    <ClCompile Include="Scenes\ShadowScene.cpp" />
-    <ClCompile Include="Scenes\SphereScene.cpp" />
     <ClCompile Include="Scenes\TerrainEditorScene.cpp" />
-    <ClCompile Include="Scenes\TerrainScene.cpp" />
     <ClCompile Include="Objects\Test\TestLight.cpp" />
     <ClCompile Include="Objects\Particle\Sprite.cpp" />
     <ClCompile Include="Objects\Particle\Snow.cpp" />
     <ClCompile Include="Objects\Particle\Spark.cpp" />
     <ClCompile Include="Objects\Particle\Trail.cpp" />
-    <ClCompile Include="Scenes\WaterScene.cpp" />
     <ClCompile Include="Objects\Landscape\Water.cpp" />
     <ClCompile Include="Objects\Landscape\TerrainData.cpp" />
     <ClCompile Include="Objects\Landscape\TerrainLOD.cpp" />
-    <ClCompile Include="Scenes\TerrainLODScene.cpp" />
-    <ClCompile Include="Scenes\TessellationScene.cpp" />
     <ClCompile Include="Scenes\DevScene\TestScene.cpp" />
     <ClCompile Include="Objects\Item\Weapon.cpp" />
     <ClCompile Include="Objects\Shop\Shop.cpp" />
     <ClCompile Include="Objects\Monster\Skeleton_Knight.cpp" />
-    <ClCompile Include="Scenes\MAP\TestDungeonScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX3D.rc" />

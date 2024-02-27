@@ -197,13 +197,18 @@ void M_008_Multi_Shot::UseSkill(MonsterBase* monsterbase)
 			ThisNumber++;
 		}
 	}
-	if (hitCollider->IsCollision(MONSTER->GetLichKing()->GetCollider()))
+
+	if (MONSTER->GetLichKing())
 	{
-		if (monsters[0] != MONSTER->GetLichKing())
+		if (hitCollider->IsCollision(MONSTER->GetLichKing()->GetCollider()))
 		{
-			MONSTER->GetLichKing()->Hit(skillDamage);
-		}		
+			if (monsters[0] != MONSTER->GetLichKing())
+			{
+				MONSTER->GetLichKing()->Hit(skillDamage);
+			}
+		}
 	}
+	
 
 	if (ThisNumber < 5)
 		skillDamage = owner->GetStat().damage * 0.5f;

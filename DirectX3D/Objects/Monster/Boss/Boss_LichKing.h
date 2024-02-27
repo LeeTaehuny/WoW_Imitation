@@ -32,9 +32,6 @@ public:
     Stat GetStat() { return Lich_Stat; }
     void SetState(State state);
 
-    virtual void Spawn(Vector3 pos) override;
-    virtual void Hit(float amount = 1) override;
-
     vector<CH_Base_ver2*> characterData;
 
     void SetBossMap(class BossMap* map) { this->map = map; }
@@ -65,10 +62,13 @@ private:
     Transform* mainHand;
     Model* Frost;
 
+    
+
 private:
     Quad* frame;
     Quad* face;
     ProgressBar* hp_bar;
+    SphereCollider* atk_serch;
 
     UINT phase = 1;
     float vidul;

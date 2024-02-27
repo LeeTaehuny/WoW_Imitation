@@ -51,10 +51,10 @@ LichKimgBossScene::~LichKimgBossScene()
 
 void LichKimgBossScene::Start()
 {
-	CH->PlayerSpawn(2);
-	//CH->GetPlayerData()->EquipWeapon(new Weapon("hammer_1", WeaponType::Hammer));
-	CH->GetPlayerData()->EquipWeapon(new Weapon("bow_1", WeaponType::Bow));
-	SKILL->Init(CH->GetPlayerData());
+	//CH->PlayerSpawn(2);
+	////CH->GetPlayerData()->EquipWeapon(new Weapon("hammer_1", WeaponType::Hammer));
+	//CH->GetPlayerData()->EquipWeapon(new Weapon("bow_1", WeaponType::Bow));
+	//SKILL->Init(CH->GetPlayerData());
 	playerData = CH->GetPlayerData();
 
 	vector<CH_Base_ver2*> Position_Select = CH->GetCharcterData();

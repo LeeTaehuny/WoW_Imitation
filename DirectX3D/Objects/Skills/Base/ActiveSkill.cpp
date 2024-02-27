@@ -131,11 +131,14 @@ void ActiveSkill::TargetUpdate()
 			}
 		}
 
-		if (hitCollider->IsCollision(cols6->GetCollider()))
+		if (cols6)
 		{
-			// 충돌한 몬스터들에게 데미지 주기
-			// * 매개변수로 owner의 공격력과 번호 저장하기
-			cols6->Hit(skillDamage);
+			if (hitCollider->IsCollision(cols6->GetCollider()))
+			{
+				// 충돌한 몬스터들에게 데미지 주기
+				// * 매개변수로 owner의 공격력과 번호 저장하기
+				cols6->Hit(skillDamage);
+			}
 		}
 
 		hitCollider->SetActive(false);

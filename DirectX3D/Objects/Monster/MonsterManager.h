@@ -41,8 +41,6 @@ public:
     vector<MonsterBase*> GetIceBall() { return valkier; }
     MonsterBase* GetLichKing() { return LickKing; }
 
-    MonsterBase* GetBoss() { return lichKimg; }
-
 public:
     // 몬스터들의 콜라이더 정보를 저장함
     //vector<Collider*> monsterCollider;
@@ -73,7 +71,6 @@ private:
     // 아이스볼 클래스
     vector<MonsterBase*> iceBall;
 
-    class MonsterBase* lichKimg;
     MonsterBase* LickKing;
 
 private:

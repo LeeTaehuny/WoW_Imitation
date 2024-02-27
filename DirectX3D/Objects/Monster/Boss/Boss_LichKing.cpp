@@ -339,48 +339,6 @@ void Boss_LichKing::SetState(State state)
 	lichking->PlayClip(state);
 }
 
-void Boss_LichKing::Spawn(Vector3 pos)
-{
-	transform->SetActive(true);
-	collider->SetActive(true);
-	SetState(IDLE);
-	curHP = maxHP;
-	transform->Pos() = pos;
-}
-
-void Boss_LichKing::Hit(float amount)
-{
-	float damage_armor = amount - Lich_Stat.Armor;
-	
-	if (damage_armor > 0)
-	{
-		curHP -= damage_armor;
-		//character_Damage_Data[] = damage_armor;
-	}	
-
-	if (curHP <= 0)
-	{
-		SetState(DIE);
-	}
-	else
-	{
-		SetState(IDLE);
-	}
-
-	for (int i = 0; i < hitText.size(); i++)
-	{
-		// 출력 off 상태이면
-		if (!hitText[i].isPrint)
-		{
-			// 출력 설정하기
-			hitText[i].isPrint = true;
-			hitText[i].duration = 1.0f;
-			hitText[i].damage = to_string((int)amount);
-			break;
-		}
-	}
-}
-
 void Boss_LichKing::Moving()
 {
 	if (curState == ATTACK || curState == CASTING || curState == HIT || curState == DIE) return;

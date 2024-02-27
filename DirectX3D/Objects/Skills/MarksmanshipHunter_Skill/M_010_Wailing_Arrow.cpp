@@ -143,7 +143,7 @@ void M_010_Wailing_Arrow::Update()
 							monster[i]->Hit(skillDamage);
 						}
 					}
-					if (monsterTarget != MONSTER->GetLichKing())
+					if (MONSTER->GetLichKing() && monsterTarget != MONSTER->GetLichKing())
 					{
 						if (hitCollider->IsCollision(MONSTER->GetLichKing()->GetCollider()))
 						{

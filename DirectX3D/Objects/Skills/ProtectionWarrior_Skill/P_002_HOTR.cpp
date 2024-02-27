@@ -136,11 +136,14 @@ void P_002_HOTR::Update()
 						monster->Hit(skillDamage);
 					}
 				}
-				if (hitCollider->IsCollision(MONSTER->GetLichKing()->GetCollider()))
+				if (MONSTER->GetLichKing())
 				{
-					// 충돌한 몬스터들에게 데미지 주기
-					// * 매개변수로 owner의 공격력과 번호 저장하기
-					MONSTER->GetLichKing()->Hit(skillDamage);
+					if (hitCollider->IsCollision(MONSTER->GetLichKing()->GetCollider()))
+					{
+						// 충돌한 몬스터들에게 데미지 주기
+						// * 매개변수로 owner의 공격력과 번호 저장하기
+						MONSTER->GetLichKing()->Hit(skillDamage);
+					}
 				}
 				hitCollider->SetActive(false);
 			}
