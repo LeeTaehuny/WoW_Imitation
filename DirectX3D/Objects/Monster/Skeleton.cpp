@@ -51,7 +51,7 @@ Skeleton::Skeleton(Transform* transform, ModelAnimatorInstancing* instancing, UI
 		attackTarget_serch->UpdateWorld();
 		float atk_leng = FLT_MAX;
 		vector<CH_Base_ver2*> characterData = CH->GetCharcterData();
-		CH_Base_ver2* lom = nullptr;
+		CH_Base_ver2* lom = target[0];
 		for (int i = 0; i < characterData.size(); ++i)
 		{
 			if (attackTarget_serch->IsCollision(characterData[i]->GetCollider()))
@@ -66,10 +66,8 @@ Skeleton::Skeleton(Transform* transform, ModelAnimatorInstancing* instancing, UI
 				}
 			}
 		}
-		if (lom != nullptr)
-		{
-			targetTransform = lom;
-		}
+
+		targetTransform = lom;
 	}
 	// 스켈레톤 스탯 설정
 	maxHP = 1000.0f;

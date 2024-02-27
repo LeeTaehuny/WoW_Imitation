@@ -149,6 +149,7 @@
     <ClInclude Include="Scenes\GameScene\DungeonScene.h" />
     <ClInclude Include="Objects\Monster\IceBall.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_005_Remorseless_Winter.h" />
+    <ClInclude Include="Objects\Shop\Guild.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.h" />
     <ClInclude Include="Objects\Monster\Boss\Lich_002_Infest.h" />
@@ -380,6 +381,11 @@
     <ClCompile Include="Scenes\GameScene\DungeonScene.cpp" />
     <ClCompile Include="Objects\Monster\IceBall.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_005_Remorseless_Winter.cpp" />
+    <ClInclude Include="Scenes\GameScene\TownScene.h" />
+    <ClInclude Include="Objects\MAP\TownMap.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Objects\Shop\Guild.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_004_Summon_Shambling_Horror.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_003_Summon_Drudge_Ghouls.cpp" />
     <ClCompile Include="Objects\Monster\Boss\Lich_002_Infest.cpp" />
@@ -448,6 +454,8 @@
     <ClCompile Include="Objects\Skills\SkillManager.cpp" />
     <ClCompile Include="Scenes\GameScene\SelectScene.cpp" />
     <ClCompile Include="Objects\Monster\VAlkier.cpp" />
+    <ClCompile Include="Scenes\GameScene\TownScene.cpp" />
+    <ClCompile Include="Objects\MAP\TownMap.cpp" />
     <ClInclude Include="Scenes\MAP\TestDungeonScene.h" />
   </ItemGroup>
   <ItemGroup>

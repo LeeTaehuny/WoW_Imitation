@@ -211,7 +211,7 @@ void SelectScene::Loding()
 	CH_Manager::Get()->PlayerSpawn(saveIndex);
 
 	// 다음 씬으로 전환
-	SceneManager::Get()->ChangeScene("TestScene");
+	SceneManager::Get()->ChangeScene("Town");
 }
 
 void SelectScene::OnClick_Start()

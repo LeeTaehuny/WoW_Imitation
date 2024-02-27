@@ -67,6 +67,14 @@ MarksmanshipHunter_in::MarksmanshipHunter_in(CreatureType type, Transform* trans
 	this->SetActive(true);
 
 	mainHandBoneIndex = 23;
+
+	// Status
+	stat.maxHp = 700.0f;
+	stat.hp = stat.maxHp;
+	stat.maxMp = 700;
+	stat.mp = stat.maxMp;
+	stat.damage = 150.0f;
+	stat.defence = 100;
 }
 
 MarksmanshipHunter_in::~MarksmanshipHunter_in()
@@ -176,7 +184,9 @@ void MarksmanshipHunter_in::AIUpdate()
 
 void MarksmanshipHunter_in::OnHit(float damage, bool motion)
 {
-	stat.hp -= damage;
+	float def = stat.defence / (stat.defence + 100) * 100;
+
+	stat.hp -= (damage - damage * def);
 
 	if (stat.hp > 0)
 	{
@@ -347,7 +357,18 @@ void MarksmanshipHunter_in::Moving()
 void MarksmanshipHunter_in::Jump()
 {
 	// �������� �ƴ϶�� ����
-	if (!isJump) return;
+	if (!isJump)
+	{
+		jumpVelocity -= 1.8f * gravityMult * DELTA;
+		Pos().y += jumpVelocity;
+
+		if (Pos().y < curheight)
+		{
+			Pos().y = curheight;
+			jumpVelocity = 0;
+		}
+		return;
+	}
 
 	jumpVelocity -= 1.8f * gravityMult * DELTA;
 	Pos().y += jumpVelocity;

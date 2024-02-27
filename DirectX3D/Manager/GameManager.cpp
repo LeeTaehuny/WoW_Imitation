@@ -33,6 +33,7 @@
 #include "Scenes/GameScene/SelectScene.h"
 #include "Scenes/GameScene/LichKingRaidScene.h"
 #include "Scenes/GameScene/DungeonScene.h"
+#include "Scenes/GameScene/TownScene.h"
 
 
 #include "Scenes/MAP/TestExportRender.h"
@@ -41,50 +42,9 @@ GameManager::GameManager()
 {
     Create();
 
-    //SceneManager::Get()->Create("Grid", new GridScene());
-    //SceneManager::Get()->Add("Grid");
 
     //SceneManager::Get()->Register("ModelExport", new ModelExportScene());
-    //SceneManager::Get()->ChangeScene("ModelExport");
-
-    //SceneManager::Get()->Register("KIM", new KimScene());
-    //SceneManager::Get()->ChangeScene("KIM");
-    SceneManager::Get()->Register("Boss", new LichKingRaidScene());
-    SceneManager::Get()->ChangeScene("Boss");
-    //SceneManager::Get()->Create("Cube", new CubeScene());
-    //SceneManager::Get()->Create("Sphere", new SphereScene());
-    //SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
-    //SceneManager::Get()->Create("Collision", new CollisionScene());
-    //SceneManager::Get()->Create("ModelRender", new ModelRenderScene());
-    //SceneManager::Get()->Create("ModelAnimationScene", new ModelAnimationScene());
-    //SceneManager::Get()->Create("Instancing", new IntancingScene());
-    //SceneManager::Get()->Create("HumanTest", new HumanScene());
-    //SceneManager::Get()->Create("Game", new GameScene());
-    //SceneManager::Get()->Add("Game");
-    //SceneManager::Get()->Create("RenderTarget", new RenderTargetScene());
-    //SceneManager::Get()->Create("GeometryBuffer", new GBufferScene());
-    //SceneManager::Get()->Create("ShadowScene", new ShadowScene());
-    //SceneManager::Get()->Create("AStar", new AStarScene());
-    //SceneManager::Get()->Create("LightTest", new LightScene());
-    //SceneManager::Get()->Create("Billboard", new BillboardScene());
-    //SceneManager::Get()->Create("Particle", new ParticleScene());
-
-    
-
-    // * 작업중. //SceneManager::Get()->Create("MirrorScene", new MirrorScene());
-    //SceneManager::Get()->Create("WaterScene", new WaterScene());
-    //SceneManager::Get()->Add("WaterScene");
-    //SceneManager::Get()->Create("QuadTree", new QuadTreeScene());
-    //SceneManager::Get()->Create("Tessellation", new TessellationScene());
-    //SceneManager::Get()->Create("LOD", new TerrainLODScene());
-    //SceneManager::Get()->Create("TestScene", new TestScene());
-    //SceneManager::Get()->Add("TestScene");
-
-    //SceneManager::Get()->Register("TestScene", new TestScene());
-    //SceneManager::Get()->Register("Select", new SelectScene());
-    //
-    //
-    //SceneManager::Get()->ChangeScene("Select");
+    //SceneManager::Get()->ChangeScene("ModelExport");    
 
 
     /////////////////////////////////////////////////////////////////// Choi
@@ -109,11 +69,17 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("LOD", new TerrainLODScene());
 
     //GameScene
-    SceneManager::Get()->Register("DungeonScene", new DungeonScene());
-    SceneManager::Get()->ChangeScene("DungeonScene");
+    
     //SceneManager::Get()->Register("BossMapScene", new BossMapScene());
     //SceneManager::Get()->ChangeScene("BossMapScene");
 
+    ///////////////////////////////////////////////////////////////////////////
+    SceneManager::Get()->Register("Select", new SelectScene());
+    SceneManager::Get()->Register("Town", new TownScene());
+    SceneManager::Get()->Register("DungeonScene", new DungeonScene());
+    SceneManager::Get()->Register("Boss", new LichKingRaidScene());
+
+    SceneManager::Get()->ChangeScene("Select");
 }
 
 GameManager::~GameManager()

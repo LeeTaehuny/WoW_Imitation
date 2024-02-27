@@ -50,7 +50,7 @@ Skeleton_Knight::Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* 
 		attackTarget_serch->UpdateWorld();
 		float atk_leng = FLT_MAX;
 		vector<CH_Base_ver2*> characterData = CH->GetCharcterData();
-		CH_Base_ver2* lom = nullptr;
+		CH_Base_ver2* lom = target[0];
 		for (int i = 0; i < characterData.size(); ++i)
 		{
 			if (attackTarget_serch->IsCollision(characterData[i]->GetCollider()))
@@ -65,10 +65,8 @@ Skeleton_Knight::Skeleton_Knight(Transform* transform, ModelAnimatorInstancing* 
 				}
 			}
 		}
-		if (lom != nullptr)
-		{
-			targetTransform = lom;
-		}
+
+		targetTransform = lom;
 	}
 	hitText.resize(20);
 

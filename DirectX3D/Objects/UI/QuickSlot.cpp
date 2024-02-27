@@ -83,7 +83,7 @@ void QuickSlot::UIRender()
 			{
 				string tempString;
 				tempString = to_string(p->GetQuantity());
-				Font::Get()->RenderText(tempString, { quickSlots[idx]->GlobalPos().x + 15.0f, quickSlots[idx]->GlobalPos().y - 5.0f }, {3.0f, 3.0f});
+				Font::Get()->RenderText(tempString, { quickSlots[idx]->GlobalPos().x + 15.0f, quickSlots[idx]->GlobalPos().y - 5.0f });
 			}
 		}
 
@@ -283,7 +283,7 @@ void QuickSlot::UpdateQuickSlot()
 		}
 		else
 		{
-			quickSlots[idx]->GetMaterial()->SetDiffuseMap(L"Textures/Color/White.png");
+			quickSlots[idx]->GetMaterial()->SetDiffuseMap(L"Textures/Color/Black.png");
 		}
 
 		idx++;

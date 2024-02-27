@@ -222,24 +222,24 @@ void Weapon::InitWeapon(string name)
 
 		collider->Pos() = { 1.0f, 0.0f, 0.0f };
 		collider->Scale() *= 1.7f;
-		damage = 1000;
+		damage = 100;
 		break;
 	case WeaponType::Bow:
 		icon = new Quad(L"Textures/UI/Items/bow_" + to_wstring(num) + L".png");
 
 		collider->Pos() = { 0.0f, 0.0f, 0.0f };
-		damage = 1000;
+		damage = 100;
 		break;
 	case WeaponType::Hammer:
 		icon = new Quad(L"Textures/UI/Items/hammer_" + to_wstring(num) + L".png");
 
 		collider->Pos() = { 0.5f, 0.0f, 0.0f };
-		damage = 1000;
+		damage = 100;
 		break;
 	case WeaponType::Staff:
 		icon = new Quad(L"Textures/UI/Items/staff_" + to_wstring(num) + L".png");
 		collider->Pos() = { 0.8f, 0.0f, 0.0f };
-		damage = 1000;
+		damage = 100;
 		break;
 	case WeaponType::Shield:
 		collider->Pos() = { 0.0f, 0.0f, 0.0f };

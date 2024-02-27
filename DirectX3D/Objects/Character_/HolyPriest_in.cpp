@@ -35,6 +35,14 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 
 	mainHandBoneIndex = 37;
 
+	// Status
+	stat.maxHp = 700.0f;
+	stat.hp = stat.maxHp;
+	stat.maxMp = 1000;
+	stat.mp = stat.maxMp;
+	stat.damage = 100.0f;
+	stat.defence = 100;
+
 
 	skillList.push_back(new H_000_Basic_Atttack());
 	skillList[skillList.size() - 1]->SetOwner(this);
@@ -296,7 +304,9 @@ void HolyPriest_in::AIUpdate()
 
 void HolyPriest_in::OnHit(float damage, bool motion)
 {
-	stat.hp -= damage;
+	float def = stat.defence / (stat.defence + 100) * 100;
+
+	stat.hp -= (damage - damage * def);
 
 	if (stat.hp > 0)
 	{
@@ -465,7 +475,18 @@ void HolyPriest_in::Moving()
 void HolyPriest_in::Jump()
 {
 	// �������� �ƴ϶�� ����
-	if (!isJump) return;
+	if (!isJump)
+	{
+		jumpVelocity -= 1.8f * gravityMult * DELTA;
+		Pos().y += jumpVelocity;
+
+		if (Pos().y < curheight)
+		{
+			Pos().y = curheight;
+			jumpVelocity = 0;
+		}
+		return;
+	}
 
 	jumpVelocity -= 1.8f * gravityMult * DELTA;
 	Pos().y += jumpVelocity;

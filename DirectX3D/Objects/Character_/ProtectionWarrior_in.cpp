@@ -59,6 +59,14 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 	this->SetActive(true);
 
 	mainHandBoneIndex = 37;
+
+	// Status
+	stat.maxHp = 2000.0f;
+	stat.hp = stat.maxHp;
+	stat.maxMp = 500;
+	stat.mp = stat.maxMp;
+	stat.damage = 100.0f;
+	stat.defence = 100;
 }
 
 ProtectionWarrior_in::~ProtectionWarrior_in()
@@ -199,7 +207,9 @@ void ProtectionWarrior_in::AIUpdate()
 
 void ProtectionWarrior_in::OnHit(float damage, bool motion)
 {
-	stat.hp -= damage;
+	float def = stat.defence / (stat.defence + 100) * 100;
+
+	stat.hp -= (damage - damage * def);
 
 	if (stat.hp > 0)
 	{
@@ -368,7 +378,18 @@ void ProtectionWarrior_in::Moving()
 void ProtectionWarrior_in::Jump()
 {
 	// 점프중이 아니라면 리턴
-	if (!isJump) return;
+	if (!isJump)
+	{
+		jumpVelocity -= 1.8f * gravityMult * DELTA;
+		Pos().y += jumpVelocity;
+
+		if (Pos().y < curheight)
+		{
+			Pos().y = curheight;
+			jumpVelocity = 0;
+		}
+		return;
+	}
 
 	jumpVelocity -= 1.8f * gravityMult * DELTA;
 	Pos().y += jumpVelocity;

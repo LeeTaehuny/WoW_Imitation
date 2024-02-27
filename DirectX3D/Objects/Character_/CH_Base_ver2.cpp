@@ -57,14 +57,6 @@ CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionT
 		break;
 	}
 
-	// ���� ���� (�ӽ�)
-	stat.maxHp = 1000.0f;
-	stat.hp = stat.maxHp;
-	stat.maxMp = 1000;
-	stat.mp = stat.maxMp;
-	stat.damage = 100.0f;
-	stat.defence = 100;
-
 	mainHand = new Transform();
 	mainHand->SetParent(this);
 }

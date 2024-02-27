@@ -63,8 +63,8 @@ BillboardScene::BillboardScene()
 
     blendState[1]->Alpha(true);
     blendState[1]->AlphaToCoverage(true);
-    depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ZERO); //어떤 것에도 가려지지 않게
-    //depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ALL);  //좌표상 조금만 앞에 있으면 다 가려지게
+    //depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ZERO); //어떤 것에도 가려지지 않게
+    depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ALL);  //좌표상 조금만 앞에 있으면 다 가려지게
 }
 
 BillboardScene::~BillboardScene()

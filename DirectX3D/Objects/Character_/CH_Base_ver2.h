@@ -67,6 +67,9 @@ public:
 	ModelAnimatorInstancing* GetInstancing() { return instancing; }
 	UINT GetIndex() { return index; }
 
+	void SetHeight(float value) { curheight = value; }
+	float& GettHeight() { return curheight; }
+
 	// ����
 	void SetStat(Status stat) { this->stat = stat; }
 	Status& GetStat() { return stat; }
