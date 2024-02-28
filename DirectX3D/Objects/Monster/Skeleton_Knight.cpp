@@ -142,12 +142,12 @@ void Skeleton_Knight::Hit(float amount)
 		SetState(DEATH);
 		collider->SetActive(false);
 		curHP = 0.0f;
-		Audio::Get()->Play("skeleton_Night_die");
+		Audio::Get()->Play("skeleton_Night_die", transform->Pos(), 1.0f);
 	}
 	else
 	{
 		SetState(HIT);
-		Audio::Get()->Play("skeleton_Night_hit");
+		Audio::Get()->Play("skeleton_Night_hit", transform->Pos(), 1.0f);
 	}
 
 	for (int i = 0; i < hitText.size(); i++)
@@ -200,7 +200,7 @@ void Skeleton_Knight::EndAttack()
 	attackBumwe->SetActive(false);
 	SetState(WALKING);
 
-	MonsterBase::targetActiveSerch();
+	MonsterBase::atkEndSerch();
 }
 
 void Skeleton_Knight::EndHit()
@@ -267,7 +267,7 @@ void Skeleton_Knight::targetAttack()
 			{
 				isOne_sound = false;
 				one_atk_time = Max_one_atk_time;
-				Audio::Get()->Play("skeleton_Night_atk");
+				Audio::Get()->Play("skeleton_Night_atk", transform->Pos(), 1.0f);
 			}
 		}
 		return;

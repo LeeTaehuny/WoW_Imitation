@@ -65,6 +65,29 @@ public:
 			targetTransform = lom;
 		}
 	}
+	void atkEndSerch()
+	{
+		attackTarget_serch->UpdateWorld();
+		float atk_leng = FLT_MAX;
+		vector<CH_Base_ver2*> characterData = CH->GetCharcterData();
+		CH_Base_ver2* lom = target[0];
+		for (int i = 0; i < characterData.size(); ++i)
+		{
+			if (!characterData[i]->GetCollider()->Active()) continue;
+			if (attackTarget_serch->IsCollision(characterData[i]->GetCollider()))
+			{
+				Vector3 leng = characterData[i]->GlobalPos() - attackTarget_serch->GlobalPos();
+				float min = leng.Length();
+
+				if (atk_leng >= min)
+				{
+					atk_leng = min;
+					lom = characterData[i];
+				}
+			}
+		}
+		targetTransform = lom;
+	}
 
 protected:
 

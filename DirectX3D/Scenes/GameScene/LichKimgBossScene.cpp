@@ -59,7 +59,7 @@ void LichKimgBossScene::Start()
 	//SKILL->Init(CH->GetPlayerData());
 
 	sound_change = false;
-	Audio::Get()->Play("bossScene_main_bgm");
+	Audio::Get()->Play("bossScene_main_bgm", 0.7f);
 
 	playerData = CH->GetPlayerData();
 
@@ -77,8 +77,7 @@ void LichKimgBossScene::Start()
 		Position_Select[i]->Pos() = position_active;
 		Position_Select[i]->SetHeight(0);
 		Position_Select[i]->Pos().y = 0;
-		Position_Select[i]->Rot().y = 0;
-		Position_Select[i]->Rot().y -= XM_PI * 0.5f;
+		Position_Select[i]->Rot().y = -(XM_PI * 0.5f);
 		Position_Select[i]->Update();
 
 		if (1 - nanum == 0)
@@ -116,6 +115,7 @@ void LichKimgBossScene::Start()
 	if (Boss_LichKing* c = dynamic_cast<Boss_LichKing*>(MONSTER->GetLichKing()))
 	{
 		c->Spawn(Vector3());
+		c->SetPhase(1);
 	}
 	
 	Mounga_die = false;
@@ -142,39 +142,12 @@ void LichKimgBossScene::Update()
 		{
 			sound_change = true;
 			Audio::Get()->Stop("bossScene_main_bgm");
-			Audio::Get()->Play("bossScene_end");
+			Audio::Get()->Play("bossScene_end", 0.7f);
 		}
 	}
-	
 
 	SKILL->Update();
 	vector<CH_Base_ver2*> con = CH->GetCharcterData();
-	//for (int i = 0; i < con.size(); i++)
-	//{
-	//	float vaul = 0.9f;
-	//	Vector3 ratio = map->Getgound01()->Scale() * vaul;
-	//	switch (map->GetPhase())
-	//	{
-	//	case 1:
-	//		ratio = map->Getgound02()->Scale() * vaul;
-	//		break;
-	//	
-	//	case 3:
-	//		ratio = map->Getgound02()->Scale() * vaul;
-	//		break;
-	//	}
-	//
-	//	if (con[i]->Pos().x >= ratio.x || con[i]->Pos().x <= -ratio.x ||
-	//		con[i]->Pos().z >= ratio.z || con[i]->Pos().z <= -ratio.z)
-	//	{
-	//		con[i]->SetHeight(-100);
-	//	}
-	//
-	//	if (con[i]->Pos().y <= -50)
-	//	{
-	//		con[i]->OnHit(99999);
-	//	}
-	//}
 
 	CH->Update();
 	MONSTER->Update();
@@ -288,6 +261,44 @@ void LichKimgBossScene::Scene_Chnage()
 	{
 		Position_Select[i]->GetStat().hp = Position_Select[i]->GetStat().maxHp;
 		Position_Select[i]->SetActive(true);
+
+		switch (Position_Select[i]->GetProfessionType())
+		{
+		case ProfessionType::ArmsWarrior:
+			if (ArmsWarrior_in* c = dynamic_cast<ArmsWarrior_in*>(Position_Select[i]))
+			{
+				c->SetState(ArmsWarrior_in::State::IDLE1);
+			}
+			break;
+
+		case ProfessionType::FireMage:
+			if (FireMage_in* c = dynamic_cast<FireMage_in*>(Position_Select[i]))
+			{
+				c->SetState(FireMage_in::State::IDLE1);
+			}
+			break;
+
+		case ProfessionType::HolyPriest:
+			if (HolyPriest_in* c = dynamic_cast<HolyPriest_in*>(Position_Select[i]))
+			{
+				c->SetState(HolyPriest_in::State::IDLE1);
+			}
+			break;
+
+		case ProfessionType::MarksmanshipHunter:
+			if (MarksmanshipHunter_in* c = dynamic_cast<MarksmanshipHunter_in*>(Position_Select[i]))
+			{
+				c->SetState(MarksmanshipHunter_in::State::IDLE1);
+			}
+			break;
+
+		case ProfessionType::ProtectionWarrior:
+			if (ProtectionWarrior_in* c = dynamic_cast<ProtectionWarrior_in*>(Position_Select[i]))
+			{
+				c->SetState(ProtectionWarrior_in::State::IDLE1);
+			}
+			break;
+		}
 	}
 
 	vector<MonsterBase*> mon1 = MONSTER->GetSkeleton();

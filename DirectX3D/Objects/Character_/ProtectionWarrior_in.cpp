@@ -30,6 +30,11 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 	{
 	case CreatureType::Player:
 		range = new SphereCollider(10);
+
+		Audio::Get()->Add("PW_01_impack", "Sounds/ProtectionWarrior/skill/P_001_impact.ogg", false, false, true);
+		Audio::Get()->Add("PW_01_swing", "Sounds/ProtectionWarrior/skill/P_001_swing.ogg", false, false, true);
+		Audio::Get()->Add("PW_02_using", "Sounds/ProtectionWarrior/skill/P_002_impact.ogg", false, false, true);
+		Audio::Get()->Add("PW_09_using", "Sounds/ProtectionWarrior/skill/P_009_using.ogg", false, false, true);
 		break;
 
 	case CreatureType::NonPlayer:
@@ -75,6 +80,10 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 	stat.mp = stat.maxMp;
 	stat.damage = 100.0f;
 	stat.defence = 100;
+
+	Audio::Get()->Add("PW_atk", "Sounds/ProtectionWarrior/attack.ogg", false, false, true);
+	Audio::Get()->Add("PW_die", "Sounds/ProtectionWarrior/die.ogg", false, false, true);
+	Audio::Get()->Add("PW_hit", "Sounds/ProtectionWarrior/hit.ogg", false, false, true);
 }
 
 ProtectionWarrior_in::~ProtectionWarrior_in()
@@ -178,7 +187,7 @@ void ProtectionWarrior_in::PlayerUpdate()
 		if (one_atk_time <= 0)
 		{
 			one_atk_time = Max_one_atk_time;
-			Audio::Get()->Play("PW_atk");
+			Audio::Get()->Play("PW_atk", Pos(), 1.0f);
 			one_atk_sound = false;
 		}
 	}
@@ -199,7 +208,7 @@ void ProtectionWarrior_in::AIUpdate()
 		if (one_atk_time <= 0)
 		{
 			one_atk_time = Max_one_atk_time;
-			Audio::Get()->Play("PW_atk");
+			Audio::Get()->Play("PW_atk", Pos(), 1.0f);
 			one_atk_sound02 = false;
 		}
 	}
@@ -212,6 +221,14 @@ void ProtectionWarrior_in::AIUpdate()
 		}
 		else
 		{
+			if (!monsterSelectData->GetCollider()->Active())
+			{
+				monsterSelectData = nullptr;
+				saveMonsterCollider = nullptr;
+				atkGannnnn = false;
+				return;
+			}
+
 			Vector3 velo = (monsterSelectData->GetTransform()->GlobalPos() - this->Pos()).GetNormalized();
 			randomVelocity = velo;
 
@@ -260,14 +277,19 @@ void ProtectionWarrior_in::OnHit(float damage, bool motion)
 		if (!motion)
 			SetState(HIT);
 
-		Audio::Get()->Play("PW_hit");
+		Audio::Get()->Play("PW_hit", Pos(), 1.0f);
 	}
 	else if (stat.hp <= 0)
 	{
 		stat.hp = 0.0f;
 		SetState(DIE);
 		myCollider->SetActive(false);
-		Audio::Get()->Play("PW_die");
+
+		if (!one_die && Active())
+		{
+			one_die = true;
+			Audio::Get()->Play("PW_die", Pos(), 1.0f);
+		}
 	}
 
 	if (creatureType == CreatureType::Player)
@@ -649,7 +671,7 @@ void ProtectionWarrior_in::EndHit()
 
 void ProtectionWarrior_in::EndDie()
 {
-	SetState(IDLE1);
+	one_die = false;
 	SetActive(false);
 }
 

@@ -216,6 +216,14 @@ void ArmsWarrior_in::AIUpdate()
 		}
 		else
 		{
+			if (!monsterSelectData->GetCollider()->Active())
+			{
+				monsterSelectData = nullptr;
+				saveMonsterCollider = nullptr;
+				atkGannnnn = false;
+				return;
+			}
+
 			Vector3 velo = (monsterSelectData->GetTransform()->GlobalPos() - this->Pos()).GetNormalized();
 			randomVelocity = velo;
 
@@ -282,7 +290,12 @@ void ArmsWarrior_in::OnHit(float damage, bool motion)
 		stat.hp = 0.0f;
 		SetState(DIE);		
 		myCollider->SetActive(false);
-		Audio::Get()->Play("WarriorDeath", Pos(), 1.0f);
+
+		if (!one_die && Active())
+		{
+			one_die = true;
+			Audio::Get()->Play("WarriorDeath", Pos(), 1.0f);
+		}
 	}
 
 	if (creatureType == CreatureType::Player)
@@ -711,7 +724,7 @@ void ArmsWarrior_in::EndHit()
 
 void ArmsWarrior_in::EndDie()
 {
-	SetState(IDLE1);
+	one_die = false;
 	SetActive(false);
 }
 

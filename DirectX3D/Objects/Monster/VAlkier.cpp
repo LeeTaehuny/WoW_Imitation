@@ -108,7 +108,7 @@ void VAlkier::Update()
 	{
 		if (!Audio::Get()->IsPlaySound("valkyr_wing"))
 		{
-			Audio::Get()->Play("valkyr_wing");
+			Audio::Get()->Play("valkyr_wing", transform->Pos(), 1.0f);
 		}
 	}
 
@@ -159,11 +159,11 @@ void VAlkier::Hit(float amount)
 		transform->SetActive(false);
 		collider->SetActive(false);
 		curHP = 0.0f;
-		Audio::Get()->Play("valkyr_die");
+		Audio::Get()->Play("valkyr_die", transform->Pos(), 1.0f);
 	}
 	else
 	{
-		Audio::Get()->Play("valkyr_hit");
+		Audio::Get()->Play("valkyr_hit", transform->Pos(), 1.0f);
 	}
 
 	for (int i = 0; i < hitText.size(); i++)

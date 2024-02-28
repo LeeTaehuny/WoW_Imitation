@@ -82,4 +82,5 @@ private:
 private:
 	Transform* sub;
 	class Weapon* shield;
+	bool one_die = false;
 };

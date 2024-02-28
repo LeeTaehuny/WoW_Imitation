@@ -77,6 +77,17 @@ void M_008_Multi_Shot::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
+		if (!isOne_sound)
+		{
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("MH_08_using", owner->Pos(), 1.0f);
+				break;
+			}
+			isOne_sound = true;
+		}
+
 		int imsivalue = 0;
 		FOR(ThisNumber)
 		{
@@ -131,6 +142,7 @@ void M_008_Multi_Shot::UseSkill(MonsterBase* monsterbase)
 	monsters[ThisNumber] = monsterbase;
 	ThisNumber++;
 	animStart = 0;
+	isOne_sound = false;
 	isRun = true;
 	isCooldown = true;
 

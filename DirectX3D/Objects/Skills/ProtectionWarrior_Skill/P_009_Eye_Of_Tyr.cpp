@@ -72,38 +72,19 @@ void P_009_Eye_Of_Tyr::Update()
 	{
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
+
+		if (!isOne)
+		{
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("PW_09_using", owner->Pos(), 1.0f);
+				break;
+			}
+			isOne = true;
+		}
+
 		hitCollider->Pos() = owner->GlobalPos();
-		 
-		vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
-		for (MonsterBase* monster : cols1)
-		{
-			if (hitCollider->IsCollision(monster->GetCollider()))
-			{
-				// 충돌한 몬스터들에게 데미지 주기
-				// * 매개변수로 owner의 공격력과 번호 저장하기
-				monster->Hit(skillDamage);
-			}
-		}
-		cols1 = MONSTER->GetSkeleton();
-		for (MonsterBase* monster : cols1)
-		{
-			if (hitCollider->IsCollision(monster->GetCollider()))
-			{
-				// 충돌한 몬스터들에게 데미지 주기
-				// * 매개변수로 owner의 공격력과 번호 저장하기
-				monster->Hit(skillDamage);
-			}
-		}
-		cols1 = MONSTER->GetSkeleton_Knight();
-		for (MonsterBase* monster : cols1)
-		{
-			if (hitCollider->IsCollision(monster->GetCollider()))
-			{
-				// 충돌한 몬스터들에게 데미지 주기
-				// * 매개변수로 owner의 공격력과 번호 저장하기
-				monster->Hit(skillDamage);
-			}
-		}
 
 		float ful = 10.5f; // 값 변경을 쉽게 하기 위한 변수
 		hitCollider->Scale().x += ful * DELTA;
@@ -218,6 +199,8 @@ void P_009_Eye_Of_Tyr::UseSkill()
 
 	skillDamage = owner->GetStat().damage * 0.56f;
 	owner->GetStat().mp -= requiredMp;
+	animStart = 0;
+	isOne = false;
 
 	hitCollider->SetActive(true);
 	isRun = true;

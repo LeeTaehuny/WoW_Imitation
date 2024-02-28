@@ -78,6 +78,15 @@ void P_001_Avengers_Shield::Update()
 		if (animStart <= Max_animStart) return;
 		if (onejacdong == 0)
 		{
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("PW_01_swing", owner->Pos(), 1.0f);
+				break;
+
+			}
+
+			
 			myCollider->SetActive(true);
 			onejacdong++;
 		}
@@ -96,6 +105,15 @@ void P_001_Avengers_Shield::Update()
 
 		if (targetMonster->GetCollider()->IsCollision(myCollider))
 		{
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("PW_01_impack", owner->Pos(), 1.0f);
+				break;
+
+			}
+
+
 			targetMonster->Hit(skillDamage);
 
 			hitCollider->Pos() = myCollider->Pos();
@@ -305,6 +323,7 @@ void P_001_Avengers_Shield::UseSkill(MonsterBase* monsterbase)
 		owner->GetStat().mp < requiredMp) return;
 	three[0] = monsterbase;
 	targetMonster = three[0];
+	animStart = 0;
 
 	Yad->SetActive(true);
 	Yad->Pos() = owner->Pos();

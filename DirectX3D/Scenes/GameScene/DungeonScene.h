@@ -51,4 +51,3 @@ private:
 
     void Scene_Chnage();
 };
-

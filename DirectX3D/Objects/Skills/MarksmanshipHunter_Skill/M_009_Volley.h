@@ -33,4 +33,6 @@ private:
 	DepthStencilState* depthState[2];
 	float Max_animStart = 0.35f;
 	float animStart = 0;
+
+	bool isOne_sound = false;
 };

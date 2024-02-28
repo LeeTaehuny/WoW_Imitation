@@ -61,6 +61,13 @@ void H_004_Holy_Word_Chastise::Update()
 			particle->Play(Vector3());
 			targetMonster->Hit(skillDamage);
 			isOne++;
+
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("HP_04_using", owner->Pos(), 1.0f);
+				break;
+			}
 		}
 
 		if (particle->IsPlay())

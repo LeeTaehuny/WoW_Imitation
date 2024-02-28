@@ -35,6 +35,9 @@ public:
     vector<CH_Base_ver2*> characterData;
 
     void SetBossMap(class BossMap* map) { this->map = map; }
+
+    UINT GetPhase() { return phase; }
+    void SetPhase(UINT num) { phase = num; }
 private: // 멤버 변수
     void Moving();
     void Attack();
@@ -111,4 +114,8 @@ private: // 마지막 페이즈에서 사용하기 위한 변수들
 
 private:
     int fiv_first = 0;
+
+private:
+    bool siitpha = false;
+
 };

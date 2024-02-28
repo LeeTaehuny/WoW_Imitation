@@ -74,6 +74,19 @@ void P_002_HOTR::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
+		if (!isOne)
+		{
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("PW_02_using", owner->Pos(), 1.0f);
+				break;
+			}
+			isOne = true;
+		}
+
+		
+
 		// 무기를 든 손으로 콜라이더를 지정
 		if (hitCollider->Active())
 		{
@@ -210,5 +223,6 @@ void P_002_HOTR::UseSkill(MonsterBase* monsterbase)
 		isCooldown = true;
 		owner->GetStat().mp -= requiredMp;
 		animStart = 0;
+		isOne = false;
 	}
 }

@@ -33,20 +33,20 @@ MonsterManager::MonsterManager()
 	valkier_body->ReadClip("Idle_2");
 	valkier_body->ReadClip("Flying");
 
-	Audio::Get()->Add("iceBall_die", "Sounds/Monster/iceBall/die.ogg");
-	Audio::Get()->Add("iceBall_hit", "Sounds/Monster/iceBall/hit.ogg");
+	Audio::Get()->Add("iceBall_die", "Sounds/Monster/iceBall/die.ogg", false, false, true);
+	Audio::Get()->Add("iceBall_hit", "Sounds/Monster/iceBall/hit.ogg", false, false, true);
 
-	Audio::Get()->Add("skeleton_hit", "Sounds/Monster/Skeleton/hit.ogg");
-	Audio::Get()->Add("skeleton_die", "Sounds/Monster/Skeleton/Death.ogg");
-	Audio::Get()->Add("skeleton_atk", "Sounds/Monster/Skeleton/Attack.ogg");
+	Audio::Get()->Add("skeleton_hit", "Sounds/Monster/Skeleton/hit.ogg", false, false, true);
+	Audio::Get()->Add("skeleton_die", "Sounds/Monster/Skeleton/Death.ogg", false, false, true);
+	Audio::Get()->Add("skeleton_atk", "Sounds/Monster/Skeleton/Attack.ogg", false, false, true);
 
-	Audio::Get()->Add("skeleton_Night_atk", "Sounds/Monster/Skeleton_Night/Attack.ogg");
-	Audio::Get()->Add("skeleton_Night_die", "Sounds/Monster/Skeleton_Night/die.ogg");
-	Audio::Get()->Add("skeleton_Night_hit", "Sounds/Monster/Skeleton_Night/hit.ogg");
+	Audio::Get()->Add("skeleton_Night_atk", "Sounds/Monster/Skeleton_Night/Attack.ogg", false, false, true);
+	Audio::Get()->Add("skeleton_Night_die", "Sounds/Monster/Skeleton_Night/die.ogg", false, false, true);
+	Audio::Get()->Add("skeleton_Night_hit", "Sounds/Monster/Skeleton_Night/hit.ogg", false, false, true);
 
-	Audio::Get()->Add("valkyr_hit", "Sounds/Monster/Valkyr/hit.ogg");
-	Audio::Get()->Add("valkyr_die", "Sounds/Monster/Valkyr/die.ogg");
-	Audio::Get()->Add("valkyr_wing", "Sounds/Monster/Valkyr/wing.ogg");
+	Audio::Get()->Add("valkyr_hit", "Sounds/Monster/Valkyr/hit.ogg", false, false, true);
+	Audio::Get()->Add("valkyr_die", "Sounds/Monster/Valkyr/die.ogg", false, false, true);
+	Audio::Get()->Add("valkyr_wing", "Sounds/Monster/Valkyr/wing.ogg", false, false, true);
 }
 MonsterManager::~MonsterManager()
 {

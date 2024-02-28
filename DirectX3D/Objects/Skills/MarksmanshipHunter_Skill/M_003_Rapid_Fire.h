@@ -27,4 +27,6 @@ private:
 
 	float Max_animStart = 0.35f;
 	float animStart = 0;
+
+	
 };
