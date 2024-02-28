@@ -250,7 +250,7 @@ void FireMage_in::OnHit(float damage, bool motion)
 		SetState(DIE);
 		myCollider->SetActive(false);
 
-		if (!one_die)
+		if (!one_die && Active())
 		{
 			one_die = true;
 			Audio::Get()->Play("MageDeath", Pos(), 1.0f);

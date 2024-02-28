@@ -249,7 +249,8 @@ void ProtectionWarrior_in::OnHit(float damage, bool motion)
 		stat.hp = 0.0f;
 		SetState(DIE);
 		myCollider->SetActive(false);
-		if (!one_die)
+
+		if (!one_die && Active())
 		{
 			one_die = true;
 			Audio::Get()->Play("PW_die", Pos(), 1.0f);
