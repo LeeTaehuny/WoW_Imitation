@@ -32,7 +32,6 @@ void TownScene::Start()
     // 위치 초기화 & 체력 초기화
     CH->GetPlayerData()->SetActive(true);
     CH->GetPlayerData()->GetCollider()->SetActive(true);
-    CH->GetPlayerData()->GetCollider()->SetActive(true);
     CH->GetPlayerData()->GetStat().hp = CH->GetPlayerData()->GetStat().maxHp;
     CH->GetPlayerData()->GetStat().mp = CH->GetPlayerData()->GetStat().maxMp;
     CH->GetPlayerData()->GetPlayerUI()->SetHpPercent(1.0f);
@@ -153,10 +152,10 @@ void TownScene::Loding()
         // 체력 최대치로 설정
         MONSTER->GetScarecrow()[i]->SetCurHp(MONSTER->GetScarecrow()[i]->GetMaxHP());
 
-        // 액티브 켜기
+        // 액티브 끄기
         MONSTER->GetScarecrow()[i]->GetTransform()->SetActive(false);
     }
 
     // 다음 씬으로 전환
-    SceneManager::Get()->ChangeScene("Boss");
+    SceneManager::Get()->ChangeScene("DungeonScene");
 }
