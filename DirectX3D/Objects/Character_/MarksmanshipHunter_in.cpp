@@ -227,7 +227,11 @@ void MarksmanshipHunter_in::OnHit(float damage, bool motion)
 		SetState(DIE);
 		myCollider->SetActive(false);
 
-		Audio::Get()->Play("MH_die", Pos(), 1.0f);
+		if (!one_die)
+		{
+			one_die = true;
+			Audio::Get()->Play("MH_die", Pos(), 1.0f);
+		}
 	}
 
 	if (creatureType == CreatureType::Player)
@@ -558,7 +562,7 @@ void MarksmanshipHunter_in::EndHit()
 
 void MarksmanshipHunter_in::EndDie()
 {
-	SetState(IDLE1);
+	one_die = false;
 	SetActive(false);
 }
 

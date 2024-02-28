@@ -249,7 +249,11 @@ void ProtectionWarrior_in::OnHit(float damage, bool motion)
 		stat.hp = 0.0f;
 		SetState(DIE);
 		myCollider->SetActive(false);
-		Audio::Get()->Play("PW_die", Pos(), 1.0f);
+		if (!one_die)
+		{
+			one_die = true;
+			Audio::Get()->Play("PW_die", Pos(), 1.0f);
+		}
 	}
 
 	if (creatureType == CreatureType::Player)
@@ -612,7 +616,7 @@ void ProtectionWarrior_in::EndHit()
 
 void ProtectionWarrior_in::EndDie()
 {
-	SetState(IDLE1);
+	one_die = false;
 	SetActive(false);
 }
 

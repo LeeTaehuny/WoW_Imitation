@@ -70,5 +70,7 @@ private:
 	bool isPlayAttackSound = false;
 	bool isRun = false;
 	float attackSoundDelay = 0.0f;
+
+	bool one_die = false;
 };
 

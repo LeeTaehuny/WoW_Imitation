@@ -64,4 +64,6 @@ private:
 	bool one_atk_sound02 = false;
 	float Max_one_atk_time = 0.1f;
 	float one_atk_time = Max_one_atk_time;
+
+	bool one_die = false;
 };

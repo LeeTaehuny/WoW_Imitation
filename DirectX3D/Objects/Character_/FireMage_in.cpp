@@ -250,7 +250,11 @@ void FireMage_in::OnHit(float damage, bool motion)
 		SetState(DIE);
 		myCollider->SetActive(false);
 
-		Audio::Get()->Play("MageDeath", Pos(), 1.0f);
+		if (!one_die)
+		{
+			one_die = true;
+			Audio::Get()->Play("MageDeath", Pos(), 1.0f);
+		}
 	}
 
 	if (creatureType == CreatureType::Player)
@@ -573,7 +577,7 @@ void FireMage_in::EndHit()
 
 void FireMage_in::EndDie()
 {
-	SetState(IDLE1);
+	one_die = false;
 	SetActive(false);
 }
 
