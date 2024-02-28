@@ -59,7 +59,7 @@ void DungeonScene::Start()
 
 	float Time = 7.0f;
 
-	Audio::Get()->Play("Out_Dungeon", 0.1f);
+	Audio::Get()->Play("Out_Dungeon", 1.0f);
 
 	// 플레이어 위치 조정
 	CH->GetPlayerData()->Pos() = dungeon->GetSpawnPoint_P();
@@ -74,6 +74,13 @@ void DungeonScene::Start()
 
 	Mounga_die = false;
 	pop_time = Max_pop_time;
+
+	// 초기화
+	isOpenGate = false;
+	isOpenDoor = false;
+	in_A = false;
+	in_B = false;
+	ClearDungeon = false;
 }
 
 void DungeonScene::Update()
@@ -114,46 +121,74 @@ void DungeonScene::Update()
 	{
 		Environment::Get()->GetLight(0)->color = { 1.0f, 1.0f, 1.0f, 1 };
 		Audio::Get()->Stop("Out_Dungeon");
+		Audio::Get()->Stop("IceWall_Break");
 		SceneManager::Get()->ChangeScene("Boss");
 	}
 
-	if (KEY_DOWN(VK_UP))
+	
+	// 1번방 문 열리기
+	if (dungeon->IsOpenGateCollider(CH->GetPlayerData()->GetCollider()) 
+		&& isOpenGate == false)
 	{
-		CH->GetPlayerData()->OnHit(9999);
+		dungeon->OpenDoor(true);
+		Audio::Get()->Play("Open_Gate", 1.0f);
+		Audio::Get()->Stop("Out_Dungeon");
+		Audio::Get()->Play("in_Dungeon", 1.0f);;
+
+		isOpenGate = true;
 	}
 
-	// 1번방 문 열리기
-	//     dungeon->OpenDoor(true);
-	//	   Audio::Get()->Play("Open_Gate", 0.1f);
-	//	   Audio::Get()->Stop("Out_Dungeon");
-	//	   Audio::Get()->Play("in_Dungeon", 0.1f);
-
 	// 1번방 문이 열렸고, 중앙 충돌체와 충돌하면 몬스터 스폰
-	//     for (int i = 0; i < dungeon->SpawnMonsters_A().size(); i++)
-	//	   {
-	//	   	  MONSTER->SpawnSkeleton(dungeon->SpawnMonsters_A()[i]);
-	//	   	  MONSTER->GetSkeleton()[MONSTER->GetSkeleton().size() - 1]->GetTransform()->Rot().y = 1.575f;
-	//	   }
+	if (isOpenGate == true &&
+		dungeon->IsinDungeon(CH->GetPlayerData()->GetCollider()) && 
+		in_A == false)
+	{
+		for (int i = 0; i < dungeon->SpawnMonsters_A().size(); i++)
+		{
+			  MONSTER->SpawnSkeleton(dungeon->SpawnMonsters_A()[i]);
+			  MONSTER->GetSkeleton()[MONSTER->GetSkeleton().size() - 1]->GetTransform()->Rot().y = 1.575f;
+		}
+		//isOpenGate = false;
+		in_A = true;
+	}
 
 	// 1번방 몬스터가 스폰되었으며, 모두 죽었다면 2번방 문 열리기
-	//     dungeon->OpenDoor_I(true);
-	//	   Audio::Get()->Play("Open_Door", 0.1f);
-	//	   Audio::Get()->Pause("in_Dungeon");
-	//	   Audio::Get()->Play("in_Dungeon2", 0.1f);
-	//
+	if (in_A == true &&
+		MONSTER->GetSkeleton().size() == 0 &&
+		isOpenDoor == false)
+	{
+		dungeon->OpenDoor_I(true);
+		Audio::Get()->Play("Open_Door", 1.0f);
+		Audio::Get()->Pause("in_Dungeon");
+		Audio::Get()->Play("in_Dungeon2", 1.0f);
 
-	// 2번방 문이 열렸고, 충앙 충돌체와 충돌하면 몬스터 스폰
-	//     for (int i = 0; i < dungeon->SpawnMonsters_B().size(); i++)
-	//	   {
-	//	   	  MONSTER->SpawnSkeletonKnight(dungeon->SpawnMonsters_B()[i]);
-	//	   	  MONSTER->GetSkeleton_Knight()[MONSTER->GetSkeleton_Knight().size() - 1]->GetTransform()->Rot().y = 1.575f;
-	//	   }
-	// 
-	
+		isOpenDoor = true;
+	}
+
+	// 2번방 문이 열렸고, 중앙 충돌체와 충돌하면 몬스터 스폰
+	if (isOpenDoor == true &&
+		dungeon->IsinDungeon2(CH->GetPlayerData()->GetCollider()) && 
+		in_B == false)
+	{
+		for (int i = 0; i < dungeon->SpawnMonsters_B().size(); i++)
+		{
+			  MONSTER->SpawnSkeletonKnight(dungeon->SpawnMonsters_B()[i]);
+			  MONSTER->GetSkeleton_Knight()[MONSTER->GetSkeleton_Knight().size() - 1]->GetTransform()->Rot().y = 1.575f;
+		}
+		in_B = true;
+	}
+
 	// 2번방 몬스터가 스폰되었으며, 모두 죽었다면 포탈 벽 부시기
-	//	   dungeon->IsClear(true);
-	//	   Audio::Get()->Play("IceWall_Break", 0.1f);
-	//	   Audio::Get()->Play("Out_Dungeon", 0.1f);
+	if (in_B == true && 
+		MONSTER->GetSkeleton_Knight().size() == 0 &&
+		ClearDungeon == false)
+	{
+		dungeon->IsClear(true);
+		Audio::Get()->Play("IceWall_Break", 1.0f);
+		Audio::Get()->Play("Out_Dungeon", 1.0f);
+
+		ClearDungeon = true;
+	}
 }
 
 void DungeonScene::PreRender()
@@ -223,6 +258,8 @@ void DungeonScene::Scene_Chnage()
 {
 	Audio::Get()->Stop("Out_Dungeon");
 	Audio::Get()->Stop("IceWall_Break");
+	Audio::Get()->Stop("in_Dungeon");
+	Audio::Get()->Stop("in_Dungeon2");
 
 	Environment::Get()->GetLight(0)->color = { 1.0f, 1.0f, 1.0f, 1 };
 

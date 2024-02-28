@@ -17,6 +17,9 @@ public:
 
 	bool IsCollision(Collider* c);
 	bool PotalCollision(Collider* c);
+	bool IsOpenGateCollider(Collider* c);
+	bool IsinDungeon(Collider* c);
+	bool IsinDungeon2(Collider* c);
 
 	vector<Vector3> SpawnMonsters_A()
 	{
@@ -78,7 +81,7 @@ private:
 	Model* Chandelier;
 	LightBuffer::Light* light;
 	TestLight* Lamp;
-	SphereCollider* TestPos;
+	//SphereCollider* TestPos;
 
 	vector<Quad*> Tiles;
 	vector<Quad*> Tiles2;
@@ -133,6 +136,10 @@ private:
 	vector<BoxCollider*> boxColliders_Tree;
 	vector<BoxCollider*> EdgeGuard;
 	vector<BoxCollider*> Gatesharp;
+
+	BoxCollider* OpenGateCollider;
+	BoxCollider* inDungeonCollider;
+	BoxCollider* inDungeonCollider2;
 
 	int n = 0;
 	int n1 = 0;

@@ -149,25 +149,43 @@ void LichKimgBossScene::Update()
 
 	SKILL->Update();
 	vector<CH_Base_ver2*> con = CH->GetCharcterData();
-	for (int i = 0; i < con.size(); i++)
-	{
-		float vaul = 0.9f;
-		Vector3 ratio = map->Getgound01()->Scale() * vaul;
-		switch (map->GetPhase())
-		{
-		case 1:
-			ratio = map->Getgound02()->Scale() * vaul;
-			break;
-		
-		case 3:
-			ratio = map->Getgound02()->Scale() * vaul;
-			break;
-		}
+	//for (int i = 0; i < con.size(); i++)
+	//{
+	//	float vaul = 0.9f;
+	//	Vector3 ratio = map->Getgound01()->Scale() * vaul;
+	//	switch (map->GetPhase())
+	//	{
+	//	case 1:
+	//		ratio = map->Getgound02()->Scale() * vaul;
+	//		break;
+	//	
+	//	case 3:
+	//		ratio = map->Getgound02()->Scale() * vaul;
+	//		break;
+	//	}
+	//
+	//	if (con[i]->Pos().x >= ratio.x || con[i]->Pos().x <= -ratio.x ||
+	//		con[i]->Pos().z >= ratio.z || con[i]->Pos().z <= -ratio.z)
+	//	{
+	//		con[i]->SetHeight(-100);
+	//	}
+	//
+	//	if (con[i]->Pos().y <= -50)
+	//	{
+	//		con[i]->OnHit(99999);
+	//	}
+	//}
 
-		if (con[i]->Pos().x >= ratio.x || con[i]->Pos().x <= -ratio.x ||
-			con[i]->Pos().z >= ratio.z || con[i]->Pos().z <= -ratio.z)
+	CH->Update();
+	MONSTER->Update();
+
+	for (int i = 0; i < CH->GetCharcterData().size(); i++)
+	{
+		if (map->IsCollision(CH->GetCharcterData()[i]->GetCollider()));
+
+		if (!map->IsCollision(CH->GetCharcterData()[i]->GetCollider()))
 		{
-			con[i]->SetHeight(-100);
+			con[i]->SetHeight(-150);
 		}
 
 		if (con[i]->Pos().y <= -50)
@@ -175,8 +193,6 @@ void LichKimgBossScene::Update()
 			con[i]->OnHit(99999);
 		}
 	}
-	CH->Update();
-	MONSTER->Update();
 }
 
 void LichKimgBossScene::PreRender()

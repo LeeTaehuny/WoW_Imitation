@@ -112,6 +112,7 @@ BossMap::BossMap()
 	Chair_Ground->UpdateWorld();
 	Chair->UpdateWorld();
 	for (int i = 0; i < StairGuard.size(); ++i) StairGuard[i]->UpdateWorld();
+	GroundColider2->UpdateWorld();
 }
 
 BossMap::~BossMap()
@@ -151,7 +152,7 @@ void BossMap::Update()
 		for (int i = 0; i < Phase2.size(); i++) Phase2[i]->SetActive(true);
 		Phase1->SetActive(false);
 		GroundColider2->SetActive(true);
-		GroundColider2->UpdateWorld();
+		//GroundColider2->UpdateWorld();
 		Fall();
 		break;
 	case 2:

@@ -554,9 +554,9 @@ Dungeon::Dungeon() //: Transform()
 	Ice_Broken->Pos().y -= 75.0f;
 	///////////////////////////////////////////////////////////////////////////
 
-	TestPos = new SphereCollider(10);
-	TestPos->SetParent(Gates[0]);
-	TestPos->Pos().y -= 75;
+	//TestPos = new SphereCollider(10);
+	//TestPos->SetParent(Gates[0]);
+	//TestPos->Pos().y -= 75;
 
 	EdgeGuard.resize(10);
 	for (int i = 0; i < EdgeGuard.size(); ++i)
@@ -676,6 +676,23 @@ Dungeon::Dungeon() //: Transform()
 	SpawnPoint_B[9] = Vector3(55, 0, 162);
 	/////////////////////////////////////////////////////////////////////////////
 
+	// 오픈 스폰
+	OpenGateCollider = new BoxCollider(Vector3(60, 10, 90));
+	OpenGateCollider->SetParent(Gates[0]);
+	OpenGateCollider->Pos().y -= 70;
+	OpenGateCollider->Pos().x -= 35;
+
+	inDungeonCollider = new BoxCollider(Vector3(60, 10, 250));
+	inDungeonCollider->SetParent(Gates[0]);
+	inDungeonCollider->Pos().y -= 70;
+	inDungeonCollider->Pos().x += 200;
+
+	inDungeonCollider2 = new BoxCollider(Vector3(60, 10, 500));
+	inDungeonCollider2->SetParent(Gates[0]);
+	inDungeonCollider2->Pos().y -= 70;
+	inDungeonCollider2->Pos().x += 635;
+	/////////////////////////////////////////////////////////////////////////////
+
 	// 부모의 위치조절
 	Gates[0]->Scale() *= 0.166f;
 	Gates[0]->Pos().y -= 62.5f;
@@ -782,6 +799,10 @@ Dungeon::Dungeon() //: Transform()
 	boxColliders_Tree[1]->Pos().y += 5;
 	for (int i = 0; i < EdgeGuard.size(); ++i) EdgeGuard[i]->UpdateWorld();
 	for (int i = 0; i < Gatesharp.size(); ++i) Gatesharp[i]->UpdateWorld();
+
+	OpenGateCollider->UpdateWorld();
+	inDungeonCollider->UpdateWorld();
+	inDungeonCollider2->UpdateWorld();
 }
 
 Dungeon::~Dungeon()
@@ -850,7 +871,11 @@ Dungeon::~Dungeon()
 
 	delete PotalCollider;
 
-	delete TestPos;
+	delete OpenGateCollider;
+	delete inDungeonCollider;
+	delete inDungeonCollider2;
+
+	//delete TestPos;
 }
 
 void Dungeon::Update()
@@ -916,6 +941,10 @@ void Dungeon::Render()
 {
 	skybox->Render();
 	terrain->Render();
+
+	//OpenGateCollider->Render();
+	//inDungeonCollider->Render();
+	//inDungeonCollider2->Render();
 
 	for (int i = 0; i < Tiles.size(); ++i) Tiles[i]->Render();
 	for (int i = 0; i < Tiles2.size(); ++i) Tiles2[i]->Render();
@@ -1006,17 +1035,17 @@ void Dungeon::Render()
 }
 void Dungeon::GUIRender()
 {
-	ImGui::Text("TestPos");
-	ImGui::Text("X : %.1f, Y : %.1f, Z : %.1f",
-		TestPos->Pos().x,
-		TestPos->Pos().y,
-		TestPos->Pos().z);
-
-	ImGui::Text("TerrainPos");
-	ImGui::Text("X : %.1f, Y : %.1f, Z : %.1f",
-		terrain->Pos().x,
-		terrain->Pos().y,
-		terrain->Pos().z);
+	//ImGui::Text("TestPos");
+	//ImGui::Text("X : %.1f, Y : %.1f, Z : %.1f",
+	//	TestPos->Pos().x,
+	//	TestPos->Pos().y,
+	//	TestPos->Pos().z);
+	//
+	//ImGui::Text("TerrainPos");
+	//ImGui::Text("X : %.1f, Y : %.1f, Z : %.1f",
+	//	terrain->Pos().x,
+	//	terrain->Pos().y,
+	//	terrain->Pos().z);
 }
 
 bool Dungeon::IsCollision(Collider* c)
@@ -1168,6 +1197,27 @@ bool Dungeon::PotalCollision(Collider* C)
 	return false;
 }
 
+bool Dungeon::IsOpenGateCollider(Collider* C)
+{
+	if (OpenGateCollider->IsCapsuleCollision((CapsuleCollider*)C)) return true;
+
+	return false;
+}
+
+bool Dungeon::IsinDungeon(Collider* C)
+{
+	if (inDungeonCollider->IsCapsuleCollision((CapsuleCollider*)C)) return true;
+
+	return false;
+}
+
+bool Dungeon::IsinDungeon2(Collider* C)
+{
+	if (inDungeonCollider2->IsCapsuleCollision((CapsuleCollider*)C)) return true;
+
+	return false;
+}
+
 void Dungeon::DoorMove()
 {
 	if (Gates[3]->Pos().y <= 15.5f)
@@ -1235,7 +1285,7 @@ void Dungeon::CrashIceWall()
 	{
 		if (Ice_debris[i]->Pos().y > 390.0)
 		{
-			Ice_debris[i]->Pos().y -= 150 * DELTA;
+			Ice_debris[i]->Pos().y -= 75 * DELTA;
 		}
 	}
 }

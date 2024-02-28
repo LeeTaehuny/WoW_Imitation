@@ -18,15 +18,19 @@ private:
 
     //vector<Vector3> TestMonsterSpawnPos_A;
     //vector<Vector3> TestMonsterSpawnPos_B;
-
     //vector<Model*> TestModels;
     //vector<Model*> TestModels2;
-
-    vector<Model*> TestMonsterSpawnPos_A;
-    vector<Model*> TestMonsterSpawnPos_B;
+    //vector<Model*> TestMonsterSpawnPos_A;
+    //vector<Model*> TestMonsterSpawnPos_B;
     //Model* TestModel;
 
-    float Time = 7.0f;
+    //float Time = 7.0f;
+
+    bool isOpenGate = false;
+    bool isOpenDoor = false;
+    bool in_A = false;
+    bool in_B = false;
+    bool ClearDungeon = false;
 
 private:
     Quad* back_;
