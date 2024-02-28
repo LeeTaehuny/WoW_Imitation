@@ -9,6 +9,8 @@ public:
 	void Render();
 	
 	UINT SetPhase(UINT Num) { return PhaseNum = Num; }
+	UINT GetPhase() { return PhaseNum; }
+
 	float GetHeight() { return Height; }
 	float GetFallDead() { return FallDead; }
 	Vector3 GetSpawnpoint_P() { return Spawnpoint_P; }
@@ -16,6 +18,9 @@ public:
 	Vector3 GetSpawnpoint_BC() { return Spawnpoint_BC; }
 	float GetStartBossRot() { return StartBossRotY; }
 	bool IsCollision(Collider* c);
+
+	Cylinder* Getgound01() { return GroundColider1; }
+	Cylinder* Getgound02() { return GroundColider2; }
 
 private:
 	float Height = 4.25f;

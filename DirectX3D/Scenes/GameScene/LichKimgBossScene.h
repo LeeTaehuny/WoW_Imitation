@@ -37,4 +37,8 @@ private:
 
     bool sound_change = false;
 
+    // 씬채인지 화면을 띄우기 위함
+    float Max_pop_time = 3.0f;
+    float pop_time = Max_pop_time;
+
 };

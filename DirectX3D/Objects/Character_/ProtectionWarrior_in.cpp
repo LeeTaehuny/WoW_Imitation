@@ -190,7 +190,7 @@ void ProtectionWarrior_in::AIUpdate()
 		}
 		else
 		{
-			Vector3 velo = (saveMonsterCollider->GlobalPos() - this->Pos()).GetNormalized();
+			Vector3 velo = (monsterSelectData->GetTransform()->GlobalPos() - this->Pos()).GetNormalized();
 			randomVelocity = velo;
 
 			this->Pos() += velo * moveSpeed * DELTA;

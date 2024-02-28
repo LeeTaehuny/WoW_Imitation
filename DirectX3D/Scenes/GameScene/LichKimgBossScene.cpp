@@ -75,6 +75,8 @@ void LichKimgBossScene::Start()
 	{
 		position_active = Vector3(xxxx, 0, zzzz);
 		Position_Select[i]->Pos() = position_active;
+		Position_Select[i]->SetHeight(0);
+		Position_Select[i]->Pos().y = 0;
 		Position_Select[i]->Rot().y = 0;
 		Position_Select[i]->Rot().y -= XM_PI * 0.5f;
 		Position_Select[i]->Update();
@@ -116,6 +118,8 @@ void LichKimgBossScene::Start()
 		c->Spawn(Vector3());
 	}
 	
+	Mounga_die = false;
+	pop_time = Max_pop_time;
 }
 
 void LichKimgBossScene::Update()
@@ -142,6 +146,33 @@ void LichKimgBossScene::Update()
 	
 
 	SKILL->Update();
+	vector<CH_Base_ver2*> con = CH->GetCharcterData();
+	for (int i = 0; i < con.size(); i++)
+	{
+		float vaul = 0.9f;
+		Vector3 ratio = map->Getgound01()->Scale() * vaul;
+		switch (map->GetPhase())
+		{
+		case 1:
+			ratio = map->Getgound02()->Scale() * vaul;
+			break;
+		
+		case 3:
+			ratio = map->Getgound02()->Scale() * vaul;
+			break;
+		}
+
+		if (con[i]->Pos().x >= ratio.x || con[i]->Pos().x <= -ratio.x ||
+			con[i]->Pos().z >= ratio.z || con[i]->Pos().z <= -ratio.z)
+		{
+			con[i]->SetHeight(-100);
+		}
+
+		if (con[i]->Pos().y <= -50)
+		{
+			con[i]->OnHit(99999);
+		}
+	}
 	CH->Update();
 	MONSTER->Update();
 }
@@ -161,38 +192,47 @@ void LichKimgBossScene::Render()
 
 void LichKimgBossScene::PostRender()
 {
-	if (playerData->GetStat().hp <= 0 && !Mounga_die)
+	if (playerData->GetStat().hp <= 0 || bossData->GetHpPercent() <= 0)
 	{
-		die_Gray->Render();
-		back_->Render();
-		gaem_end->Render();
-		goTown->Render();
+		pop_time -= DELTA;
+		if (pop_time >= 0)
+		{
+			return;
+		}
 
-		string rito = "당신은 죽었습니다.";
-		Font::Get()->RenderText(rito, { 735, 450 });
-		rito = "다시 도전하시겠습니까?";
-		Font::Get()->RenderText(rito, { 750, 420 });
+		if (playerData->GetStat().hp <= 0 && !Mounga_die)
+		{
+			die_Gray->Render();
+			back_->Render();
+			gaem_end->Render();
+			goTown->Render();
 
-		rito = "다시 도전";
-		Font::Get()->RenderText(rito, { 687, 363 });
-		
-		rito = "게임 종료";
-		Font::Get()->RenderText(rito, { 687, 291 });
-	}
+			string rito = "당신은 죽었습니다.";
+			Font::Get()->RenderText(rito, { 735, 450 });
+			rito = "다시 도전하시겠습니까?";
+			Font::Get()->RenderText(rito, { 750, 420 });
 
-	if (bossData->GetHpPercent() <= 0 && !Mounga_die)
-	{
-		back_->Render();
-		gaem_end->Render();
+			rito = "다시 도전";
+			Font::Get()->RenderText(rito, { 687, 363 });
 
-		string rito = "리치왕을 쓰러트렸습니다.";
-		Font::Get()->RenderText(rito, { 763, 450 });
-		rito = "게임을 종료하시겠습니까?";
-		Font::Get()->RenderText(rito, { 766, 400 });
+			rito = "게임 종료";
+			Font::Get()->RenderText(rito, { 687, 291 });
+		}
 
-		rito = "게임 종료";
-		Font::Get()->RenderText(rito, { 687, 291 });
-	}
+		if (bossData->GetHpPercent() <= 0 && !Mounga_die)
+		{
+			back_->Render();
+			gaem_end->Render();
+
+			string rito = "리치왕을 쓰러트렸습니다.";
+			Font::Get()->RenderText(rito, { 763, 450 });
+			rito = "게임을 종료하시겠습니까?";
+			Font::Get()->RenderText(rito, { 766, 400 });
+
+			rito = "게임 종료";
+			Font::Get()->RenderText(rito, { 687, 291 });
+		}
+	}	
 	
 	if (Mounga_die)
 	{
