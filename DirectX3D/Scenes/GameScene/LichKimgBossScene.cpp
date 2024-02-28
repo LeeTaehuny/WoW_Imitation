@@ -116,6 +116,7 @@ void LichKimgBossScene::Start()
 		c->Spawn(Vector3());
 	}
 	
+	Mounga_die = false;
 }
 
 void LichKimgBossScene::Update()
