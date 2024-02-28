@@ -59,7 +59,7 @@ void LichKimgBossScene::Start()
 	//SKILL->Init(CH->GetPlayerData());
 
 	sound_change = false;
-	Audio::Get()->Play("bossScene_main_bgm");
+	Audio::Get()->Play("bossScene_main_bgm", 0.7f);
 
 	playerData = CH->GetPlayerData();
 
@@ -142,7 +142,7 @@ void LichKimgBossScene::Update()
 		{
 			sound_change = true;
 			Audio::Get()->Stop("bossScene_main_bgm");
-			Audio::Get()->Play("bossScene_end");
+			Audio::Get()->Play("bossScene_end", 0.7f);
 		}
 	}
 
