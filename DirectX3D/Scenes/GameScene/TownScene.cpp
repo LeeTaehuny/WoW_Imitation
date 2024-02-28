@@ -157,6 +157,5 @@ void TownScene::Loding()
     }
 
     // 다음 씬으로 전환
-    //SceneManager::Get()->ChangeScene("DungeonScene");
-    SceneManager::Get()->ChangeScene("Boss");
+    SceneManager::Get()->ChangeScene("DungeonScene");
 }

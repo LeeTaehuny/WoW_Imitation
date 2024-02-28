@@ -147,7 +147,7 @@ void A_002_Overpower::Update()
 			}
 		}
 
-		if (find(hit.begin(), hit.end(), cols6) == hit.end())
+		if (cols6 != nullptr && find(hit.begin(), hit.end(), cols6) == hit.end())
 		{
 			if (myCollider->IsCollision(cols6->GetCollider()))
 			{

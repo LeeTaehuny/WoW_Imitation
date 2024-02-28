@@ -157,7 +157,7 @@ void A_010_Bladestorm::Update()
 			}
 		}
 
-		if (find(hit.begin(), hit.end(), cols6) == hit.end())
+		if (cols6 != nullptr && find(hit.begin(), hit.end(), cols6) == hit.end())
 		{
 			if (hitCollider->IsCollision(cols6->GetCollider()))
 			{

@@ -1021,17 +1021,6 @@ void Dungeon::GUIRender()
 
 bool Dungeon::IsCollision(Collider* c)
 {
-	//if (boxCollider_G->PushCollision(c)) return true;
-	//°è´Ü
-	//if (boxCollider_GP->PushCollision(c)) return true;
-	//if (boxCollider_GPI->PushCollision(c)) return true;
-	//if (boxCollider_S->PushCollision(c)) return true;
-	//if (boxCollider_SI->PushCollision(c)) return true;
-	//if (boxCollider_SIC->PushCollision(c)) return true;
-	//if (boxCollider_SIL->PushCollision(c)) return true;
-	//if (boxCollider_SIR->PushCollision(c)) return true;
-
-
 	if (boxCollider_GR->PushCollision(c))
 	{
 		if (c->GetParent()->Pos().y < 0) c->GetParent()->Pos().y = 0;
