@@ -75,6 +75,10 @@ MarksmanshipHunter_in::MarksmanshipHunter_in(CreatureType type, Transform* trans
 	stat.mp = stat.maxMp;
 	stat.damage = 150.0f;
 	stat.defence = 100;
+
+	Audio::Get()->Add("MH_atk", "Sounds/MarksmanshipHunter/attack.ogg", false, false, true);
+	Audio::Get()->Add("MH_die", "Sounds/MarksmanshipHunter/die.ogg", false, false, true);
+	Audio::Get()->Add("MH_hit", "Sounds/MarksmanshipHunter/hit.ogg", false, false, true);
 }
 
 MarksmanshipHunter_in::~MarksmanshipHunter_in()
@@ -164,7 +168,7 @@ void MarksmanshipHunter_in::PlayerUpdate()
 		if (one_atk_time <= 0)
 		{
 			one_atk_time = Max_one_atk_time;
-			Audio::Get()->Play("MH_atk");
+			Audio::Get()->Play("MH_atk", Pos(), 1.0f);
 			one_atk_sound = false;
 		}
 	}
@@ -185,7 +189,7 @@ void MarksmanshipHunter_in::AIUpdate()
 		if (one_atk_time <= 0)
 		{
 			one_atk_time = Max_one_atk_time;
-			Audio::Get()->Play("MH_atk");
+			Audio::Get()->Play("MH_atk", Pos(), 1.0f);
 			one_atk_sound02 = false;
 		}
 	}
@@ -214,7 +218,7 @@ void MarksmanshipHunter_in::OnHit(float damage, bool motion)
 	{
 		if (!motion)
 			SetState(HIT);
-		Audio::Get()->Play("MH_hit");
+		Audio::Get()->Play("MH_hit", Pos(), 1.0f);
 
 	}
 	else if (stat.hp <= 0)
@@ -223,7 +227,7 @@ void MarksmanshipHunter_in::OnHit(float damage, bool motion)
 		SetState(DIE);
 		myCollider->SetActive(false);
 
-		Audio::Get()->Play("MH_die");
+		Audio::Get()->Play("MH_die", Pos(), 1.0f);
 	}
 
 	if (creatureType == CreatureType::Player)

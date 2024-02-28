@@ -145,12 +145,12 @@ void Skeleton::Hit(float amount)
 		SetState(DEATH);
 		collider->SetActive(false);
 		curHP = 0.0f;
-		Audio::Get()->Play("skeleton_die");
+		Audio::Get()->Play("skeleton_die", transform->GlobalPos(), 1.0f);
 	}
 	else
 	{
 		SetState(HIT);
-		Audio::Get()->Play("skeleton_hit");
+		Audio::Get()->Play("skeleton_hit", transform->GlobalPos(), 1.0f);
 	}
 
 	for (int i = 0; i < hitText.size(); i++)
@@ -202,7 +202,7 @@ void Skeleton::EndAttack()
 	attackBumwe->SetActive(false);
 	SetState(RUN);
 
-	MonsterBase::targetActiveSerch();
+	MonsterBase::atkEndSerch();
 }
 
 void Skeleton::EndHit()
@@ -269,7 +269,7 @@ void Skeleton::targetAttack()
 			{
 				isOne_sound = false;
 				one_atk_time = Max_one_atk_time;
-				Audio::Get()->Play("skeleton_atk");
+				Audio::Get()->Play("skeleton_atk", transform->GlobalPos(), 1.0f);
 			}
 		}
 		return;

@@ -5,9 +5,9 @@ Boss_LichKing::Boss_LichKing()
 {
 	type = LICH;
 
-	Audio::Get()->Add("bossScene_atk", "Sounds/BossScene/lichking/attack_01.ogg");
-	Audio::Get()->Add("bossScene_hit", "Sounds/BossScene/lichking/hit_01.ogg");
-	Audio::Get()->Add("bossScene_die", "Sounds/BossScene/lichking/die_01.ogg");
+	Audio::Get()->Add("bossScene_atk", "Sounds/BossScene/lichking/attack_01.ogg", false, false, true);
+	Audio::Get()->Add("bossScene_hit", "Sounds/BossScene/lichking/hit_01.ogg", false, false, true);
+	Audio::Get()->Add("bossScene_die", "Sounds/BossScene/lichking/die_01.ogg", false, false, true);
 	Audio::Get()->Add("bossScene_iceDown", "Sounds/BossScene/BGM/ice_down.ogg");
 	//Audio::Get()->Add("bossScene_phase12", "Sounds/BossScene/lichking/phase_12.mp3", true);
 	//Audio::Get()->Add("bossScene_phase23", "Sounds/BossScene/lichking/phase_23.mp3", true);
@@ -311,13 +311,13 @@ void Boss_LichKing::Hit(float amount)
 		if (die_one_sound == 0)
 		{
 			SetState(DIE);
-			Audio::Get()->Play("bossScene_die");
+			Audio::Get()->Play("bossScene_die", transform->Pos(), 1.0f);
 			die_one_sound++;
 		}
 	}
 	else
 	{
-		Audio::Get()->Play("bossScene_hit");
+		Audio::Get()->Play("bossScene_hit", transform->Pos(), 1.0f);
 		SetState(IDLE);
 	}
 
@@ -387,7 +387,7 @@ void Boss_LichKing::Attack()
 		if (atk_sound_Time <= 0)
 		{
 			atk_sound_Time = Max_atk_sound_Time;
-			Audio::Get()->Play("bossScene_atk");
+			Audio::Get()->Play("bossScene_atk", transform->Pos(), 1.0f);
 			atk_one_sound = 0;
 		}
 	}

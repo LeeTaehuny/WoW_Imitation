@@ -82,6 +82,10 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 		break;
 	}
 	range->SetParent(this);
+
+	Audio::Get()->Add("HP_atk", "Sounds/HolyPriest/attack.ogg", false, false, true);
+	Audio::Get()->Add("HP_die", "Sounds/HolyPriest/die.ogg", false, false, true);
+	Audio::Get()->Add("HP_hit", "Sounds/HolyPriest/hit.ogg", false, false, true);
 }
 
 HolyPriest_in::~HolyPriest_in()
@@ -174,7 +178,7 @@ void HolyPriest_in::PlayerUpdate()
 		if (one_atk_time <= 0)
 		{
 			one_atk_time = Max_one_atk_time;
-			Audio::Get()->Play("HP_atk");
+			Audio::Get()->Play("HP_atk", Pos(), 1.0f);
 			one_atk_sound = false;
 		}
 	}
@@ -195,7 +199,7 @@ void HolyPriest_in::AIUpdate()
 		if (one_atk_time <= 0)
 		{
 			one_atk_time = Max_one_atk_time;
-			Audio::Get()->Play("HP_atk");
+			Audio::Get()->Play("HP_atk", Pos(), 1.0f);
 			one_atk_sound02 = false;
 		}
 	}
@@ -335,7 +339,7 @@ void HolyPriest_in::OnHit(float damage, bool motion)
 		if (!motion)
 			SetState(HIT);
 
-		Audio::Get()->Play("HP_hit");
+		Audio::Get()->Play("HP_hit", Pos(), 1.0f);
 	}
 	else if (stat.hp <= 0)
 	{
@@ -343,7 +347,7 @@ void HolyPriest_in::OnHit(float damage, bool motion)
 		SetState(DIE);
 		myCollider->SetActive(false);
 
-		Audio::Get()->Play("HP_die");
+		Audio::Get()->Play("HP_die", Pos(), 1.0f);
 	}
 
 	if (creatureType == CreatureType::Player)

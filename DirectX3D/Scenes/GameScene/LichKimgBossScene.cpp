@@ -77,8 +77,7 @@ void LichKimgBossScene::Start()
 		Position_Select[i]->Pos() = position_active;
 		Position_Select[i]->SetHeight(0);
 		Position_Select[i]->Pos().y = 0;
-		Position_Select[i]->Rot().y = 0;
-		Position_Select[i]->Rot().y -= XM_PI * 0.5f;
+		Position_Select[i]->Rot().y = -(XM_PI * 0.5f);
 		Position_Select[i]->Update();
 
 		if (1 - nanum == 0)

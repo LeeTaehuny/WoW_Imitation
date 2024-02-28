@@ -96,6 +96,12 @@ void Scarecrow::Hit(float amount)
 {
 	SetState(HIT);
 
+	//Vector3 fo;
+	//fo.x = -transform->GlobalPos().x;
+	//fo.y = transform->GlobalPos().y;
+	//fo.z = -transform->GlobalPos().z;
+	Audio::Get()->Play("skeleton_Night_hit", transform->Pos(), 1.0f);
+
 	curHP -= amount;
 
 	for (int i = 0; i < hitText.size(); i++)
