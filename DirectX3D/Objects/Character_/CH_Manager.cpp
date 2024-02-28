@@ -35,6 +35,9 @@ CH_Manager::CH_Manager()
 
 	partyUI = new PartyUI_Bar();
 	partyUI->Pos() = { CENTER_X + 480.0f, CENTER_Y , 0 };
+
+	// 걷기 사운드
+	Audio::Get()->Add("Walk", "Sounds/Basic/walk.wav", false, true, true);
 }
 CH_Manager::~CH_Manager()
 {

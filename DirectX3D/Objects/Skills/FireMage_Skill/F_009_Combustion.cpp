@@ -30,6 +30,9 @@ F_009_Combustion::F_009_Combustion() : ActiveSkill(SkillType::Target)
 	icon = new Quad(L"Textures/Character_Skill_Icon/FireMage/09_Combustion.png");
 
 	usingType = UseType::NON_Data;
+
+	// 스킬 사운드
+	Audio::Get()->Add("F_009", "Sounds/FireMage/F_009.ogg", false, false, true);
 }
 
 F_009_Combustion::~F_009_Combustion()
@@ -44,6 +47,14 @@ void F_009_Combustion::Update()
 
 	if (isRun)
 	{
+		if (curTime == 0.0f)
+		{
+			if (owner->GetcreatureType() == CreatureType::Player)
+			{
+				Audio::Get()->Play("F_009", owner->Pos(), 1.0f);
+			}
+		}
+
 		particle->SetPos(owner->GlobalPos());
 		particle->Update();
 

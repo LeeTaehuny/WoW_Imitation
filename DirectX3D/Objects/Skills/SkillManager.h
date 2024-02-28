@@ -25,11 +25,6 @@ private:
 	void CreateM_SkillTree();
 	void CreateP_SkillTree();
 
-	// 스킬창 위치 이동용 함수
-	void MoveSkillFrame();
-	// 스킬창 위치 이동 종료용 함수
-	void StopSkillFrame();
-
 private:
 	// 스킬트리 클릭 이벤트
 	void LearnSkill(void* slot);

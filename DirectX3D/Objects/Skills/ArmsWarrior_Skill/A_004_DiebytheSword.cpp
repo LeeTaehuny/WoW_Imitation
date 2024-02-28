@@ -30,6 +30,9 @@ A_004_DiebytheSword::A_004_DiebytheSword() : ActiveSkill(SkillType::Target)
 	icon = new Quad(L"Textures/Character_Skill_Icon/ArmsWarrior/04_DiebytheSword.png");
 
 	usingType = UseType::NON_Data;
+
+	// 스킬 사운드
+	Audio::Get()->Add("A_004", "Sounds/ArmsWarrior/A_004.ogg", false, false, true);
 }
 
 A_004_DiebytheSword::~A_004_DiebytheSword()
@@ -44,6 +47,14 @@ void A_004_DiebytheSword::Update()
 
 	if (isRun)
 	{
+		if (curTime == 0.0f)
+		{
+			if (owner->GetcreatureType() == CreatureType::Player)
+			{
+				Audio::Get()->Play("A_004", owner->Pos(), 1.0f);
+			}
+		}
+
 		particle->SetPos(owner->GetCollider()->GlobalPos());
 		particle->Update();
 

@@ -46,6 +46,9 @@ A_007_ColossusSmash::A_007_ColossusSmash() : ActiveSkill(SkillType::Target)
 	additiveDamage = 1.0f;
 
 	usingType = UseType::monster_Data;
+
+	// 스킬 사운드
+	Audio::Get()->Add("A_007", "Sounds/ArmsWarrior/A_007.ogg", false, false, true);
 }
 
 A_007_ColossusSmash::~A_007_ColossusSmash()
@@ -64,6 +67,14 @@ void A_007_ColossusSmash::Update()
 	if (delayTime < MAX_delayAnim && isRun)
 	{
 		delayTime += DELTA;
+
+		if (delayTime >= MAX_delayAnim)
+		{
+			if (owner->GetcreatureType() == CreatureType::Player)
+			{
+				Audio::Get()->Play("A_007", owner->Pos(), 1.0f);
+			}
+		}
 	}
 	else
 	{

@@ -45,6 +45,13 @@ void F_000_Basic_Atttack::Update()
 
 	if (isRun)
 	{
+		if (targetMonster && !targetMonster->GetCollider()->Active())
+		{
+			myCollider->SetActive(false);
+			isRun = false;
+			return;
+		}
+
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 

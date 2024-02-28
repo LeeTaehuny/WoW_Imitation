@@ -23,7 +23,6 @@ void SkillManager::Init(CH_Base_ver2* player)
 	skillTreeFrame->Scale() *= 1.5f;
 	skillTreeFrame->Pos() = { CENTER_X / 2.0f + 40.0f, CENTER_Y - 40.0f, 1.0f };
 
-
 	// 슬롯 생성
 	skillTreeSlots.reserve(10);
 
@@ -68,13 +67,12 @@ void SkillManager::Init(CH_Base_ver2* player)
 	{
 		// 스킬 배우기
 		Observer::Get()->AddParamEvent("LearnSkill", bind(&SkillManager::LearnSkill, this, placeholders::_1));
-
-		// 스킬 창 이동
-		//Observer::Get()->AddEvent("MoveSkillFrame", bind(&SkillManager::MoveSkillFrame, this));
-		//Observer::Get()->AddEvent("StopSkillFrame", bind(&SkillManager::StopSkillFrame, this));
 	}
 
 	skillTreeFrame->SetActive(false);
+
+	// 스킬 배우기 사운드 등록
+	Audio::Get()->Add("learn", "Sounds/Basic/skillLearn.ogg", false, false, true);
 }
 
 void SkillManager::Update()
@@ -88,6 +86,7 @@ void SkillManager::Update()
 		else
 		{
 			skillTreeFrame->SetActive(true);
+			Audio::Get()->Play("OpenUI", 1.0f);
 		}
 	}
 
@@ -603,58 +602,6 @@ void SkillManager::CreateP_SkillTree()
 	}
 }
 
-void SkillManager::MoveSkillFrame()
-{
-	// 스킬이 선택 중이면 종료
-	if (bIsSelected) return;
-
-	// 스킬트리 프레임이 선택되었다면?
-	if (skillTreeFrame->GetSelect())
-	{
-		// 슬롯이 선택된 것이 아닌지 체크하기
-		for (pair<Slot*, bool> slot : skillTreeSlots)
-		{
-			if (slot.first->GetSelect())
-			{
-				return;
-			}
-		}
-
-		for (pair<Slot*, bool> slot : skillTreeSlots)
-		{
-			// 슬롯이 선택된 것이 아닌지 체크하기
-			if (mousePos.x <= slot.first->GlobalPos().x + slot.first->GetSize().x && mousePos.x >= slot.first->GlobalPos().x - slot.first->GetSize().x &&
-				mousePos.y <= slot.first->GlobalPos().y + slot.first->GetSize().y && mousePos.y >= slot.first->GlobalPos().y - slot.first->GetSize().y)
-			{
-				return;
-			}
-		}
-
-		// 마우스 이동량의 Delta값 만큼 이동시키기
-		if (!bIsMove)
-		{
-			prevPos = mousePos;
-			bIsMove = true;
-		}
-		else
-		{
-			float deltaX = prevPos.x - mousePos.x;
-			float deltaY = prevPos.y - mousePos.y;
-
-			skillTreeFrame->Pos().x += -deltaX;
-			skillTreeFrame->Pos().y += -deltaY;
-
-			prevPos = mousePos;
-		}
-	}
-}
-
-void SkillManager::StopSkillFrame()
-{
-	// 이동중이 아니라고 설정
-	bIsMove = false;
-}
-
 void SkillManager::LearnSkill(void* slot)
 {
 	Slot* tmpSlot = static_cast<Slot*>(slot);
@@ -687,6 +634,8 @@ void SkillManager::LearnSkill(void* slot)
 			skillTreeSlots[idx].first->GetColor() = { 1.0f, 1.0f, 1.0f, 1.0f };
 			// 스킬을 배웠다고 표시
 			skillTreeSlots[idx].second = true;
+			// 배우기 사운드 재생
+			Audio::Get()->Play("learn", CH->GetPlayerData()->Pos(), 1.0f);
 		}
 	}
 }

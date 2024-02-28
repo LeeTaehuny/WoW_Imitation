@@ -51,6 +51,11 @@ void ActiveSkill::Render()
 void ActiveSkill::TargetUpdate()
 {
 	if (!target) return;
+	if (!target->Active())
+	{
+		myCollider->SetActive(false);
+		isRun = false;
+	}
 
 	// 방향 정보 갱신
 	direction = (target->GlobalPos() - myCollider->GlobalPos()).GetNormalized();

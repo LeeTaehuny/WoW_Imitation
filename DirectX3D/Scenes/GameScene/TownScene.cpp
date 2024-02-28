@@ -19,6 +19,8 @@ TownScene::TownScene()
 
     // 음원 등록
     Audio::Get()->Add("TownBGM", "Sounds/TownScene/TownBGM.wav", true, true, false);
+    Audio::Get()->Add("OpenUI", "Sounds/Basic/open.ogg", false, false, false);
+    Audio::Get()->Add("SelectNPC", "Sounds/TownScene/npcSelect.wav", false, false, false);
 }
 
 TownScene::~TownScene()
@@ -75,6 +77,7 @@ void TownScene::Start()
 
             // 위치 초기화
             CH->GetCharcterData()[i]->Pos() = CH->GetPlayerData()->Pos();
+            CH->GetCharcterData()[i]->Pos().y = townMap->GetHeight(Vector3(80.0f, 0.0f, 185.0f));
         }
     }
     
@@ -83,7 +86,7 @@ void TownScene::Start()
     isReady = false;
 
     // 음원 재생
-    Audio::Get()->Play("TownBGM", 1.0f);
+    Audio::Get()->Play("TownBGM", 0.7f);
 }
 
 void TownScene::Update()
@@ -126,11 +129,17 @@ void TownScene::Render()
 
 void TownScene::PostRender()
 {
-	SKILL->PostRender();
-    townMap->PostRender();
-	CH->PostRender();
-    MONSTER->PostRender();
-    loding->Render();
+    if (loding->Active())
+    {
+        loding->Render();
+    }
+    else
+    {
+        SKILL->PostRender();
+        townMap->PostRender();
+        CH->PostRender();
+        MONSTER->PostRender();
+    }
 }
 
 void TownScene::GUIRender()
@@ -158,5 +167,4 @@ void TownScene::Loding()
 
     // 다음 씬으로 전환
     SceneManager::Get()->ChangeScene("DungeonScene");
-    //SceneManager::Get()->ChangeScene("Boss");
 }

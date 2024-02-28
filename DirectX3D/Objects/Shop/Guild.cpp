@@ -70,11 +70,12 @@ void Guild::Update()
 	guild->UpdateWorld();
 	trader->UpdateWorld();
 
-	if ((CH->GetPlayerData()->GlobalPos() - GlobalPos()).Length() < 10.0f)
+	if ((CH->GetPlayerData()->GlobalPos() - GlobalPos()).Length() < 10.0f && !Active())
 	{
 		SetActive(true);
+		Audio::Get()->Play("OpenUI", 1.0f);
 	}
-	else
+	else if ((CH->GetPlayerData()->GlobalPos() - GlobalPos()).Length() >= 10.0f)
 	{
 		SetActive(false);
 	}
@@ -163,7 +164,11 @@ void Guild::Control()
 				mousePos.y <= icon->GlobalPos().y + icon->GetSize().y / 2 && mousePos.y >= icon->GlobalPos().y - icon->GetSize().y / 2)
 			{
 				if (CH->GetCharcterData().size() < 6)
+				{
 					CH->NonPlayerSpawn(idx);
+					Audio::Get()->Play("SelectNPC", 1.0f);
+				}
+					
 			}
 			idx++;
 		}
