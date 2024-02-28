@@ -120,6 +120,8 @@ void LichKimgBossScene::Start()
 	
 	Mounga_die = false;
 	pop_time = Max_pop_time;
+
+	pop_time = Max_pop_time;
 }
 
 void LichKimgBossScene::Update()

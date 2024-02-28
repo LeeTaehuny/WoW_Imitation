@@ -1,6 +1,7 @@
 #include "Framework.h"
 #include "DungeonScene.h"
 #include "Objects/Skills/SkillManager.h"
+#include "Objects/UI/Button.h"
 
 DungeonScene::DungeonScene()
 {
@@ -11,11 +12,45 @@ DungeonScene::DungeonScene()
 	Audio::Get()->Add("Open_Gate", "Sounds/DungeonScene/icecrown_door_02_main_open.ogg", true);
 	Audio::Get()->Add("Open_Door", "Sounds/DungeonScene/icecrown_door_03_open.ogg", true);
 	Audio::Get()->Add("IceWall_Break", "Sounds/DungeonScene/icecrown_cavein_close.ogg", true);
+
+	{
+		back_ = new Quad(L"Textures/UI/barbershop.png");
+		//back_->Scale() *= 0.7f;
+		back_->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.5f);
+		back_->UpdateWorld();
+
+		die_Gray = new Quad(L"Textures/UI/die_Scene.png");
+		die_Gray->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.5f);
+		die_Gray->Scale() *= 50;
+		die_Gray->UpdateWorld();
+
+		change_Scene = new Quad(Vector2(WIN_WIDTH, WIN_HEIGHT));
+		change_Scene->GetMaterial()->SetDiffuseMap(L"Textures/SelectScene/loding.jpg");
+		change_Scene->Pos() = Vector3(CENTER_X, CENTER_Y);
+		change_Scene->SetActive(false);
+		change_Scene->UpdateWorld();
+
+		gaem_end = new Button(L"Textures/UI/button-up.png");
+		gaem_end->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.4f);
+		gaem_end->Scale() *= 2;
+		gaem_end->SetDownEvent(bind(&DungeonScene::Game_End, this));
+		gaem_end->Update();
+
+		goTown = new Button(L"Textures/UI/button-up.png");
+		goTown->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.5f);
+		goTown->Scale() *= 2;
+		goTown->SetDownEvent(bind(&DungeonScene::Change_Town, this));
+	}
 }
 
 DungeonScene::~DungeonScene()
 {
 	delete dungeon;
+
+	delete back_;
+	delete die_Gray;
+	delete gaem_end;
+	delete goTown;
 }
 
 void DungeonScene::Start()
@@ -36,14 +71,35 @@ void DungeonScene::Start()
 		CH->GetCharcterData()[i]->Pos() = CH->GetPlayerData()->Pos();
 		CH->GetCharcterData()[i]->Rot().y = 3.15f;
 	}
+
+	Mounga_die = false;
+	pop_time = Max_pop_time;
 }
 
 void DungeonScene::Update()
 {
+	if (Mounga_die)
+	{
+		Scene_Chnage();
+		return;
+	}
+
 	dungeon->Update();
 	CH->Update();
 	MONSTER->Update();
 	SKILL->Update();
+
+	if (CH->GetPlayerData()->GetStat().hp <= 0)
+	{
+		goTown->Update();
+		gaem_end->Update();
+
+		if (!sound_change)
+		{
+			sound_change = true;
+			
+		}
+	}
 
 	for (int i = 0; i < CH->GetCharcterData().size(); i++)
 	{
@@ -59,6 +115,11 @@ void DungeonScene::Update()
 		Environment::Get()->GetLight(0)->color = { 1.0f, 1.0f, 1.0f, 1 };
 		Audio::Get()->Stop("Out_Dungeon");
 		SceneManager::Get()->ChangeScene("Boss");
+	}
+
+	if (KEY_DOWN(VK_UP))
+	{
+		CH->GetPlayerData()->OnHit(9999);
 	}
 
 	// 1번방 문 열리기
@@ -109,6 +170,34 @@ void DungeonScene::Render()
 
 void DungeonScene::PostRender()
 {
+	if (CH->GetPlayerData()->GetStat().hp <= 0)
+	{
+		pop_time -= DELTA;
+		if (pop_time >= 0)
+		{
+			return;
+		}
+
+		if (CH->GetPlayerData()->GetStat().hp <= 0 && !Mounga_die)
+		{
+			die_Gray->Render();
+			back_->Render();
+			gaem_end->Render();
+			goTown->Render();
+
+			string rito = "당신은 죽었습니다.";
+			Font::Get()->RenderText(rito, { 735, 450 });
+			rito = "다시 도전하시겠습니까?";
+			Font::Get()->RenderText(rito, { 750, 420 });
+
+			rito = "다시 도전";
+			Font::Get()->RenderText(rito, { 687, 363 });
+
+			rito = "게임 종료";
+			Font::Get()->RenderText(rito, { 687, 291 });
+		}
+	}
+
 	SKILL->PostRender();
 	CH->PostRender();
 
@@ -117,4 +206,38 @@ void DungeonScene::PostRender()
 
 void DungeonScene::GUIRender()
 {
+}
+
+void DungeonScene::Change_Town()
+{
+	Mounga_die = true;
+	change_Scene->SetActive(true);
+}
+
+void DungeonScene::Game_End()
+{
+	PostQuitMessage(0);
+}
+
+void DungeonScene::Scene_Chnage()
+{
+	Audio::Get()->Stop("Out_Dungeon");
+	Audio::Get()->Stop("IceWall_Break");
+
+	Environment::Get()->GetLight(0)->color = { 1.0f, 1.0f, 1.0f, 1 };
+
+	vector<MonsterBase*> mon1 = MONSTER->GetSkeleton();
+	for (int i = 0; i < mon1.size(); i++)
+	{
+		mon1[i]->GetTransform()->SetActive(false);
+		mon1[i]->GetCollider()->SetActive(false);
+	}
+	mon1 = MONSTER->GetSkeleton_Knight();
+	for (int i = 0; i < mon1.size(); i++)
+	{
+		mon1[i]->GetTransform()->SetActive(false);
+		mon1[i]->GetCollider()->SetActive(false);
+	}
+
+	SceneManager::Get()->ChangeScene("Town");
 }

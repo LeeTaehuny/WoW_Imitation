@@ -27,5 +27,24 @@ private:
     //Model* TestModel;
 
     float Time = 7.0f;
+
+private:
+    Quad* back_;
+    Quad* die_Gray;
+    class Button* gaem_end;
+    class Button* goTown;
+
+    Quad* change_Scene;
+
+    bool sound_change = false;
+    bool Mounga_die = false;
+
+    float Max_pop_time = 3.0f;
+    float pop_time = Max_pop_time;
+
+    void Change_Town();
+    void Game_End();
+
+    void Scene_Chnage();
 };
 
