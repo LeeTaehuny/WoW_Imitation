@@ -73,6 +73,17 @@ void M_005_Chimaera_Shot::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
+		if (!isOne_sound)
+		{
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("MH_05_using", owner->Pos(), 1.0f);
+				break;
+			}
+			isOne_sound = true;
+		}
+
 		if (mon1 != nullptr)
 		{
 			if (!mon1->GetCollider()->Active())
@@ -173,6 +184,7 @@ void M_005_Chimaera_Shot::UseSkill(MonsterBase* monsterbase)
 
 	mon1 = monsterbase;
 	animStart = 0;
+	isOne_sound = false;
 	isRun = true;
 	isCooldown = true;
 

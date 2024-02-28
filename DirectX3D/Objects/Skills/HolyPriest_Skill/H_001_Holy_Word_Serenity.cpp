@@ -62,7 +62,15 @@ void H_001_Holy_Word_Serenity::Update()
 			{
 				owner->GetStat().hp = owner->GetStat().maxHp;
 			}
+
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("HP_01_using", owner->Pos(), 1.0f);
+				break;
+			}
 		}
+	
 
 		if (particle->IsPlay())
 		{

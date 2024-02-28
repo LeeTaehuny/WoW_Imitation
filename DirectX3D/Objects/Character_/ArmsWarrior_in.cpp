@@ -216,6 +216,14 @@ void ArmsWarrior_in::AIUpdate()
 		}
 		else
 		{
+			if (!monsterSelectData->GetCollider()->Active())
+			{
+				monsterSelectData = nullptr;
+				saveMonsterCollider = nullptr;
+				atkGannnnn = false;
+				return;
+			}
+
 			Vector3 velo = (monsterSelectData->GetTransform()->GlobalPos() - this->Pos()).GetNormalized();
 			randomVelocity = velo;
 

@@ -30,6 +30,11 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 	{
 	case CreatureType::Player:
 		range = new SphereCollider(10);
+
+		Audio::Get()->Add("PW_01_impack", "Sounds/ProtectionWarrior/skill/P_001_impact.ogg", false, false, true);
+		Audio::Get()->Add("PW_01_swing", "Sounds/ProtectionWarrior/skill/P_001_swing.ogg", false, false, true);
+		Audio::Get()->Add("PW_02_using", "Sounds/ProtectionWarrior/skill/P_002_impact.ogg", false, false, true);
+		Audio::Get()->Add("PW_09_using", "Sounds/ProtectionWarrior/skill/P_009_using.ogg", false, false, true);
 		break;
 
 	case CreatureType::NonPlayer:
@@ -194,6 +199,14 @@ void ProtectionWarrior_in::AIUpdate()
 		}
 		else
 		{
+			if (!monsterSelectData->GetCollider()->Active())
+			{
+				monsterSelectData = nullptr;
+				saveMonsterCollider = nullptr;
+				atkGannnnn = false;
+				return;
+			}
+
 			Vector3 velo = (monsterSelectData->GetTransform()->GlobalPos() - this->Pos()).GetNormalized();
 			randomVelocity = velo;
 

@@ -67,6 +67,17 @@ void M_010_Wailing_Arrow::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
+		if (!isOne_sound)
+		{
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("MH_10_using", owner->Pos(), 1.0f);
+				break;
+			}
+			isOne_sound = true;
+		}
+
 		if (monsterTarget->GetCollider()->Active())
 		{
 			direction = (monsterTarget->GetCollider()->GlobalPos() - myCollider->Pos()).GetNormalized();
@@ -224,6 +235,7 @@ void M_010_Wailing_Arrow::UseSkill(MonsterBase* monsterbase)
 	animStart = 0;
 	isRun = true;
 	isCooldown = true;
+	isOne_sound = false;
 
 	arrow = ARROW->GetActiveArrow();
 	arrow->SetParent(myCollider);

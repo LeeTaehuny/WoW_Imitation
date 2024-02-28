@@ -59,6 +59,17 @@ void H_008_Divine_Hymn::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
+		if (!isOne_sound)
+		{
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("HP_08_using", owner->Pos(), 1.0f);
+				break;
+			}
+			isOne_sound = true;
+		}
+
 		if (!particle1->IsPlay())
 		{
 			particle1->Play(owner->Pos());
@@ -154,6 +165,7 @@ void H_008_Divine_Hymn::UseSkill()
 		animStart = 0;
 		isRun = true;
 		hitCollider->SetActive(true);
+		isOne_sound = false;
 	}
 	else if (isRun)
 	{

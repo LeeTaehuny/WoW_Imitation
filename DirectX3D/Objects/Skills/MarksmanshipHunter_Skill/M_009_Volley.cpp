@@ -75,6 +75,17 @@ void M_009_Volley::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
+		if (!isOne_sound)
+		{
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("MH_09_using", owner->Pos(), 1.0f);
+				break;
+			}
+			isOne_sound = true;
+		}
+
 		FOR(ThisNumber)
 			Using(i);
 
@@ -187,6 +198,7 @@ void M_009_Volley::UseSkill(MonsterBase* monsterbase)
 
 	targetMonster = monsterbase;
 	ThisNumber = 0;
+	isOne_sound = false;
 
 	if (MarksmanshipHunter_in* c = dynamic_cast<MarksmanshipHunter_in*>(owner))
 	{

@@ -18,4 +18,6 @@ private:
 
 	float Max_animStart = 0.45f;
 	float animStart = 0;
+
+	bool isOne = false;
 };

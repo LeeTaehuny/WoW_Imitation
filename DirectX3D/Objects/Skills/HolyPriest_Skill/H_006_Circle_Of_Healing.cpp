@@ -73,6 +73,17 @@ void H_006_Circle_Of_Healing::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
+		if (!isOne_sound)
+		{
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("HP_06_using", owner->Pos(), 1.0f);
+				break;
+			}
+			isOne_sound = true;
+		}
+
 		hitCollider->Pos() = healingTargets[0]->GlobalPos();
 		hitCollider->UpdateWorld();
 
@@ -174,4 +185,6 @@ void H_006_Circle_Of_Healing::UseSkill(CH_Base_ver2* chbase)
 	healingTargets[0] = chbase;
 	isRun = true;
 	isCooldown = true;
+
+	isOne_sound = false;
 }

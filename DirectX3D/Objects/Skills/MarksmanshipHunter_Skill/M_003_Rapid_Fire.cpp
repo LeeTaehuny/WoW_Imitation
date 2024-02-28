@@ -210,6 +210,13 @@ void M_003_Rapid_Fire::tack(int imto)
 			seven[imto]->SetActive(true);
 			seven[imto]->UpdateWorld();
 			effectTexture[imto]->SetActive(true);
+
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("MH_03_using", owner->Pos(), 1.0f);
+				break;
+			}
 		}
 
 		direction = (monster->GetCollider()->GlobalPos() - it_me_Mario[imto]->GlobalPos()).GetNormalized();

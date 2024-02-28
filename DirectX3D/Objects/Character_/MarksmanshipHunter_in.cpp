@@ -30,6 +30,13 @@ MarksmanshipHunter_in::MarksmanshipHunter_in(CreatureType type, Transform* trans
 	{
 	case CreatureType::Player:
 		range = new SphereCollider(20);
+
+		Audio::Get()->Add("MH_01_impact","Sounds/MarksmanshipHunter/skill/M_001_impact.ogg", false, false, true);
+		Audio::Get()->Add("MH_03_using", "Sounds/MarksmanshipHunter/skill/M_003_using.ogg", false, false, true);
+		Audio::Get()->Add("MH_05_using", "Sounds/MarksmanshipHunter/skill/M_005_using.ogg", false, false, true);
+		Audio::Get()->Add("MH_08_using", "Sounds/MarksmanshipHunter/skill/M_008_using.ogg", false, false, true);
+		Audio::Get()->Add("MH_09_using", "Sounds/MarksmanshipHunter/skill/M_009_using.ogg", false, false, true);
+		Audio::Get()->Add("MH_10_using", "Sounds/MarksmanshipHunter/skill/M_010_using.ogg", false, false, true);
 		break;
 
 	case CreatureType::NonPlayer:

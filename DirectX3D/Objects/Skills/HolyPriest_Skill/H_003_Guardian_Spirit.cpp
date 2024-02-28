@@ -63,6 +63,17 @@ void H_003_Guardian_Spirit::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
+		if (!isOne_sound)
+		{
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("HP_03_using", owner->Pos(), 1.0f);
+				break;
+			}
+			isOne_sound = true;
+		}
+
 		runTime -= DELTA;
 		if (runTime <= 0)
 		{
@@ -130,4 +141,5 @@ void H_003_Guardian_Spirit::UseSkill(CH_Base_ver2* chbase)
 	runTime = Max_runTime;
 	isRun = true;
 	isCooldown = true;
+	isOne_sound = false;
 }

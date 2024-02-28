@@ -67,6 +67,17 @@ void H_002_Holy_Word_Sanctify::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
+		if (!isOne_sound)
+		{
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("HP_02_using", owner->Pos(), 1.0f);
+				break;
+			}
+			isOne_sound = true;
+		}
+
 		int imsiValue = 0;
 		for (CH_Base_ver2* ch : CH->GetCharcterData())
 		{
@@ -161,4 +172,5 @@ void H_002_Holy_Word_Sanctify::UseSkill()
 	animStart = 0;
 	isRun = true;
 	isCooldown = true;
+	isOne_sound = false;
 }

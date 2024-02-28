@@ -365,7 +365,7 @@ void Boss_LichKing::Moving()
 }
 void Boss_LichKing::Attack()
 {
-	if (curState == HIT || curState == DIE) return;
+	if (curState == HIT || curState == DIE || curState == CASTING || siitpha) return;
 
 	if (curState != ATTACK)
 	{
@@ -584,12 +584,14 @@ void Boss_LichKing::phaseSait()
 			if (c->GetSkillEnd() && phase == 2)
 			{
 				phase++;
+				siitpha = false;
 				c->ChangeSkillEnd();
 				return;
 			}
 
 			if (!c->GetCoolTime())
 			{
+				siitpha = true;
 				SetState(IDLE);
 				c->UseSkill();
 			}
@@ -653,6 +655,7 @@ void Boss_LichKing::phaseSait2()
 			if (c->GetSkillEnd())
 			{
 				phase++;
+				siitpha = false;
 				c->ChangeSkillEnd();
 				return;
 			}
@@ -660,6 +663,7 @@ void Boss_LichKing::phaseSait2()
 			if (!c->GetCoolTime())
 			{
 				SetState(IDLE);
+				siitpha = true;
 				c->UseSkill();
 			}
 		}

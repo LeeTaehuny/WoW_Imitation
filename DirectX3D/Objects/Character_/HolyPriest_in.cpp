@@ -51,6 +51,13 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 	{
 	case CreatureType::Player:
 		range = new SphereCollider(10);
+
+		Audio::Get()->Add("HP_01_using", "Sounds/HolyPriest/skill/H_001_using.ogg", false, false, true);
+		Audio::Get()->Add("HP_02_using", "Sounds/HolyPriest/skill/H_002_using.ogg", false, false, true);
+		Audio::Get()->Add("HP_03_using", "Sounds/HolyPriest/skill/H_003_using.ogg", false, false, true);
+		Audio::Get()->Add("HP_04_using", "Sounds/HolyPriest/skill/H_004_using.ogg", false, false, true);
+		Audio::Get()->Add("HP_06_using", "Sounds/HolyPriest/skill/H_006_using.ogg", false, false, true);
+		Audio::Get()->Add("HP_08_using", "Sounds/HolyPriest/skill/H_008_using.ogg", false, false, true);
 		break;
 
 	case CreatureType::NonPlayer:

@@ -60,6 +60,17 @@ void M_001_Aimed_Shot::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
+		if (!isOne_sound)
+		{
+			switch (owner->GetcreatureType())
+			{
+			case CreatureType::Player:
+				Audio::Get()->Play("MH_01_impact", owner->Pos(), 1.0f);
+				break;
+			}
+			isOne_sound = true;
+		}
+
 		// 해당 몬스터가 죽어서 액티브가 꺼졌을 경우 
 		if (!targetMonster->GetCollider()->Active())
 		{
@@ -138,4 +149,6 @@ void M_001_Aimed_Shot::UseSkill(MonsterBase* monsterbase)
 	animStart = 0;
 	isRun = true;
 	isCooldown = true;
+
+	isOne_sound = false;
 }

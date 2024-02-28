@@ -115,6 +115,7 @@ void LichKimgBossScene::Start()
 	if (Boss_LichKing* c = dynamic_cast<Boss_LichKing*>(MONSTER->GetLichKing()))
 	{
 		c->Spawn(Vector3());
+		c->SetPhase(1);
 	}
 	
 	Mounga_die = false;
