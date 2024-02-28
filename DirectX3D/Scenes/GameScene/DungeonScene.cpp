@@ -12,6 +12,7 @@ DungeonScene::DungeonScene()
 	Audio::Get()->Add("Open_Gate", "Sounds/DungeonScene/icecrown_door_02_main_open.ogg", true);
 	Audio::Get()->Add("Open_Door", "Sounds/DungeonScene/icecrown_door_03_open.ogg", true);
 	Audio::Get()->Add("IceWall_Break", "Sounds/DungeonScene/icecrown_cavein_close.ogg", true);
+	Audio::Get()->Add("DungeonPotal", "Sounds/DungeonScene/fx_darkportal_open.ogg", false, false, false);
 
 	{
 		back_ = new Quad(L"Textures/UI/barbershop.png");
@@ -122,6 +123,7 @@ void DungeonScene::Update()
 		Environment::Get()->GetLight(0)->color = { 1.0f, 1.0f, 1.0f, 1 };
 		Audio::Get()->Stop("Out_Dungeon");
 		Audio::Get()->Stop("IceWall_Break");
+		Audio::Get()->Play("DungeonPotal", 1.0f);
 		SceneManager::Get()->ChangeScene("Boss");
 	}
 
