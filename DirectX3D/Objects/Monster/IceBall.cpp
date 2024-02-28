@@ -131,6 +131,11 @@ void IceBall::Hit(float amount)
 	{
 		collider->SetActive(false);
 		curHP = 0.0f;
+		Audio::Get()->Play("iceBall_die");
+	}
+	else
+	{
+		Audio::Get()->Play("iceBall_hit");
 	}
 
 	for (int i = 0; i < hitText.size(); i++)

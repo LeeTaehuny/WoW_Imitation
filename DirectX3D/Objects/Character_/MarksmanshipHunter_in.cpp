@@ -158,6 +158,16 @@ void MarksmanshipHunter_in::PlayerUpdate()
 	Control();
 	//Casting();
 
+	if (one_atk_sound)
+	{
+		one_atk_time -= DELTA;
+		if (one_atk_time <= 0)
+		{
+			one_atk_time = Max_one_atk_time;
+			Audio::Get()->Play("MH_atk");
+			one_atk_sound = false;
+		}
+	}
 
 	// �浹ü ������Ʈ
 	myCollider->UpdateWorld();
@@ -168,6 +178,18 @@ void MarksmanshipHunter_in::AIUpdate()
 {
 	if (!myPlayer) return;
 	if (curState == HIT || curState == DIE) return;
+
+	if (one_atk_sound02)
+	{
+		one_atk_time -= DELTA;
+		if (one_atk_time <= 0)
+		{
+			one_atk_time = Max_one_atk_time;
+			Audio::Get()->Play("MH_atk");
+			one_atk_sound02 = false;
+		}
+	}
+
 	// ���� ������ Ÿ���� ���ٸ�
 	if (!atkTarget)
 	{
@@ -192,12 +214,16 @@ void MarksmanshipHunter_in::OnHit(float damage, bool motion)
 	{
 		if (!motion)
 			SetState(HIT);
+		Audio::Get()->Play("MH_hit");
+
 	}
 	else if (stat.hp <= 0)
 	{
 		stat.hp = 0.0f;
 		SetState(DIE);
 		myCollider->SetActive(false);
+
+		Audio::Get()->Play("MH_die");
 	}
 
 	if (creatureType == CreatureType::Player)
@@ -391,9 +417,10 @@ void MarksmanshipHunter_in::Attack()
 	if (!weapon) return;
 
 	// �Ϲݰ���
-	if (KEY_DOWN(VK_LBUTTON))
+	if (KEY_DOWN(VK_LBUTTON) && weapon != nullptr && targetMonster)
 	{
 		skillList[0]->UseSkill(targetMonster);
+		one_atk_sound = true;
 	}
 }
 
@@ -497,6 +524,7 @@ void MarksmanshipHunter_in::ai_attack()
 			break;
 		}
 
+		one_atk_sound02 = true;
 		skillList[0]->UseSkill(monsterSelectData);
 	}
 

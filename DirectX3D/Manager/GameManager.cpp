@@ -34,7 +34,7 @@ GameManager::~GameManager()
 void GameManager::Update()
 {
     Keyboard::Get()->Update();
-    Timer::Get()->Update();    
+    Timer::Get()->Update();
     Audio::Get()->Update();
     SceneManager::Get()->Update();
 

@@ -73,8 +73,13 @@ private:
     UINT phase = 1;
     float vidul;
 
-    float Max_atk_del = 1.5f;
+    float Max_atk_del = 0.9f;
     float atk_del = Max_atk_del;
+    int atk_one_sound = 0;
+    float Max_atk_sound_Time = 0.5f;
+    float atk_sound_Time = Max_atk_sound_Time;
+    int hit_one_sound = 0;
+    int die_one_sound = 0;
 
     class BossMap* map;
 

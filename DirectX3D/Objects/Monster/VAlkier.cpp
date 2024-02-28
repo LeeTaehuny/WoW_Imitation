@@ -104,6 +104,14 @@ void VAlkier::Update()
 	MonsterBase::targetActiveSerch();
 	//UpdateUI();
 
+	if (curState == FLYING)
+	{
+		if (!Audio::Get()->IsPlaySound("valkyr_wing"))
+		{
+			Audio::Get()->Play("valkyr_wing");
+		}
+	}
+
 	root->SetWorld(instancing->GetTransformByNode(index, 3));
 	collider->UpdateWorld();
 }
@@ -148,8 +156,14 @@ void VAlkier::Hit(float amount)
 	if (curHP <= 0)
 	{
 		//SetState(DEATH);
+		transform->SetActive(false);
 		collider->SetActive(false);
 		curHP = 0.0f;
+		Audio::Get()->Play("valkyr_die");
+	}
+	else
+	{
+		Audio::Get()->Play("valkyr_hit");
 	}
 
 	for (int i = 0; i < hitText.size(); i++)

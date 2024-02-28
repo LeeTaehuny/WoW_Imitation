@@ -6,7 +6,6 @@ public:
 	~LichKimgBossScene();
 
     virtual void Start() override;
-    virtual void End() override;
 
     virtual void Update() override;
     virtual void PreRender() override;
@@ -15,8 +14,8 @@ public:
     virtual void GUIRender() override;
 
 private:
-    void PL_Die_Change_Town();
-    void BO_Die_Change_Town();
+    void Change_Town();
+    void Game_End();
 
     void Scene_Chnage();
 
@@ -28,12 +27,14 @@ private:
 
     Quad* back_;
     Quad* die_Gray;
-    class Button* reTry;
+    class Button* gaem_end;
     class Button* goTown;
 
     Quad* change_Scene;
 
-    bool pl_die = false;
-    bool bo_die = false;
+    bool Mounga_die = false;
+    bool game_end = false;
+
+    bool sound_change = false;
 
 };

@@ -11,6 +11,7 @@
 LichKimgBossScene::LichKimgBossScene()
 {
 	map = new BossMap();
+
 	back_ = new Quad(L"Textures/UI/barbershop.png");
 	//back_->Scale() *= 0.7f;
 	back_->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.5f);
@@ -27,16 +28,19 @@ LichKimgBossScene::LichKimgBossScene()
 	change_Scene->SetActive(false);
 	change_Scene->UpdateWorld();
 
-	reTry = new Button(L"Textures/UI/button-up.png");
-	reTry->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.4f);
-	reTry->Scale() *= 2;
-	reTry->SetDownEvent(bind(&LichKimgBossScene::PL_Die_Change_Town, this));
-	reTry->Update();
+	gaem_end = new Button(L"Textures/UI/button-up.png");
+	gaem_end->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.4f);
+	gaem_end->Scale() *= 2;
+	gaem_end->SetDownEvent(bind(&LichKimgBossScene::Game_End, this));
+	gaem_end->Update();
 	
 	goTown= new Button(L"Textures/UI/button-up.png");
-	goTown->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.4f);
+	goTown->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.5f);
 	goTown->Scale() *= 2;
-	goTown->SetDownEvent(bind(&LichKimgBossScene::BO_Die_Change_Town, this));
+	goTown->SetDownEvent(bind(&LichKimgBossScene::Change_Town, this));
+
+	Audio::Get()->Add("bossScene_main_bgm", "Sounds/BossScene/BGM/main.mp3", true);
+	Audio::Get()->Add("bossScene_end", "Sounds/BossScene/BGM/end.mp3", true);
 }
 
 LichKimgBossScene::~LichKimgBossScene()
@@ -44,7 +48,7 @@ LichKimgBossScene::~LichKimgBossScene()
 	delete map;
 	delete back_;
 	delete die_Gray;
-	delete reTry;
+	delete gaem_end;
 	delete goTown;
 	delete change_Scene;
 }
@@ -52,9 +56,11 @@ LichKimgBossScene::~LichKimgBossScene()
 void LichKimgBossScene::Start()
 {
 	//CH->PlayerSpawn(2);
-	////CH->GetPlayerData()->EquipWeapon(new Weapon("hammer_1", WeaponType::Hammer));
-	//CH->GetPlayerData()->EquipWeapon(new Weapon("bow_1", WeaponType::Bow));
 	//SKILL->Init(CH->GetPlayerData());
+
+	sound_change = false;
+	Audio::Get()->Play("bossScene_main_bgm");
+
 	playerData = CH->GetPlayerData();
 
 	vector<CH_Base_ver2*> Position_Select = CH->GetCharcterData();
@@ -69,6 +75,7 @@ void LichKimgBossScene::Start()
 	{
 		position_active = Vector3(xxxx, 0, zzzz);
 		Position_Select[i]->Pos() = position_active;
+		Position_Select[i]->Rot().y = 0;
 		Position_Select[i]->Rot().y -= XM_PI * 0.5f;
 		Position_Select[i]->Update();
 
@@ -93,37 +100,46 @@ void LichKimgBossScene::Start()
 		}
 	}
 
-	
-	MONSTER->SpawnLickKing(Vector3());
-	bossData = MONSTER->GetLichKing();
+	map->SetPhase(0);
+	if (!MONSTER->GetLichKing())
+	{
+		MONSTER->SpawnLickKing(Vector3());
+		bossData = MONSTER->GetLichKing();
+		if (Boss_LichKing* c = dynamic_cast<Boss_LichKing*>(MONSTER->GetLichKing()))
+		{
+			c->SetBossMap(map);
+		}
+	}
+
 	if (Boss_LichKing* c = dynamic_cast<Boss_LichKing*>(MONSTER->GetLichKing()))
 	{
-		c->SetBossMap(map);
+		c->Spawn(Vector3());
 	}
-}
-void LichKimgBossScene::End()
-{
-	delete MONSTER->GetLichKing();
-	bossData = nullptr;
+	
 }
 
 void LichKimgBossScene::Update()
 {
-	if (pl_die || bo_die) 
+	if (Mounga_die)
 	{
 		Scene_Chnage();
 		return;
 	}
 	map->Update();
 
-	if (playerData->GetStat().hp <= 0)
-	{
-		reTry->Update();
-	}
-	if (bossData->GetHpPercent() <= 0)
+	if (playerData->GetStat().hp <= 0 || bossData->GetHpPercent() <= 0)
 	{
 		goTown->Update();
+		gaem_end->Update();
+
+		if (!sound_change)
+		{
+			sound_change = true;
+			Audio::Get()->Stop("bossScene_main_bgm");
+			Audio::Get()->Play("bossScene_end");
+		}
 	}
+	
 
 	SKILL->Update();
 	CH->Update();
@@ -145,11 +161,12 @@ void LichKimgBossScene::Render()
 
 void LichKimgBossScene::PostRender()
 {
-	if (playerData->GetStat().hp <= 0 && !bo_die && !pl_die)
+	if (playerData->GetStat().hp <= 0 && !Mounga_die)
 	{
 		die_Gray->Render();
 		back_->Render();
-		reTry->Render();
+		gaem_end->Render();
+		goTown->Render();
 
 		string rito = "당신은 죽었습니다.";
 		Font::Get()->RenderText(rito, { 735, 450 });
@@ -157,24 +174,27 @@ void LichKimgBossScene::PostRender()
 		Font::Get()->RenderText(rito, { 750, 420 });
 
 		rito = "다시 도전";
-		Font::Get()->RenderText(rito, { 691, 291 });
+		Font::Get()->RenderText(rito, { 687, 363 });
+		
+		rito = "게임 종료";
+		Font::Get()->RenderText(rito, { 687, 291 });
 	}
 
-	if (bossData->GetHpPercent() <= 0 && !bo_die)
+	if (bossData->GetHpPercent() <= 0 && !Mounga_die)
 	{
 		back_->Render();
-		goTown->Render();
+		gaem_end->Render();
 
 		string rito = "리치왕을 쓰러트렸습니다.";
 		Font::Get()->RenderText(rito, { 763, 450 });
-		rito = "마을로 돌아가시겠습니까?";
-		Font::Get()->RenderText(rito, { 762, 400 });
+		rito = "게임을 종료하시겠습니까?";
+		Font::Get()->RenderText(rito, { 766, 400 });
 
-		rito = "마을로 귀환";
-		Font::Get()->RenderText(rito, { 693, 291 });
+		rito = "게임 종료";
+		Font::Get()->RenderText(rito, { 687, 291 });
 	}
 	
-	if (pl_die || bo_die)
+	if (Mounga_die)
 	{
 		change_Scene->Render();
 		return;
@@ -188,22 +208,60 @@ void LichKimgBossScene::PostRender()
 void LichKimgBossScene::GUIRender()
 {
 	CH->GUIRender();
+
+	MONSTER->GUIRender();
 }
 
-void LichKimgBossScene::PL_Die_Change_Town()
+void LichKimgBossScene::Change_Town()
 {
-	pl_die = true;
+	Mounga_die = true;
 	change_Scene->SetActive(true);
 }
 
-void LichKimgBossScene::BO_Die_Change_Town()
+void LichKimgBossScene::Game_End()
 {
-	bo_die = true;
-	change_Scene->SetActive(true);
+	PostQuitMessage(0);
 }
 
 void LichKimgBossScene::Scene_Chnage()
 {
-	// 나중에 마을 씬으로 변경해줄 필요 있음
+	vector<CH_Base_ver2*> Position_Select = CH->GetCharcterData();
+	for (int i = 0; i < Position_Select.size(); i++)
+	{
+		Position_Select[i]->GetStat().hp = Position_Select[i]->GetStat().maxHp;
+		Position_Select[i]->SetActive(true);
+	}
+
+	vector<MonsterBase*> mon1 = MONSTER->GetSkeleton();
+	for (int i = 0; i < mon1.size(); i++)
+	{
+		mon1[i]->GetTransform()->SetActive(false);
+		mon1[i]->GetCollider()->SetActive(false);
+	}
+	mon1 = MONSTER->GetSkeleton_Knight();
+	for (int i = 0; i < mon1.size(); i++)
+	{
+		mon1[i]->GetTransform()->SetActive(false);
+		mon1[i]->GetCollider()->SetActive(false);
+	}
+	mon1 = MONSTER->GetIceBall();
+	for (int i = 0; i < mon1.size(); i++)
+	{
+		mon1[i]->GetTransform()->SetActive(false);
+		mon1[i]->GetCollider()->SetActive(false);
+	}
+	mon1 = MONSTER->GetVAlkier();
+	for (int i = 0; i < mon1.size(); i++)
+	{
+		mon1[i]->GetTransform()->SetActive(false);
+		mon1[i]->GetCollider()->SetActive(false);
+	}
+
+	bossData->GetTransform()->SetActive(false);
+	bossData->GetCollider()->SetActive(false);
+
+	Audio::Get()->Stop("bossScene_main_bgm");
+	Audio::Get()->Stop("bossScene_end");
+
 	SceneManager::Get()->ChangeScene("Town");
 }

@@ -5,6 +5,14 @@ Boss_LichKing::Boss_LichKing()
 {
 	type = LICH;
 
+	Audio::Get()->Add("bossScene_atk", "Sounds/BossScene/lichking/attack_01.ogg");
+	Audio::Get()->Add("bossScene_hit", "Sounds/BossScene/lichking/hit_01.ogg");
+	Audio::Get()->Add("bossScene_die", "Sounds/BossScene/lichking/die_01.ogg");
+	Audio::Get()->Add("bossScene_iceDown", "Sounds/BossScene/BGM/ice_down.ogg");
+	//Audio::Get()->Add("bossScene_phase12", "Sounds/BossScene/lichking/phase_12.mp3", true);
+	//Audio::Get()->Add("bossScene_phase23", "Sounds/BossScene/lichking/phase_23.mp3", true);
+	//Audio::Get()->Add("bossScene_phase34", "Sounds/BossScene/lichking/phase_34.mp3", true);
+
 	transform = new Transform();
 
 	lichking = new ModelAnimator("LichKing");
@@ -78,7 +86,7 @@ Boss_LichKing::Boss_LichKing()
 
 	lasting = true;
 	moveSpeed = 2;
-	maxHP = 3300.0f;
+	maxHP = 3000.0f;
 	curHP = maxHP;
 	Lich_Stat.damage = 300.0f;
 
@@ -300,10 +308,16 @@ void Boss_LichKing::Hit(float amount)
 
 	if (curHP <= 0)
 	{
-		SetState(DIE);
+		if (die_one_sound == 0)
+		{
+			SetState(DIE);
+			Audio::Get()->Play("bossScene_die");
+			die_one_sound++;
+		}
 	}
 	else
 	{
+		Audio::Get()->Play("bossScene_hit");
 		SetState(IDLE);
 	}
 
@@ -353,11 +367,29 @@ void Boss_LichKing::Attack()
 {
 	if (curState == HIT || curState == DIE) return;
 
-	attackRange->UpdateWorld();
-	if (attackRange->IsCollision(target->GetCollider()))
+	if (curState != ATTACK)
 	{
-		Frost_Collider->SetActive(true);
-		SetState(ATTACK);
+		attackRange->UpdateWorld();
+		if (attackRange->IsCollision(target->GetCollider()))
+		{
+			Frost_Collider->SetActive(true);
+			if (atk_one_sound == 0)
+			{
+				atk_one_sound++;
+			}
+			SetState(ATTACK);
+		}
+	}
+
+	if (atk_one_sound != 0)
+	{
+		atk_sound_Time -= DELTA;
+		if (atk_sound_Time <= 0)
+		{
+			atk_sound_Time = Max_atk_sound_Time;
+			Audio::Get()->Play("bossScene_atk");
+			atk_one_sound = 0;
+		}
 	}
 
 	if (Frost_Collider->Active())
@@ -402,15 +434,19 @@ void Boss_LichKing::End_ATK()
 		target = lom;
 		lasting = true;
 	}
+	atk_one_sound = 0;
 }
 void Boss_LichKing::End_HIT()
 {
 	SetState(IDLE);
+	hit_one_sound = 0;
 }
 void Boss_LichKing::End_DIE()
 {
 	transform->SetActive(false);
 	lichking->SetActive(false);
+	SetState(IDLE);
+	die_one_sound = 0;
 }
 void Boss_LichKing::End_CAST()
 {
@@ -445,6 +481,7 @@ void Boss_LichKing::End_CAST()
 		lasting_time = Max_lasting_time;
 
 		thr_first++;
+		Audio::Get()->Play("bossScene_iceDown");
 		map->SetPhase(1);
 	}
 	if (phase == 4 && for_first == 1)
@@ -461,6 +498,7 @@ void Boss_LichKing::End_CAST()
 		lasting_time = Max_lasting_time;
 
 		fiv_first++;
+		Audio::Get()->Play("bossScene_iceDown");
 		map->SetPhase(3);
 	}
 }
