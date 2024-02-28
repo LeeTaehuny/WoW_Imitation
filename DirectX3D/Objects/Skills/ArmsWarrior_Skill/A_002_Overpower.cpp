@@ -40,6 +40,9 @@ A_002_Overpower::A_002_Overpower() : ActiveSkill(SkillType::NonTarget)
 	additiveDamage = 1.0f;
 
 	usingType = UseType::NON_Data;
+
+	// 스킬 사운드
+	Audio::Get()->Add("A_002", "Sounds/ArmsWarrior/A_002.ogg", false, false, true);
 }
 
 A_002_Overpower::~A_002_Overpower()
@@ -57,6 +60,14 @@ void A_002_Overpower::Update()
 
 	if (isRun)
 	{
+		if (curTime == 0.0f)
+		{
+			if (owner->GetcreatureType() == CreatureType::Player)
+			{
+				Audio::Get()->Play("A_002", owner->Pos(), 1.0f);
+			}
+		}
+
 		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 2;
 		endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back();
 

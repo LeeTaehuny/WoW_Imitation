@@ -26,11 +26,7 @@ StatusUI::StatusUI(class CH_Base_ver2* player) : player(player)
 
 	SetActive(false);
 
-	// 이벤트 등록
-	{
-		//Observer::Get()->AddEvent("MoveStatusFrame", bind(&StatusUI::MoveStatusFrame, this));
-		//Observer::Get()->AddEvent("StopStatusFrame", bind(&StatusUI::StopStatusFrame, this));
-	}
+	Audio::Get()->Add("Equip", "Sounds/Basic/equip.ogg", false, false);
 }
 
 StatusUI::~StatusUI()
@@ -50,6 +46,7 @@ void StatusUI::Update()
 		else
 		{
 			SetActive(true);
+			Audio::Get()->Play("OpenUI", 1.0f);
 		}
 	}
 
@@ -144,6 +141,7 @@ void StatusUI::InteractWithPlayer()
 								player->GetInventory()->GetInventory()[tempIndex] = nullptr;
 							}
 
+							Audio::Get()->Play("Equip", 1.0f);
 							// 슬롯 이미지 설정
 							weaponSlot->GetMaterial()->SetDiffuseMap(weapon->GetIcon()->GetMaterial()->GetDiffuseMap());
 						}
@@ -183,6 +181,7 @@ void StatusUI::InteractWithPlayer()
 								player->GetInventory()->GetInventory()[tempIndex] = nullptr;
 							}
 
+							Audio::Get()->Play("Equip", 1.0f);
 							// 슬롯 이미지 설정
 							weaponSlot->GetMaterial()->SetDiffuseMap(weapon->GetIcon()->GetMaterial()->GetDiffuseMap());
 						}
@@ -222,6 +221,7 @@ void StatusUI::InteractWithPlayer()
 								player->GetInventory()->GetInventory()[tempIndex] = nullptr;
 							}
 
+							Audio::Get()->Play("Equip", 1.0f);
 							// 슬롯 이미지 설정
 							weaponSlot->GetMaterial()->SetDiffuseMap(weapon->GetIcon()->GetMaterial()->GetDiffuseMap());
 						}
@@ -261,6 +261,7 @@ void StatusUI::InteractWithPlayer()
 								player->GetInventory()->GetInventory()[tempIndex] = nullptr;
 							}
 
+							Audio::Get()->Play("Equip", 1.0f);
 							// 슬롯 이미지 설정
 							weaponSlot->GetMaterial()->SetDiffuseMap(weapon->GetIcon()->GetMaterial()->GetDiffuseMap());
 						}
@@ -300,6 +301,7 @@ void StatusUI::InteractWithPlayer()
 								player->GetInventory()->GetInventory()[tempIndex] = nullptr;
 							}
 
+							Audio::Get()->Play("Equip", 1.0f);
 							// 슬롯 이미지 설정
 							weaponSlot->GetMaterial()->SetDiffuseMap(weapon->GetIcon()->GetMaterial()->GetDiffuseMap());
 						}
@@ -373,41 +375,4 @@ void StatusUI::RenderStat()
 
 	tempString = "방어력 : " + to_string((int)player->GetStat().defence);
 	Font::Get()->RenderText(tempString, { statusFrame->GlobalPos().x,  statusFrame->GlobalPos().y });
-}
-
-void StatusUI::MoveStatusFrame()
-{
-	// 인벤토리 프레임이 선택되었다면?
-	if (statusFrame->GetSelect())
-	{
-		// 슬롯이 선택된 것이 아닌지 체크하기
-		if (mousePos.x <= weaponSlot->GlobalPos().x + weaponSlot->GetSize().x && mousePos.x >= weaponSlot->GlobalPos().x - weaponSlot->GetSize().x &&
-			mousePos.y <= weaponSlot->GlobalPos().y + weaponSlot->GetSize().y && mousePos.y >= weaponSlot->GlobalPos().y - weaponSlot->GetSize().y)
-		{
-			return;
-		}
-
-		// 마우스 이동량의 Delta값 만큼 이동시키기
-		if (!bIsMove)
-		{
-			prevPos = mousePos;
-			bIsMove = true;
-		}
-		else
-		{
-			float deltaX = prevPos.x - mousePos.x;
-			float deltaY = prevPos.y - mousePos.y;
-
-			statusFrame->Pos().x += -deltaX;
-			statusFrame->Pos().y += -deltaY;
-
-			prevPos = mousePos;
-		}
-	}
-}
-
-void StatusUI::StopStatusFrame()
-{
-	// 이동중이 아니라고 설정
-	bIsMove = false;
 }

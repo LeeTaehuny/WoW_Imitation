@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 class ArmsWarrior_in : public CH_Base_ver2
 {
 public:
@@ -28,21 +28,21 @@ public:
 	virtual void EquipWeapon(class Weapon* weapon) override;
 	void AddHp(float value);
 
-	// »óÅÂ º¯°æ¿ë ÇÔ¼ö
+	// ìƒíƒœ ë³€ê²½ìš© í•¨ìˆ˜
 	void SetState(State state);
 	State GetState() { return curState; }
 
 private:
-	// ÇÃ·¹ÀÌ¾î¿ë ¾÷µ¥ÀÌÆ®
+	// í”Œë ˆì´ì–´ìš© ì—…ë°ì´íŠ¸
 	virtual void PlayerUpdate() override;
-	// NPC¿ë ¾÷µ¥ÀÌÆ®
+	// NPCìš© ì—…ë°ì´íŠ¸
 	virtual void AIUpdate() override;
-	// Ãæµ¹ ÆÇÁ¤ ÇÔ¼ö
+	// ì¶©ëŒ íŒì • í•¨ìˆ˜
 	virtual void OnHit(float damage, bool motion = false) override;
 
 	virtual void AI_animation_Moving() override;
 
-// ÄÁÆ®·Ñ °ü·Ã ÇÔ¼ö
+// ì»¨íŠ¸ë¡¤ ê´€ë ¨ í•¨ìˆ˜
 private:
 	void SetEvent(int clip, Event event, float timeRatio);
 	void ExecuteEvent();
@@ -53,24 +53,24 @@ private:
 	void Attack();
 	void ai_attack();
 
-// ÀÌº¥Æ® ÇÔ¼ö
+// ì´ë²¤íŠ¸ í•¨ìˆ˜
 private:
 	void EndATK();
 	void EndHit();
 	void EndDie();
 
 private:
-	// ¹öÇÁ¿ë º¯¼ö (¹æ¾î·Â 1.3¹è)
+	// ë²„í”„ìš© ë³€ìˆ˜ (ë°©ì–´ë ¥ 1.3ë°°)
 	bool isDefence = false;
-	// ¹öÇÁ¿ë º¯¼ö (ÇÇÇØ Èí¼ö)
+	// ë²„í”„ìš© ë³€ìˆ˜ (í”¼í•´ í¡ìˆ˜)
 	bool isLifeDrain = false;
 
 	State curState = IDLE1;
 
-	// Àü»çÀÇ ½ÇÁ¦ °ø°İ »ç°Å¸®
+	// ì „ì‚¬ì˜ ì‹¤ì œ ê³µê²© ì‚¬ê±°ë¦¬
 	Collider* attackRange;
 
-	// ¹Ş¾Æ¿Â ¸ó½ºÅÍÀÇ Äİ¶óÀÌ´õ Á¤º¸¸¦ ÀúÀåÇÏ±â À§ÇÑ º¯¼ö
+	// ë°›ì•„ì˜¨ ëª¬ìŠ¤í„°ì˜ ì½œë¼ì´ë” ì •ë³´ë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
 	Collider* saveMonsterCollider;
 
 	int impact = 0;
@@ -78,7 +78,7 @@ private:
 	int imsiSkillStart = 0;
 
 private:
-	// °ø°İ À½¿ø Àç»ı ¿©ºÎ
+	// ê³µê²© ìŒì› ì¬ìƒ ì—¬ë¶€
 	bool isPlayAttackSound = false;
 	bool isRun = false;
 	float attackSoundDelay = 0.0f;

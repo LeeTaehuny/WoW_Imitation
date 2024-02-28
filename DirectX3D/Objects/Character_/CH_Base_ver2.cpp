@@ -17,7 +17,7 @@ CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionT
 		statusUI = new StatusUI(this);
 		quickSlot = new QuickSlot(this);
 
-		// HP/MP Bar ����
+		// HP/MP Bar 생성
 		{
 			switch (professionType)
 			{
@@ -44,7 +44,7 @@ CH_Base_ver2::CH_Base_ver2(CreatureType creatureType, ProfessionType professionT
 			playerUI->SetMpPercent(1.0f);
 		}
 		
-		// ���� HP bar ����
+		// 몬스터 HP bar 생성
 		{
 			monsterUI = new MonsterUI_Bar();
 

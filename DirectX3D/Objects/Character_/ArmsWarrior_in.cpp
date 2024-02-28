@@ -347,13 +347,13 @@ void ArmsWarrior_in::Control()
 
 void ArmsWarrior_in::Moving()
 {
-	// ����, ����, ���� ��, �׾��� ��� �������� �ʱ�
+	// 공격, 사망, 피격 중이라면 리턴
 	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
 
-	// ĳ���� �⺻ �̵� : W(��), S(��), Q(��), E(��)
+	// 이동 : W(앞), S(뒤), Q(좌), E(우)
 	{
 		if (KEY_PRESS('W'))
 		{
@@ -377,11 +377,10 @@ void ArmsWarrior_in::Moving()
 		}
 	}
 
-	// ĳ���� ���콺 ��Ŭ���� ���� �̵� ��ȭ
+	// 우클릭 중 좌우 이동 가능
 	{
 		if (KEY_PRESS(VK_RBUTTON))
 		{
-			// �¿� �̵�
 			if (KEY_PRESS('A'))
 			{
 				velocity.x -= DELTA;
@@ -395,10 +394,9 @@ void ArmsWarrior_in::Moving()
 		}
 		else
 		{
-			// �յڷ� �̵� ���� �ƴ� ��
+			// 엎, 뒤 이동 중에 방향 회전
 			if (KEY_PRESS('W') || KEY_PRESS('S'))
 			{
-				// �¿� ȸ��
 				if (KEY_PRESS('A'))
 				{
 					Rot().y -= turnSpeed * DELTA;
@@ -411,7 +409,7 @@ void ArmsWarrior_in::Moving()
 		}
 	}
 
-	// ���ӵ� ����
+	// 이동량 체크 및 정규화
 	if (velocity.Length() > 1) velocity.Normalize();
 	if (!isMoveZ) velocity.z = Lerp(velocity.z, 0, deceleration * DELTA);
 	if (!isMoveX) velocity.x = Lerp(velocity.x, 0, deceleration * DELTA);
@@ -419,10 +417,10 @@ void ArmsWarrior_in::Moving()
 	Matrix rotY = XMMatrixRotationY(Rot().y);
 	Vector3 direction = XMVector3TransformCoord(velocity, rotY);
 
-	// ��ġ �̵�
+	// 해당 방향으로 이동
 	this->Pos() += direction * -1 * moveSpeed * DELTA;
 
-	// ������ ����� �ִϸ��̼� ���� X
+	// 점프 상태라면 모션 변경 X
 	if (curState == JUMP) return;
 
 	if (velocity.z > 0.1f)
@@ -670,6 +668,25 @@ void ArmsWarrior_in::ai_attack()
 void ArmsWarrior_in::SetState(State state)
 {
 	if (state == curState) return;
+
+	// 플레이어가 걷기로 상태를 변환했다면
+	if (creatureType == CreatureType::Player && (state == WALK_F || state == WALK_B || state == WALK_L || state == WALK_R))
+	{
+		// 걷기 사운드 재생 중이 아니라면
+		if (!Audio::Get()->IsPlaySound("Walk"))
+		{
+			Audio::Get()->Play("Walk", Pos(), 1.0f);
+		}
+	}
+	else
+	{
+		// 걷기 사운드 재생중이라면
+		if (Audio::Get()->IsPlaySound("Walk"))
+		{
+			Audio::Get()->Stop("Walk");
+		}
+	}
+
 	curState = state;
 	instancing->PlayClip(index, state);
 	eventIters[state] = totalEvents[state].begin();

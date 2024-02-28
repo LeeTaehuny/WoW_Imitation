@@ -44,6 +44,9 @@ F_001_Pyroblast::F_001_Pyroblast() : ActiveSkill(SkillType::Target)
 	additiveDamage = 1.0f;
 
 	usingType = UseType::monster_Data;
+
+	// 스킬 사운드
+	Audio::Get()->Add("F_001", "Sounds/FireMage/F_001.ogg", false, false, true);
 }
 
 F_001_Pyroblast::~F_001_Pyroblast()
@@ -70,7 +73,13 @@ void F_001_Pyroblast::Update()
 			if (isRun)
 			{
 				if (!fireBallParticle->IsPlay())
+				{
+					if (owner->GetcreatureType() == CreatureType::Player)
+					{
+						Audio::Get()->Play("F_001", owner->Pos(), 1.0f);
+					}
 					fireBallParticle->Play(myCollider->Pos());
+				}
 				else
 					fireBallParticle->SetPos(myCollider->Pos());
 			}

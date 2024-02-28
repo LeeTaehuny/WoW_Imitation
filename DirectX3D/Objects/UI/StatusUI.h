@@ -15,11 +15,6 @@ private:
 	// 스탯을 렌더링하기 위한 함수
 	void RenderStat();
 
-	// 스탯창 위치 이동용 함수
-	void MoveStatusFrame();
-	// 스탯창 위치 이동 종료용 함수
-	void StopStatusFrame();
-
 // Member Variable
 private:
 	// 무기 정보를 저장하기 위한 변수

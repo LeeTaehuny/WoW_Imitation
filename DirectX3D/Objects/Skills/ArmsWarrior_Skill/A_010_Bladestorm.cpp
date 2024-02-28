@@ -62,6 +62,11 @@ A_010_Bladestorm::A_010_Bladestorm() : ActiveSkill(SkillType::NonTarget)
 	additiveDamage = 1.0f;
 
 	usingType = UseType::NON_Data;
+
+	// 스킬 사운드
+	Audio::Get()->Add("A_010", "Sounds/ArmsWarrior/A_010.ogg", false, false, true);
+
+	isPlay = false;
 }
 
 A_010_Bladestorm::~A_010_Bladestorm()
@@ -77,6 +82,15 @@ void A_010_Bladestorm::Update()
 
 	if (isRun)
 	{
+		if (!isPlay)
+		{
+			if (owner->GetcreatureType() == CreatureType::Player)
+			{
+				Audio::Get()->Play("A_010", owner->Pos(), 1.0f);
+				isPlay = true;
+			}
+		}
+
 		myCollider->Rot().y += DELTA * 8.0f;
 
 		// myCollider와의 충돌 체크
@@ -175,6 +189,7 @@ void A_010_Bladestorm::Update()
 		{
 			curTime = 0.0f;
 			isRun = false;
+			isPlay = false;
 			hit.clear();
 		}
 

@@ -17,6 +17,11 @@ SelectScene::SelectScene()
 
 	// 음원 등록
 	Audio::Get()->Add("SelectBGM", "Sounds/SelectScene/SelectBGM.wav", true, true, false);
+	Audio::Get()->Add("Select_0", "Sounds/SelectScene/select_0.ogg", false, false, false);
+	Audio::Get()->Add("Select_1", "Sounds/SelectScene/select_1.ogg", false, false, false);
+	Audio::Get()->Add("Select_2", "Sounds/SelectScene/select_2.ogg", false, false, false);
+	Audio::Get()->Add("Select_3", "Sounds/SelectScene/select_3.ogg", false, false, false);
+	Audio::Get()->Add("Select_4", "Sounds/SelectScene/select_4.ogg", false, false, false);
 }
 
 SelectScene::~SelectScene()
@@ -37,7 +42,7 @@ void SelectScene::Start()
 	CAM->Rot() = Vector3(0.0f, 0.0f, 0.0f);
 
 	// 음원 재생
-	Audio::Get()->Play("SelectBGM", 1.0f);
+	Audio::Get()->Play("SelectBGM", 0.7f);
 }
 
 void SelectScene::Update()
@@ -194,10 +199,14 @@ void SelectScene::Control()
 					if (previewModels[i]->Active())
 					{
 						previewModels[i]->SetActive(false);
+						string temp = "Select_" + to_string(i);
+						Audio::Get()->Stop(temp);
 					}
 				}
 
 				previewModels[idx]->SetActive(true);
+				string temp = "Select_" + to_string(idx);
+				Audio::Get()->Play(temp, 1.0f);
 				previewModels[idx]->PlayClip(0);
 
 				// 해당 인덱스 저장

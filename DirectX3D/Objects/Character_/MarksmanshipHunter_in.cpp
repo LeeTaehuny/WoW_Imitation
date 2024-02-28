@@ -537,6 +537,25 @@ void MarksmanshipHunter_in::ai_attack()
 void MarksmanshipHunter_in::SetState(State state)
 {
 	if (state == curState) return;
+
+	// 플레이어가 걷기로 상태를 변환했다면
+	if (creatureType == CreatureType::Player && (state == WALK_F || state == WALK_B || state == WALK_L || state == WALK_R))
+	{
+		// 걷기 사운드 재생 중이 아니라면
+		if (!Audio::Get()->IsPlaySound("Walk"))
+		{
+			Audio::Get()->Play("Walk", Pos(), 1.0f);
+		}
+	}
+	else
+	{
+		// 걷기 사운드 재생중이라면
+		if (Audio::Get()->IsPlaySound("Walk"))
+		{
+			Audio::Get()->Stop("Walk");
+		}
+	}
+
 	curState = state;
 	instancing->PlayClip(index, state);
 	eventIters[state] = totalEvents[state].begin();

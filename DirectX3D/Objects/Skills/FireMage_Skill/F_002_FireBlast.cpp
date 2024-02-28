@@ -33,6 +33,9 @@ F_002_FireBlast::F_002_FireBlast() : ActiveSkill(SkillType::Target)
 	additiveDamage = 1.0f;
 
 	usingType = UseType::monster_Data;
+
+	// 스킬 사운드
+	Audio::Get()->Add("F_002", "Sounds/FireMage/F_002.ogg", false, false, true);
 }
 
 F_002_FireBlast::~F_002_FireBlast()
@@ -73,8 +76,12 @@ void F_002_FireBlast::Update()
 				if (monster->GetCollider() == target)
 				{
 					// 충돌한 몬스터들에게 데미지 주기
-					// * 매개변수로 owner의 공격력과 번호 저장하기
 					monster->Hit(skillDamage);
+
+					if (owner->GetcreatureType() == CreatureType::Player)
+					{
+						Audio::Get()->Play("F_002", owner->Pos(), 1.0f);
+					}
 
 					hitParticleSystem->Play(target->GlobalPos());
 					isRun = false;
@@ -87,8 +94,12 @@ void F_002_FireBlast::Update()
 				if (monster->GetCollider() == target)
 				{
 					// 충돌한 몬스터들에게 데미지 주기
-					// * 매개변수로 owner의 공격력과 번호 저장하기
 					monster->Hit(skillDamage);
+
+					if (owner->GetcreatureType() == CreatureType::Player)
+					{
+						Audio::Get()->Play("F_002", owner->Pos(), 1.0f);
+					}
 
 					hitParticleSystem->Play(target->GlobalPos());
 					isRun = false;
@@ -101,8 +112,12 @@ void F_002_FireBlast::Update()
 				if (monster->GetCollider() == target)
 				{
 					// 충돌한 몬스터들에게 데미지 주기
-					// * 매개변수로 owner의 공격력과 번호 저장하기
 					monster->Hit(skillDamage);
+
+					if (owner->GetcreatureType() == CreatureType::Player)
+					{
+						Audio::Get()->Play("F_002", owner->Pos(), 1.0f);
+					}
 
 					hitParticleSystem->Play(target->GlobalPos());
 					isRun = false;
@@ -115,8 +130,12 @@ void F_002_FireBlast::Update()
 				if (monster->GetCollider() == target)
 				{
 					// 충돌한 몬스터들에게 데미지 주기
-					// * 매개변수로 owner의 공격력과 번호 저장하기
 					monster->Hit(skillDamage);
+
+					if (owner->GetcreatureType() == CreatureType::Player)
+					{
+						Audio::Get()->Play("F_002", owner->Pos(), 1.0f);
+					}
 
 					hitParticleSystem->Play(target->GlobalPos());
 					isRun = false;
@@ -129,8 +148,12 @@ void F_002_FireBlast::Update()
 				if (monster->GetCollider() == target)
 				{
 					// 충돌한 몬스터들에게 데미지 주기
-					// * 매개변수로 owner의 공격력과 번호 저장하기
 					monster->Hit(skillDamage);
+
+					if (owner->GetcreatureType() == CreatureType::Player)
+					{
+						Audio::Get()->Play("F_002", owner->Pos(), 1.0f);
+					}
 
 					hitParticleSystem->Play(target->GlobalPos());
 					isRun = false;
@@ -143,8 +166,12 @@ void F_002_FireBlast::Update()
 				if (cols6->GetCollider() == target)
 				{
 					// 충돌한 몬스터들에게 데미지 주기
-					// * 매개변수로 owner의 공격력과 번호 저장하기
 					cols6->Hit(skillDamage);
+
+					if (owner->GetcreatureType() == CreatureType::Player)
+					{
+						Audio::Get()->Play("F_002", owner->Pos(), 1.0f);
+					}
 
 					hitParticleSystem->Play(target->GlobalPos());
 					isRun = false;

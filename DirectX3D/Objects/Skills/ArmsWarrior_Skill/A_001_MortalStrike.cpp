@@ -37,6 +37,9 @@ A_001_MortalStrike::A_001_MortalStrike() : ActiveSkill(SkillType::NonTarget)
 	additiveDamage = 1.0f;
 
 	usingType = UseType::NON_Data;
+
+	// 스킬 사운드
+	Audio::Get()->Add("A_001", "Sounds/ArmsWarrior/A_001.ogg", false, false, true);
 }
 
 A_001_MortalStrike::~A_001_MortalStrike()
@@ -54,6 +57,14 @@ void A_001_MortalStrike::Update()
 
 	if (isRun)
 	{
+		if (curTime == 0.0f)
+		{
+			if (owner->GetcreatureType() == CreatureType::Player)
+			{
+				Audio::Get()->Play("A_001", owner->Pos(), 1.0f);
+			}
+		}
+
 		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Forward() * 2;
 		endEdge->Pos() = myCollider->GlobalPos() + myCollider->Back();
 

@@ -48,6 +48,9 @@ F_005_PhoenixFlame::F_005_PhoenixFlame() : ActiveSkill(SkillType::Target)
 	additiveDamage = 1.0f;
 
 	usingType = UseType::monster_Data;
+
+	// 스킬 사운드
+	Audio::Get()->Add("F_005", "Sounds/FireMage/F_005.ogg", false, false, true);
 }
 
 F_005_PhoenixFlame::~F_005_PhoenixFlame()
@@ -68,6 +71,14 @@ void F_005_PhoenixFlame::Update()
 	if (delayTime < MAX_delayAnim && isRun)
 	{
 		delayTime += DELTA;
+
+		if (delayTime >= MAX_delayAnim)
+		{
+			if (owner->GetcreatureType() == CreatureType::Player)
+			{
+				Audio::Get()->Play("F_005", owner->Pos(), 1.0f);
+			}
+		}
 	}
 	else
 	{

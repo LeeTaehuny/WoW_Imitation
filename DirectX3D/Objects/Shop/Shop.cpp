@@ -80,11 +80,12 @@ Shop::~Shop()
 
 void Shop::Update()
 {
-	if ((CH->GetPlayerData()->GlobalPos() - GlobalPos()).Length() < 10.0f)
+	if ((CH->GetPlayerData()->GlobalPos() - GlobalPos()).Length() < 10.0f && !Active())
 	{
 		SetActive(true);
+		Audio::Get()->Play("OpenUI", 1.0f);
 	}
-	else
+	else if ((CH->GetPlayerData()->GlobalPos() - GlobalPos()).Length() >= 10.0f)
 	{
 		SetActive(false);
 	}

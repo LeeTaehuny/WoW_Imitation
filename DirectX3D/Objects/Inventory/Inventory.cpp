@@ -41,6 +41,7 @@ void Inventory::Update()
 		else
 		{
 			SetActive(true);
+			Audio::Get()->Play("OpenUI", 1.0f);
 		}
 	}
 

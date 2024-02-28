@@ -35,4 +35,7 @@ private:
 	vector<MonsterBase*> hit;
 
 	float additiveDamage;
+
+	// 사운드 재생 판별 변수
+	bool isPlay;
 };

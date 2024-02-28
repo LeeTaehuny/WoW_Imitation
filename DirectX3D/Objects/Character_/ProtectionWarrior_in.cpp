@@ -48,9 +48,17 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 
 		weapon = new Weapon("hammer_1", WeaponType::Hammer);
 		weapon->SetParent(mainHand);
+
 		break;
 	}
 	range->SetParent(this);
+
+	sub = new Transform();
+	sub->SetParent(this);
+
+	shield = new Weapon("shield", WeaponType::Shield);
+	shield->Rot().y = XM_PI / 2;
+	shield->SetParent(sub);
 
 	FOR(totalEvents.size())
 	{
@@ -95,6 +103,15 @@ void ProtectionWarrior_in::Update()
 		break;
 	}
 
+	// 실드 업데이트
+	if (shield && sub)
+	{
+		sub->SetWorld(instancing->GetTransformByNode(index, 18));
+		sub->GlobalPos() = GlobalPos();
+
+		shield->Update();
+	}
+
 	FOR(skillList.size())
 		skillList[i]->Update();
 
@@ -113,6 +130,11 @@ void ProtectionWarrior_in::Render()
 
 	FOR(skillList.size())
 		skillList[i]->Render();
+
+	if (shield)
+	{
+		shield->Render();
+	}
 
 	myCollider->Render();
 	range->Render();
@@ -584,6 +606,25 @@ void ProtectionWarrior_in::ai_attack()
 void ProtectionWarrior_in::SetState(State state)
 {
 	if (state == curState) return;
+
+	// 플레이어가 걷기로 상태를 변환했다면
+	if (creatureType == CreatureType::Player && (state == WALK_F || state == WALK_B || state == WALK_L || state == WALK_R))
+	{
+		// 걷기 사운드 재생 중이 아니라면
+		if (!Audio::Get()->IsPlaySound("Walk"))
+		{
+			Audio::Get()->Play("Walk", Pos(), 1.0f);
+		}
+	}
+	else
+	{
+		// 걷기 사운드 재생중이라면
+		if (Audio::Get()->IsPlaySound("Walk"))
+		{
+			Audio::Get()->Stop("Walk");
+		}
+	}
+
 	curState = state;
 	instancing->PlayClip(index, state);
 	eventIters[state] = totalEvents[state].begin();
