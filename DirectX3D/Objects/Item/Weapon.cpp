@@ -92,7 +92,6 @@ void Weapon::Update()
 			if (collider->IsCollision(monster->GetCollider()))
 			{
 				// 충돌한 몬스터들에게 데미지 주기
-				// TODO : 플레이어 인덱스 정보 추가하기
 				monster->Hit(damage + playerDamage);
 				hit.push_back(monster);
 
@@ -118,7 +117,6 @@ void Weapon::Update()
 			if (collider->IsCollision(monster->GetCollider()))
 			{
 				// 충돌한 몬스터들에게 데미지 주기
-				// TODO : 플레이어 인덱스 정보 추가하기
 				monster->Hit(damage + playerDamage);
 				hit.push_back(monster);
 
@@ -144,7 +142,6 @@ void Weapon::Update()
 			if (collider->IsCollision(monster->GetCollider()))
 			{
 				// 충돌한 몬스터들에게 데미지 주기
-				// TODO : 플레이어 인덱스 정보 추가하기
 				monster->Hit(damage + playerDamage);
 				hit.push_back(monster);
 
@@ -172,7 +169,6 @@ void Weapon::Update()
 				if (collider->IsCollision(cols6->GetCollider()))
 				{
 					// 충돌한 몬스터들에게 데미지 주기
-					// TODO : 플레이어 인덱스 정보 추가하기
 					cols6->Hit(damage + playerDamage);
 					hit.push_back(cols6);
 
@@ -225,24 +221,24 @@ void Weapon::InitWeapon(string name)
 
 		collider->Pos() = { 1.0f, 0.0f, 0.0f };
 		collider->Scale() *= 1.7f;
-		damage = 100;
+		damage = 100 + (num * 10);
 		break;
 	case WeaponType::Bow:
 		icon = new Quad(L"Textures/UI/Items/bow_" + to_wstring(num) + L".png");
 
 		collider->Pos() = { 0.0f, 0.0f, 0.0f };
-		damage = 100;
+		damage = 100 + (num * 10);
 		break;
 	case WeaponType::Hammer:
 		icon = new Quad(L"Textures/UI/Items/hammer_" + to_wstring(num) + L".png");
 
 		collider->Pos() = { 0.5f, 0.0f, 0.0f };
-		damage = 100;
+		damage = 100 + (num * 10);
 		break;
 	case WeaponType::Staff:
 		icon = new Quad(L"Textures/UI/Items/staff_" + to_wstring(num) + L".png");
 		collider->Pos() = { 0.8f, 0.0f, 0.0f };
-		damage = 100;
+		damage = 100 + (num * 10);
 		break;
 	case WeaponType::Shield:
 		collider->Pos() = { 0.0f, 0.0f, 0.0f };

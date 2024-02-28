@@ -64,5 +64,11 @@ private:
 	bool isDouble = false;
 
 	State curState = IDLE1;
+
+private:
+	// 공격 음원 재생 여부
+	bool isPlayAttackSound = false;
+	bool isRun = false;
+	float attackSoundDelay = 0.0f;
 };
 

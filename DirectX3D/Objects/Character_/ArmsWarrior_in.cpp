@@ -24,7 +24,7 @@ ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAni
 	SetEvent(HIT, bind(&ArmsWarrior_in::EndHit, this), 0.9f);
 	SetEvent(DIE, bind(&ArmsWarrior_in::EndDie, this), 1);
 
-	// �ڽ��� Ÿ�Կ� ���� 
+	// NPC / PC 구분
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -72,6 +72,11 @@ ArmsWarrior_in::ArmsWarrior_in(CreatureType type, Transform* transform, ModelAni
 	stat.defence = 100;
 
 	mainHandBoneIndex = 37;
+
+	// 음원 등록
+	Audio::Get()->Add("WarriorAttack", "Sounds/ArmsWarrior/attack.wav", false, false, true);
+	Audio::Get()->Add("WarriorHit", "Sounds/ArmsWarrior/hit.wav", false, false, true);
+	Audio::Get()->Add("WarriorDeath", "Sounds/ArmsWarrior/death.wav", false, false, true);
 }
 
 ArmsWarrior_in::~ArmsWarrior_in()
@@ -98,6 +103,28 @@ void ArmsWarrior_in::Update()
 	case CreatureType::NonPlayer:
 		AIUpdate();
 		break;
+	}
+
+	// 공격 음원 재생
+	if (isPlayAttackSound && !isRun)
+	{
+		attackSoundDelay += DELTA;
+		if (attackSoundDelay >= 0.3f)
+		{
+			attackSoundDelay = 0.0f;
+			// 음원 재생
+			Audio::Get()->Play("WarriorAttack", Pos(), 1.0f);
+
+			// 재생했다고 표시
+			isRun = true;
+		}
+	}
+	// 만약 재생했으면서, 사운드 재생이 끝난 상황이라면? 
+	if (isRun && !Audio::Get()->IsPlaySound("WarriorAttack"))
+	{
+		// 변수 초기화
+		isRun = false;
+		isPlayAttackSound = false;
 	}
 
 	FOR(skillList.size())
@@ -246,6 +273,8 @@ void ArmsWarrior_in::OnHit(float damage, bool motion)
 	{
 		if (!motion)
 			SetState(HIT);
+
+		Audio::Get()->Play("WarriorHit", Pos(), 1.0f);
 	}
 	else if (stat.hp <= 0)
 	{
@@ -253,6 +282,7 @@ void ArmsWarrior_in::OnHit(float damage, bool motion)
 		stat.hp = 0.0f;
 		SetState(DIE);		
 		myCollider->SetActive(false);
+		Audio::Get()->Play("WarriorDeath", Pos(), 1.0f);
 	}
 
 	if (creatureType == CreatureType::Player)
@@ -439,7 +469,7 @@ void ArmsWarrior_in::Jump()
 
 void ArmsWarrior_in::Attack()
 {
-	// ����, ���, �ǰ�, ���� ������ ��� ����
+	// 점프, 사망, 피격, 공격 모션 중에는 다시 공격 X
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
 	// 인벤토리가 열려있으면 공격 X
@@ -447,14 +477,17 @@ void ArmsWarrior_in::Attack()
 
 	if (KEY_DOWN(VK_LBUTTON))
 	{
-		SetState(ATTACK1);
-
-		// ���Ⱑ �����ϴ� ���
+		// 무기가 존재한다면
 		if (weapon)
 		{
-			// ������ �ݶ��̴��� ���ְ�, �÷��̾��� �������� ����
+			SetState(ATTACK1);
+
+			// 무기의 충돌체 정보를 키고 데미지를 전달하기
 			weapon->GetCollider()->SetActive(true);
 			weapon->SetDamage(stat.damage);
+
+			// 음원 재생 설정
+			isPlayAttackSound = true;
 		}
 	}
 }
@@ -616,6 +649,9 @@ void ArmsWarrior_in::ai_attack()
 				// 무기의 콜라이더를 켜주고, 플레이어의 데미지를 전달
 				weapon->GetCollider()->SetActive(true);
 				weapon->SetDamage(stat.damage);
+
+				// 음원 재생 설정
+				isPlayAttackSound = true;
 			}
 			impact = 0;
 			atkGannnnn = true;
@@ -658,6 +694,7 @@ void ArmsWarrior_in::EndHit()
 
 void ArmsWarrior_in::EndDie()
 {
+	SetState(IDLE1);
 	SetActive(false);
 }
 
