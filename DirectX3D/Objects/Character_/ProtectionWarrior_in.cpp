@@ -157,8 +157,6 @@ void ProtectionWarrior_in::GUIRender()
 		Transform::GUIRender();
 
 		string Mtag = "P_" + to_string(index);
-		//ImGui::SliderFloat((tag + "_HP").c_str(), &stat.hp, 0, stat.maxHp);
-		//ImGui::SliderFloat((tag + "_MP").c_str(), (float*)&stat.mp, 0, stat.maxHp);
 		ImGui::Text((Mtag + "_HP : " + to_string((int)stat.hp)).c_str());
 		ImGui::Text((Mtag + "_MP : " + to_string(stat.mp)).c_str());
 
@@ -179,7 +177,6 @@ void ProtectionWarrior_in::EquipWeapon(Weapon* weapon)
 void ProtectionWarrior_in::PlayerUpdate()
 {
 	Control();
-	//Casting();
 
 	if (one_atk_sound)
 	{
@@ -345,7 +342,6 @@ void ProtectionWarrior_in::Control()
 			SetState(JUMP);
 			jumpVelocity = jumpForce;
 			isJump = true;
-			//curheight = 0.0f;
 		}
 	}
 

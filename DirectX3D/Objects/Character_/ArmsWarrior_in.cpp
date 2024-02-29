@@ -90,10 +90,10 @@ ArmsWarrior_in::~ArmsWarrior_in()
 
 void ArmsWarrior_in::Update()
 {
-	// ��Ƽ�� ���°� �ƴ϶�� ������Ʈ���� ����
+	// 액티브 상태가 아니라면 업데이트하지 않음
 	if (!Active()) return;
 
-	// �÷��̾� Ÿ�Կ� ���� ������Ʈ ����
+	// 플레이어 타입에 따라 업데이트 수행
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -137,7 +137,7 @@ void ArmsWarrior_in::Update()
 
 void ArmsWarrior_in::Render()
 {
-	// ��Ƽ�� ���°� �ƴ϶�� ������Ʈ���� ����
+	// 액티브 상태가 아니라면 업데이트하지 않음
 	if (!Active()) return;
 
 	FOR(skillList.size())
@@ -158,8 +158,6 @@ void ArmsWarrior_in::GUIRender()
 		Transform::GUIRender();
 
 		string Mtag = "M_" + to_string(index);
-		//ImGui::SliderFloat((tag + "_HP").c_str(), &stat.hp, 0, stat.maxHp);
-		//ImGui::SliderFloat((tag + "_MP").c_str(), (float*)&stat.mp, 0, stat.maxHp);
 		ImGui::Text((Mtag + "_HP : " + to_string((int)stat.hp)).c_str());
 		ImGui::Text((Mtag + "_MP : " + to_string(stat.mp)).c_str());
 
@@ -180,13 +178,13 @@ void ArmsWarrior_in::AddHp(float value)
 {
 	if (value > 0)
 	{
-		// ü�� ȸ��
+		// ü이 아닐때 캐릭터의 체력을 추가
 		stat.hp += value;
 
-		// ���� �ִ� ü�·����� �������ٸ�?
+		// 현재 체력이 최대 체력을 넘어갈 경우
 		if (stat.hp > stat.maxHp)
 		{
-			// �ִ� ü�¾����� ����
+			// 현재 체력에 최대 체력을 할당
 			stat.hp = stat.maxHp;
 		}
 	}
@@ -196,9 +194,8 @@ void ArmsWarrior_in::AddHp(float value)
 void ArmsWarrior_in::PlayerUpdate()
 {
 	Control();
-	//Casting();
 
-	// �浹ü ������Ʈ
+	// 충돌체 업데이트
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
 }
@@ -306,7 +303,7 @@ void ArmsWarrior_in::OnHit(float damage, bool motion)
 
 void ArmsWarrior_in::AI_animation_Moving()
 {
-	// ���� �÷��̾��� ������ �ִٸ�
+	// 내가 플레이어의 주위에 있다면
 	if (myPlayer->GetRange()->IsCollision(myCollider))
 	{
 		randomHangdong -= DELTA;
@@ -321,7 +318,7 @@ void ArmsWarrior_in::AI_animation_Moving()
 
 		SetState(WALK_F);
 	}
-	// �÷��̾��� �ֺ��� �ƴ϶��
+	// 플레이어의 주변이 아니라면
 	else
 	{
 		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
@@ -450,7 +447,7 @@ void ArmsWarrior_in::Moving()
 
 void ArmsWarrior_in::Jump()
 {
-	// �������� �ƴ϶�� ����
+	// 점프중이 아니라면 리턴
 	if (!isJump)
 	{
 		jumpVelocity -= 1.8f * gravityMult * DELTA;
@@ -467,10 +464,10 @@ void ArmsWarrior_in::Jump()
 	jumpVelocity -= 1.8f * gravityMult * DELTA;
 	Pos().y += jumpVelocity;
 
-	// ������ ���� ���̺��� ��ġ�� ���ٸ�?
+	// 현재의 지정 높이보다 위치가 낮다면?
 	if (Pos().y < curheight)
 	{
-		// ��ġ �ʱ�ȭ �� ���� ��ȯ
+		// 위치 초기화 및 상태 전환
 		Pos().y = curheight;
 		jumpVelocity = 0;
 		SetState(IDLE1);
@@ -711,7 +708,7 @@ void ArmsWarrior_in::EndATK()
 
 	if (weapon)
 	{
-		// ������ �������Ƿ� ������ �浹ü ������ ���ֱ�
+		// 공격이 끝났으므로 무기의 충돌체 정보를 꺼주기
 		weapon->GetCollider()->SetActive(false);
 		weapon->ClearHit();
 	}

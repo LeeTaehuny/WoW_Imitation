@@ -5,11 +5,6 @@ class CH_Manager : public Singleton<CH_Manager>
 {
 	friend class Singleton;
 
-	enum Type
-	{
-
-	};
-
 public:
 	CH_Manager();
 	~CH_Manager();
@@ -47,11 +42,9 @@ public:
 	// 5 : 신성 사제
 	void NonPlayerSpawn(int value);
 
-	// 캐릭터의 정보를 담기 위한 겟터함수?
-	CH_Base_ver2* SelectHealCharacter(IN CH_Base_ver2* collider);
-
 	// 플레이어의 데이터를 받아오기 위한 겟터
 	CH_Base_ver2* GetPlayerData() { return character[0]; }
+	// 캐릭터 전체의 데이터를 받아오기 위한 겟터
 	vector<CH_Base_ver2*> GetCharcterData() { return character; }
 
 	// 파티원 정보 UI 반환용 함수

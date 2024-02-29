@@ -28,6 +28,7 @@ public:
 	void SetState(State state);
 	State GetState() { return curState; }
 
+	// 무기 할당을 위한 함수
 	virtual void EquipWeapon(class Weapon* weapon) override;
 
 private:
@@ -38,26 +39,37 @@ private:
 	// 충돌 판정 함수
 	virtual void OnHit(float damage, bool motion = false) override;
 
+	// NPC가 움직이기 위한 함수
 	virtual void AI_animation_Moving() override;
 
-// 컨트롤 관련 함수
-private:
+
+private: // 컨트롤 관련 함수
+
+	// 애니메이션 이벤트를 할당하기 위한 함수
 	void SetEvent(int clip, Event event, float timeRatio);
+	// 애니메이션 인스턴싱 함수
 	void ExecuteEvent();
 
+	// 플레이어 컨트롤을 종합하는 함수
 	void Control();
+	// 플레이어의 움직임을 담당하는 함수
 	void Moving();
+	// 플레이어의 점프를 담당하는 함수
 	void Jump();
+	// 플레이어의 공격을 담당하는 함수
 	void Attack();
-	void ai_attack();
-	//void Casting();
 
-// 이벤트 함수
-private:
+	// NPC의 공격을 담당하는 함수
+	void ai_attack();
+
+private: // 이벤트 함수
+
+	// 공격 애니메이션이 종료되었을때 실행되는 함수
 	void EndATK();
+	// 히트 애니메이션이 종료되었을때 실행되는 함수
 	void EndHit();
+	// 죽음 애니메이션이 종료되었을때 실행되는 함수
 	void EndDie();
-	//void EndCasting();
 
 private:
 	// 버프용 변수 (데미지 2배)

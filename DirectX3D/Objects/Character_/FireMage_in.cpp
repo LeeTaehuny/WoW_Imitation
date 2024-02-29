@@ -35,7 +35,7 @@ FireMage_in::FireMage_in(CreatureType type, Transform* transform, ModelAnimatorI
 
 	skillList.push_back(new F_000_Basic_Atttack());
 	skillList[skillList.size() - 1]->SetOwner(this);
-	// �ڽ��� Ÿ�Կ� ���� 
+	// 자신의 타입에 따라
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -102,10 +102,10 @@ FireMage_in::~FireMage_in()
 
 void FireMage_in::Update()
 {
-	// ��Ƽ�� ���°� �ƴ϶�� ������Ʈ���� ����
+	// 액티브 상태가 아니라면 업데이트하지 않음
 	if (!Active()) return;
 
-	// �÷��̾� Ÿ�Կ� ���� ������Ʈ ����
+	// 플레이어 타입에 따라 업데이트 수행
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -149,7 +149,7 @@ void FireMage_in::Update()
 
 void FireMage_in::Render()
 {
-	// ��Ƽ�� ���°� �ƴ϶�� ������Ʈ���� ����
+	// 액티브 상태가 아니라면 업데이트하지 않음
 	if (!Active()) return;
 
 	myCollider->Render();
@@ -168,8 +168,6 @@ void FireMage_in::GUIRender()
 		Transform::GUIRender();
 
 		string Mtag = "F_" + to_string(index);
-		//ImGui::SliderFloat((tag + "_HP").c_str(), &stat.hp, 0, stat.maxHp);
-		//ImGui::SliderFloat((tag + "_MP").c_str(), (float*)&stat.mp, 0, stat.maxHp);
 		ImGui::Text((Mtag + "_HP : " + to_string((int)stat.hp)).c_str());
 		ImGui::Text((Mtag + "_MP : " + to_string(stat.mp)).c_str());
 
@@ -192,9 +190,8 @@ void FireMage_in::EquipWeapon(Weapon* weapon)
 void FireMage_in::PlayerUpdate()
 {
 	Control();
-	//Casting();
 
-	// �浹ü ������Ʈ
+	// 충돌체 업데이트
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
 }
@@ -204,12 +201,12 @@ void FireMage_in::AIUpdate()
 	if (!myPlayer) return;
 	if (curState == HIT || curState == DIE) return;
 
-	// ���� ������ Ÿ���� ���ٸ�
+	// 지금 공격할 타겟이 없다면
 	if (!atkTarget)
 	{
 		AI_animation_Moving();
 	}
-	// ������ Ÿ���� �ִٸ�
+	// 공격할 타겟이 있다면
 	else
 	{
 		if (curState == ATTACK1 || curState == ATTACK2 || curState == ATTACK3) return;
@@ -265,7 +262,7 @@ void FireMage_in::OnHit(float damage, bool motion)
 
 void FireMage_in::AI_animation_Moving()
 {
-	// ���� �÷��̾��� ������ �ִٸ�
+	// 내가 플레이어의 주위에 있다면
 	if (myPlayer->GetRange()->IsCollision(myCollider))
 	{
 		randomHangdong -= DELTA;
@@ -280,7 +277,7 @@ void FireMage_in::AI_animation_Moving()
 
 		SetState(WALK_F);
 	}
-	// �÷��̾��� �ֺ��� �ƴ϶��
+	// 플레이어의 주변이 아니라면
 	else
 	{
 		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
@@ -319,13 +316,13 @@ void FireMage_in::Control()
 
 void FireMage_in::Moving()
 {
-	// ����, ����, ���� ��, �׾��� ��� �������� �ʱ�
+	// 점프, 공격, 맞을 때, 죽었을 경우 움직이지 않기
 	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
 
-	// ĳ���� �⺻ �̵� : W(��), S(��), Q(��), E(��)
+	// 캐릭터 기본 이동 : W(앞), S(뒤), Q(좌), E(우)
 	{
 		if (KEY_PRESS('W'))
 		{
@@ -349,11 +346,11 @@ void FireMage_in::Moving()
 		}
 	}
 
-	// ĳ���� ���콺 ��Ŭ���� ���� �̵� ��ȭ
+	// 캐릭터 마우스 우클릭에 따른 이동 변화
 	{
 		if (KEY_PRESS(VK_RBUTTON))
 		{
-			// �¿� �̵�
+			// 좌우 이동
 			if (KEY_PRESS('A'))
 			{
 				velocity.x -= DELTA;
@@ -367,10 +364,10 @@ void FireMage_in::Moving()
 		}
 		else
 		{
-			// �յڷ� �̵� ���� �ƴ� ��
+			// 앞뒤로 이동 중이 아닐 때
 			if (KEY_PRESS('W') || KEY_PRESS('S'))
 			{
-				// �¿� ȸ��
+				// 좌우 회전
 				if (KEY_PRESS('A'))
 				{
 					Rot().y -= turnSpeed * DELTA;
@@ -383,7 +380,7 @@ void FireMage_in::Moving()
 		}
 	}
 
-	// ���ӵ� ����
+	// 가속도 설정
 	if (velocity.Length() > 1) velocity.Normalize();
 	if (!isMoveZ) velocity.z = Lerp(velocity.z, 0, deceleration * DELTA);
 	if (!isMoveX) velocity.x = Lerp(velocity.x, 0, deceleration * DELTA);
@@ -391,10 +388,10 @@ void FireMage_in::Moving()
 	Matrix rotY = XMMatrixRotationY(Rot().y);
 	Vector3 direction = XMVector3TransformCoord(velocity, rotY);
 
-	// ��ġ �̵�
+	// 위치 이동
 	this->Pos() += direction * -1 * moveSpeed * DELTA;
 
-	// ������ ����� �ִϸ��̼� ���� X
+	// 점프인 경우라면 애니메이션 설정 X
 	if (curState == JUMP) return;
 
 	if (velocity.z > 0.1f)
@@ -411,7 +408,7 @@ void FireMage_in::Moving()
 
 void FireMage_in::Jump()
 {
-	// �������� �ƴ϶�� ����
+	// 점프중이 아니라면 리턴
 	if (!isJump)
 	{
 		jumpVelocity -= 1.8f * gravityMult * DELTA;
@@ -428,10 +425,10 @@ void FireMage_in::Jump()
 	jumpVelocity -= 1.8f * gravityMult * DELTA;
 	Pos().y += jumpVelocity;
 
-	// ������ ���� ���̺��� ��ġ�� ���ٸ�?
+	// 현재의 지정 높이보다 위치가 낮다면?
 	if (Pos().y < curheight)
 	{
-		// ��ġ �ʱ�ȭ �� ���� ��ȯ
+		// 위치 초기화 및 상태 전환
 		Pos().y = curheight;
 		jumpVelocity = 0;
 		SetState(IDLE1);
@@ -474,7 +471,7 @@ void FireMage_in::ai_attack()
 		return;
 	}
 
-	// ������ ����� �ٶ󺸰� �ϴ� �ڵ�
+	// 공격할 대상을 바라보게 하는 코드
 	Vector3 poldirect = monsterSelectData->GetTransform()->GlobalPos() - this->GlobalPos();
 	this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
 

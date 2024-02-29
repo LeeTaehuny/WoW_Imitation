@@ -8,22 +8,22 @@ enum class CreatureType
 
 enum class ProfessionType
 {
-	ArmsWarrior,		// ����[����]
-	ProtectionWarrior,  // �����[��ȣ]
-	MarksmanshipHunter, // ��ɲ�[���]
-	FireMage,			// ������[ȭ��]
-	HolyPriest,			// ����[�ż�]
+	ArmsWarrior,		// 전사[무기]
+	ProtectionWarrior,  // 성기사[보호]
+	MarksmanshipHunter, // 사냥꾼[사격]
+	FireMage,			// 마법사[화염]
+	HolyPriest,			// 사제[신성]
 };
 
-// ������ �����ϱ� ���� ����ü
+// 캐릭터의 스탯 정보
 struct Status
 {
-	float maxHp;	// �ִ� ü��
-	float hp;		// ���� ü��
-	int maxMp;
-	int mp;			// ����
-	int defence;	// ����
-	float damage;	// ���ݷ�
+	float maxHp;	// 최대 체력
+	float hp;		// 체력
+	int maxMp;		// 최대 마나
+	int mp;			// 마나
+	int defence;	// 방어력
+	float damage;	// 데미지
 };
 
 class CH_Base_ver2 : public Transform
@@ -37,50 +37,66 @@ public:
 	void UIRender();
 	virtual void GUIRender() {};
 
-	// �÷��̾�� ������Ʈ
+	// 캐릭터가 플레이어일 경우 업데이트하기 위한 함수
 	virtual void PlayerUpdate() = 0;
-	// NPC�� ������Ʈ
+	// 캐릭터가 NPC일 경우 업에이트하기 위한 함수
 	virtual void AIUpdate() = 0;
-	// �ٸ� �ݶ��̴��� �浹���� ��
+	// 데미지를 받기 위한 함수
 	virtual void OnHit(float damage, bool motion = false) = 0;
 
+	// 플레이어가 스킬을 학습하기 위한 함수
 	bool LearnSkill(class SkillBase* skill);
 
 	// 체력 & 마나 회복 함수
 	void AddHp(int amount);
 	void AddMp(int amount);
 
+	// NPC의 이동 함수
 	virtual void AI_animation_Moving() = 0;
 
+	// 무기 장착 함수
 	virtual void EquipWeapon(class Weapon* weapon) = 0;
 
+	// 무기 초기화
 	void ClearWeapon();
 
 // Getter & Setter
 public:
+	// 인벤토리 정보를 얻기 위한 겟터 함수
 	class Inventory* GetInventory() { return inventory; }
+	// 캐릭터의 콜라이더를 얻기 위한 겟터 함수
 	Collider* GetCollider() { return myCollider; }
+	// 플레이어일 경우 NPC들의 활동범위
+	// NPC일 경우 적대 몬스터를 감지해냄
 	Collider* GetRange() { return range; }
 
+	// NPC의 경우 플레이어의 정보를 설정함
 	void SetPlayer(CH_Base_ver2* myPlayer) { this->myPlayer = myPlayer; };
 
+	// 인스턴싱 겟터
 	ModelAnimatorInstancing* GetInstancing() { return instancing; }
+	// 인스턴싱의 인덱스 정보 겟터
 	UINT GetIndex() { return index; }
 
+	// 높이 설정
 	void SetHeight(float value) { curheight = value; }
+	// 현재 높이 겟터 함수
 	float& GettHeight() { return curheight; }
 
-	// ����
+	// 스탯을 설정하기 위한 함수
 	void SetStat(Status stat) { this->stat = stat; }
+	// 스탯정보를 받아오기 위한 겟터 함수
 	Status& GetStat() { return stat; }
 
-	// ��ų
+	// 스킬들의 벡터 정보를 얻기 위한 겟터 함수
 	vector<class SkillBase*>& GetSkillList() { return skillList; }
 
-	// 무기
+	// 무기의 정보를 얻기 위한 겟터 함수
 	class Weapon* GetWeapon() { return weapon; }
 
+	// 타겟 몬스터를 설정하기 위한 셋터 함수
 	void SetSelectTarget(class MonsterBase* monster) { monsterSelectData = monster; }
+	// NPC의 경우 몬스터들을 공격함
 	void SetAttackOrder() { this->atkTarget = !this->atkTarget; }
 
 	// Member Variable
@@ -89,6 +105,7 @@ public:
 
 	// target
 	class MonsterBase* GetTargetMonster() { return targetMonster; }
+	// 캐릭터의 정보를 얻기 위한 겟터 함수 (회복스킬을 위한 함수)
 	CH_Base_ver2* GetTargetCharacter() { return targetCharacter; }
 
 	// 퀵슬롯
@@ -97,6 +114,7 @@ public:
 	// 플레이어 UI
 	class PlayerUI_Bar* GetPlayerUI() { return playerUI; }
 
+	// 플레이어인지 NPC인지 정보를 얻기 위한 겟터
 	CreatureType GetcreatureType() { return creatureType; }
 
 // Member Variable
@@ -104,7 +122,7 @@ protected:
 	CreatureType creatureType;
 	ProfessionType professionType;
 
-	// �÷��̾� ������ �浹 �ݶ��̴�
+	// 내 콜라이더 변수
 	Collider* myCollider;
 
 	class Inventory* inventory;
@@ -118,12 +136,11 @@ protected:
 	vector<class SkillBase*> skillList;
 	map<string, int> prevSkills;
 
-	// �ν��Ͻ̿� �ʿ��� ������
 protected:
-	// �ν��Ͻ� ����
+	// 인스턴싱 정보들을 모아놓은 곳
 	ModelAnimatorInstancing* instancing;
 	ModelAnimatorInstancing::Motion* motion;
-	UINT index; // ���� ������� �ִϸ��̼�
+	UINT index;
 	UINT mainHandBoneIndex;
 
 	vector<map<float, Event>> totalEvents;
@@ -157,25 +174,29 @@ protected:
 	Transform* mainHand;
 
 protected: // 평타 및 스킬을 사용할때 참고하기 위한 변수들
-	class MonsterBase* monsterSelectData; // 현재 선택된 몬스터의 정보를 받기 위한 변수
+
+	// 현재 선택된 몬스터의 정보를 받기 위한 변수
+	class MonsterBase* monsterSelectData; 
 	class CH_Base_ver2* characterSelectData;
 
 
-protected: // NPC ĳ���͸� �����ϱ� ���� ���� �� �Լ�
+protected: // NPC가 사용할 변수들의 목록
 
-	// �÷��̾�� ����ȴٸ� NPC���� Ȱ�� ����
-	// NPC�� ������ �ȵǸ� ��Ÿ ��Ÿ��� �ȴ�.
+	// 플레이어일 경우 NPC들의 활동범위
+	// NPC일 경우 적대 몬스터를 감지해냄
 	Collider* range;
 
-	// �÷��̾��� ������ �޾ƿ��� ���� ����
+	// NPC에게 플레이어의 정보를 저장하기 위한 변수
 	CH_Base_ver2* myPlayer;
 
-	// �÷��̾��� �ֺ��� NPC�� ���� ��� �������� �����̰� �ϱ� ���� ������
+	// NPC가 랜덤행동을 하기 위한 타이머의 최대 시간
 	float MAX_randomHangdong = 5;
-	float randomHangdong = -1; // -1�� �ִ� ������ ù ������Ʈ ������ �������� �۵���Ű�� ����
+	// 시작하자마자 바로 실행시키기 위한 변수
+	float randomHangdong = -1;
+	// 플레이어의 주변을 떠돌때 방향을 정하기 위한 변수
 	Vector3 randomVelocity;
 
-	// 공격할 타겟이 있는지를 구분하기 위한 변수
+	// NPC에게 적을 공격할지 안할지 명령을 내리는 변수
 	bool atkTarget = false;
 	// 행동 틱 1초 단위
 	float Max_ActionTickTime = 1.0f;

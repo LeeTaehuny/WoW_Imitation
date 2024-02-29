@@ -51,6 +51,7 @@ void CH_Manager::Update()
 	{
 		if (ch != nullptr)
 		{
+			// NPC들에게 공격명령을 내리기 위한 부분
 			if (KEY_DOWN('Z'))
 				ch->SetAttackOrder();
 
@@ -322,11 +323,4 @@ void CH_Manager::NonPlayerSpawn(int value)
 	nonCount++;
 
 	partyUI->AddPlayer(character.size() - 1);
-}
-
-CH_Base_ver2* CH_Manager::SelectHealCharacter(IN CH_Base_ver2* collider)
-{
-
-
-	return nullptr;
 }

@@ -91,16 +91,15 @@ void CH_Base_ver2::Update()
 		skill->Update();
 	}
 
-	// �ӽ� ���� �ڵ�
+	// 씬에서 몬스터나 캐릭터의 정보를 얻기 위한 코드
 	if (KEY_DOWN(VK_RBUTTON))
 	{
-		// ���콺 ��ġ�� Ray ����
+		// 마우스 좌클릭시 Ray 충돌을 통해 몬스터의 정보를 받아옴
 		Ray ray = CAM->ScreenPointToRay(mousePos);
 		Contact contact;
 
-		// ���� ����
+		// 몬스터 정보 (리치왕 포함)
 		{
-			// ���� �迭 �ޱ�
 			vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
 			vector<MonsterBase*> cols2 = MONSTER->GetSkeleton();
 			vector<MonsterBase*> cols3 = MONSTER->GetSkeleton_Knight();
@@ -108,47 +107,38 @@ void CH_Base_ver2::Update()
 			MonsterBase* cols5 = MONSTER->GetLichKing();
 			vector<MonsterBase*> cols6 = MONSTER->GetIceBall();
 
-			// ���� ��ȸ�ϸ� Ray �浹 ����
 			for (MonsterBase* monster : cols1)
 			{
 				if (monster->GetCollider()->IsRayCollision(ray, &contact))
 				{
-					// �浹�ߴٸ� �ش� ���͸� �� Ÿ������ ����
 					targetMonster = monster;
 					break;
 				}
 			}
-
 			for (MonsterBase* monster : cols2)
 			{
 				if (monster->GetCollider()->IsRayCollision(ray, &contact))
 				{
-					// �浹�ߴٸ� �ش� ���͸� �� Ÿ������ ����
 					targetMonster = monster;
 					break;
 				}
 			}
-
 			for (MonsterBase* monster : cols3)
 			{
 				if (monster->GetCollider()->IsRayCollision(ray, &contact))
 				{
-					// �浹�ߴٸ� �ش� ���͸� �� Ÿ������ ����
 					targetMonster = monster;
 					break;
 				}
 			}
-
 			for (MonsterBase* monster : cols4)
 			{
 				if (monster->GetCollider()->IsRayCollision(ray, &contact))
 				{
-					// �浹�ߴٸ� �ش� ���͸� �� Ÿ������ ����
 					targetMonster = monster;
 					break;
 				}
 			}
-
 			if (cols5)
 			{
 				if (cols5->GetCollider()->IsRayCollision(ray, &contact))
@@ -156,19 +146,17 @@ void CH_Base_ver2::Update()
 					targetMonster = cols5;
 				}
 			}
-
 			for (MonsterBase* monster : cols6)
 			{
 				if (monster->GetCollider()->IsRayCollision(ray, &contact))
 				{
-					// �浹�ߴٸ� �ش� ���͸� �� Ÿ������ ����
 					targetMonster = monster;
 					break;
 				}
 			}
 		}
 
-		// �÷��̾� ����
+		// 캐릭터 정보
 		{
 			vector<CH_Base_ver2*> player = CH->GetCharcterData();
 
@@ -185,19 +173,18 @@ void CH_Base_ver2::Update()
 		}
 	}
 
-	// Ÿ�� ���� ����
 	if (targetMonster != nullptr)
 	{
-		// �ش� ���Ͱ� �׾��ִٸ�?
+		// 몬스터의 트랜스폼이 비활성화 되었는가? (죽었다는 의미)
 		if (!targetMonster->GetTransform()->Active())
 		{
-			// ���� ����
+			// 몬스터가 죽었을 경우 해당 변수에 nullptr을 할당
 			targetMonster = nullptr;
 		}
-		// �ش� ���Ϳ� �÷��̾��� �Ÿ��� �ָ� ������ �����?
+		// 타겟 몬스터와 일정범위 이상 멀어질 경우
 		else if ((targetMonster->GetTransform()->GlobalPos() - this->GlobalPos()).Length() >= 30.0f)
 		{
-			// ���� ����
+			// 해당 변수에 nullptr 할당
 			targetMonster = nullptr;
 		}
 	}
