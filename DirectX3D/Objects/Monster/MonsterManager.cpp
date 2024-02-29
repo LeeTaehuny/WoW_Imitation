@@ -76,6 +76,57 @@ void MonsterManager::Update()
 	valkier_body->Update();
 	if (LickKing) LickKing->Update();
 
+	if (KEY_DOWN(VK_NUMPAD0))
+	{
+		for (int i = 0; i < skeleton.size(); i++)
+		{
+			skeleton[i]->Hit(99999);
+		}
+		for (int i = 0; i < skeleton_Knight.size(); i++)
+		{
+			skeleton_Knight[i]->Hit(99999);
+		}
+		for (int i = 0; i < scarecrow.size(); i++)
+		{
+			scarecrow[i]->Hit(99999);
+		}
+		for (int i = 0; i < valkier.size(); i++)
+		{
+			valkier[i]->Hit(99999);
+		}
+		for (int i = 0; i < iceBall.size(); i++)
+		{
+			iceBall[i]->Hit(99999);
+		}
+	}
+	if (KEY_DOWN(VK_NUMPAD5))
+	{
+		for (int i = 0; i < skeleton.size(); i++)
+		{
+			skeleton[i]->Hit(skeleton[i]->GetMaxHP() * 0.5f);
+		}
+		for (int i = 0; i < skeleton_Knight.size(); i++)
+		{
+			skeleton_Knight[i]->Hit(skeleton_Knight[i]->GetMaxHP() * 0.5f);
+		}
+		for (int i = 0; i < scarecrow.size(); i++)
+		{
+			scarecrow[i]->Hit(scarecrow[i]->GetMaxHP() * 0.5f);
+		}
+		for (int i = 0; i < valkier.size(); i++)
+		{
+			valkier[i]->Hit(valkier[i]->GetMaxHP() * 0.5f);
+		}
+		for (int i = 0; i < iceBall.size(); i++)
+		{
+			iceBall[i]->Hit(iceBall[i]->GetMaxHP() * 0.5f);
+		}
+		if (LickKing)
+		{
+			LickKing->Hit(LickKing->GetMaxHP() * 0.5f);
+		}
+	}
+
 	for (int i = 0; i < skeleton.size(); i++)
 	{
 		if (!skeleton[i]->GetTransform()->Active())

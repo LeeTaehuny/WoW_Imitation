@@ -116,6 +116,7 @@ void LichKimgBossScene::Start()
 	{
 		c->Spawn(Vector3());
 		c->SetPhase(1);
+		c->resetBut();
 	}
 	
 	Mounga_die = false;
