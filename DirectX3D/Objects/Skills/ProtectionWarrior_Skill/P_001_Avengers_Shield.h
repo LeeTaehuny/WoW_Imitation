@@ -9,6 +9,7 @@ public:
 	virtual void Render() override;
 	virtual void UseSkill(MonsterBase* monsterbase) override;
 
+	// 사거리 정보를 받아오기 위한 겟터
 	Collider* Getyad() { return Yad; }
 
 private:

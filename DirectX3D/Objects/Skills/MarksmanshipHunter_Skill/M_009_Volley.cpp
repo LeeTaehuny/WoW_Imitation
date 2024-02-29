@@ -250,12 +250,6 @@ void M_009_Volley::Using(int imto)
 		Arrows[imto]->Rot().z = -1.6f;
 	}
 
-
-
-	//Vector3 aro_tec = CAM->Rot();
-	//monsterTecture[imto]->Rot().x = CAM->Rot().x;
-	//monsterTecture[imto]->Rot().z = atan2(aro_tec.y, aro_tec.x) + 1.6f;
-	//monsterTecture[imto]->Rot().y = CAM->Rot().y;
 	monsterTecture[imto]->Rot() = CAM->Rot();
 	monsterTecture[imto]->UpdateWorld();
 

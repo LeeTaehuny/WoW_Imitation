@@ -105,11 +105,6 @@ void H_008_Divine_Hymn::Update()
 			{
 				ch->GetStat().hp += skillDamage * DELTA;
 
-				//if (ch->GetcreatureType() == CreatureType::Player)
-				//	ch->GetPlayerUI()->SetHpPercent(ch->GetStat().hp / ch->GetStat().maxHp);
-				//else
-				//	CH->GetPartyUI()->SetHpPercent(ch->GetStat().hp / ch->GetStat().maxHp, stoi(ch->GetTag().c_str()));
-
 				if (owner->GetStat().hp >= owner->GetStat().maxHp)
 				{
 					owner->GetStat().hp = owner->GetStat().maxHp;
@@ -174,6 +169,5 @@ void H_008_Divine_Hymn::UseSkill()
 		isCooldown = true;
 	}
 
-	//startTimeDelay = 0;
 	skillDamage = owner->GetStat().damage * 0.1f;
 }

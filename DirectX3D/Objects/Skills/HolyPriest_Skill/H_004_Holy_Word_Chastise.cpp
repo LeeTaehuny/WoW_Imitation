@@ -49,12 +49,6 @@ void H_004_Holy_Word_Chastise::Update()
 	{
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
-		//if (!targetMonster->GetCollider()->Active())
-		//{
-		//	isOne = 0;
-		//	isRun = false;
-		//	return;
-		//}
 
 		if (isOne == 0)
 		{

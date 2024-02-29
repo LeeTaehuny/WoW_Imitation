@@ -186,7 +186,6 @@ void M_003_Rapid_Fire::UseSkill(MonsterBase* monsterbase)
 
 void M_003_Rapid_Fire::tack(int imto)
 {
-	//if (it_me_Mario[imto]->Active())
 	if (!monster->GetCollider()->Active())
 	{
 		isRun = false;

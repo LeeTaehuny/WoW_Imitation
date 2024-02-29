@@ -94,7 +94,6 @@ void H_003_Guardian_Spirit::Update()
 		}
 
 		// 스탯이 추가되면 이곳에 추가 효과를 주면 됩니다.
-
 		Vector3 lll = healingTarget->GlobalPos();
 		lll.y += healingTarget->GlobalScale().y * 4.5f;
 		spirit->Pos() = lll;
