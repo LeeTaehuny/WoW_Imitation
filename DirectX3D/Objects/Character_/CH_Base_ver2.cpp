@@ -106,6 +106,7 @@ void CH_Base_ver2::Update()
 			vector<MonsterBase*> cols3 = MONSTER->GetSkeleton_Knight();
 			vector<MonsterBase*> cols4 = MONSTER->GetVAlkier();
 			MonsterBase* cols5 = MONSTER->GetLichKing();
+			vector<MonsterBase*> cols6 = MONSTER->GetIceBall();
 
 			// ���� ��ȸ�ϸ� Ray �浹 ����
 			for (MonsterBase* monster : cols1)
@@ -154,7 +155,17 @@ void CH_Base_ver2::Update()
 				{
 					targetMonster = cols5;
 				}
-			}			
+			}
+
+			for (MonsterBase* monster : cols6)
+			{
+				if (monster->GetCollider()->IsRayCollision(ray, &contact))
+				{
+					// �浹�ߴٸ� �ش� ���͸� �� Ÿ������ ����
+					targetMonster = monster;
+					break;
+				}
+			}
 		}
 
 		// �÷��̾� ����
