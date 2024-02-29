@@ -167,7 +167,6 @@ using namespace GameMath;
 #include "Objects/Basic/Sphere.h"
 #include "Objects/Basic/Cylinder.h"
 
-#include "Objects/Actor/ActorUI.h"
 #include "Objects/UI/ProgressBar.h"
 
 #include "Objects/Landscape/Terrain.h"
@@ -177,8 +176,6 @@ using namespace GameMath;
 #include "Objects/Landscape/TerrainLOD.h"
 #include "Objects/Landscape/TerrainData.h"
 #include "Objects/Landscape/QuadTreeTerrain.h"
-
-#include "Objects/Static/Reflector.h"
 
 #include "Objects/Particle/ParticleSystem.h"
 #include "Objects/Particle/Particle.h"
@@ -192,14 +189,6 @@ using namespace GameMath;
 #include "Objects/Algorithm/Heap.h"
 #include "Objects/Algorithm/AStar.h"
 
-#include "Objects/Items/Weapons/Crowbar.h"
-#include "Objects/Items/Weapons/Kunai.h"
-
-#include "Objects/Character/Human.h"
-#include "Objects/Character/Naruto.h"
-#include "Objects/Character/Robot.h"
-#include "Objects/Character/Fox.h"
-
 // 캐릭터 인스턴싱 버전
 #include "Objects/Character_/CH_Base_ver2.h"
 #include "Objects/Character_/ArmsWarrior_in.h"
@@ -208,10 +197,6 @@ using namespace GameMath;
 #include "Objects/Character_/MarksmanshipHunter_in.h"
 #include "Objects/Character_/ProtectionWarrior_in.h"
 #include "Objects/Character_/CH_Manager.h"
-
-#include "Objects/Manager/BlockManager.h"
-#include "Objects/Manager/KunaiManager.h"
-#include "Objects/Manager/RobotManager.h"
 
 // 몬스터
 #include "Objects/Monster/MonsterBase.h"
