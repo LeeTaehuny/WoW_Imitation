@@ -199,7 +199,3 @@ void IceBall::targetAttack()
 		}
 	}
 }
-
-void IceBall::UpdateUI()
-{
-}

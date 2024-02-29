@@ -14,9 +14,12 @@ public:
     virtual void GUIRender() override;
 
 private:
+    // 마을로 돌아가기 버튼이 눌렸을때 실행되는 함수
     void Change_Town();
+    // 게임 엔드 버튼이 눌렸을때 실행
     void Game_End();
 
+    // 씬체인지에 사용되는 함수
     void Scene_Chnage();
 
 private:

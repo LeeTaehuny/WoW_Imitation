@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "Lick_006_Summon_IceSphere.h"
 
 Lick_006_Summon_IceSphere::Lick_006_Summon_IceSphere(Boss_LichKing* lich)

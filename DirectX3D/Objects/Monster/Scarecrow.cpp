@@ -30,7 +30,6 @@ Scarecrow::Scarecrow(Transform* transform, ModelAnimatorInstancing* instancing, 
 	velocity = Vector3();
 
 	SetState(IDLE);
-
 	hitText.resize(20);
 
 	// 허수아비 스탯 설정
@@ -95,11 +94,8 @@ void Scarecrow::PostRender()
 void Scarecrow::Hit(float amount)
 {
 	SetState(HIT);
-
-	//Vector3 fo;
-	//fo.x = -transform->GlobalPos().x;
-	//fo.y = transform->GlobalPos().y;
-	//fo.z = -transform->GlobalPos().z;
+	// 허수아비는 죽지 않기 때문에 히트 함수를 통해 데미지가 들어오면 무조건
+	// 히트 사운드를 출력
 	Audio::Get()->Play("skeleton_Night_hit", transform->Pos(), 1.0f);
 
 	curHP -= amount;

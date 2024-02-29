@@ -96,7 +96,6 @@ void Skeleton::Update()
 	targetAttack();
 	ExecuteEvent();
 	MonsterBase::targetActiveSerch();
-	//UpdateUI();
 
 	root->SetWorld(instancing->GetTransformByNode(index, 3));
 	collider->UpdateWorld();
@@ -315,8 +314,4 @@ void Skeleton::targetAttack()
 		Moving = true;
 		attackBumwe->SetActive(false);
 	}
-}
-
-void Skeleton::UpdateUI()
-{
 }

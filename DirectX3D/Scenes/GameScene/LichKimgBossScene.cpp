@@ -13,7 +13,6 @@ LichKimgBossScene::LichKimgBossScene()
 	map = new BossMap();
 
 	back_ = new Quad(L"Textures/UI/barbershop.png");
-	//back_->Scale() *= 0.7f;
 	back_->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.5f);
 	back_->UpdateWorld();
 
@@ -55,9 +54,6 @@ LichKimgBossScene::~LichKimgBossScene()
 
 void LichKimgBossScene::Start()
 {
-	//CH->PlayerSpawn(2);
-	//SKILL->Init(CH->GetPlayerData());
-
 	sound_change = false;
 	Audio::Get()->Play("bossScene_main_bgm", 0.7f);
 

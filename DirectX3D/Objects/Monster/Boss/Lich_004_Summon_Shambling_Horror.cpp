@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "Lich_004_Summon_Shambling_Horror.h"
 
 Lich_004_Summon_Shambling_Horror::Lich_004_Summon_Shambling_Horror(Boss_LichKing* lich)
@@ -22,6 +22,7 @@ void Lich_004_Summon_Shambling_Horror::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
+		// 한 번만 스폰하게하기 위한 작업
 		if (JustOne == 0)
 		{
 			JustOne++;

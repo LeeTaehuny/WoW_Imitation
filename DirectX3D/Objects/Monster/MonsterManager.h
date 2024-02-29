@@ -25,26 +25,29 @@ public:
     // 얼음구슬 스폰
     void SpawnIceBall(Vector3 pos);
     // 리치왕 스폰
-    void SpawnBoss(Vector3 pos);
     void SpawnLickKing(Vector3 pos);
 
+    // 캐릭터와 가장 가까운 몬스터의 값을 얻기 위한 함수
     MonsterBase* hitCollision(IN Collider* collider);
 
 // Getter & Setter
 public:
     // 지금 필드에 있는 플레이어 캐릭터들의 모든 콜라이더 정보를 저장함
     void SetTarget(CH_Base_ver2* transform);
+    // 스켈레톤의 배열 정보를 얻기 위한 함수
     vector<MonsterBase*> GetSkeleton() { return skeleton; }
+    // 스켈레톤 나이트의 배열 정보를 얻기 위한 함수
     vector<MonsterBase*> GetSkeleton_Knight() { return skeleton_Knight; }
+    // 허수아비의 배열 정보를 얻기 위한 함수
     vector<MonsterBase*> GetScarecrow() { return scarecrow; }
+    // 발키리의 배열 정보를 얻기 위한 함수
     vector<MonsterBase*> GetVAlkier() { return valkier; }
+    // 얼음구슬의 배열 정보를 얻기 위한 함수
     vector<MonsterBase*> GetIceBall() { return valkier; }
+    // 리치왕의 정보를 얻기 위한 함수
     MonsterBase* GetLichKing() { return LickKing; }
 
 public:
-    // 몬스터들의 콜라이더 정보를 저장함
-    //vector<Collider*> monsterCollider;
-
     // 플레이어 캐릭터들의 정보를 저장함
     vector<CH_Base_ver2*> targets;
 private:
@@ -71,6 +74,7 @@ private:
     // 아이스볼 클래스
     vector<MonsterBase*> iceBall;
 
+    // 리치왕 클래스
     MonsterBase* LickKing;
 
 private:

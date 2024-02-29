@@ -65,7 +65,6 @@ void Lich_001_Necrotic_Plague::Update()
 			{
 				Yad->Pos() = characterData->GlobalPos();
 				Yad->UpdateWorld();
-				//lich->GetStat().damage = 2;
 
 				vector<CH_Base_ver2*> plData = lich->characterData;
 				float min_Len = FLT_MAX;

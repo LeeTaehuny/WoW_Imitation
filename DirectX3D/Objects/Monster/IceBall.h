@@ -11,14 +11,13 @@ public:
 
     // 데미지를 받기 위한 함수
     virtual void Hit(float amount = 1) override;
-    // 헤이트벡터의 순번을 지정하기 위한 임시변수
-    int targetNumber = 0;
+    // 몬스터를 스폰하기 위한 함수
     virtual void Spawn(Vector3 pos) override;
 
 public:
-    void UpdateUI();
-
+    // 얼음구슬의 움직임을 담당할 함수
     void Move();
+    // 얼음구슬의 공격을 담당할 함수
     void targetAttack();
 
 private: // 공격을 위한 변수 모음

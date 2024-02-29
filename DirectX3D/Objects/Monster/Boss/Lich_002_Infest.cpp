@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "Lich_002_Infest.h"
 
 Lich_002_Infest::Lich_002_Infest(Boss_LichKing* lich)

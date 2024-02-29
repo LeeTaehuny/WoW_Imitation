@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "Lich_007_Defile.h"
 
 Lich_007_Defile::Lich_007_Defile(Boss_LichKing* lich)
@@ -9,12 +9,10 @@ Lich_007_Defile::Lich_007_Defile(Boss_LichKing* lich)
 	particle->Scale() *= 0.02f;
 	particle->Rot().x = XM_PI * 0.5f;
 	particle->SetParent(hitCollider);
-	//particle->Pos().y = 0.5f;
 	
 	FOR(2) blendState[i] = new BlendState();
 	FOR(2) depthState[i] = new DepthStencilState();
-
-	//blendState[1]->Additive();
+	
 	blendState[1]->Alpha(true);
 	depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ZERO);
 
