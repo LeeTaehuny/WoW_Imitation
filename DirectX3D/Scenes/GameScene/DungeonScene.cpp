@@ -60,16 +60,18 @@ void DungeonScene::Start()
 
 	float Time = 7.0f;
 
-	Audio::Get()->Play("Out_Dungeon", 1.0f);
+	Audio::Get()->Play("Out_Dungeon", 0.7f);
 
 	// 플레이어 위치 조정
 	CH->GetPlayerData()->Pos() = dungeon->GetSpawnPoint_P();
+	CH->GetPlayerData()->SetHeight(0.0f);
 	CH->GetPlayerData()->Rot().y = 3.15f;
 	CH->GetPlayerData()->Update();
 
 	for (int i = 1; i < CH->GetCharcterData().size(); i++)
 	{
 		CH->GetCharcterData()[i]->Pos() = CH->GetPlayerData()->Pos();
+		CH->GetCharcterData()[i]->SetHeight(0.0f);
 		CH->GetCharcterData()[i]->Rot().y = 3.15f;
 	}
 
@@ -123,19 +125,18 @@ void DungeonScene::Update()
 		Environment::Get()->GetLight(0)->color = { 1.0f, 1.0f, 1.0f, 1 };
 		Audio::Get()->Stop("Out_Dungeon");
 		Audio::Get()->Stop("IceWall_Break");
-		Audio::Get()->Play("DungeonPotal", 1.0f);
+		Audio::Get()->Play("DungeonPotal", 0.7f);
 		SceneManager::Get()->ChangeScene("Boss");
 	}
 
-	
 	// 1번방 문 열리기
 	if (dungeon->IsOpenGateCollider(CH->GetPlayerData()->GetCollider()) 
 		&& isOpenGate == false)
 	{
 		dungeon->OpenDoor(true);
-		Audio::Get()->Play("Open_Gate", 1.0f);
+		Audio::Get()->Play("Open_Gate", 0.7f);
 		Audio::Get()->Stop("Out_Dungeon");
-		Audio::Get()->Play("in_Dungeon", 1.0f);;
+		Audio::Get()->Play("in_Dungeon", 0.7f);;
 
 		isOpenGate = true;
 	}
@@ -160,9 +161,9 @@ void DungeonScene::Update()
 		isOpenDoor == false)
 	{
 		dungeon->OpenDoor_I(true);
-		Audio::Get()->Play("Open_Door", 1.0f);
+		Audio::Get()->Play("Open_Door", 0.7f);
 		Audio::Get()->Pause("in_Dungeon");
-		Audio::Get()->Play("in_Dungeon2", 1.0f);
+		Audio::Get()->Play("in_Dungeon2", 0.7f);
 
 		isOpenDoor = true;
 	}
@@ -187,7 +188,7 @@ void DungeonScene::Update()
 	{
 		dungeon->IsClear(true);
 		Audio::Get()->Play("IceWall_Break", 1.0f);
-		Audio::Get()->Play("Out_Dungeon", 1.0f);
+		Audio::Get()->Play("Out_Dungeon", 0.7f);
 
 		ClearDungeon = true;
 	}

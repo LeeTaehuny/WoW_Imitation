@@ -98,11 +98,13 @@ void Guild::Render()
 
 void Guild::UIRender()
 {
-	Vector3 screenPos = CAM->WorldToScreen(guild->GlobalPos());
-	Font::Get()->RenderText("GUILD", { screenPos.x + 40.0f, screenPos.y + 150.0f });
+	if (!Active())
+	{
+		Vector3 screenPos = CAM->WorldToScreen(guild->GlobalPos());
+		Font::Get()->RenderText("GUILD", { screenPos.x + 40.0f, screenPos.y + 150.0f });
 
-	if (!Active()) return;
-
+		return;
+	}
 	guildFrame->Render();
 
 	int idx = 0;

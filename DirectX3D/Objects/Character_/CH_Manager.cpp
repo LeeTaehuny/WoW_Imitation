@@ -14,11 +14,11 @@
 
 CH_Manager::CH_Manager()
 {
-	//InstancingDataArms();
-	//InstancingDataFire();
-	//InstancingDataHoly();
-	//InstancingDataMarksmanship();
-	//InstancingDataProtection();
+	InstancingDataArms();
+	InstancingDataFire();
+	InstancingDataHoly();
+	InstancingDataMarksmanship();
+	InstancingDataProtection();
 	ARROW;
 
 	partyUI = new PartyUI_Bar();

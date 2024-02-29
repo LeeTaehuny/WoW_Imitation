@@ -874,42 +874,11 @@ Dungeon::~Dungeon()
 	delete OpenGateCollider;
 	delete inDungeonCollider;
 	delete inDungeonCollider2;
-
-	//delete TestPos;
 }
 
 void Dungeon::Update()
 {
-	//TestPos->UpdateWorld();
-	//terrain->UpdateWorld();
-	//if(!KEY_PRESS(VK_RBUTTON))
-	//{
-	//	//if (KEY_PRESS('W'))TestPos->Pos().x += 50 * DELTA;
-	//	//if (KEY_PRESS('S'))TestPos->Pos().x -= 50 * DELTA;
-	//	//if (KEY_PRESS('D'))TestPos->Pos().z -= 50 * DELTA;
-	//	//if (KEY_PRESS('A'))TestPos->Pos().z += 50 * DELTA;
-	//	//
-	//	//if (KEY_PRESS(VK_LEFT)) TestPos->Pos().z += 10 * DELTA;
-	//	//if (KEY_PRESS(VK_RIGHT)) TestPos->Pos().z -= 10 * DELTA;
-	//	//if (KEY_PRESS(VK_UP)) TestPos->Pos().x += 10 * DELTA;
-	//	//if (KEY_PRESS(VK_DOWN)) TestPos->Pos().x -= 10 * DELTA;
-	//	//
-	//	//if (KEY_DOWN('1')) TestPos->Pos().z += 50;
-	//	//if (KEY_DOWN('3')) TestPos->Pos().z -= 50;
-	//	//if (KEY_DOWN('2')) TestPos->Pos().x += 50;
-	//	//if (KEY_DOWN('4')) TestPos->Pos().x -= 50;
-	//	//
-	//	//if (KEY_DOWN('N')) n += 1;
-	//
-	//
-	//	if (KEY_DOWN('W'))terrain->Pos().x += 5000 * DELTA;
-	//	if (KEY_DOWN('S'))terrain->Pos().x -= 5000 * DELTA;
-	//	if (KEY_DOWN('D'))terrain->Pos().z -= 5000 * DELTA;
-	//	if (KEY_DOWN('A'))terrain->Pos().z += 5000 * DELTA;
-	//	if (KEY_PRESS('Q'))terrain->Rot().y += 10 * DELTA;
-	//	if (KEY_PRESS('E'))terrain->Rot().y -= 10 * DELTA;
-	//}
-	//TestPos->Pos() = SpawnPoint_P;
+	CamSetting();
 
 	Audio::Get()->Update();
 
@@ -1216,6 +1185,169 @@ bool Dungeon::IsinDungeon2(Collider* C)
 	if (inDungeonCollider2->IsCapsuleCollision((CapsuleCollider*)C)) return true;
 
 	return false;
+}
+
+void Dungeon::CamSetting()
+{
+	isCamCollision = false;
+
+	Ray ray;
+	Vector3 direct = (CAM->Pos() - CH->GetPlayerData()->Pos()).GetNormalized();
+	ray.dir = direct;
+
+	ray.pos = CH->GetPlayerData()->GetCollider()->GlobalPos();
+
+	Contact ct;
+
+	if (!isCamCollision)
+	{
+		for (BoxCollider* wall : boxColliders_WL)
+		{
+			// 벽과 충돌했다면?
+			if (wall->IsRayCollision(ray, &ct))
+			{
+				// 충돌 변수 체크
+				isCamCollision = true;
+				break;
+			}
+		}
+	}
+
+	if (!isCamCollision)
+	{
+		for (BoxCollider* wall : boxColliders_P)
+		{
+			// 벽과 충돌했다면?
+			if (wall->IsRayCollision(ray, &ct))
+			{
+				// 충돌 변수 체크
+				isCamCollision = true;
+				break;
+			}
+		}
+	}
+
+	
+	if (!isCamCollision)
+	{
+		for (BoxCollider* wall : boxColliders_WR)
+		{
+			// 벽과 충돌했다면?
+			if (wall->IsRayCollision(ray, &ct))
+			{
+				// 충돌 변수 체크
+				isCamCollision = true;
+				break;
+			}
+		}
+	}
+	
+	if (!isCamCollision)
+	{
+		for (BoxCollider* wall : boxColliders_WB)
+		{
+			// 벽과 충돌했다면?
+			if (wall->IsRayCollision(ray, &ct))
+			{
+				// 충돌 변수 체크
+				isCamCollision = true;
+				break;
+			}
+		}
+	}
+	
+	if (!isCamCollision)
+	{
+		if (boxCollider_WLF->IsRayCollision(ray, &ct))
+		{
+			// 충돌 변수 체크
+			isCamCollision = true;
+		}
+	}
+
+	if (!isCamCollision)
+	{
+		if (boxCollider_WRF->IsRayCollision(ray, &ct))
+		{
+			// 충돌 변수 체크
+			isCamCollision = true;
+		}
+	}
+
+	if (!isCamCollision)
+	{
+		if (boxCollider_WGL->IsRayCollision(ray, &ct))
+		{
+			// 충돌 변수 체크
+			isCamCollision = true;
+		}
+	}
+
+	if (!isCamCollision)
+	{
+		if (boxCollider_WGR->IsRayCollision(ray, &ct))
+		{
+			// 충돌 변수 체크
+			isCamCollision = true;
+		}
+	}
+
+	if (!isCamCollision)
+	{
+		if (boxColliders_WBL->IsRayCollision(ray, &ct))
+		{
+			// 충돌 변수 체크
+			isCamCollision = true;
+		}
+	}
+
+	if (!isCamCollision)
+	{
+		if (boxColliders_WBR->IsRayCollision(ray, &ct))
+		{
+			// 충돌 변수 체크
+			isCamCollision = true;
+		}
+	}
+
+	if (!isCamCollision)
+	{
+		if (boxCollider_GL->IsRayCollision(ray, &ct))
+		{
+			// 충돌 변수 체크
+			isCamCollision = true;
+		}
+	}
+
+	if (!isCamCollision)
+	{
+		if (boxCollider_GR->IsRayCollision(ray, &ct))
+		{
+			// 충돌 변수 체크
+			isCamCollision = true;
+		}
+	}
+
+
+
+	if (isCamCollision)
+	{
+		if (abs(ct.distance) < 20 && abs(ct.distance) > 0)
+		{
+			CAM->SetTargetDistance(-ct.distance);
+			CAM->SetTargetHeight(10 * (ct.distance / 20.0f));
+		}
+		else
+		{
+			CAM->SetTargetDistance(-20.0f);
+			CAM->SetTargetHeight(10.0f);
+		}	
+	}
+	else
+	{
+		CAM->SetTargetDistance(-20.0f);
+		CAM->SetTargetHeight(10.0f);
+	}
 }
 
 void Dungeon::DoorMove()

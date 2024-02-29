@@ -43,6 +43,8 @@ void SelectScene::Start()
 
 	// 음원 재생
 	Audio::Get()->Play("SelectBGM", 0.7f);
+
+	Collider::RenderOnOff();
 }
 
 void SelectScene::Update()
