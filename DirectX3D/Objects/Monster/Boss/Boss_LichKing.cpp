@@ -86,7 +86,7 @@ Boss_LichKing::Boss_LichKing()
 
 	lasting = true;
 	moveSpeed = 2;
-	maxHP = 3000.0f;
+	maxHP = 20000.0f;
 	curHP = maxHP;
 	Lich_Stat.damage = 300.0f;
 
@@ -169,31 +169,34 @@ void Boss_LichKing::Update()
 	}
 	// 체력 비율을 내기 위한 변수
 	
-	switch (phase)
+	if (curState != ATTACK)
 	{
-	case 1:
-		phaseOne();
-		break;
-	
-	case 2:
-		phaseSait();
-		break;
-	
-	case 3:
-		phaseTwo();
-		break;
-	
-	case 4:
-		phaseSait2();
-		break;
-	
-	case 5:
-		phaseThree();
-		break;
-	
-	default:
-		break;
-	}
+		switch (phase)
+		{
+		case 1:
+			phaseOne();
+			break;
+
+		case 2:
+			phaseSait();
+			break;
+
+		case 3:
+			phaseTwo();
+			break;
+
+		case 4:
+			phaseSait2();
+			break;
+
+		case 5:
+			phaseThree();
+			break;
+
+		default:
+			break;
+		}
+	}	
 
 	Moving();
 	Attack();
@@ -352,6 +355,17 @@ void Boss_LichKing::SetState(State state)
 	lichking->PlayClip(state);
 }
 
+void Boss_LichKing::resetBut()
+{
+	first = 0;
+	thr_first = 0;
+	for_first = 0;
+	sumon1 = 3;
+	skill1 = 7;
+	fiv_first = 0;
+	siitpha = false;
+}
+
 void Boss_LichKing::Moving()
 {
 	if (curState == ATTACK || curState == CASTING || curState == HIT || curState == DIE) return;
@@ -372,12 +386,13 @@ void Boss_LichKing::Attack()
 		attackRange->UpdateWorld();
 		if (attackRange->IsCollision(target->GetCollider()))
 		{
-			Frost_Collider->SetActive(true);
 			if (atk_one_sound == 0)
 			{
 				atk_one_sound++;
 			}
+			Frost_Collider->SetActive(true);
 			SetState(ATTACK);
+			atk_del = Max_atk_del;
 		}
 	}
 
@@ -545,11 +560,6 @@ void Boss_LichKing::phaseOne()
 		SetState(CASTING);
 		lich_SkillList[0]->UseSkill(target);
 	}
-	//if (!lich_SkillList[1]->GetCoolTime())
-	//{
-	//	SetState(CASTING);
-	//	lich_SkillList[1]->UseSkill(target);
-	//}
 	if (!lich_SkillList[2]->GetCoolTime())
 	{
 		SetState(CASTING);

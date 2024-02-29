@@ -103,6 +103,14 @@ void P_001_Avengers_Shield::Update()
 		startEdge->Pos() = myCollider->GlobalPos() + myCollider->Left() * 0.5f;
 		endEdge->Pos() = myCollider->GlobalPos() + myCollider->Right() * 0.5f;
 
+		if (!targetMonster->GetCollider()->Active())
+		{
+			impaction_count = 0;
+			onejacdong = 0;
+			myCollider->SetActive(false);
+			isRun = false;
+			return;
+		}
 		if (targetMonster->GetCollider()->IsCollision(myCollider))
 		{
 			switch (owner->GetcreatureType())
@@ -110,9 +118,7 @@ void P_001_Avengers_Shield::Update()
 			case CreatureType::Player:
 				Audio::Get()->Play("PW_01_impack", owner->Pos(), 1.0f);
 				break;
-
 			}
-
 
 			targetMonster->Hit(skillDamage);
 
@@ -194,6 +200,60 @@ void P_001_Avengers_Shield::Update()
 						three[1] = monster[i];
 					}
 				}
+				monster = MONSTER->GetIceBall();
+				for (int i = 0; i < monster.size(); ++i)
+				{
+					if (three[0] == monster[i] ||
+						three[1] == monster[i] ||
+						!Yad->IsCollision(monster[i]->GetCollider())) continue;
+
+					Vector3 im = monster[i]->GetCollider()->GlobalPos() - three[1]->GetTransform()->GlobalPos();
+					float length = abs(im.Length());
+
+					if (min_length >= length)
+					{
+						min_length = length;
+						three[2] = monster[i];
+					}
+				}
+				monster = MONSTER->GetVAlkier();
+				for (int i = 0; i < monster.size(); ++i)
+				{
+					if (three[0] == monster[i] ||
+						three[1] == monster[i] ||
+						!Yad->IsCollision(monster[i]->GetCollider())) continue;
+
+					Vector3 im = monster[i]->GetCollider()->GlobalPos() - three[1]->GetTransform()->GlobalPos();
+					float length = abs(im.Length());
+
+					if (min_length >= length)
+					{
+						min_length = length;
+						three[2] = monster[i];
+					}
+				}
+
+				MonsterBase* lich = MONSTER->GetLichKing();
+				if (lich != nullptr)
+				{
+					if (three[0] == lich ||
+						three[1] == lich ||
+						!Yad->IsCollision(lich->GetCollider()))
+					{
+
+					}
+					else
+					{
+						Vector3 im = lich->GetCollider()->GlobalPos() - three[1]->GetTransform()->GlobalPos();
+						float length = abs(im.Length());
+
+						if (min_length >= length)
+						{
+							min_length = length;
+							three[2] = lich;
+						}
+					}
+				}
 
 				if (min_length == FLT_MAX)
 				{
@@ -259,24 +319,72 @@ void P_001_Avengers_Shield::Update()
 				monster = MONSTER->GetScarecrow();
 				for (int i = 0; i < monster.size(); ++i)
 				{
-					// 0번에 저장된 값과 같은 것이라면 다음으로 진행
-					// 그리고 거리콜라이더와 충돌한 콜라이더만 연산
 					if (three[0] == monster[i] ||
 						three[1] == monster[i] ||
 						!Yad->IsCollision(monster[i]->GetCollider())) continue;
 
-					// 몬스터 콜라이더의 위치값과 지금 타격한 대상의 위치 값의 차를 구함
 					Vector3 im = monster[i]->GetCollider()->GlobalPos() - three[1]->GetTransform()->GlobalPos();
-					// 구한 차이값의 거리를 저장
 					float length = abs(im.Length());
 
-					// 저장된 거리 값중 가장 작거나 같은 값을 계속해서 저장함
-					// 마찬가지로 포인터에 값도 저장
 					if (min_length >= length)
 					{
 						min_length = length;
 						three[2] = monster[i];
 					}
+				}
+				monster = MONSTER->GetIceBall();
+				for (int i = 0; i < monster.size(); ++i)
+				{
+					if (three[0] == monster[i] ||
+						three[1] == monster[i] ||
+						!Yad->IsCollision(monster[i]->GetCollider())) continue;
+
+					Vector3 im = monster[i]->GetCollider()->GlobalPos() - three[1]->GetTransform()->GlobalPos();
+					float length = abs(im.Length());
+
+					if (min_length >= length)
+					{
+						min_length = length;
+						three[2] = monster[i];
+					}
+				}
+				monster = MONSTER->GetVAlkier();
+				for (int i = 0; i < monster.size(); ++i)
+				{
+					if (three[0] == monster[i] ||
+						three[1] == monster[i] ||
+						!Yad->IsCollision(monster[i]->GetCollider())) continue;
+
+					Vector3 im = monster[i]->GetCollider()->GlobalPos() - three[1]->GetTransform()->GlobalPos();
+					float length = abs(im.Length());
+
+					if (min_length >= length)
+					{
+						min_length = length;
+						three[2] = monster[i];
+					}
+				}
+				
+				MonsterBase* lich = MONSTER->GetLichKing();
+				if (lich != nullptr)
+				{
+					if (three[0] == lich ||
+						three[1] == lich ||
+						!Yad->IsCollision(lich->GetCollider()))
+					{
+						
+					}
+					else
+					{
+						Vector3 im = lich->GetCollider()->GlobalPos() - three[1]->GetTransform()->GlobalPos();
+						float length = abs(im.Length());
+
+						if (min_length >= length)
+						{
+							min_length = length;
+							three[2] = lich;
+						}
+					}					
 				}
 
 				if (min_length == FLT_MAX)

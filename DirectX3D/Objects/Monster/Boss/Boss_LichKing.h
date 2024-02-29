@@ -38,6 +38,9 @@ public:
 
     UINT GetPhase() { return phase; }
     void SetPhase(UINT num) { phase = num; }
+
+    void resetBut();
+
 private: // 멤버 변수
     void Moving();
     void Attack();
@@ -89,7 +92,7 @@ private:
     Stat Lich_Stat;
 
     bool lasting = false;
-    float Max_lasting_time = 3.0f;
+    float Max_lasting_time = 1.5f;
     float lasting_time = Max_lasting_time;
 
     vector<UINT> character_Damage_Data;
