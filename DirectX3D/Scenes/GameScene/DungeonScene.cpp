@@ -258,6 +258,51 @@ void DungeonScene::Game_End()
 
 void DungeonScene::Scene_Chnage()
 {
+	vector<CH_Base_ver2*> Position_Select = CH->GetCharcterData();
+	for (int i = 0; i < Position_Select.size(); i++)
+	{
+		Position_Select[i]->GetStat().hp = Position_Select[i]->GetStat().maxHp;
+		Position_Select[i]->SetActive(true);
+
+		switch (Position_Select[i]->GetProfessionType())
+		{
+		case ProfessionType::ArmsWarrior:
+			if (ArmsWarrior_in* c = dynamic_cast<ArmsWarrior_in*>(Position_Select[i]))
+			{
+				c->SetState(ArmsWarrior_in::State::IDLE1);
+			}
+			break;
+
+		case ProfessionType::FireMage:
+			if (FireMage_in* c = dynamic_cast<FireMage_in*>(Position_Select[i]))
+			{
+				c->SetState(FireMage_in::State::IDLE1);
+			}
+			break;
+
+		case ProfessionType::HolyPriest:
+			if (HolyPriest_in* c = dynamic_cast<HolyPriest_in*>(Position_Select[i]))
+			{
+				c->SetState(HolyPriest_in::State::IDLE1);
+			}
+			break;
+
+		case ProfessionType::MarksmanshipHunter:
+			if (MarksmanshipHunter_in* c = dynamic_cast<MarksmanshipHunter_in*>(Position_Select[i]))
+			{
+				c->SetState(MarksmanshipHunter_in::State::IDLE1);
+			}
+			break;
+
+		case ProfessionType::ProtectionWarrior:
+			if (ProtectionWarrior_in* c = dynamic_cast<ProtectionWarrior_in*>(Position_Select[i]))
+			{
+				c->SetState(ProtectionWarrior_in::State::IDLE1);
+			}
+			break;
+		}
+	}
+
 	Audio::Get()->Stop("Out_Dungeon");
 	Audio::Get()->Stop("IceWall_Break");
 	Audio::Get()->Stop("in_Dungeon");
