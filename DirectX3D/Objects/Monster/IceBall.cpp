@@ -80,7 +80,6 @@ void IceBall::Update()
 	Move();
 	targetAttack();
 	MonsterBase::targetActiveSerch();
-	//UpdateUI();
 
 	iceball->UpdateWorld();
 	collider->UpdateWorld();
@@ -189,6 +188,7 @@ void IceBall::targetAttack()
 	if (tickTime <= 0)
 	{
 		tickTime = Max_tickTime;
+		nomarATK->Pos() = targetTransform->Pos();
 		nomarATK->UpdateWorld();
 		for (CH_Base_ver2* ch : CH->GetCharcterData())
 		{

@@ -258,6 +258,7 @@ void MarksmanshipHunter_in::AI_animation_Moving()
 		}
 
 		this->Pos() += randomVelocity * (moveSpeed / 10) * DELTA;
+		this->Pos().y = curheight;
 		this->Rot().y = atan2(randomVelocity.x, randomVelocity.z) + XM_PI;
 
 		SetState(WALK_F);
@@ -272,6 +273,7 @@ void MarksmanshipHunter_in::AI_animation_Moving()
 		this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
 
 		this->Pos() += velo * moveSpeed * DELTA;
+		this->Pos().y = curheight;
 		SetState(WALK_F);
 	}
 

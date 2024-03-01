@@ -44,4 +44,9 @@ private:
     float Max_pop_time = 3.0f;
     float pop_time = Max_pop_time;
 
+    // 캐릭터가 먼저 죽었을때
+    bool pldie_first = false;
+    // 보스가 먼저 죽었을때
+    bool bodie_first = false;
+
 };

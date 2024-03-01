@@ -145,6 +145,7 @@ void TownScene::PostRender()
 void TownScene::GUIRender()
 {
     townMap->GUIRender();
+    CH->GUIRender();
 }
 
 void TownScene::Loding()

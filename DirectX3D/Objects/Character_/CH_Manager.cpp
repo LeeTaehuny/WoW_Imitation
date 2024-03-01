@@ -14,11 +14,11 @@
 
 CH_Manager::CH_Manager()
 {
-	InstancingDataArms();
-	InstancingDataFire();
-	InstancingDataHoly();
-	InstancingDataMarksmanship();
-	InstancingDataProtection();
+	//InstancingDataArms();
+	//InstancingDataFire();
+	//InstancingDataHoly();
+	//InstancingDataMarksmanship();
+	//InstancingDataProtection();
 	ARROW;
 
 	partyUI = new PartyUI_Bar();
@@ -46,6 +46,11 @@ void CH_Manager::Update()
 	UPDATE(firemage);
 	UPDATE(marksmanshiphunter);
 	UPDATE(holypriest);
+
+	if (KEY_DOWN(VK_UP))
+	{
+		character[0]->OnHit(100);
+	}
 
 	for (CH_Base_ver2* ch : character)
 	{
