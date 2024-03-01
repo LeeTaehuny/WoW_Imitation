@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 class BossMap : public Transform
 {
 public:
@@ -33,12 +33,11 @@ private:
 	UINT PhaseNum = 0; 
 
 	SkyBox* skybox;
-	//BlendState* blendState[2];
 
-	Model* Phase1;				// 1Æä ¶¥
-	vector<Model*> Phase2;		// 2Æä ¶¥ + ¸ğ¼­¸® + ¾óÀ½ÆÄÆí
-	vector<Model*> fixeds;		// °íÁ¤µÈ(¾ø¾îÁöÁö ¾Ê´Â°Í)
-	vector<Model*> disappears;  // »ç¶óÁü(1Æä ÀÌÈÄ·Î ¾ø¾îÁü)
+	Model* Phase1;				// 1í˜ ë•…
+	vector<Model*> Phase2;		// 2í˜ ë•… + ëª¨ì„œë¦¬ + ì–¼ìŒíŒŒí¸
+	vector<Model*> fixeds;		// ê³ ì •ëœ(ì—†ì–´ì§€ì§€ ì•ŠëŠ”ê²ƒ)
+	vector<Model*> disappears;  // ì‚¬ë¼ì§(1í˜ ì´í›„ë¡œ ì—†ì–´ì§)
 
 	Cylinder* GroundColider1;
 	Cylinder* GroundColider2;

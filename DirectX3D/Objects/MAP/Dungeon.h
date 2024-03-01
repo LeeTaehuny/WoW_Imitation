@@ -1,4 +1,4 @@
-#pragma once
+癤�#pragma once
 class Dungeon : public Transform
 {
 public:
@@ -48,7 +48,6 @@ private:
 	void CamSetting();
 
 private:
-	//Terrain* terrain;
 	TerrainLOD* terrain;
 
 	vector<Model*> Gates;
@@ -79,12 +78,12 @@ private:
 	Model* Roof;
 	Model* Roofi;
 	SkyBox* skybox;
-	//Model* TestSky;
+
 
 	Model* Chandelier;
 	LightBuffer::Light* light;
 	TestLight* Lamp;
-	//SphereCollider* TestPos;
+
 
 	vector<Quad*> Tiles;
 	vector<Quad*> Tiles2;
@@ -104,8 +103,6 @@ private:
 	bool open_I = false;
 	bool isClear = false;
 
-	BoxCollider* boxCollider_GL;
-	BoxCollider* boxCollider_GR;
 	BoxCollider* boxCollider_GD;
 
 	BoxCollider* boxCollider_DL;
@@ -113,33 +110,35 @@ private:
 	BoxCollider* boxCollider_PR;
 	BoxCollider* boxCollider_PL;
 
-
-	vector<BoxCollider*> boxColliders_WL; // 좌측 콜라이더 2개
-	vector<BoxCollider*> boxColliders_WR; // 우측 콜라이더 2개
-	vector<BoxCollider*> boxColliders_WB; // 뒤쪽 콜라이더 3개
+	// CAM Collisions
+	BoxCollider* boxCollider_GL;
+	BoxCollider* boxCollider_GR;
+	vector<BoxCollider*> boxColliders_WL; 
+	vector<BoxCollider*> boxColliders_WR; 
+	vector<BoxCollider*> boxColliders_WB; 
 	BoxCollider* boxCollider_WLF;
 	BoxCollider* boxCollider_WRF;
-	BoxCollider* boxCollider_WGL;
+	BoxCollider* boxCollider_WGL; 
 	BoxCollider* boxCollider_WGR;
 	BoxCollider* boxColliders_WBL;
 	BoxCollider* boxColliders_WBR;
+	vector<BoxCollider*> boxColliders_P;
 
+	BoxCollider* boxCollider_GT;
+	vector<BoxCollider*> RoofColliders;
+	BoxCollider* LightCollider;
 
 	BoxCollider* boxColliders_WD;
 	vector<BoxCollider*> boxColliders_potal;
-	vector<BoxCollider*> boxColliders_P;
 	SphereCollider* PotalCollider;
 	BoxCollider* boxColliders_B;
 	vector<BoxCollider*> boxColliders_Tree;
-	vector<BoxCollider*> EdgeGuard;
 	vector<BoxCollider*> Gatesharp;
+	vector<BoxCollider*> EdgeGuard;
 
 	BoxCollider* OpenGateCollider;
 	BoxCollider* inDungeonCollider;
 	BoxCollider* inDungeonCollider2;
-
-	int n = 0;
-	int n1 = 0;
 
 	float Time = 7.0f;
 

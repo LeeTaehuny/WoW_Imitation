@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "BossMap.h"
 
 BossMap::BossMap()
@@ -6,44 +6,41 @@ BossMap::BossMap()
 	skybox = new SkyBox(L"Textures/Landscape/Space.dds");
 	skybox->UpdateWorld();
 
-	Phase1 = new Model("LastBossMap1");		// 1ÆäÀÌÁîÀÇ ¶¥ ÀÔ´Ï´Ù
+	Phase1 = new Model("LastBossMap1");		// 1í˜ì´ì¦ˆì˜ ë•… ì…ë‹ˆë‹¤
 	GroundColider1 = new Cylinder();
 	GroundColider1->SetParent(Phase1);
 	GroundColider1->Scale() *= 75.0f;
 	GroundColider1->Pos().y -= 33.5f;
-	//GroundColider1->SetActive(false);
 
 	Phase2.resize(10);
-	Phase2[0] = new Model("LastBossMap2");  // 2ÆäÀÌÁîÀÇ ¶¥ ÀÔ´Ï´Ù
+	Phase2[0] = new Model("LastBossMap2");  // 2í˜ì´ì¦ˆì˜ ë•… ì…ë‹ˆë‹¤
 	GroundColider2 = new Cylinder();
 	GroundColider2->SetParent(Phase2[0]);
 	GroundColider2->Scale() *= 50.0f;
 	GroundColider2->Pos().y -= 21.5f;
-	//GroundColider2->SetActive(false);
 
-	Phase2[1] = new Model("IceEdge1");		// ¶³¾îÁ®³ª°¥ ¶¥ÀÇ ¸ğ¼­¸®ºÎºĞÀÔ´Ï´Ù
+	Phase2[1] = new Model("IceEdge1");		// ë–¨ì–´ì ¸ë‚˜ê°ˆ ë•…ì˜ ëª¨ì„œë¦¬ë¶€ë¶„ì…ë‹ˆë‹¤
 	Phase2[2] = new Model("IceEdge2");
 	Phase2[3] = new Model("IceEdge3");
 	Phase2[4] = new Model("IceEdge4");
 
-	Phase2[5] = new Model("Ice_debris1");	// ¾óÀ½ÆÄÆí ÀÔ´Ï´Ù
+	Phase2[5] = new Model("Ice_debris1");	// ì–¼ìŒíŒŒí¸ ì…ë‹ˆë‹¤
 	Phase2[6] = new Model("Ice_debris2");
 	Phase2[7] = new Model("Ice_debris3");
 	Phase2[8] = new Model("Ice_debris4");
 
-	Phase2[9] = new Model("IceBreak");		// ¾óÀ½ÀÌ ±úÁö´Â ¹Ù´Ú ÀÌÆåÆ®? ÀÔ´Ï´Ù
+	Phase2[9] = new Model("IceBreak");		// ì–¼ìŒì´ ê¹¨ì§€ëŠ” ë°”ë‹¥ ì´í™íŠ¸? ì…ë‹ˆë‹¤
 
-	Phase2[5]->Pos().y = 295.0f;			// ¾óÀ½ ÆÄÆíÀÇ ÃÊ±â À§Ä¡¸¦ ¼³Á¤ÇÕ´Ï´Ù
+	Phase2[5]->Pos().y = 295.0f;			// ì–¼ìŒ íŒŒí¸ì˜ ì´ˆê¸° ìœ„ì¹˜ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤
 	Phase2[6]->Pos().y = 295.0f;
 	Phase2[7]->Pos().y = 295.0f;
 	Phase2[8]->Pos().y = 295.0f;
 
 
-
-	fixeds.resize(2);							// ÆäÀÌÁî°¡ ¹Ù²î¾îµµ º¯È­ÇÏÁö ¾Ê´Â °Íµé
-	fixeds[0] = new Model("LastBossMap1_B");    // ¶¥À» ¹ŞÄ¡°í ÀÖ´Â ±âµÕ ÀÔ´Ï´Ù
-	fixeds[1] = new Model("LastBossMap1_O2");   // °è´ÜÂÊ¿¡ÀÖ´Â »ç½½ ±âµÕÀÔ´Ï´Ù
-	fixeds[1]->Pos().y += 22.5f;                // »ç½½ ±âµÕÀÇ ÃÊ±â À§Ä¡¸¦ ¼³Á¤ÇÕ´Ï´Ù
+	fixeds.resize(2);							// í˜ì´ì¦ˆê°€ ë°”ë€Œì–´ë„ ë³€í™”í•˜ì§€ ì•ŠëŠ” ê²ƒë“¤
+	fixeds[0] = new Model("LastBossMap1_B");    // ë•…ì„ ë°›ì¹˜ê³  ìˆëŠ” ê¸°ë‘¥ ì…ë‹ˆë‹¤
+	fixeds[1] = new Model("LastBossMap1_O2");   // ê³„ë‹¨ìª½ì—ìˆëŠ” ì‚¬ìŠ¬ ê¸°ë‘¥ì…ë‹ˆë‹¤
+	fixeds[1]->Pos().y += 22.5f;                // ì‚¬ìŠ¬ ê¸°ë‘¥ì˜ ì´ˆê¸° ìœ„ì¹˜ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤
 	fixeds[1]->Pos().x += 75;
 	StairCollider = new BoxCollider(Vector3(5, 40, 25));
 	StairCollider->Pos().y += 7.5;
@@ -72,7 +69,7 @@ BossMap::BossMap()
 	StairGuard[2]->Pos().z += 22.5;
 	StairGuard[2]->Rot().y += 0.75;
 
-	disappears.resize(4);							// 1ÆäÀÌÁî ÀÌÈÄ¿¡ »ç¶óÁö´Â ¾óÀ½±âµÕ(°¥ºñ»À¸ğ¾ç) ÀÔ´Ï´Ù
+	disappears.resize(4);							// 1í˜ì´ì¦ˆ ì´í›„ì— ì‚¬ë¼ì§€ëŠ” ì–¼ìŒê¸°ë‘¥(ê°ˆë¹„ë¼ˆëª¨ì–‘) ì…ë‹ˆë‹¤
 	disappears_C.resize(4);
 	for (int i = 0; i < disappears.size(); i++)
 	{
@@ -80,9 +77,8 @@ BossMap::BossMap()
 		disappears_C[i] = new Cylinder(3.5f, 15.0f, 32);
 		disappears_C[i]->SetParent(disappears[i]);
 		disappears_C[i]->Pos().y += 10.0f;
-		//disappears_C[i]->SetActive(false);
 	}
-	disappears[0]->Pos().x += 30;					// ÃÊ±âÀ§Ä¡ ¼³Á¤
+	disappears[0]->Pos().x += 30;					// ì´ˆê¸°ìœ„ì¹˜ ì„¤ì •
 	disappears[0]->Pos().z -= 30;
 	disappears[1]->Pos().x -= 30;
 	disappears[1]->Pos().z -= 30;
@@ -95,24 +91,19 @@ BossMap::BossMap()
 	disappears[3]->Rot().y -= 1.575f;
 
 	fixeds[0]->Pos().y -= 2.25f;
-	//fixeds[0]->Pos().y += 150.0f;
 	Phase1->SetParent(fixeds[0]);
 	for (int i = 0; i < Phase2.size(); i++) Phase2[i]->SetParent(fixeds[0]);
 	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->SetParent(fixeds[0]);
 	for (int i = 0; i < disappears.size(); i++) disappears[i]->SetParent(fixeds[0]);
-	//fixeds[0]->Scale() *= 0.5f;
 
-
-	//FOR(2)
-	//	blendState[i] = new BlendState();
-	//blendState[1]->Alpha(true);
-
-	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->UpdateWorld();	// ÆäÀÌÁî°¡ ³Ñ¾î°¡µµ º¯È­ÇÏÁö ¾Ê´Â°ÍµéÀº ±×³É ¾÷µ¥ÀÌÆ® ÇÕ´Ï´Ù
+	// í˜ì´ì¦ˆê°€ ë„˜ì–´ê°€ë„ ë³€í™”í•˜ì§€ ì•ŠëŠ”ê²ƒë“¤ì€ ìƒì„±ìì—ì„œ ì—…ë°ì´íŠ¸ í•©ë‹ˆë‹¤
+	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->UpdateWorld();
 	StairCollider->UpdateWorld();
 	Chair_Ground->UpdateWorld();
 	Chair->UpdateWorld();
 	for (int i = 0; i < StairGuard.size(); ++i) StairGuard[i]->UpdateWorld();
 	GroundColider2->UpdateWorld();
+
 }
 
 BossMap::~BossMap()
@@ -122,37 +113,27 @@ BossMap::~BossMap()
 	for (int i = 0; i < Phase2.size(); i++) delete Phase2[i];
 	for (int i = 0; i < fixeds.size(); i++) delete fixeds[i];
 	for (int i = 0; i < disappears.size(); i++) delete disappears[i];
-
-	//FOR(2)
-	//	delete blendState[i];
 }
 
 void BossMap::Update()
 {
-	//if(KEY_DOWN(VK_RIGHT))
-	//{
-	//	PhaseNum += 1;
-	//}
-
-	switch (PhaseNum) // ÆäÀÌÁî ³Ñ¹ö¿¡µû¶ó ¿¢Æ¼ºê¿Í ¾÷µ¥ÀÌÆ® ¿©ºÎ¸¦ ÆÇ´ÜÇÏ¿© ¼öÇàÇÕ´Ï´Ù
+	switch (PhaseNum) // í˜ì´ì¦ˆ ë„˜ë²„ì—ë”°ë¼ ì—‘í‹°ë¸Œì™€ ì—…ë°ì´íŠ¸ ì—¬ë¶€ë¥¼ íŒë‹¨í•˜ì—¬ ìˆ˜í–‰í•©ë‹ˆë‹¤
 	{
 	case 0:
 		Phase1->UpdateWorld();
 		Phase1->SetActive(true);
 		GroundColider1->SetActive(true);
 		GroundColider1->UpdateWorld();
-
 		for (int i = 0; i < disappears.size(); i++)
 		{
 			disappears[i]->UpdateWorld();
-			disappears_C[i]->UpdateWorld();
+			//disappears_C[i]->UpdateWorld();
 		}
 		break;
 	case 1:
 		for (int i = 0; i < Phase2.size(); i++) Phase2[i]->SetActive(true);
 		Phase1->SetActive(false);
 		GroundColider2->SetActive(true);
-		//GroundColider2->UpdateWorld();
 		Fall();
 		break;
 	case 2:
@@ -176,19 +157,18 @@ void BossMap::Render()
 {
 	skybox->Render();
 
-	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->Render(); // ÆäÀÌÁî°¡ ³Ñ¾î°¡µµ º¯È­ÇÏÁö ¾Ê´Â°ÍµéÀº ±×³É ·£´õ ÇÕ´Ï´Ù
-	//StairCollider->Render();
-	//Chair_Ground->Render();
-	//Chair->Render();
-	//for (int i = 0; i < StairGuard.size(); ++i) StairGuard[i]->Render();
+	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->Render(); // í˜ì´ì¦ˆê°€ ë„˜ì–´ê°€ë„ ë³€í™”í•˜ì§€ ì•ŠëŠ”ê²ƒë“¤ì€ ê·¸ëƒ¥ ëœë” í•©ë‹ˆë‹¤
+	StairCollider->Render();
+	Chair_Ground->Render();
+	Chair->Render();
+	for (int i = 0; i < StairGuard.size(); ++i) StairGuard[i]->Render();
+	//GroundColider2->Render();
 
-	//blendState[1]->SetState();
-
-	switch (PhaseNum) // ÆäÀÌÁî ³Ñ¹ö¿¡µû¶ó ·£´õ ¿©ºÎ¸¦ ÆÇ´ÜÇÏ¿© ¼öÇàÇÕ´Ï´Ù
+	switch (PhaseNum) // í˜ì´ì¦ˆ ë„˜ë²„ì—ë”°ë¼ ëœë” ì—¬ë¶€ë¥¼ íŒë‹¨í•˜ì—¬ ìˆ˜í–‰í•©ë‹ˆë‹¤
 	{
 	case 0:
 		Phase1->Render();
-		//GroundColider1->Render();
+		GroundColider1->Render();
 		for (int i = 0; i < disappears.size(); i++)
 		{
 			disappears[i]->Render();
@@ -196,21 +176,19 @@ void BossMap::Render()
 		}
 		break;
 	case 1:
-		Phase2[0]->Render(); // 2ÆäÀÌÁî´Â ÀÏ´Ü ¶¥¸¸ ·£´õ ÇÕ´Ï´Ù
+		Phase2[0]->Render(); // 2í˜ì´ì¦ˆ
 		//GroundColider2->Render();
 		NoneRender();
 		break;
 	case 2:
 		Phase1->Render();
-		//GroundColider1->Render();
+		GroundColider1->Render();
 		break;
 	case 3:
 		Phase2[0]->Render();
 		//GroundColider2->Render();
 		NoneRender();
 	}
-
-	//blendState[0]->SetState();
 }
 
 bool BossMap::IsCollision(Collider* c)
@@ -267,7 +245,7 @@ bool BossMap::IsCollision(Collider* c)
 	return false;
 }
 
-void BossMap::Fall() // ¾óÀ½ ¹Ù´ÚÀÌ ¶³¾îÁö´Â ÇÔ¼ö ÀÔ´Ï´Ù
+void BossMap::Fall() // ì–¼ìŒ ë°”ë‹¥ì´ ë–¨ì–´ì§€ëŠ” í•¨ìˆ˜ ì…ë‹ˆë‹¤
 {
 
 	for (int i = 0; i < Phase2.size(); i++) Phase2[i]->UpdateWorld();
@@ -288,7 +266,7 @@ void BossMap::Fall() // ¾óÀ½ ¹Ù´ÚÀÌ ¶³¾îÁö´Â ÇÔ¼ö ÀÔ´Ï´Ù
 	}
 }
 
-void BossMap::ZeroSet() // ¶³¾îÁø ¾óÀ½ ¹Ù´Ú À§Ä¡¸¦ ¸®¼Â½ÃÅµ´Ï´Ù
+void BossMap::ZeroSet() // ë–¨ì–´ì§„ ì–¼ìŒ ë°”ë‹¥ ìœ„ì¹˜ë¥¼ ë¦¬ì…‹ì‹œí‚µë‹ˆë‹¤
 {
 	for (int k = 1; k <= 8; ++k)
 	{
@@ -309,7 +287,7 @@ void BossMap::ZeroSet() // ¶³¾îÁø ¾óÀ½ ¹Ù´Ú À§Ä¡¸¦ ¸®¼Â½ÃÅµ´Ï´Ù
 	}
 }
 
-void BossMap::NoneRender() // ¾óÀ½¹Ù´ÚÀÌ ´Ù ¶³¾îÁö±â Àü±îÁö ·£´õ ÇÕ´Ï´Ù (´Ù¶³¾îÁö¸é ·£´õÇÏÁö¾Ê½À´Ï´Ù)
+void BossMap::NoneRender() // ì–¼ìŒë°”ë‹¥ì´ ë‹¤ ë–¨ì–´ì§€ê¸° ì „ê¹Œì§€ ëœë” í•©ë‹ˆë‹¤ (ë‹¤ë–¨ì–´ì§€ë©´ ëœë”í•˜ì§€ì•ŠìŠµë‹ˆë‹¤)
 {
 	for (int k = 1; k <= 9; ++k)
 	{

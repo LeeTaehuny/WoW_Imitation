@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "DungeonScene.h"
 #include "Objects/Skills/SkillManager.h"
 #include "Objects/UI/Button.h"
@@ -16,7 +16,6 @@ DungeonScene::DungeonScene()
 
 	{
 		back_ = new Quad(L"Textures/UI/barbershop.png");
-		//back_->Scale() *= 0.7f;
 		back_->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.5f);
 		back_->UpdateWorld();
 
@@ -58,11 +57,9 @@ void DungeonScene::Start()
 {
 	dungeon = new Dungeon();
 
-	float Time = 7.0f;
-
 	Audio::Get()->Play("Out_Dungeon", 0.7f);
 
-	// ÇÃ·¹ÀÌ¾î À§Ä¡ Á¶Á¤
+	// í”Œë ˆì´ì–´ ìœ„ì¹˜ ì¡°ì •
 	CH->GetPlayerData()->Pos() = dungeon->GetSpawnPoint_P();
 	CH->GetPlayerData()->SetHeight(0.0f);
 	CH->GetPlayerData()->Rot().y = 3.15f;
@@ -78,7 +75,7 @@ void DungeonScene::Start()
 	Mounga_die = false;
 	pop_time = Max_pop_time;
 
-	// ÃÊ±âÈ­
+	// ì´ˆê¸°í™”
 	isOpenGate = false;
 	isOpenDoor = false;
 	in_A = false;
@@ -119,7 +116,7 @@ void DungeonScene::Update()
 		}
 	}
 
-	// ÇÃ·¹ÀÌ¾î°¡ Æ÷Å»¿¡ ´êÀº°æ¿ì
+	// í”Œë ˆì´ì–´ê°€ í¬íƒˆì— ë‹¿ì€ê²½ìš°
 	if (dungeon->PotalCollision(CH->GetPlayerData()->GetCollider())) 
 	{
 		Environment::Get()->GetLight(0)->color = { 1.0f, 1.0f, 1.0f, 1 };
@@ -129,7 +126,7 @@ void DungeonScene::Update()
 		SceneManager::Get()->ChangeScene("Boss");
 	}
 
-	// 1¹ø¹æ ¹® ¿­¸®±â
+	// 1ë²ˆë°© ë¬¸ ì—´ë¦¬ê¸°
 	if (dungeon->IsOpenGateCollider(CH->GetPlayerData()->GetCollider()) 
 		&& isOpenGate == false)
 	{
@@ -141,7 +138,7 @@ void DungeonScene::Update()
 		isOpenGate = true;
 	}
 
-	// 1¹ø¹æ ¹®ÀÌ ¿­·È°í, Áß¾Ó Ãæµ¹Ã¼¿Í Ãæµ¹ÇÏ¸é ¸ó½ºÅÍ ½ºÆù
+	// 1ë²ˆë°© ë¬¸ì´ ì—´ë ¸ê³ , ì¤‘ì•™ ì¶©ëŒì²´ì™€ ì¶©ëŒí•˜ë©´ ëª¬ìŠ¤í„° ìŠ¤í°
 	if (isOpenGate == true &&
 		dungeon->IsinDungeon(CH->GetPlayerData()->GetCollider()) && 
 		in_A == false)
@@ -155,7 +152,7 @@ void DungeonScene::Update()
 		in_A = true;
 	}
 
-	// 1¹ø¹æ ¸ó½ºÅÍ°¡ ½ºÆùµÇ¾úÀ¸¸ç, ¸ðµÎ Á×¾ú´Ù¸é 2¹ø¹æ ¹® ¿­¸®±â
+	// 1ë²ˆë°© ëª¬ìŠ¤í„°ê°€ ìŠ¤í°ë˜ì—ˆìœ¼ë©°, ëª¨ë‘ ì£½ì—ˆë‹¤ë©´ 2ë²ˆë°© ë¬¸ ì—´ë¦¬ê¸°
 	if (in_A == true &&
 		MONSTER->GetSkeleton().size() == 0 &&
 		isOpenDoor == false)
@@ -168,7 +165,7 @@ void DungeonScene::Update()
 		isOpenDoor = true;
 	}
 
-	// 2¹ø¹æ ¹®ÀÌ ¿­·È°í, Áß¾Ó Ãæµ¹Ã¼¿Í Ãæµ¹ÇÏ¸é ¸ó½ºÅÍ ½ºÆù
+	// 2ë²ˆë°© ë¬¸ì´ ì—´ë ¸ê³ , ì¤‘ì•™ ì¶©ëŒì²´ì™€ ì¶©ëŒí•˜ë©´ ëª¬ìŠ¤í„° ìŠ¤í°
 	if (isOpenDoor == true &&
 		dungeon->IsinDungeon2(CH->GetPlayerData()->GetCollider()) && 
 		in_B == false)
@@ -181,7 +178,7 @@ void DungeonScene::Update()
 		in_B = true;
 	}
 
-	// 2¹ø¹æ ¸ó½ºÅÍ°¡ ½ºÆùµÇ¾úÀ¸¸ç, ¸ðµÎ Á×¾ú´Ù¸é Æ÷Å» º® ºÎ½Ã±â
+	// 2ë²ˆë°© ëª¬ìŠ¤í„°ê°€ ìŠ¤í°ë˜ì—ˆìœ¼ë©°, ëª¨ë‘ ì£½ì—ˆë‹¤ë©´ í¬íƒˆ ë²½ ë¶€ì‹œê¸°
 	if (in_B == true && 
 		MONSTER->GetSkeleton_Knight().size() == 0 &&
 		ClearDungeon == false)
@@ -223,15 +220,15 @@ void DungeonScene::PostRender()
 			gaem_end->Render();
 			goTown->Render();
 
-			string rito = "´ç½ÅÀº Á×¾ú½À´Ï´Ù.";
+			string rito = "ë‹¹ì‹ ì€ ì£½ì—ˆìŠµë‹ˆë‹¤.";
 			Font::Get()->RenderText(rito, { 735, 450 });
-			rito = "´Ù½Ã µµÀüÇÏ½Ã°Ú½À´Ï±î?";
+			rito = "ë‹¤ì‹œ ë„ì „í•˜ì‹œê² ìŠµë‹ˆê¹Œ?";
 			Font::Get()->RenderText(rito, { 750, 420 });
 
-			rito = "´Ù½Ã µµÀü";
+			rito = "ë‹¤ì‹œ ë„ì „";
 			Font::Get()->RenderText(rito, { 687, 363 });
 
-			rito = "°ÔÀÓ Á¾·á";
+			rito = "ê²Œìž„ ì¢…ë£Œ";
 			Font::Get()->RenderText(rito, { 687, 291 });
 		}
 	}
