@@ -133,7 +133,7 @@ void DungeonScene::Update()
 		dungeon->OpenDoor(true);
 		Audio::Get()->Play("Open_Gate", 0.7f);
 		Audio::Get()->Stop("Out_Dungeon");
-		Audio::Get()->Play("in_Dungeon", 0.7f);;
+		Audio::Get()->Play("in_Dungeon", 0.7f);
 
 		isOpenGate = true;
 	}
@@ -151,6 +151,11 @@ void DungeonScene::Update()
 		//isOpenGate = false;
 		in_A = true;
 	}
+	if (in_A == true && isOpenDoor == false && !Audio::Get()->IsPlaySound("in_Dungeon"))
+	{
+		Audio::Get()->Play("in_Dungeon", 0.7f);
+	}
+
 
 	// 1번방 몬스터가 스폰되었으며, 모두 죽었다면 2번방 문 열리기
 	if (in_A == true &&
@@ -177,6 +182,11 @@ void DungeonScene::Update()
 		}
 		in_B = true;
 	}
+	if (isOpenDoor == true && in_B == true && ClearDungeon == false && !Audio::Get()->IsPlaySound("in_Dungeon2"))
+	{
+		Audio::Get()->Play("in_Dungeon2", 0.7f);
+	}
+	
 
 	// 2번방 몬스터가 스폰되었으며, 모두 죽었다면 포탈 벽 부시기
 	if (in_B == true && 
