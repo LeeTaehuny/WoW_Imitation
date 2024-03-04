@@ -7,10 +7,6 @@ Arrow::Arrow(Transform* transform)
 	isRun = false;
 }
 
-Arrow::~Arrow()
-{
-}
+Arrow::~Arrow(){}
 
-void Arrow::Update()
-{
-}
+void Arrow::Update(){}

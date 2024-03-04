@@ -13,7 +13,6 @@ LichKimgBossScene::LichKimgBossScene()
 	map = new BossMap();
 
 	back_ = new Quad(L"Textures/UI/barbershop.png");
-	//back_->Scale() *= 0.7f;
 	back_->Pos() = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.5f);
 	back_->UpdateWorld();
 
@@ -23,7 +22,7 @@ LichKimgBossScene::LichKimgBossScene()
 	die_Gray->UpdateWorld();
 
 	change_Scene = new Quad(Vector2(WIN_WIDTH, WIN_HEIGHT));
-	change_Scene->GetMaterial()->SetDiffuseMap(L"Textures/SelectScene/loding.jpg");
+	change_Scene->GetMaterial()->SetDiffuseMap(L"Textures/SelectScene/lickKing_Loading.png");
 	change_Scene->Pos() = Vector3(CENTER_X, CENTER_Y);
 	change_Scene->SetActive(false);
 	change_Scene->UpdateWorld();
@@ -55,9 +54,6 @@ LichKimgBossScene::~LichKimgBossScene()
 
 void LichKimgBossScene::Start()
 {
-	//CH->PlayerSpawn(2);
-	//SKILL->Init(CH->GetPlayerData());
-
 	sound_change = false;
 	Audio::Get()->Play("bossScene_main_bgm", 0.7f);
 
@@ -136,14 +132,36 @@ void LichKimgBossScene::Update()
 
 	if (playerData->GetStat().hp <= 0 || bossData->GetHpPercent() <= 0)
 	{
-		goTown->Update();
-		gaem_end->Update();
+		if (pldie_first)
+		{
+			goTown->Update();
+			gaem_end->Update();
+		}
+		if (bodie_first)
+		{
+			gaem_end->Update();
+		}
 
 		if (!sound_change)
 		{
 			sound_change = true;
 			Audio::Get()->Stop("bossScene_main_bgm");
 			Audio::Get()->Play("bossScene_end", 0.7f);
+		}
+	}
+
+	if (!sound_change)
+	{
+		if (!Audio::Get()->IsPlaySound("bossScene_main_bgm"))
+		{
+			Audio::Get()->Play("bossScene_main_bgm");
+		}
+	}
+	else
+	{
+		if (!Audio::Get()->IsPlaySound("bossScene_end"))
+		{
+			Audio::Get()->Play("bossScene_end");
 		}
 	}
 
@@ -192,8 +210,10 @@ void LichKimgBossScene::PostRender()
 			return;
 		}
 
-		if (playerData->GetStat().hp <= 0 && !Mounga_die)
+		if (playerData->GetStat().hp <= 0 && !Mounga_die && !bodie_first)
 		{
+			pldie_first = true;
+
 			die_Gray->Render();
 			back_->Render();
 			gaem_end->Render();
@@ -211,8 +231,10 @@ void LichKimgBossScene::PostRender()
 			Font::Get()->RenderText(rito, { 687, 291 });
 		}
 
-		if (bossData->GetHpPercent() <= 0 && !Mounga_die)
+		if (bossData->GetHpPercent() <= 0 && !Mounga_die && !pldie_first)
 		{
+			bodie_first = true;
+
 			back_->Render();
 			gaem_end->Render();
 

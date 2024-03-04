@@ -94,7 +94,6 @@ void Skeleton_Knight::Update()
 	targetAttack();
 	ExecuteEvent();
 	MonsterBase::targetActiveSerch();
-	//UpdateUI();
 
 	root->SetWorld(instancing->GetTransformByNode(index, 3));
 	collider->UpdateWorld();
@@ -211,7 +210,6 @@ void Skeleton_Knight::EndHit()
 void Skeleton_Knight::EndDeath()
 {
 	transform->SetActive(false);
-	//collider->SetActive(false);
 }
 
 void Skeleton_Knight::SetState(State state)
@@ -297,8 +295,4 @@ void Skeleton_Knight::targetAttack()
 		Moving = true;
 		attackBumwe->SetActive(false);
 	}
-}
-
-void Skeleton_Knight::UpdateUI()
-{
 }

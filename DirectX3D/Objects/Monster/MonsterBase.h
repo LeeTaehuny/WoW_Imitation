@@ -30,15 +30,23 @@ public:
 	virtual void PostRender() = 0;
 	virtual void Hit(float amount = 1) = 0;
 
+	// 몬스터의 콜라이더 정보
 	CapsuleCollider* GetCollider() { return collider; }
+	// 몬스터의 모델 트랜스폼 정보
 	Transform* GetTransform() { return transform; }
+	// 몬스터의 체력 비율
 	float GetHpPercent() { return curHP / maxHP; }
+	// 몬스터의 현재 체력
 	float GetCurHP() { return curHP; }
+	// 몬스터의 최대 체력
 	float GetMaxHP() { return maxHP; }
+	// 몬스터의 현재 체력 변경
 	void SetCurHp(float value) { curHP = value; }
 
+	// 몬스터가 보스인지 아닌지를 확인하기 위한 겟터
 	MonsterType GetMonsterType() { return type; }
 
+	// 타겟 캐릭터의 액티브가 꺼졌을때 자신과 가장 가까운 캐릭터를 판별하기 위한 함수
 	void targetActiveSerch()
 	{
 		if (!targetTransform->GetCollider()->Active())
@@ -65,6 +73,7 @@ public:
 			targetTransform = lom;
 		}
 	}
+	// 자신과 가장 가까운 캐릭터를 판별하기 위한 함수
 	void atkEndSerch()
 	{
 		attackTarget_serch->UpdateWorld();

@@ -7,8 +7,6 @@ VAlkier::VAlkier(Transform* transform, ModelAnimatorInstancing* instancing, UINT
 	this->index = index;
 	this->target = target;
 
-	//transform->Scale() *= 0.03f;
-
 	root = new Transform();
 
 	collider = new CapsuleCollider(100, 100);
@@ -20,9 +18,6 @@ VAlkier::VAlkier(Transform* transform, ModelAnimatorInstancing* instancing, UINT
 	motion = instancing->GetMotion(index);
 	totalEvents.resize(instancing->GetClipSize());
 	eventIters.resize(instancing->GetClipSize());
-
-	// 애니메이션 세팅
-	//SetEvent(DEATH, bind(&VAlkier::EndDeath, this), 1);
 
 	Max_attack_deley = 1.5f;
 	attack_deley = Max_attack_deley;
@@ -102,7 +97,6 @@ void VAlkier::Update()
 
 	ExecuteEvent();
 	MonsterBase::targetActiveSerch();
-	//UpdateUI();
 
 	if (curState == FLYING)
 	{
@@ -155,7 +149,6 @@ void VAlkier::Hit(float amount)
 
 	if (curHP <= 0)
 	{
-		//SetState(DEATH);
 		transform->SetActive(false);
 		collider->SetActive(false);
 		curHP = 0.0f;
@@ -211,11 +204,6 @@ void VAlkier::ExecuteEvent()
 	eventIters[index]++;
 }
 
-void VAlkier::EndDeath()
-{
-	transform->SetActive(false);
-}
-
 void VAlkier::SetState(State state)
 {
 	if (state == curState) return;
@@ -263,8 +251,4 @@ void VAlkier::targetAttack()
 		transform->SetActive(false);
 		collider->SetActive(false);
 	}	
-}
-
-void VAlkier::UpdateUI()
-{
 }

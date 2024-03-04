@@ -101,10 +101,11 @@ MarksmanshipHunter_in::~MarksmanshipHunter_in()
 
 void MarksmanshipHunter_in::Update()
 {
-	// ��Ƽ�� ���°� �ƴ϶�� ������Ʈ���� ����
+	// 액티브가 꺼져 있다면 함수 종료
 	if (!Active()) return;
 
-	// �÷��̾� Ÿ�Կ� ���� ������Ʈ ����
+	// 캐릭터의 타입에따라 업데이트를 다르게 함
+	// NPC와 플레이어 구분
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -126,7 +127,7 @@ void MarksmanshipHunter_in::Update()
 
 void MarksmanshipHunter_in::Render()
 {
-	// ��Ƽ�� ���°� �ƴ϶�� ������Ʈ���� ����
+	// 액티브가 꺼져 있다면 함수 종료
 	if (!Active()) return;
 
 	myCollider->Render();
@@ -145,8 +146,6 @@ void MarksmanshipHunter_in::GUIRender()
 		Transform::GUIRender();
 
 		string Mtag = "M_" + to_string(index);
-		//ImGui::SliderFloat((tag + "_HP").c_str(), &stat.hp, 0, stat.maxHp);
-		//ImGui::SliderFloat((tag + "_MP").c_str(), (float*)&stat.mp, 0, stat.maxHp);
 		ImGui::Text((Mtag + "_HP : " + to_string((int)stat.hp)).c_str());
 		ImGui::Text((Mtag + "_MP : " + to_string(stat.mp)).c_str());
 
@@ -167,7 +166,6 @@ void MarksmanshipHunter_in::EquipWeapon(Weapon* weapon)
 void MarksmanshipHunter_in::PlayerUpdate()
 {
 	Control();
-	//Casting();
 
 	if (one_atk_sound)
 	{
@@ -180,7 +178,6 @@ void MarksmanshipHunter_in::PlayerUpdate()
 		}
 	}
 
-	// �浹ü ������Ʈ
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
 }
@@ -201,11 +198,12 @@ void MarksmanshipHunter_in::AIUpdate()
 		}
 	}
 
-	// ���� ������ Ÿ���� ���ٸ�
+	// 공격 명령이 활성화되었을 경우
 	if (!atkTarget)
 	{
 		AI_animation_Moving();
 	}
+	// 공격 명령이 비활성화인 경우
 	else
 	{
 		ai_attack();
@@ -249,8 +247,7 @@ void MarksmanshipHunter_in::OnHit(float damage, bool motion)
 
 void MarksmanshipHunter_in::AI_animation_Moving()
 {
-
-	// ���� �÷��̾��� ������ �ִٸ�
+	// 플레이어의 범위에 머물러 있는 경우 작동하는 이프문
 	if (myPlayer->GetRange()->IsCollision(myCollider))
 	{
 		randomHangdong -= DELTA;
@@ -261,11 +258,12 @@ void MarksmanshipHunter_in::AI_animation_Moving()
 		}
 
 		this->Pos() += randomVelocity * (moveSpeed / 10) * DELTA;
+		this->Pos().y = curheight;
 		this->Rot().y = atan2(randomVelocity.x, randomVelocity.z) + XM_PI;
 
 		SetState(WALK_F);
 	}
-	// �÷��̾��� �ֺ��� �ƴ϶��
+	// 플레이어의 범위안에 없는 경우 작동하는 이프문
 	else
 	{
 		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
@@ -275,6 +273,7 @@ void MarksmanshipHunter_in::AI_animation_Moving()
 		this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
 
 		this->Pos() += velo * moveSpeed * DELTA;
+		this->Pos().y = curheight;
 		SetState(WALK_F);
 	}
 
@@ -304,14 +303,14 @@ void MarksmanshipHunter_in::Control()
 
 void MarksmanshipHunter_in::Moving()
 {
-	// ����, ����, ���� ��, �׾��� ��� �������� �ʱ�
+	// 공격, 죽음, 히트, 캐스팅 애니메이션이 실행중이라면 함수 종료
 	if (curState == ATTACK1 || curState == DIE || curState == HIT ||
 		curState == SKILL1 || curState == SKILL2) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
 
-	// ĳ���� �⺻ �̵� : W(��), S(��), Q(��), E(��)
+	// 캐릭터 기본 이동 : W(앞), S(뒤), Q(좌), E(우)
 	{
 		if (KEY_PRESS('W'))
 		{
@@ -335,11 +334,11 @@ void MarksmanshipHunter_in::Moving()
 		}
 	}
 
-	// ĳ���� ���콺 ��Ŭ���� ���� �̵� ��ȭ
+	// 캐릭터 마우스 우클릭에 따른 이동 변화
 	{
 		if (KEY_PRESS(VK_RBUTTON))
 		{
-			// �¿� �̵�
+			// 좌우 이동
 			if (KEY_PRESS('A'))
 			{
 				velocity.x -= DELTA;
@@ -353,10 +352,10 @@ void MarksmanshipHunter_in::Moving()
 		}
 		else
 		{
-			// �յڷ� �̵� ���� �ƴ� ��
+			// 앞뒤로 이동 중이 아닐 때
 			if (KEY_PRESS('W') || KEY_PRESS('S'))
 			{
-				// �¿� ȸ��
+				// 좌우 회전
 				if (KEY_PRESS('A'))
 				{
 					Rot().y -= turnSpeed * DELTA;
@@ -369,7 +368,7 @@ void MarksmanshipHunter_in::Moving()
 		}
 	}
 
-	// ���ӵ� ����
+	// 가속도 설정
 	if (velocity.Length() > 1) velocity.Normalize();
 	if (!isMoveZ) velocity.z = Lerp(velocity.z, 0, deceleration * DELTA);
 	if (!isMoveX) velocity.x = Lerp(velocity.x, 0, deceleration * DELTA);
@@ -377,10 +376,10 @@ void MarksmanshipHunter_in::Moving()
 	Matrix rotY = XMMatrixRotationY(Rot().y);
 	Vector3 direction = XMVector3TransformCoord(velocity, rotY);
 
-	// ��ġ �̵�
+	// 위치 이동
 	this->Pos() += direction * -1 * moveSpeed * DELTA;
 
-	// ������ ����� �ִϸ��̼� ���� X
+	// 점프인 경우라면 애니메이션 설정 X
 	if (curState == JUMP) return;
 
 	if (velocity.z > 0.1f)
@@ -397,7 +396,7 @@ void MarksmanshipHunter_in::Moving()
 
 void MarksmanshipHunter_in::Jump()
 {
-	// �������� �ƴ϶�� ����
+	// 점프중이 아니라면 리턴
 	if (!isJump)
 	{
 		jumpVelocity -= 1.8f * gravityMult * DELTA;
@@ -414,10 +413,10 @@ void MarksmanshipHunter_in::Jump()
 	jumpVelocity -= 1.8f * gravityMult * DELTA;
 	Pos().y += jumpVelocity;
 
-	// ������ ���� ���̺��� ��ġ�� ���ٸ�?
+	// 현재의 지정 높이보다 위치가 낮다면?
 	if (Pos().y < curheight)
 	{
-		// ��ġ �ʱ�ȭ �� ���� ��ȯ
+		// 위치 초기화 및 상태 전환
 		Pos().y = curheight;
 		jumpVelocity = 0;
 		SetState(IDLE1);
@@ -427,11 +426,11 @@ void MarksmanshipHunter_in::Jump()
 
 void MarksmanshipHunter_in::Attack()
 {
-	// ����, ���, �ǰ�, ���� ������ ��� ����
+	// 점프, 죽음, 히트, 공격 애니메이션이 실행중이라면 함수를 작동시키지 않음
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 	if (!weapon) return;
 
-	// �Ϲݰ���
+	// 무기가 착용되어 있고 타겟이 널이 아닌 경우 공격 가능
 	if (KEY_DOWN(VK_LBUTTON) && weapon != nullptr && targetMonster)
 	{
 		skillList[0]->UseSkill(targetMonster);
@@ -441,7 +440,7 @@ void MarksmanshipHunter_in::Attack()
 
 void MarksmanshipHunter_in::ai_attack()
 {
-	// ����, ���, �ǰ�, ���� ������ ��� ����
+	// 죽음, 히트, 공격 애니메이션이 재생중이라면 함수 종료
 	if (curState == DIE || curState == HIT || curState == ATTACK1) return;
 
 	ActionTickTime -= DELTA;
@@ -461,7 +460,7 @@ void MarksmanshipHunter_in::ai_attack()
 			return;
 		}
 
-		// ������ ����� �ٶ󺸰� �ϴ� �ڵ�
+		// 스킬을 사용할때 대상을 포게하기 위함
 		Vector3 poldirect = monsterSelectData->GetTransform()->GlobalPos() - this->GlobalPos();
 		this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
 

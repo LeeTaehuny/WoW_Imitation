@@ -9,6 +9,7 @@ public:
 	virtual void Render() override;
 	virtual void UseSkill(MonsterBase* monsterbase) override;
 
+	// 스킬 발동부분을 함수로 제작
 	void Using(int imto);
 
 private:

@@ -14,11 +14,11 @@
 
 CH_Manager::CH_Manager()
 {
-	InstancingDataArms();
-	InstancingDataFire();
-	InstancingDataHoly();
-	InstancingDataMarksmanship();
-	InstancingDataProtection();
+	//InstancingDataArms();
+	//InstancingDataFire();
+	//InstancingDataHoly();
+	//InstancingDataMarksmanship();
+	//InstancingDataProtection();
 	ARROW;
 
 	partyUI = new PartyUI_Bar();
@@ -47,10 +47,16 @@ void CH_Manager::Update()
 	UPDATE(marksmanshiphunter);
 	UPDATE(holypriest);
 
+	if (KEY_DOWN(VK_UP))
+	{
+		character[0]->OnHit(100);
+	}
+
 	for (CH_Base_ver2* ch : character)
 	{
 		if (ch != nullptr)
 		{
+			// NPC들에게 공격명령을 내리기 위한 부분
 			if (KEY_DOWN('Z'))
 				ch->SetAttackOrder();
 
@@ -322,11 +328,4 @@ void CH_Manager::NonPlayerSpawn(int value)
 	nonCount++;
 
 	partyUI->AddPlayer(character.size() - 1);
-}
-
-CH_Base_ver2* CH_Manager::SelectHealCharacter(IN CH_Base_ver2* collider)
-{
-
-
-	return nullptr;
 }

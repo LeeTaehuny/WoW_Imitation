@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "Lich_003_Summon_Drudge_Ghouls.h"
 
 Lich_003_Summon_Drudge_Ghouls::Lich_003_Summon_Drudge_Ghouls(Boss_LichKing* lich)
@@ -25,6 +25,7 @@ void Lich_003_Summon_Drudge_Ghouls::Update()
 		animStart += DELTA;
 		if (animStart <= Max_animStart) return;
 
+		// 한 번만 스폰하게하기 위한 작업
 		if (JustOne == 0)
 		{
 			JustOne++;

@@ -206,8 +206,7 @@ void MonsterManager::PostRender()
 
 void MonsterManager::GUIRender()
 {
-	//string nowSize = "skeleton count : " + to_string(skeleton.size());
-	//ImGui::Text((nowSize).c_str());
+	
 }
 
 void MonsterManager::SetTarget(CH_Base_ver2* transform)
@@ -220,7 +219,6 @@ void MonsterManager::SpawnSkeleton(Vector3 pos)
 	Transform* transform = skeleton_body->Add();
 	transform->Scale() *= 0.01f;
 	Skeleton* skel = new Skeleton(transform, skeleton_body, skeleton_Count, targets);
-	//monsterCollider.push_back(skel->collider);
 	skeleton.push_back(skel);
 	skeleton[skeleton.size() - 1]->Spawn(pos);
 	skeleton_Count++;
@@ -230,7 +228,6 @@ void MonsterManager::SpawnSkeletonKnight(Vector3 pos)
 	Transform* transform = skeletonKnight_body->Add();
 	transform->Scale() *= 0.02f;
 	Skeleton_Knight* skel = new Skeleton_Knight(transform, skeletonKnight_body, skeleton_Night_Count, targets);
-	//monsterCollider.push_back(skel->collider);
 	skeleton_Knight.push_back(skel);
 	skeleton_Knight[skeleton_Knight.size() - 1]->Spawn(pos);
 	skeleton_Night_Count++;
@@ -240,7 +237,6 @@ void MonsterManager::SpawnScarecrow(Vector3 pos)
 	Transform* transform = scarecrow_body->Add();
 	transform->Scale() *= 0.02f;
 	Scarecrow* skel = new Scarecrow(transform, scarecrow_body, scarecrow_Count, targets);
-	//monsterCollider.push_back(skel->collider);
 	scarecrow.push_back(skel);
 	scarecrow[scarecrow.size() - 1]->Spawn(pos);
 	scarecrow_Count++;
@@ -250,7 +246,6 @@ void MonsterManager::SpawnVAlkier(Vector3 pos)
 	Transform* transform = valkier_body->Add();
 	transform->Scale() *= 0.02f;
 	VAlkier* skel = new VAlkier(transform, valkier_body, Valkier_Count, targets);
-	//monsterCollider.push_back(skel->collider);
 	valkier.push_back(skel);
 	valkier[valkier.size() - 1]->Spawn(pos);
 	Valkier_Count++;
@@ -258,7 +253,6 @@ void MonsterManager::SpawnVAlkier(Vector3 pos)
 void MonsterManager::SpawnIceBall(Vector3 pos)
 {
 	IceBall* skel = new IceBall(targets);
-	//monsterCollider.push_back(skel->collider);
 	valkier.push_back(skel);
 	valkier[valkier.size() - 1]->Spawn(pos);
 }

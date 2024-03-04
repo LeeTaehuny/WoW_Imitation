@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "Lich_005_Remorseless_Winter.h"
 
 Lich_005_Remorseless_Winter::Lich_005_Remorseless_Winter(Boss_LichKing* lich)

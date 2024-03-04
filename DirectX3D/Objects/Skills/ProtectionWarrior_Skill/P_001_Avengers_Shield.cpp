@@ -5,12 +5,6 @@ P_001_Avengers_Shield::P_001_Avengers_Shield()
 {
 	skillName = "P_001_Avengers_Shield";
 
-	/*
-	스킬의 효과
-
-	적에게 방패를 던짐
-	*/
-
 	// 콜라이더 생성 후 바로 비활성화
 	myCollider = new SphereCollider();
 	myCollider->SetActive(false);
@@ -83,10 +77,7 @@ void P_001_Avengers_Shield::Update()
 			case CreatureType::Player:
 				Audio::Get()->Play("PW_01_swing", owner->Pos(), 1.0f);
 				break;
-
 			}
-
-			
 			myCollider->SetActive(true);
 			onejacdong++;
 		}

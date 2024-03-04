@@ -5,14 +5,6 @@ P_009_Eye_Of_Tyr::P_009_Eye_Of_Tyr() : ActiveSkill(SkillType::NonTarget)
 {
 	skillName = "P_009_Eye_Of_Tyr";
 
-	/*
-	스킬의 효과
-
-	방패에서 빛을 발산하여 범위내의 모든 적에게 신성피해를 입히고 9초간
-	대상이 자신에게 입히는 피해를 25%만큼 감소시킴
-	(데미지 감소 생략)
-	*/
-
 	hitCollider = new SphereCollider();
 	hitCollider->SetActive(false);
 
@@ -155,7 +147,6 @@ void P_009_Eye_Of_Tyr::Update()
 			}
 
 			hitCollider->SetActive(false);
-			//hitCollider->Scale() = Vector3(1, 1, 1);
 			isRun = false;
 			hitCollider->Scale() = Vector3(1, 1, 1);
 			hitCollider->Pos() = Vector3(0, -50, 0);

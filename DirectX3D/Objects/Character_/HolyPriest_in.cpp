@@ -12,9 +12,6 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 	this->instancing = instancing;
 	this->index = index;
 
-	//this->Scale() *= 0.01;
-	//this->Scale() *= 100;
-
 	myCollider = new CapsuleCollider(0.5f, 1.0f);
 	myCollider->SetParent(this);
 	myCollider->Pos() = Vector3(0, 1.0f, 0);
@@ -46,7 +43,7 @@ HolyPriest_in::HolyPriest_in(CreatureType type, Transform* transform, ModelAnima
 
 	skillList.push_back(new H_000_Basic_Atttack());
 	skillList[skillList.size() - 1]->SetOwner(this);
-	// �ڽ��� Ÿ�Կ� ���� 
+	// 캐릭터의 타입에 따라 생성하는 것들을 나눔
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -109,10 +106,11 @@ HolyPriest_in::~HolyPriest_in()
 
 void HolyPriest_in::Update()
 {
-	// ��Ƽ�� ���°� �ƴ϶�� ������Ʈ���� ����
+	// 캐릭터의 액티브가 꺼져있을 경우 업데이트하지 않음
 	if (!Active()) return;
 
-	// �÷��̾� Ÿ�Կ� ���� ������Ʈ ����
+	// 캐릭터의 타입에따라 업데이트를 다르게 함
+	// NPC와 플레이어 구분
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -134,7 +132,7 @@ void HolyPriest_in::Update()
 
 void HolyPriest_in::Render()
 {
-	// ��Ƽ�� ���°� �ƴ϶�� ������Ʈ���� ����
+	// 캐릭터의 액티브가 꺼져있을 경우 업데이트하지 않음
 	if (!Active()) return;
 
 	myCollider->Render();
@@ -177,7 +175,6 @@ void HolyPriest_in::EquipWeapon(Weapon* weapon)
 void HolyPriest_in::PlayerUpdate()
 {
 	Control();
-	//Casting();
 
 	if (one_atk_sound)
 	{
@@ -190,7 +187,6 @@ void HolyPriest_in::PlayerUpdate()
 		}
 	}
 
-	// �浹ü ������Ʈ
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
 }
@@ -200,6 +196,7 @@ void HolyPriest_in::AIUpdate()
 	if (!myPlayer) return;
 	if (curState == HIT || curState == DIE) return;
 
+	// 공격 사운드
 	if (one_atk_sound02)
 	{
 		one_atk_time -= DELTA;
@@ -210,7 +207,8 @@ void HolyPriest_in::AIUpdate()
 			one_atk_sound02 = false;
 		}
 	}
-
+	
+	// 2번 스킬이 사용되었을 경우 작동하는 이프문
 	if (use002skill)
 	{
 		if (skillRange->IsCollision(characterSelectData->GetCollider()))
@@ -229,11 +227,13 @@ void HolyPriest_in::AIUpdate()
 		{
 			Vector3 velo = (characterSelectData->GlobalPos() - this->Pos()).GetNormalized();
 			this->Pos() += velo * moveSpeed * DELTA;
+			this->Pos().y = curheight;
 			this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
 			skillRange->UpdateWorld();
 			SetState(WALK_F);
 		}
 	}
+	// 8번 스킬이 사용되었을 경우 작동하는 이프문
 	else if (use008skill)
 	{
 		if (skillRange->IsCollision(characterSelectData->GetCollider()))
@@ -258,17 +258,18 @@ void HolyPriest_in::AIUpdate()
 		{
 			Vector3 velo = (characterSelectData->GlobalPos() - this->Pos()).GetNormalized();
 			this->Pos() += velo * moveSpeed * DELTA;
+			this->Pos().y = curheight;
 			this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
 			skillRange->UpdateWorld();
 			SetState(WALK_F);
 		}
 	}
-	// ���� ������ Ÿ���� ���ٸ�
+	// 플레이어로부터 공격명령이 하달되지 않았을 경우
 	else if (!atkTarget)
 	{
 		AI_animation_Moving();
 	}
-	// ������ Ÿ���� �ִٸ�
+	// 플레이어로부터 공격명령을 하달받은 경우
 	else
 	{
 		ActionTickTime -= DELTA;
@@ -302,7 +303,7 @@ void HolyPriest_in::AIUpdate()
 
 			if (characterSelectData)
 			{
-				// ȸ�� ��� ĳ������ ü�� ���� ���ϱ�
+				// 대상 캐릭터의 체력 비율을 내기 위한 코드
 				target_Proportion = characterSelectData->GetStat().hp / characterSelectData->GetStat().maxHp;
 				if (target_Proportion <= 0.6)
 				{
@@ -369,7 +370,7 @@ void HolyPriest_in::OnHit(float damage, bool motion)
 
 void HolyPriest_in::AI_animation_Moving()
 {
-	// ���� �÷��̾��� ������ �ִٸ�
+	// 플레이어의 범위에 머물러 있는 경우 작동하는 이프문
 	if (myPlayer->GetRange()->IsCollision(myCollider))
 	{
 		randomHangdong -= DELTA;
@@ -380,11 +381,12 @@ void HolyPriest_in::AI_animation_Moving()
 		}
 
 		this->Pos() += randomVelocity * (moveSpeed / 10) * DELTA;
+		this->Pos().y = curheight;
 		this->Rot().y = atan2(randomVelocity.x, randomVelocity.z) + XM_PI;
 
 		SetState(WALK_F);
 	}
-	// �÷��̾��� �ֺ��� �ƴ϶��
+	// 플레이어의 범위안에 없는 경우 작동하는 이프문
 	else
 	{
 		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
@@ -394,6 +396,7 @@ void HolyPriest_in::AI_animation_Moving()
 		this->Rot().y = atan2(velo.x, velo.z) + XM_PI;
 
 		this->Pos() += velo * moveSpeed * DELTA;
+		this->Pos().y = curheight;
 		SetState(WALK_F);
 	}
 
@@ -423,13 +426,13 @@ void HolyPriest_in::Control()
 
 void HolyPriest_in::Moving()
 {
-	// ����, ����, ���� ��, �׾��� ��� �������� �ʱ�
+	// 현재 재생중인 애니메이션이 공격, 죽음, 히트 중 하나일경우 해당 함수를 동작시키지 않음
 	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
 
-	// ĳ���� �⺻ �̵� : W(��), S(��), Q(��), E(��)
+	// 캐릭터 기본 이동 : W(앞), S(뒤), Q(좌), E(우)
 	{
 		if (KEY_PRESS('W'))
 		{
@@ -453,11 +456,11 @@ void HolyPriest_in::Moving()
 		}
 	}
 
-	// ĳ���� ���콺 ��Ŭ���� ���� �̵� ��ȭ
+	// 캐릭터 마우스 우클릭에 따른 이동 변화
 	{
 		if (KEY_PRESS(VK_RBUTTON))
 		{
-			// �¿� �̵�
+			// 좌우 이동
 			if (KEY_PRESS('A'))
 			{
 				velocity.x -= DELTA;
@@ -471,10 +474,10 @@ void HolyPriest_in::Moving()
 		}
 		else
 		{
-			// �յڷ� �̵� ���� �ƴ� ��
+			// 앞뒤로 이동 중이 아닐 때
 			if (KEY_PRESS('W') || KEY_PRESS('S'))
 			{
-				// �¿� ȸ��
+				// 좌우 회전
 				if (KEY_PRESS('A'))
 				{
 					Rot().y -= turnSpeed * DELTA;
@@ -487,7 +490,7 @@ void HolyPriest_in::Moving()
 		}
 	}
 
-	// ���ӵ� ����
+	// 가속도 설정
 	if (velocity.Length() > 1) velocity.Normalize();
 	if (!isMoveZ) velocity.z = Lerp(velocity.z, 0, deceleration * DELTA);
 	if (!isMoveX) velocity.x = Lerp(velocity.x, 0, deceleration * DELTA);
@@ -495,10 +498,10 @@ void HolyPriest_in::Moving()
 	Matrix rotY = XMMatrixRotationY(Rot().y);
 	Vector3 direction = XMVector3TransformCoord(velocity, rotY);
 
-	// ��ġ �̵�
+	// 위치 이동
 	this->Pos() += direction * -1 * moveSpeed * DELTA;
 
-	// ������ ����� �ִϸ��̼� ���� X
+	// 점프인 경우라면 애니메이션 설정 X
 	if (curState == JUMP) return;
 
 	if (velocity.z > 0.1f)
@@ -515,7 +518,7 @@ void HolyPriest_in::Moving()
 
 void HolyPriest_in::Jump()
 {
-	// �������� �ƴ϶�� ����
+	// 점프중이 아니라면 리턴
 	if (!isJump)
 	{
 		jumpVelocity -= 1.8f * gravityMult * DELTA;
@@ -532,10 +535,10 @@ void HolyPriest_in::Jump()
 	jumpVelocity -= 1.8f * gravityMult * DELTA;
 	Pos().y += jumpVelocity;
 
-	// ������ ���� ���̺��� ��ġ�� ���ٸ�?
+	// 현재의 지정 높이보다 위치가 낮다면?
 	if (Pos().y < curheight)
 	{
-		// ��ġ �ʱ�ȭ �� ���� ��ȯ
+		// 위치 초기화 및 상태 전환
 		Pos().y = curheight;
 		jumpVelocity = 0;
 		SetState(IDLE1);
@@ -545,9 +548,10 @@ void HolyPriest_in::Jump()
 
 void HolyPriest_in::Attack()
 {
-	// ����, ���, �ǰ�, ���� ������ ��� ����
+	// 점프, 죽음, 히트, 공격 애니메이션이 실행중이라면 함수 종료
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
+	// 무기가 착용되어 있고 타겟이 널이 아닌 경우 공격 가능
 	if (KEY_DOWN(VK_LBUTTON) && weapon != nullptr && targetMonster)
 	{
 		one_atk_sound = true;
@@ -557,11 +561,12 @@ void HolyPriest_in::Attack()
 
 void HolyPriest_in::ai_attack()
 {
-	// ����, ���, �ǰ�, ���� ������ ��� ����
+	// 죽음, 히트, 공격죽이라면 하무 종료
 	if (curState == DIE || curState == HIT || curState == ATTACK1) return;
 
 	if (heal)
 	{
+		// 공격할 대상을 바라보게 하는 코드
 		Vector3 poldirect = characterSelectData->GlobalPos() - this->GlobalPos();
 		this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
 
@@ -668,7 +673,6 @@ void HolyPriest_in::ai_attack()
 			return;
 		}
 
-		// ������ ����� �ٶ󺸰� �ϴ� �ڵ�
 		Vector3 poldirect = monsterSelectData->GetCollider()->GlobalPos() - this->GlobalPos();
 		this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
 

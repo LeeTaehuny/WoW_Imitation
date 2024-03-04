@@ -77,7 +77,7 @@ void M_000_Basic_Atttack::Update()
 
 void M_000_Basic_Atttack::Render()
 {
-	//myCollider->Render();
+	
 }
 
 void M_000_Basic_Atttack::UseSkill(MonsterBase* monsterbase)

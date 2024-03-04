@@ -9,9 +9,6 @@ Boss_LichKing::Boss_LichKing()
 	Audio::Get()->Add("bossScene_hit", "Sounds/BossScene/lichking/hit_01.ogg", false, false, true);
 	Audio::Get()->Add("bossScene_die", "Sounds/BossScene/lichking/die_01.ogg", false, false, true);
 	Audio::Get()->Add("bossScene_iceDown", "Sounds/BossScene/BGM/ice_down.ogg");
-	//Audio::Get()->Add("bossScene_phase12", "Sounds/BossScene/lichking/phase_12.mp3", true);
-	//Audio::Get()->Add("bossScene_phase23", "Sounds/BossScene/lichking/phase_23.mp3", true);
-	//Audio::Get()->Add("bossScene_phase34", "Sounds/BossScene/lichking/phase_34.mp3", true);
 
 	transform = new Transform();
 
@@ -342,6 +339,7 @@ void Boss_LichKing::Hit(float amount)
 void Boss_LichKing::SetState(State state)
 {
 	if (state == curState) return;
+	if (curState == DIE) return;
 	if (state == ATTACK)
 	{
 		Frost->Rot().z = XM_PI * 0.5f;

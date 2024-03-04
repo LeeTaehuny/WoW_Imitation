@@ -21,19 +21,23 @@ public:
 
     // 데미지를 받기 위한 함수
     virtual void Hit(float amount = 1) override;
-    // 헤이트벡터의 순번을 지정하기 위한 임시변수
-    int targetNumber = 0;
+    // 스켈레톤 나이트를 스폰하기 위한 함수
     virtual void Spawn(Vector3 pos) override;
 
 public:
+    // 애니메이션 종료 이벤트를 설정하기 위한 함수
     void SetEvent(int clip, Event event, float timeRatio);
+    // 애니메이션 인스턴싱 관련 함수
     void ExecuteEvent();
-    void UpdateUI();
 
+    // 공격 애니메이션이 종료되었을때 실행되는 함수
     void EndAttack();
+    // 히트 애니메이션이 종료되었을때 실행되는 함수
     void EndHit();
+    // 데스 애니메이션이 종료되었을때 실행되는 함수
     void EndDeath();
 
+    // 애니메이션을 변경하기 위한 함수
     void SetState(State state);
 
     // 적을 추격하는 함수
