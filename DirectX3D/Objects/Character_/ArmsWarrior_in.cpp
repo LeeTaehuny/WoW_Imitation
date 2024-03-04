@@ -260,7 +260,7 @@ void ArmsWarrior_in::AIUpdate()
 
 void ArmsWarrior_in::OnHit(float damage, bool motion)
 {
-	// 방어력 버프 존재 시
+	/* 방어력 버프 존재 시 */
 	if (isDefence)
 	{
 		float def = ((stat.defence * 1.3f) / (stat.defence + 100)) * 100;
@@ -304,7 +304,7 @@ void ArmsWarrior_in::OnHit(float damage, bool motion)
 
 void ArmsWarrior_in::AI_animation_Moving()
 {
-	// 내가 플레이어의 주위에 있다면
+	/* 내가 플레이어의 주위에 있다면 */
 	if (myPlayer->GetRange()->IsCollision(myCollider))
 	{
 		randomHangdong -= DELTA;
@@ -320,7 +320,7 @@ void ArmsWarrior_in::AI_animation_Moving()
 
 		SetState(WALK_F);
 	}
-	// 플레이어의 주변이 아니라면
+	/* 플레이어의 주변이 아니라면 */
 	else
 	{
 		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
@@ -390,7 +390,7 @@ void ArmsWarrior_in::Moving()
 		}
 	}
 
-	// 우클릭 중 좌우 이동 가능
+	/* 우클릭 중 좌우 이동 가능 */
 	{
 		if (KEY_PRESS(VK_RBUTTON))
 		{
@@ -407,7 +407,7 @@ void ArmsWarrior_in::Moving()
 		}
 		else
 		{
-			// 엎, 뒤 이동 중에 방향 회전
+			/* 엎, 뒤 이동 중에 방향 회전 */
 			if (KEY_PRESS('W') || KEY_PRESS('S'))
 			{
 				if (KEY_PRESS('A'))

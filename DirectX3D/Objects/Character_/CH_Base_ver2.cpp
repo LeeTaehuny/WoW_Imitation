@@ -94,7 +94,7 @@ void CH_Base_ver2::Update()
 	// 씬에서 몬스터나 캐릭터의 정보를 얻기 위한 코드
 	if (KEY_DOWN(VK_RBUTTON))
 	{
-		// 마우스 좌클릭시 Ray 충돌을 통해 몬스터의 정보를 받아옴
+		/* 마우스 좌클릭시 Ray 충돌을 통해 몬스터의 정보를 받아옴 */ 
 		Ray ray = CAM->ScreenPointToRay(mousePos);
 		Contact contact;
 

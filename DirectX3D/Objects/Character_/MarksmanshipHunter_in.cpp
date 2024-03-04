@@ -303,14 +303,14 @@ void MarksmanshipHunter_in::Control()
 
 void MarksmanshipHunter_in::Moving()
 {
-	// 공격, 죽음, 히트, 캐스팅 애니메이션이 실행중이라면 함수 종료
+	/* 공격, 죽음, 히트, 캐스팅 애니메이션이 실행중이라면 함수 종료 */
 	if (curState == ATTACK1 || curState == DIE || curState == HIT ||
 		curState == SKILL1 || curState == SKILL2) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
 
-	// 캐릭터 기본 이동 : W(앞), S(뒤), Q(좌), E(우)
+	/* 캐릭터 기본 이동 : W(앞), S(뒤), Q(좌), E(우) */
 	{
 		if (KEY_PRESS('W'))
 		{
@@ -334,11 +334,11 @@ void MarksmanshipHunter_in::Moving()
 		}
 	}
 
-	// 캐릭터 마우스 우클릭에 따른 이동 변화
+	/* 캐릭터 마우스 우클릭에 따른 이동 변화 */
 	{
 		if (KEY_PRESS(VK_RBUTTON))
 		{
-			// 좌우 이동
+			/* 좌우 이동 */
 			if (KEY_PRESS('A'))
 			{
 				velocity.x -= DELTA;
@@ -352,10 +352,10 @@ void MarksmanshipHunter_in::Moving()
 		}
 		else
 		{
-			// 앞뒤로 이동 중이 아닐 때
+			/* 앞뒤로 이동 중이 아닐 때 */
 			if (KEY_PRESS('W') || KEY_PRESS('S'))
 			{
-				// 좌우 회전
+				/* 좌우 회전 */
 				if (KEY_PRESS('A'))
 				{
 					Rot().y -= turnSpeed * DELTA;

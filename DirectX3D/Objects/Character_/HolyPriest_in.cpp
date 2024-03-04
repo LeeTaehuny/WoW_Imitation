@@ -196,7 +196,7 @@ void HolyPriest_in::AIUpdate()
 	if (!myPlayer) return;
 	if (curState == HIT || curState == DIE) return;
 
-	// 공격 사운드
+	/* 공격 사운드 */
 	if (one_atk_sound02)
 	{
 		one_atk_time -= DELTA;
@@ -208,7 +208,7 @@ void HolyPriest_in::AIUpdate()
 		}
 	}
 	
-	// 2번 스킬이 사용되었을 경우 작동하는 이프문
+	/* 2번 스킬이 사용되었을 경우 작동하는 이프문 */
 	if (use002skill)
 	{
 		if (skillRange->IsCollision(characterSelectData->GetCollider()))
@@ -233,7 +233,7 @@ void HolyPriest_in::AIUpdate()
 			SetState(WALK_F);
 		}
 	}
-	// 8번 스킬이 사용되었을 경우 작동하는 이프문
+	/* 8번 스킬이 사용되었을 경우 작동하는 이프문 */
 	else if (use008skill)
 	{
 		if (skillRange->IsCollision(characterSelectData->GetCollider()))
@@ -456,11 +456,11 @@ void HolyPriest_in::Moving()
 		}
 	}
 
-	// 캐릭터 마우스 우클릭에 따른 이동 변화
+	/* 캐릭터 마우스 우클릭에 따른 이동 변화 */
 	{
 		if (KEY_PRESS(VK_RBUTTON))
 		{
-			// 좌우 이동
+			/* 좌우 이동 */
 			if (KEY_PRESS('A'))
 			{
 				velocity.x -= DELTA;
@@ -474,10 +474,10 @@ void HolyPriest_in::Moving()
 		}
 		else
 		{
-			// 앞뒤로 이동 중이 아닐 때
+			/* 앞뒤로 이동 중이 아닐 때 */
 			if (KEY_PRESS('W') || KEY_PRESS('S'))
 			{
-				// 좌우 회전
+				/* 좌우 회전 */
 				if (KEY_PRESS('A'))
 				{
 					Rot().y -= turnSpeed * DELTA;
