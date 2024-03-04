@@ -86,8 +86,10 @@ void Inventory::Update()
 
 void Inventory::UIRender()
 {
+	// 액티브가 꺼진 경우 리턴
 	if (!Active()) return;
 
+	// 인벤토리 UI 렌더링
 	invFrame->Render();
 	for (Slot* slot : invSlot)
 	{
@@ -96,6 +98,7 @@ void Inventory::UIRender()
 
 	int idx = 0;
 
+	// 아이템 수치 렌더링 (포션)
 	for (Item* item : inventory)
 	{
 		if (item != nullptr)
@@ -319,11 +322,6 @@ void Inventory::PickItem(void* slot)
 
 		// 해당 슬롯의 인덱스 저장
 		tempIndex = idx;
-
-		// 마우스 이미지 활성화 및 해당 슬롯 이미지 넣기
-		//mouseImg->GetMaterial()->SetDiffuseMap(invSlot[idx]->GetMaterial()->GetDiffuseMap());
-		//mouseImg->SetActive(true);
-
 	}
 }
 

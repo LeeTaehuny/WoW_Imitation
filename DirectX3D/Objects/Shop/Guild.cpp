@@ -70,11 +70,13 @@ void Guild::Update()
 	guild->UpdateWorld();
 	trader->UpdateWorld();
 
+	// 플레이어가 10의 거리 이내로 접근하면 길드 UI 오픈
 	if ((CH->GetPlayerData()->GlobalPos() - GlobalPos()).Length() < 10.0f && !Active())
 	{
 		SetActive(true);
 		Audio::Get()->Play("OpenUI", 1.0f);
 	}
+	// 멀어지면 UI 비활성화
 	else if ((CH->GetPlayerData()->GlobalPos() - GlobalPos()).Length() >= 10.0f)
 	{
 		SetActive(false);
@@ -82,6 +84,7 @@ void Guild::Update()
 
 	if (!Active()) return;
 
+	// 조작
 	Control();
 
 	guildFrame->UpdateWorld();
@@ -156,15 +159,18 @@ void Guild::GUIRender()
 
 void Guild::Control()
 {
+	// 좌클릭 시
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		int idx = 1;
 
+		// 모든 아이콘을 순회하며 현재 클릭된 아이콘이 있는지 위치로 확인
 		for (Quad* icon : icons)
 		{
 			if (mousePos.x <= icon->GlobalPos().x + icon->GetSize().x / 2 && mousePos.x >= icon->GlobalPos().x - icon->GetSize().x / 2 &&
 				mousePos.y <= icon->GlobalPos().y + icon->GetSize().y / 2 && mousePos.y >= icon->GlobalPos().y - icon->GetSize().y / 2)
 			{
+				// 파티원의 수가 5인 이하라면 파티원 추가
 				if (CH->GetCharcterData().size() < 6)
 				{
 					CH->NonPlayerSpawn(idx);

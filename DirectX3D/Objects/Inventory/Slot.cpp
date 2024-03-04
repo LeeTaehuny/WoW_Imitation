@@ -39,44 +39,14 @@ void Slot::OnClick()
 	// 슬롯 타입에 따라 적용
 	switch (slotType)
 	{
-	case SlotType::Inventory_Frame:
-		break;
-	case SlotType::Inventory_Slot:
-		break;
-	case SlotType::Status_Frame:
-		break;
-	case SlotType::Status_Slot:
-		break;
-	case SlotType::SkillTree_Frame:
-		break;
 	case SlotType::SkillTree_Slot:
 		Observer::Get()->ExcuteParamEvent("LearnSkill", this);
-		break;
-	default:
 		break;
 	}
 }
 
 void Slot::OnHover()
 {
-	// 슬롯 타입에 따라 적용
-	switch (slotType)
-	{
-	case SlotType::Inventory_Frame:
-		break;
-	case SlotType::Inventory_Slot:
-		break;
-	case SlotType::Status_Frame:
-		break;
-	case SlotType::Status_Slot:
-		break;
-	case SlotType::SkillTree_Frame:
-		break;
-	case SlotType::SkillTree_Slot:
-		break;
-	default:
-		break;
-	}
 }
 
 void Slot::OnPress()
@@ -89,18 +59,6 @@ void Slot::OnPress()
 		break;
 	case SlotType::Inventory_Slot:
 		Observer::Get()->ExcuteParamEvent("PickInvItem", this);
-		break;
-	case SlotType::Status_Frame:
-		Observer::Get()->ExcuteEvent("MoveStatusFrame");
-		break;
-	case SlotType::Status_Slot:
-		break;
-	case SlotType::SkillTree_Frame:
-		Observer::Get()->ExcuteEvent("MoveSkillFrame");
-		break;
-	case SlotType::SkillTree_Slot:
-		break;
-	default:
 		break;
 	}
 }
@@ -115,18 +73,6 @@ void Slot::OnRelease()
 		break;
 	case SlotType::Inventory_Slot:
 		Observer::Get()->ExcuteParamEvent("DownInvItem", this);
-		break;
-	case SlotType::Status_Frame:
-		Observer::Get()->ExcuteEvent("StopStatusFrame");
-		break;
-	case SlotType::Status_Slot:
-		break;
-	case SlotType::SkillTree_Frame:
-		Observer::Get()->ExcuteEvent("StopSkillFrame");
-		break;
-	case SlotType::SkillTree_Slot:
-		break;
-	default:
 		break;
 	}
 }

@@ -62,7 +62,7 @@ void GameManager::Render()
     ImGui::NewFrame();
     
     string fps = "FPS : " + to_string(Timer::Get()->GetFPS());
-    Font::Get()->RenderText(fps, { 100, WIN_HEIGHT - 10 });
+    //Font::Get()->RenderText(fps, { 100, WIN_HEIGHT - 10 });
     
     static bool isActive = true;
 

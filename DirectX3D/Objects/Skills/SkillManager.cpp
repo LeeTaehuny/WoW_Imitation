@@ -77,6 +77,7 @@ void SkillManager::Init(CH_Base_ver2* player)
 
 void SkillManager::Update()
 {
+	// K버튼으로 스킬트리 On/Off 구분
 	if (KEY_DOWN('K'))
 	{
 		if (skillTreeFrame->Active())
