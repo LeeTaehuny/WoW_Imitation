@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 QuadTreeTerrain::QuadTreeTerrain(wstring heightFile)
 {
@@ -165,7 +165,7 @@ void QuadTreeTerrain::CreateTreeNode(Node* node, float x, float z, float size)
     if (triangles == 0)
         return;
 
-    if (triangles > MIN_TRIANGLE)//ÂÉ°³¾ß ÇÏ´Â ³ëµå
+    if (triangles > MIN_TRIANGLE)//ìª¼ê°œì•¼ í•˜ëŠ” ë…¸ë“œ
     {
         FOR(4)
         {
@@ -179,7 +179,7 @@ void QuadTreeTerrain::CreateTreeNode(Node* node, float x, float z, float size)
         return;
     }
 
-    //Leaf Node ³ª´­¼ö ¾ø´Â»óÈ² 
+    //Leaf Node ë‚˜ëˆŒìˆ˜ ì—†ëŠ”ìƒí™© 
     node->triangleCount = triangles;
     UINT vertexCount = triangles * 3;
 

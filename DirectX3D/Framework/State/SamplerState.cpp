@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 SamplerState::SamplerState()
 {
@@ -9,7 +9,7 @@ SamplerState::SamplerState()
     desc.ComparisonFunc = D3D11_COMPARISON_NEVER;
     desc.MinLOD = 0;
     desc.MaxLOD = D3D11_FLOAT32_MAX;
-    //LOD(Level Of Detail) : Ä«¸Ş¶óÀÇ °Å¸®¿¡ µû¶ó¼­ Ä÷¸®Æ¼¸¦ ´Ù¸£°Ô ÇÏ´Â °Í   
+    //LOD(Level Of Detail) : ì¹´ë©”ë¼ì˜ ê±°ë¦¬ì— ë”°ë¼ì„œ í€„ë¦¬í‹°ë¥¼ ë‹¤ë¥´ê²Œ í•˜ëŠ” ê²ƒ   
 
     Changed();
 }

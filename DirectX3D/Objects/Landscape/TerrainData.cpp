@@ -1,4 +1,4 @@
-#include "Framework.h"
+Ôªø#include "Framework.h"
 
 TerrainData::TerrainData(wstring heightFile)
 {
@@ -17,7 +17,7 @@ void TerrainData::MakeMesh()
     vector<Float4> pixels;
     heightMap->ReadPixels(pixels);
 
-    //¡§¡° µ•¿Ã≈Õ
+    //Ï†ïÏ†ê Îç∞Ïù¥ÌÑ∞
     vertices.reserve(width * height);
     for (UINT z = 0; z < height; z++)
     {
@@ -83,10 +83,10 @@ void TerrainData::AlignVertexData()
     {
         for (UINT x = 0; x < width - 1; x++)
         {
-            UINT index0 = width * z + x; // ¿⁄Ω≈
-            UINT index1 = width * z + x + 1; // øÏ
-            UINT index2 = width * (z + 1) + x; // «œ
-            UINT index3 = width * (z + 1) + x + 1; //¥Î∞¢
+            UINT index0 = width * z + x; // ÏûêÏã†
+            UINT index1 = width * z + x + 1; // Ïö∞
+            UINT index2 = width * (z + 1) + x; // Ìïò
+            UINT index3 = width * (z + 1) + x + 1; //ÎåÄÍ∞Å
 
             
             alignedVertices.push_back(vertices[index0]);

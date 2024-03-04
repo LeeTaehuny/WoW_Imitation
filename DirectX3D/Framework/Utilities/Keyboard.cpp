@@ -1,11 +1,11 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 void Keyboard::Update()
 {
     memcpy(oldState, curState, sizeof(oldState));
 
-    //0, 1 -> Å°º¸µå ÀÔ·Â X
-    //128, 129 -> Å°º¸µå ÀÔ·Â O
+    //0, 1 -> í‚¤ë³´ë“œ ìž…ë ¥ X
+    //128, 129 -> í‚¤ë³´ë“œ ìž…ë ¥ O
     GetKeyboardState(curState);
 
     for(UINT i = 0 ; i < KEY_MAX ; i++)

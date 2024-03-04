@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 class Terrain : public GameObject
 {
@@ -12,11 +12,11 @@ public:
 
     void Render();
 
-    //³ôÀÌ ¹Ş±â
+    //ë†’ì´ ë°›ê¸°
     float GetHeight(const Vector3& pos, Vector3* normal = nullptr);
 
-    //ÁöÇüµµ ¿¡µğÅÍÃ³·³ Á¶°Ç¿¡ ¸ÂÃß¾î ÁÂÇ¥¸¦ ¹Ş¾Æ³»´Â ±â´ÉÀÌ ÀÖ¾î¾ß ÇÒ °Í
-    Vector3 Pick(); //Âï±â ÇÔ¼ö
+    //ì§€í˜•ë„ ì—ë””í„°ì²˜ëŸ¼ ì¡°ê±´ì— ë§ì¶”ì–´ ì¢Œí‘œë¥¼ ë°›ì•„ë‚´ëŠ” ê¸°ëŠ¥ì´ ìˆì–´ì•¼ í•  ê²ƒ
+    Vector3 Pick(); //ì°ê¸° í•¨ìˆ˜
 
     Vector2 GetSize() { return Vector2(width, height); }
 

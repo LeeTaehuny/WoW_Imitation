@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 class Particle
 {
 protected:
@@ -19,14 +19,14 @@ public:
     bool GetActive() { return isActive; }
 
 protected:
-    bool isActive = false; //È°¼ºÈ­ ¿©ºÎ µû·Î ¼³Á¤ (±âº»°ª : Ã³À½¿¡´Â Àç»ı ¾È ÇÔ)
-    UINT particleCount = 0; //»ı¼º½Ã ÆÄÆ¼Å¬ °³¼ö ¾øÀ½
+    bool isActive = false; //í™œì„±í™” ì—¬ë¶€ ë”°ë¡œ ì„¤ì • (ê¸°ë³¸ê°’ : ì²˜ìŒì—ëŠ” ì¬ìƒ ì•ˆ í•¨)
+    UINT particleCount = 0; //ìƒì„±ì‹œ íŒŒí‹°í´ ê°œìˆ˜ ì—†ìŒ
     Vector3 position;
 
-    Material* material; //½Ã°¢È­
-    VertexBuffer* vertexBuffer; //Á¤Á¡(À§Ä¡)
+    Material* material; //ì‹œê°í™”
+    VertexBuffer* vertexBuffer; //ì •ì (ìœ„ì¹˜)
 
-    //Áö¿À¸ŞÆ®¸® ¼ÎÀÌ´õ
+    //ì§€ì˜¤ë©”íŠ¸ë¦¬ ì…°ì´ë”
     GeometryShader* geometryShader;
 
     BlendState* blendState[2];

@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 Reflection::Reflection(Transform* target)
     : target(target)
@@ -42,7 +42,7 @@ void Reflection::Update()
         }
         break;
     case Reflection::DIRECTION::Z:
-        //......ZÃà ¹İ»ç¶ó´Â °Ç ¹»±î¿ä.......
+        //......Zì¶• ë°˜ì‚¬ë¼ëŠ” ê±´ ë­˜ê¹Œìš”.......
         break;
     }
 

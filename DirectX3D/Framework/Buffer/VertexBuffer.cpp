@@ -1,10 +1,10 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 VertexBuffer::VertexBuffer(void* data, UINT stride, UINT count)
     : stride(stride)
 {
     D3D11_BUFFER_DESC bufferDesc = {};
-    bufferDesc.Usage = D3D11_USAGE_DEFAULT;//CPU/GPU¿¡ ´ëÇÑ Á¢±Ù±ÇÇÑ
+    bufferDesc.Usage = D3D11_USAGE_DEFAULT;//CPU/GPUì— ëŒ€í•œ ì ‘ê·¼ê¶Œí•œ
     bufferDesc.ByteWidth = stride * count;
     bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;    
 

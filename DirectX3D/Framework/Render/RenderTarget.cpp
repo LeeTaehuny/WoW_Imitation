@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 
 RenderTarget::RenderTarget(UINT width, UINT height, DXGI_FORMAT format)
     : width(width), height(height), format(format)

@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "BuffParticle.h"
 
 BuffParticle::BuffParticle(int spawnCount) : spawnCount(spawnCount)

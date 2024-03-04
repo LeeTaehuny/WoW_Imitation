@@ -1,4 +1,4 @@
-#include "Framework.h"
+Ôªø#include "Framework.h"
 
 TerrainLOD::TerrainLOD(wstring heightFile)
 {
@@ -73,7 +73,7 @@ void TerrainLOD::MakeMesh()
     patchWidth = ((width - 1) / cellsPerPatch) + 1;
     patchHeight = ((height - 1) / cellsPerPatch) + 1;
 
-    //¡§¡° µ•¿Ã≈Õ
+    //Ï†ïÏ†ê Îç∞Ïù¥ÌÑ∞
     vector<VertexType>& vertices = mesh->GetVertices();
     vertices.resize(patchWidth * patchHeight);
 
@@ -99,7 +99,7 @@ void TerrainLOD::MakeMesh()
         }
     }
 
-    //¡§¡° ¿Œµ¶Ω∫
+    //Ï†ïÏ†ê Ïù∏Îç±Ïä§
     vector<UINT>& indices = mesh->GetIndices();
     indices.reserve((patchWidth - 1) * (patchHeight - 1) * 4);
 

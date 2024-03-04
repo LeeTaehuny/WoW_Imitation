@@ -1,17 +1,17 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 Rain::Rain()
 {
-    //±×¸² ¼¼ÆÃ
-    //material->SetShader(L"Basic/Texture.hlsl"); // <- ÅØ½ºÃ³·Î¼­ ºñ Ãâ·Â
-    material->SetShader(L"Geometry/Rain.hlsl"); //Áö¿À¸ÞÆ®¸® ¼ÎÀÌ´õ¿ë Ä¿½ºÅÒ ¼ÎÀÌ´õ
+    //ê·¸ë¦¼ ì„¸íŒ…
+    //material->SetShader(L"Basic/Texture.hlsl"); // <- í…ìŠ¤ì²˜ë¡œì„œ ë¹„ ì¶œë ¥
+    material->SetShader(L"Geometry/Rain.hlsl"); //ì§€ì˜¤ë©”íŠ¸ë¦¬ ì…°ì´ë”ìš© ì»¤ìŠ¤í…€ ì…°ì´ë”
     material->SetDiffuseMap(L"Textures/Effect/Rain.png");
 
     geometryShader = Shader::AddGS(L"Geometry/Rain.hlsl");
 
-    buffer = new WeatherBuffer(); // Å¬·¡½º ¾È¿¡ ±âº»°ª ÀÖÀ½
+    buffer = new WeatherBuffer(); // í´ëž˜ìŠ¤ ì•ˆì— ê¸°ë³¸ê°’ ìžˆìŒ
 
-    Create(); // Á¤Á¡ ¸¸µé±â ÇÔ¼ö ²ø¾î¼­ È£Ãâ
+    Create(); // ì •ì  ë§Œë“¤ê¸° í•¨ìˆ˜ ëŒì–´ì„œ í˜¸ì¶œ
 }
 
 Rain::~Rain()
@@ -21,18 +21,18 @@ Rain::~Rain()
 
 void Rain::Update()
 {
-    buffer->Get().time += DELTA; //½Ã°£¿¡ °æ°ú½Ã°£ ´©Àû
+    buffer->Get().time += DELTA; //ì‹œê°„ì— ê²½ê³¼ì‹œê°„ ëˆ„ì 
 }
 
 void Rain::Render()
 {
-    buffer->SetVS(10); //Á¤Á¡ ¼ÎÀÌ´õ + ±×¸² Ãâ·Â Á¶°Ç¹® »ç¿ë (10 : ´Ù¸¥ »ö ¹ÝÈ¯ ¾øÀ½)
-    Particle::Render(); //ºÎ¸ð ·»´õ ÇÔ¼ö ÀÌ¾î È£Ãâ
+    buffer->SetVS(10); //ì •ì  ì…°ì´ë” + ê·¸ë¦¼ ì¶œë ¥ ì¡°ê±´ë¬¸ ì‚¬ìš© (10 : ë‹¤ë¥¸ ìƒ‰ ë°˜í™˜ ì—†ìŒ)
+    Particle::Render(); //ë¶€ëª¨ ë Œë” í•¨ìˆ˜ ì´ì–´ í˜¸ì¶œ
 }
 
 void Rain::GUIRender()
 {
-    // ¹öÆÛ°¡ °®°í ÀÖ´Â ³¯¾¾·Î¼­ÀÇ ÆÄÆ¼Å¬ ¿É¼Ç ¼³Á¤
+    // ë²„í¼ê°€ ê°–ê³  ìžˆëŠ” ë‚ ì”¨ë¡œì„œì˜ íŒŒí‹°í´ ì˜µì…˜ ì„¤ì •
 
     ImGui::Text("Rain Particle Options");
     ImGui::Text("Time : %f", &buffer->Get().time);
@@ -45,10 +45,10 @@ void Rain::GUIRender()
 
 void Rain::Create()
 {
-    int count = 10000; //ºø¹æ¿ï °³¼ö. ¿øÇÏ´Â °ª ¼³Á¤
-    buffer->Get().velocity = { 0, -5, 0 }; //¼Ó·Â ÇÊ¿äÇÒ °æ¿ì ¼öÁ¤
+    int count = 10000; //ë¹—ë°©ìš¸ ê°œìˆ˜. ì›í•˜ëŠ” ê°’ ì„¤ì •
+    buffer->Get().velocity = { 0, -5, 0 }; //ì†ë ¥ í•„ìš”í•  ê²½ìš° ìˆ˜ì •
 
-    // À§ ¼³Á¤°ªÀÌ Çì´õÀÇ ÃÖ´ë°ªÀ» ³ÑÁö ¾Êµµ·Ï
+    // ìœ„ ì„¤ì •ê°’ì´ í—¤ë”ì˜ ìµœëŒ€ê°’ì„ ë„˜ì§€ ì•Šë„ë¡
     particleCount = (count < MAX_COUNT) ? count : MAX_COUNT;
 
     vertices.resize(particleCount);
@@ -62,13 +62,13 @@ void Rain::Create()
         pos.x = Random(-buffer->Get().size.x, buffer->Get().size.x);
         pos.y = Random(-buffer->Get().size.y, buffer->Get().size.y);
         pos.z = Random(-buffer->Get().size.z, buffer->Get().size.z);
-                // size = ³¯¾¾ ¹öÆÛÀÇ Å©±â = ³¯¾¾°¡ ¿µÇâÀ» ¹ÌÄ¡´Â Áö¿ªÀÇ ±Ô¸ð = ÆÄÆ¼Å¬ ÀüÃ¼ Å©±â
-                // µû¶ó¼­ ºø¹æ¿ïÀÌ ÀÖ´Â Àå¼Ò´Â size ¼Ó ¾îµò°¡
+                // size = ë‚ ì”¨ ë²„í¼ì˜ í¬ê¸° = ë‚ ì”¨ê°€ ì˜í–¥ì„ ë¯¸ì¹˜ëŠ” ì§€ì—­ì˜ ê·œëª¨ = íŒŒí‹°í´ ì „ì²´ í¬ê¸°
+                // ë”°ë¼ì„œ ë¹—ë°©ìš¸ì´ ìžˆëŠ” ìž¥ì†ŒëŠ” size ì† ì–´ë”˜ê°€
 
-        //ÅØ½ºÃ³ ¿¬»ê¿ë Á¤Á¡ º¤ÅÍ¿¡ Ãß°¡
+        //í…ìŠ¤ì²˜ ì—°ì‚°ìš© ì •ì  ë²¡í„°ì— ì¶”ê°€
         vertices[i].pos = pos;
         vertices[i].uv = size;
     }
-    //Ãâ·Â¿ë Á¤Á¡ ¹öÆÛ¿¡µµ ¹Ý¿µ
+    //ì¶œë ¥ìš© ì •ì  ë²„í¼ì—ë„ ë°˜ì˜
     vertexBuffer = new VertexBuffer(vertices.data(), sizeof(VertexUV), particleCount);
 }

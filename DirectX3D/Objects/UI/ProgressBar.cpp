@@ -1,14 +1,14 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 ProgressBar::ProgressBar(wstring frontImageFile, wstring backImageFile)
     : Quad(frontImageFile)
 {
-    // »ı¼ºÀÚ È£Ãâ ½ÃÁ¡¿¡¼­ ÀÌ Å¬·¡½º°¡ °®´Â °Í
-    // 1. Äõµå·Î¼­ÀÇ ÅØ½ºÃ³ (Àü¸é ÀÌ¹ÌÁö)
-    // 2. Å¬·¡½º ¸â¹ö ÅØ½ºÃ³ (ÈÄ¸é ÀÌ¹ÌÁö)
-    // ÀÌ µÑÀ» ÇÕÄ¡¸é ÁøÇàÇ¥½Ã±â°¡(È¤Àº Ã¼·Â¹Ù°¡) µÈ´Ù
+    // ìƒì„±ì í˜¸ì¶œ ì‹œì ì—ì„œ ì´ í´ë˜ìŠ¤ê°€ ê°–ëŠ” ê²ƒ
+    // 1. ì¿¼ë“œë¡œì„œì˜ í…ìŠ¤ì²˜ (ì „ë©´ ì´ë¯¸ì§€)
+    // 2. í´ë˜ìŠ¤ ë©¤ë²„ í…ìŠ¤ì²˜ (í›„ë©´ ì´ë¯¸ì§€)
+    // ì´ ë‘˜ì„ í•©ì¹˜ë©´ ì§„í–‰í‘œì‹œê¸°ê°€(í˜¹ì€ ì²´ë ¥ë°”ê°€) ëœë‹¤
      
-    material->SetShader(L"UI/ProgressBar.hlsl"); // 3D ¿¬»êÀÌ ºüÁø, ±×¸²¸¸ °è»êÇÏ´Â ¼ÎÀÌ´õ
+    material->SetShader(L"UI/ProgressBar.hlsl"); // 3D ì—°ì‚°ì´ ë¹ ì§„, ê·¸ë¦¼ë§Œ ê³„ì‚°í•˜ëŠ” ì…°ì´ë”
 
     backImage = Texture::Add(backImageFile);
 

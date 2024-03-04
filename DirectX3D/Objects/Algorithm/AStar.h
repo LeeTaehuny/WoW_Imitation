@@ -1,29 +1,29 @@
-#pragma once
+ï»¿#pragma once
 
 class AStar
 {
 public:
-    // AStar(class GameTileMap* map); // : 2D Å¸ÀÏ ±â¹İ ¹è°æ »ç¿ëÇÏÁö ¾ÊÀ½
+    // AStar(class GameTileMap* map); // : 2D íƒ€ì¼ ê¸°ë°˜ ë°°ê²½ ì‚¬ìš©í•˜ì§€ ì•ŠìŒ
     AStar(UINT width = 20, UINT height = 20);
 
     ~AStar();
     void Update();
     void Render();
 
-    // ³ëµå°¡ °ğ Äİ¶óÀÌ´õÀÌ°í ¹è°æÀÌ Å¸ÀÏ¸ÊÀÌ ¾Æ´Ï±â ¶§¹®¿¡ ³ëµå ÀÚÃ¼°¡ µû·Î ¹èÄ¡°¡ ÇÊ¿äÇÏ´Ù
-    void SetNode() {} //±âº»Çü
-    void SetNode(class Terrain* terrain); //ÅÍ·¹ÀÎ »ç¿ë (ÅÍ·¹ÀÎ ¿¡µğÅÍ·Î ´ë¿ë °¡´É)
+    // ë…¸ë“œê°€ ê³§ ì½œë¼ì´ë”ì´ê³  ë°°ê²½ì´ íƒ€ì¼ë§µì´ ì•„ë‹ˆê¸° ë•Œë¬¸ì— ë…¸ë“œ ìì²´ê°€ ë”°ë¡œ ë°°ì¹˜ê°€ í•„ìš”í•˜ë‹¤
+    void SetNode() {} //ê¸°ë³¸í˜•
+    void SetNode(class Terrain* terrain); //í„°ë ˆì¸ ì‚¬ìš© (í„°ë ˆì¸ ì—ë””í„°ë¡œ ëŒ€ìš© ê°€ëŠ¥)
 
-    int FindCloseNode(Vector3 pos); // Å¬¸¯ÇÑ °÷¿¡¼­ °¡Àå °¡±î¿î(=°¡Àå ÀÇµµ¿¡ ¸Â´Â) ³ëµå ±¸ÇÏ±â
-    int FindRandomPos(Vector3 pos, float range); //¹üÀ§ ³»¿¡¼­ ¹«ÀÛÀ§·Î (Á¶°Ç¿¡ ¸Â´Â) ³ëµå ±¸ÇÏ±â
+    int FindCloseNode(Vector3 pos); // í´ë¦­í•œ ê³³ì—ì„œ ê°€ì¥ ê°€ê¹Œìš´(=ê°€ì¥ ì˜ë„ì— ë§ëŠ”) ë…¸ë“œ êµ¬í•˜ê¸°
+    int FindRandomPos(Vector3 pos, float range); //ë²”ìœ„ ë‚´ì—ì„œ ë¬´ì‘ìœ„ë¡œ (ì¡°ê±´ì— ë§ëŠ”) ë…¸ë“œ êµ¬í•˜ê¸°
     
-    void GetPath(IN int start, IN int end, OUT vector<Vector3>& path); //°á°ú¹°À» V3·Î
+    void GetPath(IN int start, IN int end, OUT vector<Vector3>& path); //ê²°ê³¼ë¬¼ì„ V3ë¡œ
     void MakeDirectionPath(IN Vector3 start, IN Vector3 end, OUT vector<Vector3>& path);
 
     bool IsCollisionObstacle(Vector3 start, Vector3 end);
 
-    void AddObstacle(Collider* collider); // ³ëµå°¡ Àå¾Ö¹°ÀÏ ¶§µµ ¾²°í,
-                                          // ³ªÁß¿¡´Â ¾Æ¹«°Å³ª Àå¾Ö¹°ÀÌ µÉ ¼ö ÀÖÀ¸¸é Àû¿ë °¡´É
+    void AddObstacle(Collider* collider); // ë…¸ë“œê°€ ì¥ì• ë¬¼ì¼ ë•Œë„ ì“°ê³ ,
+                                          // ë‚˜ì¤‘ì—ëŠ” ì•„ë¬´ê±°ë‚˜ ì¥ì• ë¬¼ì´ ë  ìˆ˜ ìˆìœ¼ë©´ ì ìš© ê°€ëŠ¥
     
 
 private:
@@ -31,21 +31,21 @@ private:
     vector<Node*> nodes;
     Heap* heap; 
 
-    vector<Collider*> obstacles; // »çÀü¿¡ Á¤ÀÇµÈ Àå¾Ö¹° º¤ÅÍ
+    vector<Collider*> obstacles; // ì‚¬ì „ì— ì •ì˜ëœ ì¥ì• ë¬¼ ë²¡í„°
 
-    //Ãß°¡·Î ¹è°æ ¼³Á¤À» À§ÇÑ º¯¼öµé
+    //ì¶”ê°€ë¡œ ë°°ê²½ ì„¤ì •ì„ ìœ„í•œ ë³€ìˆ˜ë“¤
     UINT width;
     UINT height;
-    Vector2 interval; //°£°İ
+    Vector2 interval; //ê°„ê²©
 
-    //±æÃ£±â Ãß°¡ ÇÔ¼ö
-    void SetEdge(); //¸Å°³º¯¼ö´Â Å¬·¡½º°¡ °®°í ÀÖÀ¸´Ï ÀÌÁ¦ ºÒÇÊ¿ä
+    //ê¸¸ì°¾ê¸° ì¶”ê°€ í•¨ìˆ˜
+    void SetEdge(); //ë§¤ê°œë³€ìˆ˜ëŠ” í´ë˜ìŠ¤ê°€ ê°–ê³  ìˆìœ¼ë‹ˆ ì´ì œ ë¶ˆí•„ìš”
     int GetMinNode();
     void Extend(int center, int end);
 
     void Reset();
 
-    float GetManhattanDistance(int start, int end); // 3D¿¡¼± ÀÌÁ¦ ·¹°Å½Ã ÄÚµå
+    float GetManhattanDistance(int start, int end); // 3Dì—ì„  ì´ì œ ë ˆê±°ì‹œ ì½”ë“œ
     float GetDiagonalManhattanDistance(int start, int end);
 };
 

@@ -1,4 +1,4 @@
-#include "Framework.h"
+Ôªø#include "Framework.h"
 
 SphereCollider::SphereCollider(float radius, UINT stackCount, UINT sliceCount)
     : radius(radius), stackCount(stackCount), sliceCount(sliceCount)
@@ -81,7 +81,7 @@ void SphereCollider::MakeMesh()
         }
     }
 
-    //¡§¡° ¿Œµ¶Ω∫
+    //Ï†ïÏ†ê Ïù∏Îç±Ïä§
     vector<UINT>& indices = mesh->GetIndices();
 
     indices.reserve(sliceCount * stackCount * 6);

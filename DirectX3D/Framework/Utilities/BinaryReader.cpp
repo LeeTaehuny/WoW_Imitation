@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 
 BinaryReader::BinaryReader(string filePath)
 {

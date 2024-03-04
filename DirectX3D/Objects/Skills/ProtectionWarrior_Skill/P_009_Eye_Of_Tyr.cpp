@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "P_009_Eye_Of_Tyr.h"
 
 P_009_Eye_Of_Tyr::P_009_Eye_Of_Tyr() : ActiveSkill(SkillType::NonTarget)
@@ -8,34 +8,34 @@ P_009_Eye_Of_Tyr::P_009_Eye_Of_Tyr() : ActiveSkill(SkillType::NonTarget)
 	hitCollider = new SphereCollider();
 	hitCollider->SetActive(false);
 
-	// ±âº» »ý¼º ¿ä¼Ò
+	// ê¸°ë³¸ ìƒì„± ìš”ì†Œ
 	{
-		// ½ºÅ³ ¼Óµµ
+		// ìŠ¤í‚¬ ì†ë„
 		speed = 0.0f;
 
-		// ½ºÅ³ µ¥¹ÌÁö
+		// ìŠ¤í‚¬ ë°ë¯¸ì§€
 		skillDamage = 100.0f;
 
-		// ÄðÅ¸ÀÓ ¼³Á¤ (±âº» 60ÃÊ)
+		// ì¿¨íƒ€ìž„ ì„¤ì • (ê¸°ë³¸ 60ì´ˆ)
 		MAX_delay = 5.0f;
 		coolTime = MAX_delay;
 
-		// Ã³À½Àº ½ºÅ³ ½ÇÇàÁßÀÎ »óÅÂ°¡ ¾Æ´Ïµµ·Ï ¼³Á¤
+		// ì²˜ìŒì€ ìŠ¤í‚¬ ì‹¤í–‰ì¤‘ì¸ ìƒíƒœê°€ ì•„ë‹ˆë„ë¡ ì„¤ì •
 		isRun = false;
 		isCooldown = false;
 
-		// ¸¶³ª ¼Ò¸ð ºÒ¸í : 10%
+		// ë§ˆë‚˜ ì†Œëª¨ ë¶ˆëª… : 10%
 		requiredMp = 100;
 		usingType = NON_Data;
 	}
 
-	// ÀÌÆåÆ®¸¦ À§ÇÑ º¯¼ö?
+	// ì´íŽ™íŠ¸ë¥¼ ìœ„í•œ ë³€ìˆ˜?
 	FOR(2) blendState[i] = new BlendState();
 	FOR(2) depthState[i] = new DepthStencilState();
 	blendState[1]->Alpha(true);
 	depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ZERO);
 
-	// ÀÌÆåÆ® ÅØ½ºÃ³
+	// ì´íŽ™íŠ¸ í…ìŠ¤ì²˜
 	donut = new Quad(L"Textures/Effect/alpha_gold_donut.png");
 	donut->SetParent(hitCollider);
 	donut->Scale() *= 0.1;
@@ -78,12 +78,12 @@ void P_009_Eye_Of_Tyr::Update()
 
 		hitCollider->Pos() = owner->GlobalPos();
 
-		float ful = 10.5f; // °ª º¯°æÀ» ½±°Ô ÇÏ±â À§ÇÑ º¯¼ö
+		float ful = 10.5f; // ê°’ ë³€ê²½ì„ ì‰½ê²Œ í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
 		hitCollider->Scale().x += ful * DELTA;
 		hitCollider->Scale().y += ful * DELTA;
 		hitCollider->Scale().z += ful * DELTA;
 
-		// È÷Æ® ¹üÀ§°¡ ÀÏÁ¤ ¼öÁØÀ» ³Ñ¾î°¡¸é ¾×Æ¼ºê¸¦ ²ô¸é¼­ µ¿ÀÛ Á¤Áö
+		// ížˆíŠ¸ ë²”ìœ„ê°€ ì¼ì • ìˆ˜ì¤€ì„ ë„˜ì–´ê°€ë©´ ì•¡í‹°ë¸Œë¥¼ ë„ë©´ì„œ ë™ìž‘ ì •ì§€
 		if (hitCollider->Scale().x >= 7)
 		{
 			vector<MonsterBase*> cols1 = MONSTER->GetScarecrow();
@@ -91,8 +91,8 @@ void P_009_Eye_Of_Tyr::Update()
 			{
 				if (hitCollider->IsCollision(monster->GetCollider()))
 				{
-					// Ãæµ¹ÇÑ ¸ó½ºÅÍµé¿¡°Ô µ¥¹ÌÁö ÁÖ±â
-					// * ¸Å°³º¯¼ö·Î ownerÀÇ °ø°Ý·Â°ú ¹øÈ£ ÀúÀåÇÏ±â
+					// ì¶©ëŒí•œ ëª¬ìŠ¤í„°ë“¤ì—ê²Œ ë°ë¯¸ì§€ ì£¼ê¸°
+					// * ë§¤ê°œë³€ìˆ˜ë¡œ ownerì˜ ê³µê²©ë ¥ê³¼ ë²ˆí˜¸ ì €ìž¥í•˜ê¸°
 					monster->Hit(skillDamage);
 				}
 			}
@@ -101,8 +101,8 @@ void P_009_Eye_Of_Tyr::Update()
 			{
 				if (hitCollider->IsCollision(monster->GetCollider()))
 				{
-					// Ãæµ¹ÇÑ ¸ó½ºÅÍµé¿¡°Ô µ¥¹ÌÁö ÁÖ±â
-					// * ¸Å°³º¯¼ö·Î ownerÀÇ °ø°Ý·Â°ú ¹øÈ£ ÀúÀåÇÏ±â
+					// ì¶©ëŒí•œ ëª¬ìŠ¤í„°ë“¤ì—ê²Œ ë°ë¯¸ì§€ ì£¼ê¸°
+					// * ë§¤ê°œë³€ìˆ˜ë¡œ ownerì˜ ê³µê²©ë ¥ê³¼ ë²ˆí˜¸ ì €ìž¥í•˜ê¸°
 					monster->Hit(skillDamage);
 				}
 			}
@@ -111,8 +111,8 @@ void P_009_Eye_Of_Tyr::Update()
 			{
 				if (hitCollider->IsCollision(monster->GetCollider()))
 				{
-					// Ãæµ¹ÇÑ ¸ó½ºÅÍµé¿¡°Ô µ¥¹ÌÁö ÁÖ±â
-					// * ¸Å°³º¯¼ö·Î ownerÀÇ °ø°Ý·Â°ú ¹øÈ£ ÀúÀåÇÏ±â
+					// ì¶©ëŒí•œ ëª¬ìŠ¤í„°ë“¤ì—ê²Œ ë°ë¯¸ì§€ ì£¼ê¸°
+					// * ë§¤ê°œë³€ìˆ˜ë¡œ ownerì˜ ê³µê²©ë ¥ê³¼ ë²ˆí˜¸ ì €ìž¥í•˜ê¸°
 					monster->Hit(skillDamage);
 				}
 			}
@@ -121,8 +121,8 @@ void P_009_Eye_Of_Tyr::Update()
 			{
 				if (hitCollider->IsCollision(monster->GetCollider()))
 				{
-					// Ãæµ¹ÇÑ ¸ó½ºÅÍµé¿¡°Ô µ¥¹ÌÁö ÁÖ±â
-					// * ¸Å°³º¯¼ö·Î ownerÀÇ °ø°Ý·Â°ú ¹øÈ£ ÀúÀåÇÏ±â
+					// ì¶©ëŒí•œ ëª¬ìŠ¤í„°ë“¤ì—ê²Œ ë°ë¯¸ì§€ ì£¼ê¸°
+					// * ë§¤ê°œë³€ìˆ˜ë¡œ ownerì˜ ê³µê²©ë ¥ê³¼ ë²ˆí˜¸ ì €ìž¥í•˜ê¸°
 					monster->Hit(skillDamage);
 				}
 			}
@@ -131,8 +131,8 @@ void P_009_Eye_Of_Tyr::Update()
 			{
 				if (hitCollider->IsCollision(monster->GetCollider()))
 				{
-					// Ãæµ¹ÇÑ ¸ó½ºÅÍµé¿¡°Ô µ¥¹ÌÁö ÁÖ±â
-					// * ¸Å°³º¯¼ö·Î ownerÀÇ °ø°Ý·Â°ú ¹øÈ£ ÀúÀåÇÏ±â
+					// ì¶©ëŒí•œ ëª¬ìŠ¤í„°ë“¤ì—ê²Œ ë°ë¯¸ì§€ ì£¼ê¸°
+					// * ë§¤ê°œë³€ìˆ˜ë¡œ ownerì˜ ê³µê²©ë ¥ê³¼ ë²ˆí˜¸ ì €ìž¥í•˜ê¸°
 					monster->Hit(skillDamage);
 				}
 			}
@@ -140,8 +140,8 @@ void P_009_Eye_Of_Tyr::Update()
 			{
 				if (hitCollider->IsCollision(MONSTER->GetLichKing()->GetCollider()))
 				{
-					// Ãæµ¹ÇÑ ¸ó½ºÅÍµé¿¡°Ô µ¥¹ÌÁö ÁÖ±â
-					// * ¸Å°³º¯¼ö·Î ownerÀÇ °ø°Ý·Â°ú ¹øÈ£ ÀúÀåÇÏ±â
+					// ì¶©ëŒí•œ ëª¬ìŠ¤í„°ë“¤ì—ê²Œ ë°ë¯¸ì§€ ì£¼ê¸°
+					// * ë§¤ê°œë³€ìˆ˜ë¡œ ownerì˜ ê³µê²©ë ¥ê³¼ ë²ˆí˜¸ ì €ìž¥í•˜ê¸°
 					MONSTER->GetLichKing()->Hit(skillDamage);
 				}
 			}

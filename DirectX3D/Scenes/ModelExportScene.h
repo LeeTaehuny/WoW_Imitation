@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 class ModelExportScene : public Scene
 {
@@ -12,11 +12,11 @@ public:
     virtual void PostRender() override;
     virtual void GUIRender() override;
 
-    // ¸ğµ¨¿¡¼­ ¸ŞÅ×¸®¾ó°ú ¸Ş½¬ ÃßÃâ ÇÔ¼ö
-    // ¸ğµ¨ÀÇ ÀÌ¸§¸¸ ³ÖÀ¸¸é ¾Ë¾Æ¼­ ³ª¿É´Ï´Ù.
+    // ëª¨ë¸ì—ì„œ ë©”í…Œë¦¬ì–¼ê³¼ ë©”ì‰¬ ì¶”ì¶œ í•¨ìˆ˜
+    // ëª¨ë¸ì˜ ì´ë¦„ë§Œ ë„£ìœ¼ë©´ ì•Œì•„ì„œ ë‚˜ì˜µë‹ˆë‹¤.
     void Model_MER_MESH(string name);
 
-    // ¾Ö´Ï¸ŞÀÌ¼Ç Æú´õ¿¡¼­ Å¬¸³ ÃßÃâ
-    // ¸ğµ¨ÀÇ ÀÌ¸§, ¾Ö´Ï¸ŞÀÌ¼Ç ÀÌ¸§À» ³ÖÀ¸½Ã¸é µË´Ï´Ù.
+    // ì• ë‹ˆë©”ì´ì…˜ í´ë”ì—ì„œ í´ë¦½ ì¶”ì¶œ
+    // ëª¨ë¸ì˜ ì´ë¦„, ì• ë‹ˆë©”ì´ì…˜ ì´ë¦„ì„ ë„£ìœ¼ì‹œë©´ ë©ë‹ˆë‹¤.
     void AnimationClip(string name, string clipName);
 };

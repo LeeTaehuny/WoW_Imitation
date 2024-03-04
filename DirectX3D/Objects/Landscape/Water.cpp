@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 
 Water::Water(wstring normalFile, float width, float height)
     : size(width, height)

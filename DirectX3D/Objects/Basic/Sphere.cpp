@@ -1,4 +1,4 @@
-#include "Framework.h"
+Ôªø#include "Framework.h"
 
 Sphere::Sphere(float radius, UINT sliceCount, UINT stackCount)
     : radius(radius), sliceCount(sliceCount), stackCount(stackCount)
@@ -53,7 +53,7 @@ void Sphere::MakeMesh()
         }
     }
 
-    //¡§¡° ¿Œµ¶Ω∫
+    //Ï†ïÏ†ê Ïù∏Îç±Ïä§
     vector<UINT>& indices = mesh->GetIndices();
 
     indices.reserve(sliceCount * stackCount * 6);

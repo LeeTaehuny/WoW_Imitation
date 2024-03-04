@@ -1,17 +1,17 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "ParticleConfigScene.h"
 
 ParticleConfigScene::ParticleConfigScene()
 {
-    // ÆÄÆ¼Å¬ (ÆÄÀÏ) ¼³Á¤¿ë ¾À : Äõµå¸¦ ÀÐÀº ÈÄ, ¿©±â¿¡ ÆÄÆ¼Å¬ ¿É¼ÇÀ» ´õÇØ¼­
-    // ÆÄÀÏ ¾²±â/ÀÐ±â ±â´ÉÀ» ÀÌ¿ëÇØ¼­ »çÀü¼³Á¤ ÆÄÀÏÀ» ¸¸µé±â À§ÇÑ ¾À
+    // íŒŒí‹°í´ (íŒŒì¼) ì„¤ì •ìš© ì”¬ : ì¿¼ë“œë¥¼ ì½ì€ í›„, ì—¬ê¸°ì— íŒŒí‹°í´ ì˜µì…˜ì„ ë”í•´ì„œ
+    // íŒŒì¼ ì“°ê¸°/ì½ê¸° ê¸°ëŠ¥ì„ ì´ìš©í•´ì„œ ì‚¬ì „ì„¤ì • íŒŒì¼ì„ ë§Œë“¤ê¸° ìœ„í•œ ì”¬
 
-    //Äõµå ÁØºñ
+    //ì¿¼ë“œ ì¤€ë¹„
     quad = new Quad(Vector2(1, 1));
-    //¼ÎÀÌ´õ ¼³Á¤ (±âº»Àº ±âº» ÆÄÆ¼Å¬ ¼ÎÀÌ´õ)
-    quad->GetMaterial()->SetShader(L"Effect/Particle.hlsl"); // <-¸Å°³º¯¼ö ±³Ã¼ = ¼ÎÀÌ´õ
-    //µðÇ»Áî¸Ê(=ÆÄÆ¼Å¬ÀÇ ¸ð¾ç) ¼³Á¤ (»ùÇÃÀº ´«)
-    quad->GetMaterial()->SetDiffuseMap(L"Textures/Effect/lich_snow.png"); // <-¸Å°³º¯¼ö ±³Ã¼ = ÅØ½ºÃ³
+    //ì…°ì´ë” ì„¤ì • (ê¸°ë³¸ì€ ê¸°ë³¸ íŒŒí‹°í´ ì…°ì´ë”)
+    quad->GetMaterial()->SetShader(L"Effect/Particle.hlsl"); // <-ë§¤ê°œë³€ìˆ˜ êµì²´ = ì…°ì´ë”
+    //ë””í“¨ì¦ˆë§µ(=íŒŒí‹°í´ì˜ ëª¨ì–‘) ì„¤ì • (ìƒ˜í”Œì€ ëˆˆ)
+    quad->GetMaterial()->SetDiffuseMap(L"Textures/Effect/lich_snow.png"); // <-ë§¤ê°œë³€ìˆ˜ êµì²´ = í…ìŠ¤ì²˜
 
     instances.resize(MAX_COUNT);
     particleInfos.resize(MAX_COUNT);

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 class P_009_Eye_Of_Tyr : public ActiveSkill
 {
 public:

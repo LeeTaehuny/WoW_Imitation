@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 class TestLight : public Transform
 {
 public:

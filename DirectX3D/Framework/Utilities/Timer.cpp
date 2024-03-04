@@ -1,11 +1,11 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 Timer::Timer()
 {
-    //1ÃÊµ¿¾È CPUÁøµ¿¼ö¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+    //1ì´ˆë™ì•ˆ CPUì§„ë™ìˆ˜ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
     QueryPerformanceFrequency((LARGE_INTEGER*)&periodFrequency);
 
-    //ÇöÀç CPUÁøµ¿¼ö¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+    //í˜„ì¬ CPUì§„ë™ìˆ˜ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
     QueryPerformanceCounter((LARGE_INTEGER*)&lastTime);
 
     timeScale = 1.0f / (float)periodFrequency;

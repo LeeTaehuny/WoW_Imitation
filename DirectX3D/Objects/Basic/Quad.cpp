@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 
 Quad::Quad(Vector2 size)
     : GameObject(L"Basic/Texture.hlsl"), size(size)

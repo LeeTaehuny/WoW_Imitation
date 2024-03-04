@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "GameMath.h"
 
 int GameMath::Random(const int& min, const int& max)

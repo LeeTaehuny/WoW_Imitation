@@ -1,27 +1,27 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 Trail::Trail(wstring imageFile, Transform* start, Transform* end, UINT width, float speed)
     : start(start), end(end), width(width), speed(speed)
 {
-    //¸ÅÆ¼¸®¾ó ¼¼ÆÃ
+    //ë§¤í‹°ë¦¬ì–¼ ì„¸íŒ…
     material->SetShader(L"Basic/Texture.hlsl");
     material->SetDiffuseMap(imageFile);
 
-    //¸Ş½Ã ¸¸µé±â
+    //ë©”ì‹œ ë§Œë“¤ê¸°
     CreateMesh();
 
-    //·¡½ºÅÍ¶óÀÌÀú »óÅÂ ¼³Á¤
+    //ë˜ìŠ¤í„°ë¼ì´ì € ìƒíƒœ ì„¤ì •
     rasterizerState[0] = new RasterizerState();
     rasterizerState[1] = new RasterizerState();
-    rasterizerState[1]->CullMode(D3D11_CULL_NONE); // ÄÃ¸µ(Ãâ·Â¼±º°) : ÇÏÁö ¾ÊÀ½
-                                                   // ¹æÇâ °ü°è ¾øÀÌ ¸ğµç ÀÌ¹ÌÁö Ãâ·Â
+    rasterizerState[1]->CullMode(D3D11_CULL_NONE); // ì»¬ë§(ì¶œë ¥ì„ ë³„) : í•˜ì§€ ì•ŠìŒ
+                                                   // ë°©í–¥ ê´€ê³„ ì—†ì´ ëª¨ë“  ì´ë¯¸ì§€ ì¶œë ¥
 
-    //ºí·»µå »óÅÂ ¼³Á¤
-    blendState[0] = new BlendState(); // <- °³º° »óÅÂ¸¦ °¢°¢ µû·Î ¼³Á¤ÇÒ ¶§ ÀÌ·¸°Ô °¢ÀÚ »ı¼º
+    //ë¸”ë Œë“œ ìƒíƒœ ì„¤ì •
+    blendState[0] = new BlendState(); // <- ê°œë³„ ìƒíƒœë¥¼ ê°ê° ë”°ë¡œ ì„¤ì •í•  ë•Œ ì´ë ‡ê²Œ ê°ì ìƒì„±
     blendState[1] = new BlendState();
-    //FOR(2) blendState[i] = new BlendState(); // <- »ı¼ºÇÒ °´Ã¼°¡ ¸¹°Å³ª Å¸ÀÚ Ä¡±â ±ÍÂúÀ» ¶§
+    //FOR(2) blendState[i] = new BlendState(); // <- ìƒì„±í•  ê°ì²´ê°€ ë§ê±°ë‚˜ íƒ€ì ì¹˜ê¸° ê·€ì°®ì„ ë•Œ
     //blendState[1]->Alpha(true);
-    blendState[1]->Additive(); //È¥ÇÕ¿¡ ÀÇÇÑ Åõ¸í (È­¼Ò´©Àû)
+    blendState[1]->Additive(); //í˜¼í•©ì— ì˜í•œ íˆ¬ëª… (í™”ì†Œëˆ„ì )
 }
 
 Trail::~Trail()
@@ -39,24 +39,24 @@ void Trail::Update()
 {
     if (!Active()) return;
 
-    //¸Ş½¬ µ¥ÀÌÅÍ ¹Ş±â
+    //ë©”ì‰¬ ë°ì´í„° ë°›ê¸°
     vector<VertexUV>& vertices = mesh->GetVertices();
 
-    //½ÃÀÛ°ú ³¡ÀÇ À§Ä¡¸¦ °è¼Ó ÀçÁ¶Á¤À» ÇÏ±â
+    //ì‹œì‘ê³¼ ëì˜ ìœ„ì¹˜ë¥¼ ê³„ì† ì¬ì¡°ì •ì„ í•˜ê¸°
     for (UINT i = 0; i <= width; i++)
     {
-        //Á¤Á¡À» º¤ÅÍ¿¡¼­ ¹Ş°í
+        //ì •ì ì„ ë²¡í„°ì—ì„œ ë°›ê³ 
         Vector3 startPos = vertices[i * 2].pos;
         Vector3 endPos = vertices[(i * 2) + 1].pos;
 
-        //»õ·Î Âï¾î¾ß ÇÒ À§Ä¡¸¦ ¸¸µé°í
+        //ìƒˆë¡œ ì°ì–´ì•¼ í•  ìœ„ì¹˜ë¥¼ ë§Œë“¤ê³ 
         Vector3 startDestPos;
         Vector3 endDestPos;
 
-        //¸¸µç À§Ä¡ º¤ÅÍ¿¡ °ªÀ» ÇÒ´çÇÏ±â (Æ®·£½ºÆûÀ¸·Î ¹ŞÀº ½ÃÀÛ+³¡¿¡¼­)
+        //ë§Œë“  ìœ„ì¹˜ ë²¡í„°ì— ê°’ì„ í• ë‹¹í•˜ê¸° (íŠ¸ëœìŠ¤í¼ìœ¼ë¡œ ë°›ì€ ì‹œì‘+ëì—ì„œ)
         if (i == 0)
         {
-            //¸ñÀûÁö = Æ®·£½ºÆûÀÇ À§Ä¡
+            //ëª©ì ì§€ = íŠ¸ëœìŠ¤í¼ì˜ ìœ„ì¹˜
             startDestPos = start->GlobalPos();
             endDestPos = end->GlobalPos();
         }
@@ -66,18 +66,18 @@ void Trail::Update()
             endDestPos = vertices[(i - 1) * 2 + 1].pos;
         }
         
-        //º¸°£À¸·Î ¸ñÀûÁö±îÁö Á¤Á¡À» ÀÌµ¿½ÃÅ°±â
+        //ë³´ê°„ìœ¼ë¡œ ëª©ì ì§€ê¹Œì§€ ì •ì ì„ ì´ë™ì‹œí‚¤ê¸°
         startPos = Lerp(startPos, startDestPos, speed * DELTA);
         endPos = Lerp(endPos, endDestPos, speed * DELTA);
         
-        //¸Ş½¬ µ¥ÀÌÅÍ¿¡ ¹İ¿µ
+        //ë©”ì‰¬ ë°ì´í„°ì— ë°˜ì˜
         vertices[i * 2].pos = startPos;
         vertices[i * 2 + 1].pos = endPos;
     }
 
-    // ¿©±â±îÁö ¿À¸é ¸¸µé¾îÁø ±×¸²(µé)ÀÇ ¾çÂÊ ³¡ÀÌ »õ·Î¿î ¸ñÀûÁö¸¦ °è¼ÓÇØ¼­ ÂÑ¾Æ°¥ °Í
+    // ì—¬ê¸°ê¹Œì§€ ì˜¤ë©´ ë§Œë“¤ì–´ì§„ ê·¸ë¦¼(ë“¤)ì˜ ì–‘ìª½ ëì´ ìƒˆë¡œìš´ ëª©ì ì§€ë¥¼ ê³„ì†í•´ì„œ ì«“ì•„ê°ˆ ê²ƒ
 
-    // ÇØ´ç °á°ú¸¦ ¾÷µ¥ÀÌÆ®
+    // í•´ë‹¹ ê²°ê³¼ë¥¼ ì—…ë°ì´íŠ¸
     mesh->UpdateVertex();
 }
 
@@ -104,12 +104,12 @@ void Trail::CreateMesh()
 
     vector<VertexUV>& vertices = mesh->GetVertices();
 
-    //±ËÀûÀÇ ±×¸² ¸Ş½Ã ¸¸µå´Â ¹ı
+    //ê¶¤ì ì˜ ê·¸ë¦¼ ë©”ì‹œ ë§Œë“œëŠ” ë²•
 
-    vertices.reserve((width + 1) * 2); //º¤ÅÍ¸¦ °¡·ÎÀÇ "°³¼ö"¸¸Å­ ¸¸µé±â (À§¾Æ·¡ ÇÑ ½ÖÀ¸·Î)
+    vertices.reserve((width + 1) * 2); //ë²¡í„°ë¥¼ ê°€ë¡œì˜ "ê°œìˆ˜"ë§Œí¼ ë§Œë“¤ê¸° (ìœ„ì•„ë˜ í•œ ìŒìœ¼ë¡œ)
     for (UINT i = 0; i <= width; i++)
     {
-        //ÅØ½ºÃ³ ÂüÁ¶ À§Ä¡ : ±×¸²ÀÇ À§¿Í ¾Æ·¡ + °¡·Î¿¡ ´ëÇÑ ´ÜÀ§³Êºñ¸¸Å­¸¸
+        //í…ìŠ¤ì²˜ ì°¸ì¡° ìœ„ì¹˜ : ê·¸ë¦¼ì˜ ìœ„ì™€ ì•„ë˜ + ê°€ë¡œì— ëŒ€í•œ ë‹¨ìœ„ë„ˆë¹„ë§Œí¼ë§Œ
         VertexUV vertex;
         vertex.uv = { (float)i / width, 0.0f };
         vertices.push_back(vertex);
@@ -120,7 +120,7 @@ void Trail::CreateMesh()
 
     vector<UINT>& indices = mesh->GetIndices();
 
-    //Àß·Á¼­ ¸¸µç Á¤Á¡µéÀ» ´Ù½Ã ¸ğ¾Æ Áï¼® ÄõµåÃ³·³ ¸¸µé±â
+    //ì˜ë ¤ì„œ ë§Œë“  ì •ì ë“¤ì„ ë‹¤ì‹œ ëª¨ì•„ ì¦‰ì„ ì¿¼ë“œì²˜ëŸ¼ ë§Œë“¤ê¸°
     indices.reserve(width * 6);
     FOR(width)
     {

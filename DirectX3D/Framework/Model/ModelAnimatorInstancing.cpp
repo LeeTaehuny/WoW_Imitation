@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 
 ModelAnimatorInstancing::ModelAnimatorInstancing(string name)
     : ModelAnimator(name)

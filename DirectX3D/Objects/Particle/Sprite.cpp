@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "Sprite.h"
 
 Sprite::Sprite(wstring imageFile, float width, float height, UINT frameCol, UINT frameRow, bool isAdditive)
@@ -27,14 +27,14 @@ void Sprite::Update()
 {
     if (!isActive) return;
 
-    //2D ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı°ú °°Àº ¹æ½ÄÀ¸·Î ¾÷µ¥ÀÌÆ®
+    //2D ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒê³¼ ê°™ì€ ë°©ì‹ìœ¼ë¡œ ì—…ë°ì´íŠ¸
 
     time += speed * DELTA;
 
-    if (time > 0.1f) //0.1f : ÀÓÀÇÀÇ ±âÁØ½Ã°£. ³ªÁß¿¡ °³¹ßÀÚ°¡ ¼öÁ¤ °¡´É
+    if (time > 0.1f) //0.1f : ì„ì˜ì˜ ê¸°ì¤€ì‹œê°„. ë‚˜ì¤‘ì— ê°œë°œìê°€ ìˆ˜ì • ê°€ëŠ¥
     {
-        curFrameCount++; //ÇÁ·¹ÀÓ +1
-        //ÇÁ·¹ÀÓ À§Ä¡ Ã£±â
+        curFrameCount++; //í”„ë ˆì„ +1
+        //í”„ë ˆì„ ìœ„ì¹˜ ì°¾ê¸°
         buffer->Get().curFrame.x = curFrameCount % (UINT)buffer->Get().maxFrame.x;
         buffer->Get().curFrame.y = curFrameCount / (UINT)buffer->Get().maxFrame.y;
         time = 0;
@@ -55,7 +55,7 @@ void Sprite::GUIRender()
 
 void Sprite::Play(Vector3 pos)
 {
-    isActive = true; //Àç»ı½ÃÀÛ
+    isActive = true; //ì¬ìƒì‹œì‘
 
     time = 0;
     curFrameCount = 0;
@@ -68,7 +68,7 @@ void Sprite::Play(Vector3 pos)
 
 void Sprite::Create()
 {
-    particleCount = 1; //¾Ö´Ï¸ŞÀÌ¼ÇÀ» Àç»ıÇÏ´Â °ÍÀÌ ¸ñÀûÀÌ´Ï±î
+    particleCount = 1; //ì• ë‹ˆë©”ì´ì…˜ì„ ì¬ìƒí•˜ëŠ” ê²ƒì´ ëª©ì ì´ë‹ˆê¹Œ
 
-    vertexBuffer = new VertexBuffer(&vertex, sizeof(VertexUV), 1); // ÅØ½ºÃ³ ÇÑ °³ Ãâ·ÂÀÌ ¸ñÀûÀÌ´Ï±î
+    vertexBuffer = new VertexBuffer(&vertex, sizeof(VertexUV), 1); // í…ìŠ¤ì²˜ í•œ ê°œ ì¶œë ¥ì´ ëª©ì ì´ë‹ˆê¹Œ
 }

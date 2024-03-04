@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Objects/Basic/GameObject.h"
 
 struct Ray

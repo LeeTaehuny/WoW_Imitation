@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "Objects/Inventory/Inventory.h"
 #include "Objects/UI/QuickSlot.h"
 #include "Objects/Item/Weapon.h"

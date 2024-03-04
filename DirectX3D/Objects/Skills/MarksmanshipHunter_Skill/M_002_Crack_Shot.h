@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 class M_002_Crack_Shot : public PassiveSkill
 {
 public:

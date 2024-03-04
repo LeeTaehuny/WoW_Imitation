@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 class M_010_Wailing_Arrow : public ActiveSkill
 {
 public:

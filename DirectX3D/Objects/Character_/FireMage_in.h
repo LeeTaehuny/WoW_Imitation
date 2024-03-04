@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 class FireMage_in : public CH_Base_ver2
 {
 public:
@@ -24,61 +24,61 @@ public:
 	void SetDoubleDamage(bool value) { isDouble = value; }
 	bool GetDoubleDamage() { return isDouble; }
 
-	// »óÅÂ º¯°æ¿ë ÇÔ¼ö
+	// ìƒíƒœ ë³€ê²½ìš© í•¨ìˆ˜
 	void SetState(State state);
 	State GetState() { return curState; }
 
-	// ¹«±â ÇÒ´çÀ» À§ÇÑ ÇÔ¼ö
+	// ë¬´ê¸° í• ë‹¹ì„ ìœ„í•œ í•¨ìˆ˜
 	virtual void EquipWeapon(class Weapon* weapon) override;
 
 private:
-	// ÇÃ·¹ÀÌ¾î¿ë ¾÷µ¥ÀÌÆ®
+	// í”Œë ˆì´ì–´ìš© ì—…ë°ì´íŠ¸
 	virtual void PlayerUpdate() override;
-	// NPC¿ë ¾÷µ¥ÀÌÆ®
+	// NPCìš© ì—…ë°ì´íŠ¸
 	virtual void AIUpdate() override;
-	// Ãæµ¹ ÆÇÁ¤ ÇÔ¼ö
+	// ì¶©ëŒ íŒì • í•¨ìˆ˜
 	virtual void OnHit(float damage, bool motion = false) override;
 
-	// NPC°¡ ¿òÁ÷ÀÌ±â À§ÇÑ ÇÔ¼ö
+	// NPCê°€ ì›€ì§ì´ê¸° ìœ„í•œ í•¨ìˆ˜
 	virtual void AI_animation_Moving() override;
 
 
-private: // ÄÁÆ®·Ñ °ü·Ã ÇÔ¼ö
+private: // ì»¨íŠ¸ë¡¤ ê´€ë ¨ í•¨ìˆ˜
 
-	// ¾Ö´Ï¸ŞÀÌ¼Ç ÀÌº¥Æ®¸¦ ÇÒ´çÇÏ±â À§ÇÑ ÇÔ¼ö
+	// ì• ë‹ˆë©”ì´ì…˜ ì´ë²¤íŠ¸ë¥¼ í• ë‹¹í•˜ê¸° ìœ„í•œ í•¨ìˆ˜
 	void SetEvent(int clip, Event event, float timeRatio);
-	// ¾Ö´Ï¸ŞÀÌ¼Ç ÀÎ½ºÅÏ½Ì ÇÔ¼ö
+	// ì• ë‹ˆë©”ì´ì…˜ ì¸ìŠ¤í„´ì‹± í•¨ìˆ˜
 	void ExecuteEvent();
 
-	// ÇÃ·¹ÀÌ¾î ÄÁÆ®·ÑÀ» Á¾ÇÕÇÏ´Â ÇÔ¼ö
+	// í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ì„ ì¢…í•©í•˜ëŠ” í•¨ìˆ˜
 	void Control();
-	// ÇÃ·¹ÀÌ¾îÀÇ ¿òÁ÷ÀÓÀ» ´ã´çÇÏ´Â ÇÔ¼ö
+	// í”Œë ˆì´ì–´ì˜ ì›€ì§ì„ì„ ë‹´ë‹¹í•˜ëŠ” í•¨ìˆ˜
 	void Moving();
-	// ÇÃ·¹ÀÌ¾îÀÇ Á¡ÇÁ¸¦ ´ã´çÇÏ´Â ÇÔ¼ö
+	// í”Œë ˆì´ì–´ì˜ ì í”„ë¥¼ ë‹´ë‹¹í•˜ëŠ” í•¨ìˆ˜
 	void Jump();
-	// ÇÃ·¹ÀÌ¾îÀÇ °ø°İÀ» ´ã´çÇÏ´Â ÇÔ¼ö
+	// í”Œë ˆì´ì–´ì˜ ê³µê²©ì„ ë‹´ë‹¹í•˜ëŠ” í•¨ìˆ˜
 	void Attack();
 
-	// NPCÀÇ °ø°İÀ» ´ã´çÇÏ´Â ÇÔ¼ö
+	// NPCì˜ ê³µê²©ì„ ë‹´ë‹¹í•˜ëŠ” í•¨ìˆ˜
 	void ai_attack();
 
-private: // ÀÌº¥Æ® ÇÔ¼ö
+private: // ì´ë²¤íŠ¸ í•¨ìˆ˜
 
-	// °ø°İ ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ Á¾·áµÇ¾úÀ»¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
+	// ê³µê²© ì• ë‹ˆë©”ì´ì…˜ì´ ì¢…ë£Œë˜ì—ˆì„ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 	void EndATK();
-	// È÷Æ® ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ Á¾·áµÇ¾úÀ»¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
+	// íˆíŠ¸ ì• ë‹ˆë©”ì´ì…˜ì´ ì¢…ë£Œë˜ì—ˆì„ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 	void EndHit();
-	// Á×À½ ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ Á¾·áµÇ¾úÀ»¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
+	// ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ì´ ì¢…ë£Œë˜ì—ˆì„ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 	void EndDie();
 
 private:
-	// ¹öÇÁ¿ë º¯¼ö (µ¥¹ÌÁö 2¹è)
+	// ë²„í”„ìš© ë³€ìˆ˜ (ë°ë¯¸ì§€ 2ë°°)
 	bool isDouble = false;
 
 	State curState = IDLE1;
 
 private:
-	// °ø°İ À½¿ø Àç»ı ¿©ºÎ
+	// ê³µê²© ìŒì› ì¬ìƒ ì—¬ë¶€
 	bool isPlayAttackSound = false;
 	bool isRun = false;
 	float attackSoundDelay = 0.0f;

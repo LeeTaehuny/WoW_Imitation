@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "P_010_Moment_Of_Glory.h"
 
 P_010_Moment_Of_Glory::P_010_Moment_Of_Glory()
@@ -27,6 +27,6 @@ void P_010_Moment_Of_Glory::Render()
 
 void P_010_Moment_Of_Glory::UseSkill()
 {
-	// ÀüÃ¼ Ã¼·ÂÀÇ 30% È¸º¹
+	// ì „ì²´ ì²´ë ¥ì˜ 30% íšŒë³µ
 	owner->GetStat().maxHp += owner->GetStat().maxHp * 0.3f;
 }

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 class QuadTreeTerrain : public GameObject
 {
@@ -13,9 +13,9 @@ private:
         float x, z, size;
         UINT triangleCount = 0;
 
-        Mesh<VertexType>* mesh = nullptr; // ÇØ´ç³ëµå¿¡¼­ °®°íÀÖ´Â ÁöÇüÀÇ ÂÉ°³Áø ¸ğ¾ç
+        Mesh<VertexType>* mesh = nullptr; // í•´ë‹¹ë…¸ë“œì—ì„œ ê°–ê³ ìˆëŠ” ì§€í˜•ì˜ ìª¼ê°œì§„ ëª¨ì–‘
 
-        Node* children[4] = {}; // ³ëµå ÀÚ½ÄÀÌ ¸î°³ÀÎÁö
+        Node* children[4] = {}; // ë…¸ë“œ ìì‹ì´ ëª‡ê°œì¸ì§€
     };
 
 public:

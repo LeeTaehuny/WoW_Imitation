@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 class P_010_Moment_Of_Glory : public PassiveSkill
 {
 public:

@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 BoxCollider::BoxCollider(Vector3 size) : size(size)
 {
@@ -31,7 +31,7 @@ bool BoxCollider::IsRayCollision(IN Ray ray, OUT Contact* contact)
         float e = Dot(axis, delta);
         float f = Dot(D, axis);
 
-        if (NearlyEqual(f, 0.0f))//·¹ÀÌ¿Í ÃàÀÌ ¼öÁ÷ÀÎ »óÈ²
+        if (NearlyEqual(f, 0.0f))//ë ˆì´ì™€ ì¶•ì´ ìˆ˜ì§ì¸ ìƒí™©
         {
             if (min[i] > e || max[i] < e) return false;
         }

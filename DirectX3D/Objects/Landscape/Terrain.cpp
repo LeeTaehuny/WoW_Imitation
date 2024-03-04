@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 
 Terrain::Terrain()
     : GameObject(L"Landscape/Terrain.hlsl"), width(256), height(256)

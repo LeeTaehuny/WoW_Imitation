@@ -1,16 +1,16 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "Particle.h"
 
 Particle::Particle()
 {
-    material = new Material; //¸ÅÆ¼¸®¾ó ¸¸µé±â
+    material = new Material; //ë§¤í‹°ë¦¬ì–¼ ë§Œë“¤ê¸°
 
     FOR(2) blendState[i] = new BlendState();
     FOR(2) depthState[i] = new DepthStencilState();
 
     blendState[1]->Alpha(true);
     depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ZERO);
-    //depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ALL); //³ªÁß¿¡ ¿É¼Ç ¹Ù²Ü ¶§¸¦ ´ëºñ
+    //depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ALL); //ë‚˜ì¤‘ì— ì˜µì…˜ ë°”ê¿€ ë•Œë¥¼ ëŒ€ë¹„
 }
 
 Particle::~Particle()
@@ -24,23 +24,23 @@ Particle::~Particle()
 
 void Particle::Render()
 {
-    // È°¼ºÈ­ µÇ¾î ÀÖ´Â ÇÑ Àç»ıÀ» °è¼ÓÇÑ´Ù
+    // í™œì„±í™” ë˜ì–´ ìˆëŠ” í•œ ì¬ìƒì„ ê³„ì†í•œë‹¤
     if (!isActive) return;
 
-    // Á¶Á¤µÈ ÀÌ¹ÌÁö Ãâ·Â¿ë Ãâ·Â»óÅÂ ¼³Á¤
+    // ì¡°ì •ëœ ì´ë¯¸ì§€ ì¶œë ¥ìš© ì¶œë ¥ìƒíƒœ ì„¤ì •
     blendState[1]->SetState();
     depthState[1]->SetState();
 
-    vertexBuffer->Set(D3D_PRIMITIVE_TOPOLOGY_POINTLIST); //¹ü¿ë ÆÄÆ¼Å¬°ú ¸¶Âù°¡Áö·Î Æ÷ÀÎÆ® Ãâ·Â
+    vertexBuffer->Set(D3D_PRIMITIVE_TOPOLOGY_POINTLIST); //ë²”ìš© íŒŒí‹°í´ê³¼ ë§ˆì°¬ê°€ì§€ë¡œ í¬ì¸íŠ¸ ì¶œë ¥
 
-    //·»´õ ÁØºñ
+    //ë Œë” ì¤€ë¹„
     material->Set();
     geometryShader->Set();
 
-    DC->Draw(particleCount, 0); // ¾ó¸¶³ª, ¾îµğ¼­ºÎÅÍ ±×¸± °ÍÀÎ°¡ (¹«¾ùÀ» = À§¿¡¼­ ¼³Á¤ÇØµĞ Á¤Á¡¹öÆÛ)
-    DC->GSSetShader(nullptr, nullptr, 0); //¼³Á¤Àº ¹Ì¸® ÇØµÎ¾ú°í Áö±İÀº Ãß°¡ ¿É¼ÇÀÌ ¾ø´Ù
+    DC->Draw(particleCount, 0); // ì–¼ë§ˆë‚˜, ì–´ë””ì„œë¶€í„° ê·¸ë¦´ ê²ƒì¸ê°€ (ë¬´ì—‡ì„ = ìœ„ì—ì„œ ì„¤ì •í•´ë‘” ì •ì ë²„í¼)
+    DC->GSSetShader(nullptr, nullptr, 0); //ì„¤ì •ì€ ë¯¸ë¦¬ í•´ë‘ì—ˆê³  ì§€ê¸ˆì€ ì¶”ê°€ ì˜µì…˜ì´ ì—†ë‹¤
 
-    //Ãâ·Â »óÅÂ ¿ø»óº¹±¸
+    //ì¶œë ¥ ìƒíƒœ ì›ìƒë³µêµ¬
     blendState[0]->SetState();
     depthState[0]->SetState();
 }

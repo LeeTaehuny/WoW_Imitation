@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 //ModelData
 
 typedef VertexUVNormalTangentBlend ModelVertex;
@@ -30,7 +30,7 @@ struct BoneData
 struct VertexWeights
 {
     UINT indices[4] = {};//Bone Index;
-    float weights[4] = {};//º¸°£°ª¿¡ ´ëÇÑ °¡ÁßÄ¡
+    float weights[4] = {};//ë³´ê°„ê°’ì— ëŒ€í•œ ê°€ì¤‘ì¹˜
 
     void Add(const UINT& index, const float& weight)
     {

@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "Lich_000_Base.h"
 
 void Lich_000_Base::Cooldown()

@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 IceBall::IceBall(vector<CH_Base_ver2*> target)
 {
@@ -19,7 +19,7 @@ IceBall::IceBall(vector<CH_Base_ver2*> target)
 	attackTarget_serch->SetParent(this->transform);
 	attackTarget_serch->Scale() *= 300;
 
-	// ÇöÀç ¸ó½ºÅÍ¿Í °¡Àå °¡±î¿î Ä³¸¯ÅÍ¸¦ ÆÇº°ÇÏ±â À§ÇÑ ºÎºĞ
+	// í˜„ì¬ ëª¬ìŠ¤í„°ì™€ ê°€ì¥ ê°€ê¹Œìš´ ìºë¦­í„°ë¥¼ íŒë³„í•˜ê¸° ìœ„í•œ ë¶€ë¶„
 	{
 		attackTarget_serch->UpdateWorld();
 		float atk_leng = FLT_MAX;
@@ -43,12 +43,12 @@ IceBall::IceBall(vector<CH_Base_ver2*> target)
 	}
 	hitText.resize(20);
 
-	// ¾óÀ½±¸½½ ½ºÅÈ ¼³Á¤
+	// ì–¼ìŒêµ¬ìŠ¬ ìŠ¤íƒ¯ ì„¤ì •
 	maxHP = 500.0f;
 	curHP = maxHP;
 	Atk = 10.0f;
 
-	// Ã¹ ¹øÂ° ½ºÅ³
+	// ì²« ë²ˆì§¸ ìŠ¤í‚¬
 	{
 		particle = new ParticleSystem("TextData/Particles/LichKing/iceball/ice01.fx");
 		nomarATK = new SphereCollider();
@@ -104,10 +104,10 @@ void IceBall::PostRender()
 
 	for (HitDesc& hit : hitText)
 	{
-		// Ãâ·Â Off¸é Ãâ·Â X
+		// ì¶œë ¥ Offë©´ ì¶œë ¥ X
 		if (!hit.isPrint) continue;
 
-		// Áö¼Ó½Ã°£ °¨¼Ò ¹× Ãâ·Â ¿©ºÎ Ã¼Å©
+		// ì§€ì†ì‹œê°„ ê°ì†Œ ë° ì¶œë ¥ ì—¬ë¶€ ì²´í¬
 		hit.duration -= DELTA;
 
 		if (hit.duration <= 0.0f)
@@ -115,9 +115,9 @@ void IceBall::PostRender()
 			hit.isPrint = false;
 		}
 
-		// ¸ó½ºÅÍÀÇ À§Ä¡ ±¸ÇÏ±â
+		// ëª¬ìŠ¤í„°ì˜ ìœ„ì¹˜ êµ¬í•˜ê¸°
 		Vector3 screenPos = CAM->WorldToScreen(collider->GlobalPos());
-		// Ãâ·Â (³²Àº ½Ã°£¿¡ ºñ·ÊÇØ¼­ Á¡Á¡ ¿Ã¶ó°¡°Ô ¼³Á¤ÇÏ±â)
+		// ì¶œë ¥ (ë‚¨ì€ ì‹œê°„ì— ë¹„ë¡€í•´ì„œ ì ì  ì˜¬ë¼ê°€ê²Œ ì„¤ì •í•˜ê¸°)
 		Font::Get()->RenderText(hit.damage, { screenPos.x + 15.0f , screenPos.y - (50.0f * hit.duration) + 55.0f });
 	}
 }
@@ -139,10 +139,10 @@ void IceBall::Hit(float amount)
 
 	for (int i = 0; i < hitText.size(); i++)
 	{
-		// Ãâ·Â off »óÅÂÀÌ¸é
+		// ì¶œë ¥ off ìƒíƒœì´ë©´
 		if (!hitText[i].isPrint)
 		{
-			// Ãâ·Â ¼³Á¤ÇÏ±â
+			// ì¶œë ¥ ì„¤ì •í•˜ê¸°
 			hitText[i].isPrint = true;
 			hitText[i].duration = 1.0f;
 			hitText[i].damage = to_string((int)amount);

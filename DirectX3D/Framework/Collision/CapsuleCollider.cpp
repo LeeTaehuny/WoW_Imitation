@@ -1,4 +1,4 @@
-#include "Framework.h"
+Ôªø#include "Framework.h"
 
 CapsuleCollider::CapsuleCollider(float radius, float height, UINT stackCount, UINT sliceCount)
     : radius(radius), height(height), stackCount(stackCount), sliceCount(sliceCount)
@@ -179,7 +179,7 @@ void CapsuleCollider::MakeMesh()
         }
     }
 
-    //¡§¡° ¿Œµ¶Ω∫
+    //Ï†ïÏ†ê Ïù∏Îç±Ïä§
     vector<UINT>& indices = mesh->GetIndices();
 
     indices.reserve(sliceCount * stackCount * 6);

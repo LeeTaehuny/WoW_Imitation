@@ -1,41 +1,41 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
-// ³»ºÎ Å¬·¡½º È¯°æ¿¡¼­ ÆÄÀÏ °¡Á®¿À±â (=ÅØ½ºÆ® ¼³Á¤)
+// ë‚´ë¶€ í´ëž˜ìŠ¤ í™˜ê²½ì—ì„œ íŒŒì¼ ê°€ì ¸ì˜¤ê¸° (=í…ìŠ¤íŠ¸ ì„¤ì •)
 ParticleSystem::ParticleSystem(string file)
 {
-    LoadData(file); // ÆÄÀÏ µ¥ÀÌÅÍ ºÒ·¯¿À±â ÇÔ¼ö ²ø¾î¿À±â
+    LoadData(file); // íŒŒì¼ ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸° í•¨ìˆ˜ ëŒì–´ì˜¤ê¸°
 
-    //Æ®·£½ºÆû µ¥ÀÌÅÍ ÁØºñ
+    //íŠ¸ëžœìŠ¤í¼ ë°ì´í„° ì¤€ë¹„
     instanceBuffer = new VertexBuffer(instances.data(), sizeof(InstanceData), data.count);
 
-    //Ãâ·Â¿ë ½ºÅ×ÀÌÆ®°ª ÁØºñ
+    //ì¶œë ¥ìš© ìŠ¤í…Œì´íŠ¸ê°’ ì¤€ë¹„
     FOR(2) blendState[i] = new BlendState();
-    blendState[1]->Alpha(true); //¾ËÆÄ Àû¿ë (¹ÝÅõ¸í ¼³Á¤ ÀÖÀ¸¸é Àû¿ë)
+    blendState[1]->Alpha(true); //ì•ŒíŒŒ ì ìš© (ë°˜íˆ¬ëª… ì„¤ì • ìžˆìœ¼ë©´ ì ìš©)
 
     FOR(2) depthState[i] = new DepthStencilState();
-    //depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ALL); // °¡·ÁÁö´Â ÀÌÆåÆ®
-    depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ZERO); // ¾È °¡·ÁÁö´Â ÀÌÆåÆ®
+    //depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ALL); // ê°€ë ¤ì§€ëŠ” ì´íŽ™íŠ¸
+    depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ZERO); // ì•ˆ ê°€ë ¤ì§€ëŠ” ì´íŽ™íŠ¸
 
-    quad->SetActive(false); // ÀÏ´Ü ÅÍÁú ¶§°¡ ¾Æ´Ï¾î¼­ ºñÈ°¼ºÈ­
+    quad->SetActive(false); // ì¼ë‹¨ í„°ì§ˆ ë•Œê°€ ì•„ë‹ˆì–´ì„œ ë¹„í™œì„±í™”
 }
 
-// ¿ÜºÎ Å½»ö±â¿¡¼­ ÆÄÀÏ °¡Á®¿À±â (=±×¸² ÆÄÀÏ)
+// ì™¸ë¶€ íƒìƒ‰ê¸°ì—ì„œ íŒŒì¼ ê°€ì ¸ì˜¤ê¸° (=ê·¸ë¦¼ íŒŒì¼)
 ParticleSystem::ParticleSystem(wstring file)
 {
-    LoadData(file); // ÆÄÀÏ µ¥ÀÌÅÍ ºÒ·¯¿À±â ÇÔ¼ö ²ø¾î¿À±â
+    LoadData(file); // íŒŒì¼ ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸° í•¨ìˆ˜ ëŒì–´ì˜¤ê¸°
 
-    //Æ®·£½ºÆû µ¥ÀÌÅÍ ÁØºñ
+    //íŠ¸ëžœìŠ¤í¼ ë°ì´í„° ì¤€ë¹„
     instanceBuffer = new VertexBuffer(instances.data(), sizeof(InstanceData), data.count);
 
-    //Ãâ·Â¿ë ½ºÅ×ÀÌÆ®°ª ÁØºñ
+    //ì¶œë ¥ìš© ìŠ¤í…Œì´íŠ¸ê°’ ì¤€ë¹„
     FOR(2) blendState[i] = new BlendState();
-    blendState[1]->Alpha(true); //¾ËÆÄ Àû¿ë (¹ÝÅõ¸í ¼³Á¤ ÀÖÀ¸¸é Àû¿ë)
+    blendState[1]->Alpha(true); //ì•ŒíŒŒ ì ìš© (ë°˜íˆ¬ëª… ì„¤ì • ìžˆìœ¼ë©´ ì ìš©)
 
     FOR(2) depthState[i] = new DepthStencilState();
-    //depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ALL); // °¡·ÁÁö´Â ÀÌÆåÆ®
-    depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ZERO); // ¾È °¡·ÁÁö´Â ÀÌÆåÆ®
+    //depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ALL); // ê°€ë ¤ì§€ëŠ” ì´íŽ™íŠ¸
+    depthState[1]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ZERO); // ì•ˆ ê°€ë ¤ì§€ëŠ” ì´íŽ™íŠ¸
 
-    quad->SetActive(false); // ÀÏ´Ü ÅÍÁú ¶§°¡ ¾Æ´Ï¾î¼­ ºñÈ°¼ºÈ­
+    quad->SetActive(false); // ì¼ë‹¨ í„°ì§ˆ ë•Œê°€ ì•„ë‹ˆì–´ì„œ ë¹„í™œì„±í™”
 }
 
 ParticleSystem::~ParticleSystem()
@@ -52,14 +52,14 @@ void ParticleSystem::Update()
 
     lifeSpan += DELTA;
 
-    UpdatePhysical(); // Á¤Á¡ ¾÷µ¥ÀÌÆ®
-    UpdateColor();    // »ö±òÀ» ¾÷µ¥ÀÌÆ®
-    quad->UpdateWorld();  //¾÷µ¥ÀÌÆ®µÈ Á¤º¸¿¡ ±×¸²À» ¸ÂÃß±â (±×¸²À» ÆÄÆ¼Å¬¿¡ ¸Â°Ô ¾÷µ¥ÀÌÆ®)
+    UpdatePhysical(); // ì •ì  ì—…ë°ì´íŠ¸
+    UpdateColor();    // ìƒ‰ê¹”ì„ ì—…ë°ì´íŠ¸
+    quad->UpdateWorld();  //ì—…ë°ì´íŠ¸ëœ ì •ë³´ì— ê·¸ë¦¼ì„ ë§žì¶”ê¸° (ê·¸ë¦¼ì„ íŒŒí‹°í´ì— ë§žê²Œ ì—…ë°ì´íŠ¸)
 
-    if (lifeSpan > data.duration) //¼³Á¤µÈ Àç»ý½Ã°£À» »ý¾ÖÁÖ±â(Áß °æ°ú½Ã°£)°¡ ÃÊ°úÇÏ¸é
+    if (lifeSpan > data.duration) //ì„¤ì •ëœ ìž¬ìƒì‹œê°„ì„ ìƒì• ì£¼ê¸°(ì¤‘ ê²½ê³¼ì‹œê°„)ê°€ ì´ˆê³¼í•˜ë©´
     {
-        if (data.isLoop) Init(); // ¹Ýº¹ ¿É¼ÇÀÌ ÄÑÁ® ÀÖÀ¸¸é Àç½ÃÀÛ
-        else Stop(); // ¸ØÃß±â
+        if (data.isLoop) Init(); // ë°˜ë³µ ì˜µì…˜ì´ ì¼œì ¸ ìžˆìœ¼ë©´ ìž¬ì‹œìž‘
+        else Stop(); // ë©ˆì¶”ê¸°
     }
 }
 
@@ -67,21 +67,21 @@ void ParticleSystem::Render()
 {
     if (!quad->Active()) return;
 
-    //ÀÎ½ºÅÏ½º ÁØºñ
+    //ì¸ìŠ¤í„´ìŠ¤ ì¤€ë¹„
     instanceBuffer->Set(1);
 
-    //±×¸²ÁØºñ
+    //ê·¸ë¦¼ì¤€ë¹„
     quad->SetRender();
 
-    //½ºÅ×ÀÌÆ® ÁØºñ
+    //ìŠ¤í…Œì´íŠ¸ ì¤€ë¹„
     blendState[1]->SetState();
     depthState[1]->SetState();
 
-    //Ãâ·ÂÀåÄ¡·Î È£Ãâ
-    DC->DrawIndexedInstanced(6, drawCount, 0, 0, 0); // ¸Å°³º¯¼ö´Â ¾î¶² ´ÜÀ§¸¦, ¾ó¸¶³ª ¸¹ÀÌ
-                                                     // ¾îµð¼­, ¾î¶² Ãß°¡ ÂüÁ¶ ÀÚ·á·Î Ãâ·ÂÇÒ °ÍÀÎ°¡
+    //ì¶œë ¥ìž¥ì¹˜ë¡œ í˜¸ì¶œ
+    DC->DrawIndexedInstanced(6, drawCount, 0, 0, 0); // ë§¤ê°œë³€ìˆ˜ëŠ” ì–´ë–¤ ë‹¨ìœ„ë¥¼, ì–¼ë§ˆë‚˜ ë§Žì´
+                                                     // ì–´ë””ì„œ, ì–´ë–¤ ì¶”ê°€ ì°¸ì¡° ìžë£Œë¡œ ì¶œë ¥í•  ê²ƒì¸ê°€
 
-    //¿ø»óº¹±¸
+    //ì›ìƒë³µêµ¬
     blendState[0]->SetState();
     depthState[0]->SetState();
 }
@@ -109,102 +109,102 @@ void ParticleSystem::Stop()
     quad->SetActive(false);
 }
 
-//¾Æ·¡ µÎ ÇÔ¼ö = ÆÄÆ¼Å¬ (°³º° ³»ºÎ µ¥ÀÌÅÍ) ¾÷µ¥ÀÌÆ®
+//ì•„ëž˜ ë‘ í•¨ìˆ˜ = íŒŒí‹°í´ (ê°œë³„ ë‚´ë¶€ ë°ì´í„°) ì—…ë°ì´íŠ¸
 void ParticleSystem::UpdatePhysical()
 {
     drawCount = 0;
 
-    FOR(data.count) //µ¿½Ã ÀÌÆåÆ® °í·Á
+    FOR(data.count) //ë™ì‹œ ì´íŽ™íŠ¸ ê³ ë ¤
     {
-        // * particleInfos[i] : ¹Ì¸® ¸¸µé¾îÁø ÆÄÆ¼Å¬À» »ç¿ëÇÒ °æ¿ì È£ÃâÇÒ ´ë»ó
+        // * particleInfos[i] : ë¯¸ë¦¬ ë§Œë“¤ì–´ì§„ íŒŒí‹°í´ì„ ì‚¬ìš©í•  ê²½ìš° í˜¸ì¶œí•  ëŒ€ìƒ
 
         if (lifeSpan < particleInfos[i].startTime) continue;
-                // ÁÖ±â°¡ ¿ÀÁöµµ ¾ÊÀº = ½ÃÀÛµµ ¾ÈµÈ ÆÄÆ¼Å¬ Á¦Ä¡±â
+                // ì£¼ê¸°ê°€ ì˜¤ì§€ë„ ì•Šì€ = ì‹œìž‘ë„ ì•ˆëœ íŒŒí‹°í´ ì œì¹˜ê¸°
 
-        //ÁøÇà ÁßÀÎ ÆÄÆ¼Å¬ °è»ê
-        particleInfos[i].velocity += particleInfos[i].acceleration * DELTA; // ¼Ó·Â±âÁØ
+        //ì§„í–‰ ì¤‘ì¸ íŒŒí‹°í´ ê³„ì‚°
+        particleInfos[i].velocity += particleInfos[i].acceleration * DELTA; // ì†ë ¥ê¸°ì¤€
         particleInfos[i].transform.Pos() += particleInfos[i].velocity
-            * particleInfos[i].speed * DELTA; // ¼Ó·Â±âÁØ * ±âº»¼Óµµ * ½Ã°£°æ°ú = ÃÖÁ¾¼Ó·Â
-                                              // ÃÖÁ¾¼Ó·ÂÀ» À§Ä¡¿¡ ´õÇØ¼­ À§Ä¡ °»½Å
+            * particleInfos[i].speed * DELTA; // ì†ë ¥ê¸°ì¤€ * ê¸°ë³¸ì†ë„ * ì‹œê°„ê²½ê³¼ = ìµœì¢…ì†ë ¥
+                                              // ìµœì¢…ì†ë ¥ì„ ìœ„ì¹˜ì— ë”í•´ì„œ ìœ„ì¹˜ ê°±ì‹ 
         particleInfos[i].transform.Rot().z += particleInfos[i].angularVelocity * DELTA;
-                                              // °¢µµ °»½Å
+                                              // ê°ë„ ê°±ì‹ 
 
-        //ºôº¸µå ¿É¼ÇÀÌ È°¼ºÈ­µÇ¾î ÀÖÀ¸¸é ±×¸²À» Ä«¸Þ¶ó ÂÊÀ¸·Î (µ¿±âÈ­)
+        //ë¹Œë³´ë“œ ì˜µì…˜ì´ í™œì„±í™”ë˜ì–´ ìžˆìœ¼ë©´ ê·¸ë¦¼ì„ ì¹´ë©”ë¼ ìª½ìœ¼ë¡œ (ë™ê¸°í™”)
         if (data.isBillboard)
         {
             particleInfos[i].transform.Rot().x = CAM->Rot().x;
             particleInfos[i].transform.Rot().y = CAM->Rot().y;
         }
-        // º¤ÅÍ¸¦ ¾²¸é ¿¬»êÀº ºü¸£°í °£´ÜÇÏÁö¸¸ -> ±×¸²ÀÌ ¾ðÁ¦³ª 100% 2D Á¤¸éÀ¸·Î º¸ÀÎ´Ù´Â º¸ÀåÀº ¾ø´Ù
-        // Áö¿À¸ÞÆ®¸® ¼ÎÀÌ´õ¸¦ ½áµµ µÇÁö¸¸ -> ·»´õ ÀýÂ÷°¡ ´Þ¶óÁ®¾ß ÇÒ ¼öµµ ÀÖ´Ù (¿É¼Ç¿¡ ¹«°üÇÑ ·»´õ ÀÏ¿øÈ­)
+        // ë²¡í„°ë¥¼ ì“°ë©´ ì—°ì‚°ì€ ë¹ ë¥´ê³  ê°„ë‹¨í•˜ì§€ë§Œ -> ê·¸ë¦¼ì´ ì–¸ì œë‚˜ 100% 2D ì •ë©´ìœ¼ë¡œ ë³´ì¸ë‹¤ëŠ” ë³´ìž¥ì€ ì—†ë‹¤
+        // ì§€ì˜¤ë©”íŠ¸ë¦¬ ì…°ì´ë”ë¥¼ ì¨ë„ ë˜ì§€ë§Œ -> ë Œë” ì ˆì°¨ê°€ ë‹¬ë¼ì ¸ì•¼ í•  ìˆ˜ë„ ìžˆë‹¤ (ì˜µì…˜ì— ë¬´ê´€í•œ ë Œë” ì¼ì›í™”)
 
         float t = (lifeSpan - particleInfos[i].startTime)
-            / (data.duration - particleInfos[i].startTime); //ÁÖ±â Áß °æ°ú ½Ã°£°ú (¾÷µ¥ÀÌÆ® Áß¿¡´Â »ý¾ÖÁÖ±â=°æ°ú½Ã°£)
-                                                            //ÆÄÆ¼Å¬ÀÇ ÀüÃ¼ Àç»ý ½Ã°£À» °¢°¢ ½ÃÀÛ½Ã°£¿¡ ´ëÇØ Â÷ÀÌ¸¦ ³»°í
-                                                            //±×¿¡ µû¸¥ °æ°ú ºñÀ²(t)À» ³½´Ù
-                                                            // = ¸¸µé¾îÁø Á÷ÈÄ(0)ºÎÅÍ »ç¶óÁö±â Á÷Àü(1) »çÀÌÀÇ °ªÀÌ ³ª¿Ã °Í
+            / (data.duration - particleInfos[i].startTime); //ì£¼ê¸° ì¤‘ ê²½ê³¼ ì‹œê°„ê³¼ (ì—…ë°ì´íŠ¸ ì¤‘ì—ëŠ” ìƒì• ì£¼ê¸°=ê²½ê³¼ì‹œê°„)
+                                                            //íŒŒí‹°í´ì˜ ì „ì²´ ìž¬ìƒ ì‹œê°„ì„ ê°ê° ì‹œìž‘ì‹œê°„ì— ëŒ€í•´ ì°¨ì´ë¥¼ ë‚´ê³ 
+                                                            //ê·¸ì— ë”°ë¥¸ ê²½ê³¼ ë¹„ìœ¨(t)ì„ ë‚¸ë‹¤
+                                                            // = ë§Œë“¤ì–´ì§„ ì§í›„(0)ë¶€í„° ì‚¬ë¼ì§€ê¸° ì§ì „(1) ì‚¬ì´ì˜ ê°’ì´ ë‚˜ì˜¬ ê²ƒ
 
-        //À§¿¡¼­ ¸¸µç ½Ã°£ °æ°ú ºñÀ²À» ÀÌ¿ëÇØ¼­ Å©±â (°æ¿ì¿¡ µû¶ó ´Ù¸¥ ¿É¼ÇÀÌ ÀÖ´Ù¸é ±×°Íµµ) º¸°£
+        //ìœ„ì—ì„œ ë§Œë“  ì‹œê°„ ê²½ê³¼ ë¹„ìœ¨ì„ ì´ìš©í•´ì„œ í¬ê¸° (ê²½ìš°ì— ë”°ë¼ ë‹¤ë¥¸ ì˜µì…˜ì´ ìžˆë‹¤ë©´ ê·¸ê²ƒë„) ë³´ê°„
         particleInfos[i].transform.Scale() =
             Lerp(particleInfos[i].startScale, particleInfos[i].endScale, t);
 
-        //À§Ä¡, È¸Àü, Å©±â °ªÀÌ °¢°¢ ³ª¿Â ´ë·Î Á¤Á¡ ¾÷µ¥ÀÌÆ®
+        //ìœ„ì¹˜, íšŒì „, í¬ê¸° ê°’ì´ ê°ê° ë‚˜ì˜¨ ëŒ€ë¡œ ì •ì  ì—…ë°ì´íŠ¸
         particleInfos[i].transform.UpdateWorld();
 
-        //¾÷µ¥ÀÌÆ®µÈ Á¤Á¡À» ÆÄÆ¼Å¬¿¡ Á÷Á¢ Àû¿ë
-        instances[drawCount++].transform = //drawCount¸¦ È£ÃâÇÑ ÈÄ, ¿¬»êÀÌ ³¡³ª¸é º¯¼ö¿¡ +1 (´©Àû¿¬»ê È°¿ë ²Ä¼ö)
+        //ì—…ë°ì´íŠ¸ëœ ì •ì ì„ íŒŒí‹°í´ì— ì§ì ‘ ì ìš©
+        instances[drawCount++].transform = //drawCountë¥¼ í˜¸ì¶œí•œ í›„, ì—°ì‚°ì´ ëë‚˜ë©´ ë³€ìˆ˜ì— +1 (ëˆ„ì ì—°ì‚° í™œìš© ê¼¼ìˆ˜)
             XMMatrixTranspose(particleInfos[i].transform.GetWorld());
     }
 
-    // ¿©±â±îÁö ¿À¸é °¢ ÆÄÆ¼Å¬¿¡ ´ëÇÑ Á¤Á¡ Á¤º¸°¡ ¸ðµÎ °»½ÅÀÌ µÈ´Ù
-    // -> ÀÌ¿¡ µû¶ó ¹öÆÛ¸¦ ¾÷µ¥ÀÌÆ®
-    instanceBuffer->Update(instances.data(), drawCount);// ¾î´À ¹üÀ§¸¦ ¸î ¹ø ¾÷µ¥ÀÌÆ®ÇÒ °ÍÀÎ°¡
+    // ì—¬ê¸°ê¹Œì§€ ì˜¤ë©´ ê° íŒŒí‹°í´ì— ëŒ€í•œ ì •ì  ì •ë³´ê°€ ëª¨ë‘ ê°±ì‹ ì´ ëœë‹¤
+    // -> ì´ì— ë”°ë¼ ë²„í¼ë¥¼ ì—…ë°ì´íŠ¸
+    instanceBuffer->Update(instances.data(), drawCount);// ì–´ëŠ ë²”ìœ„ë¥¼ ëª‡ ë²ˆ ì—…ë°ì´íŠ¸í•  ê²ƒì¸ê°€
 }
 
 void ParticleSystem::UpdateColor()
 {
-    // Á¤Á¡ ¾÷µ¥ÀÌÆ® ÁøÇà °úÁ¤¿¡¼­ ÀÌ¹Ì ÆÄÆ¼Å¬ÀÇ Àç»ý¿©ºÎ, Á¤Á¡Á¤º¸(Á¸ÀçÁ¤º¸) ¿¬»êÀ» °ÅÃÆÀ» °Í
-    // -> ¸¸¾à ¾È ±×·¨´Ù¸é ÀÌÂÊ¿¡¼­ ´Ù½Ã ±× °úÁ¤À» ´Ù ÇØÁà¾ß ¸ÂÀ» °Í
-    // -> ÇÑÂÊÀÌ ÁøÇàÇØÁØ ¿¬»êÀ» ¿©±â¼­ ¶Ç ÇÒ ÇÊ¿ä´Â ¾ø´Ù. ´ë½Å °Å±â¼­ ºüÁø °É Ã¤¿öÁà¾ß ÇÑ´Ù
+    // ì •ì  ì—…ë°ì´íŠ¸ ì§„í–‰ ê³¼ì •ì—ì„œ ì´ë¯¸ íŒŒí‹°í´ì˜ ìž¬ìƒì—¬ë¶€, ì •ì ì •ë³´(ì¡´ìž¬ì •ë³´) ì—°ì‚°ì„ ê±°ì³¤ì„ ê²ƒ
+    // -> ë§Œì•½ ì•ˆ ê·¸ëž¬ë‹¤ë©´ ì´ìª½ì—ì„œ ë‹¤ì‹œ ê·¸ ê³¼ì •ì„ ë‹¤ í•´ì¤˜ì•¼ ë§žì„ ê²ƒ
+    // -> í•œìª½ì´ ì§„í–‰í•´ì¤€ ì—°ì‚°ì„ ì—¬ê¸°ì„œ ë˜ í•  í•„ìš”ëŠ” ì—†ë‹¤. ëŒ€ì‹  ê±°ê¸°ì„œ ë¹ ì§„ ê±¸ ì±„ì›Œì¤˜ì•¼ í•œë‹¤
 
-    float t = lifeSpan / data.duration; // °æ°ú½Ã°£ ³ª´©±â º»·¡ÀÇ Àç»ý½Ã°£(ÀÏ¹Ý°ª)
+    float t = lifeSpan / data.duration; // ê²½ê³¼ì‹œê°„ ë‚˜ëˆ„ê¸° ë³¸ëž˜ì˜ ìž¬ìƒì‹œê°„(ì¼ë°˜ê°’)
 
-    //°ð¹Ù·Î È°¿ë
+    //ê³§ë°”ë¡œ í™œìš©
     Float4 color;
     color.x = Lerp(data.startColor.x, data.endColor.x, t); // R
     color.y = Lerp(data.startColor.y, data.endColor.y, t); // G
     color.z = Lerp(data.startColor.z, data.endColor.z, t); // B
     color.w = Lerp(data.startColor.w, data.endColor.w, t); // A
 
-    //Äõµå¿¡µµ Àû¿ë
+    //ì¿¼ë“œì—ë„ ì ìš©
     quad->GetMaterial()->GetData().diffuse = color;
 }
 
 void ParticleSystem::Init()
 {
-    // ¸¸µç ÆÄÆ¼Å¬À» ½ÃÀÛÇÏ±â
+    // ë§Œë“  íŒŒí‹°í´ì„ ì‹œìž‘í•˜ê¸°
 
-    // ±×¸²ÀÇ ¼º°ÝÀÌ È¥ÇÕÅõ¸íÀÎ°¡(additive) ¾Æ´Ï¸é ±×³É ´Üµ¶ ¾ËÆÄ°¡ ÀÖ´Â °Ç°¡(¾ËÆÄ ÀÖ´Â ºÒÅõ¸í)
-    // ->¿É¼Ç¿¡ µû¶ó ½ºÅ×ÀÌÆ® °ªÀ» ÇÑ¹ø ´õ È®ÀÎ»ç»ì
-    if (data.isAdditive) blendState[1]->Additive(); //È¥ÇÕ¿¡ ÀÇÇÑ Åõ¸í È°¼ºÈ­
-    else blendState[1]->Alpha(true);                //¾ËÆÄ°¡ ÀÖ´Â ºÒÅõ¸í È°¼ºÈ­
-                                                    //->Áß°£¿¡ ¿É¼ÇÀÌ ¹Ù²î´Â °æ¿ì¸¦ À§ÇØ¼­
+    // ê·¸ë¦¼ì˜ ì„±ê²©ì´ í˜¼í•©íˆ¬ëª…ì¸ê°€(additive) ì•„ë‹ˆë©´ ê·¸ëƒ¥ ë‹¨ë… ì•ŒíŒŒê°€ ìžˆëŠ” ê±´ê°€(ì•ŒíŒŒ ìžˆëŠ” ë¶ˆíˆ¬ëª…)
+    // ->ì˜µì…˜ì— ë”°ë¼ ìŠ¤í…Œì´íŠ¸ ê°’ì„ í•œë²ˆ ë” í™•ì¸ì‚¬ì‚´
+    if (data.isAdditive) blendState[1]->Additive(); //í˜¼í•©ì— ì˜í•œ íˆ¬ëª… í™œì„±í™”
+    else blendState[1]->Alpha(true);                //ì•ŒíŒŒê°€ ìžˆëŠ” ë¶ˆíˆ¬ëª… í™œì„±í™”
+                                                    //->ì¤‘ê°„ì— ì˜µì…˜ì´ ë°”ë€ŒëŠ” ê²½ìš°ë¥¼ ìœ„í•´ì„œ
 
-    lifeSpan = 0; //ÁÖ±â(Áß °æ°ú ½Ã°£) 0
-    drawCount = 0; //µå·Î¿ì ¿äÃ» È½¼ö 0
-    data.count = particleCount; //¼³Á¤µÈ ´ë·Î (ÀÌÈÄ ¿É¼ÇÀÌ ´Þ¶óÁö¸é ÀÌ ÄÚµåµµ ¼öÁ¤ ÇÊ¿ä)
+    lifeSpan = 0; //ì£¼ê¸°(ì¤‘ ê²½ê³¼ ì‹œê°„) 0
+    drawCount = 0; //ë“œë¡œìš° ìš”ì²­ íšŸìˆ˜ 0
+    data.count = particleCount; //ì„¤ì •ëœ ëŒ€ë¡œ (ì´í›„ ì˜µì…˜ì´ ë‹¬ë¼ì§€ë©´ ì´ ì½”ë“œë„ ìˆ˜ì • í•„ìš”)
 
-    // º¤ÅÍ ´Ù½Ã ¸®¼Â
+    // ë²¡í„° ë‹¤ì‹œ ë¦¬ì…‹
     instances.resize(data.count);
-    particleInfos.resize(data.count); //°³º° ÆÄÆ¼Å¬ Á¤º¸
+    particleInfos.resize(data.count); //ê°œë³„ íŒŒí‹°í´ ì •ë³´
 
-    //¾Æ·¡ ÄÚµå´Â »ùÇÃ : °³º° ÆÄÆ¼Å¬ Á¤º¸°¡ ÀÖ°í, Áö±Ý Á¤ÇØÁø´Ù°í °¡Á¤
-    // -> ½Ã³ª¸®¿À°¡ ¹Ù²î¸é ÀÌ ÄÚµå´Â ¼öÁ¤µÇ°Å³ª, ´Ù¸¥ °÷¿¡¼­ µû·Î È£ÃâµÇ¾î¾ß ÇÑ´Ù
-    for (ParticleInfo& info : particleInfos) //À§ÀÇ °³º° Á¤º¸ º¤ÅÍ È°¿ë
+    //ì•„ëž˜ ì½”ë“œëŠ” ìƒ˜í”Œ : ê°œë³„ íŒŒí‹°í´ ì •ë³´ê°€ ìžˆê³ , ì§€ê¸ˆ ì •í•´ì§„ë‹¤ê³  ê°€ì •
+    // -> ì‹œë‚˜ë¦¬ì˜¤ê°€ ë°”ë€Œë©´ ì´ ì½”ë“œëŠ” ìˆ˜ì •ë˜ê±°ë‚˜, ë‹¤ë¥¸ ê³³ì—ì„œ ë”°ë¡œ í˜¸ì¶œë˜ì–´ì•¼ í•œë‹¤
+    for (ParticleInfo& info : particleInfos) //ìœ„ì˜ ê°œë³„ ì •ë³´ ë²¡í„° í™œìš©
     {
-        info.transform.Pos() = {}; //ÀÏ´Ü ´ë±â »óÅÂ. Æ®·£½ºÆûÀÌ ÀÖ±â´Â ÀÖÀ½
+        info.transform.Pos() = {}; //ì¼ë‹¨ ëŒ€ê¸° ìƒíƒœ. íŠ¸ëžœìŠ¤í¼ì´ ìžˆê¸°ëŠ” ìžˆìŒ
 
-        //ÆÄÆ¼Å¬·Î¼­ÀÇ ¿É¼Ç ¼³Á¤
+        //íŒŒí‹°í´ë¡œì„œì˜ ì˜µì…˜ ì„¤ì •
         info.velocity = Random(data.minVelocity, data.maxVelocity);
         info.acceleration = Random(data.minAcceleration, data.maxAcceleration);
         info.angularVelocity = Random(data.minAngularVelocity, data.maxAngularVelocity);
@@ -213,37 +213,37 @@ void ParticleSystem::Init()
         info.startScale = Random(data.minStartScale, data.maxStartScale);
         info.endScale = Random(data.minEndScale, data.maxEndScale);
 
-        //ÆÄÆ¼Å¬¿¡¼­ ¼Ó·ÂÀ» Á¤±ÔÈ­ÇÑ´Ù¸é ¾Æ·¡ ÄÚµå±îÁö
+        //íŒŒí‹°í´ì—ì„œ ì†ë ¥ì„ ì •ê·œí™”í•œë‹¤ë©´ ì•„ëž˜ ì½”ë“œê¹Œì§€
         info.velocity.Normalize();
     }
-    //ÀÌ ¹Ýº¹¹®ÀÌ ³¡³ª¸é °³¼ö¿¡ µû¸¥ °¢ °³º° ÆÄÆ¼Å¬¿¡ °¢ÀÚ ´Ù¸¥ ¼³Á¤°ª ´ëÀÔ
-    //->³ªÁß¿¡ ÀÌ ¼³Á¤°ªÀÌ ´Ù¸¥ ÆÄÆ¼Å¬À» ºÎ¸£±â¸¸ ÇØµµ ´Ù¾çÇÑ ´À³¦ÀÌ ³ª´Â ÆÄÆ¼Å¬ ±¸Çö °¡´É
-    //-> ¹Ì¸® ÆÄÆ¼Å¬À» ¸¸µé¸é ÃÖÀûÈ­¿¡´Â µµ¿òÀÌ µÇ°í, ´«½ä¹Ì ÁÁÀº »ç¶÷¿¡°Ô´Â Å« Èï¹Ì¸¦ ÁÖÁö ¸øÇÑ´Ù
+    //ì´ ë°˜ë³µë¬¸ì´ ëë‚˜ë©´ ê°œìˆ˜ì— ë”°ë¥¸ ê° ê°œë³„ íŒŒí‹°í´ì— ê°ìž ë‹¤ë¥¸ ì„¤ì •ê°’ ëŒ€ìž…
+    //->ë‚˜ì¤‘ì— ì´ ì„¤ì •ê°’ì´ ë‹¤ë¥¸ íŒŒí‹°í´ì„ ë¶€ë¥´ê¸°ë§Œ í•´ë„ ë‹¤ì–‘í•œ ëŠë‚Œì´ ë‚˜ëŠ” íŒŒí‹°í´ êµ¬í˜„ ê°€ëŠ¥
+    //-> ë¯¸ë¦¬ íŒŒí‹°í´ì„ ë§Œë“¤ë©´ ìµœì í™”ì—ëŠ” ë„ì›€ì´ ë˜ê³ , ëˆˆì°ë¯¸ ì¢‹ì€ ì‚¬ëžŒì—ê²ŒëŠ” í° í¥ë¯¸ë¥¼ ì£¼ì§€ ëª»í•œë‹¤
 }
 
 void ParticleSystem::LoadData(string file)
 {
-    //»çÀü¿¡ ¼³Á¤µÈ ÆÄÀÏ(ÅØ½ºÆ® ÆÄÀÏ, ini µî)ÀÌ ÀÖ´Ù°í Ä¡°í °Å±â¼­ ÀÚ·á ºÒ·¯¿À±â
+    //ì‚¬ì „ì— ì„¤ì •ëœ íŒŒì¼(í…ìŠ¤íŠ¸ íŒŒì¼, ini ë“±)ì´ ìžˆë‹¤ê³  ì¹˜ê³  ê±°ê¸°ì„œ ìžë£Œ ë¶ˆëŸ¬ì˜¤ê¸°
 
-    //ÆÄÀÏ ÀÐ±â ÁØºñ
+    //íŒŒì¼ ì½ê¸° ì¤€ë¹„
     BinaryReader* reader = new BinaryReader(file);
 
-    //»çÀü ¼³Á¤ ÆÄÀÏ¿¡¼­ ÆÄÀÏ ÀÌ¸§À» ÃßÃâÇØ¼­ ±×¸² ¸¸µé±â
+    //ì‚¬ì „ ì„¤ì • íŒŒì¼ì—ì„œ íŒŒì¼ ì´ë¦„ì„ ì¶”ì¶œí•´ì„œ ê·¸ë¦¼ ë§Œë“¤ê¸°
     wstring tFile = reader->WString();
     quad = new Quad(Vector2(1, 1));
     quad->GetMaterial()->SetDiffuseMap(tFile);
     quad->GetMaterial()->SetShader(L"Effect/Particle.hlsl");
 
-    //»çÀü¿¡ ¼³Á¤µÈ ÆÄÆ¼Å¬ ¿É¼Ç ºÒ·¯¿Í¼­ ¼³Á¤ÇÏ±â
-    // -> ÅØ½ºÆ® ÀÔÃâ·ÂÀ» È°¿ëÇØ¼­ ¿ì¸®°¡ »çÀü¿¡ ¸¸µé ¼öµµ ÀÖ°í (±×·¸°Ô ¸¸µç °ÍÀ» °¡Á®¿Ã ¼öµµ ÀÖ°í)
-    // -> º¸Åë ÆÄÆ¼Å¬ÀÌ¸é Áö±Ý Çì´õ¿¡¼­ ±¸ÇöµÈ Á¤µµÀÇ ¿É¼ÇÀº ÃÖ¼ÒÇÑÀ¸·Î °¡Áö°Ô µÇ±â ¶§¹®¿¡ ¿©±â¼­
-    //    ÆÄÀÏÀ» ÀÐ¾î¼­ ¹Ù·Î ¿É¼Ç Àû¿ëÀÌ °¡´ÉÇÏ´Ù
+    //ì‚¬ì „ì— ì„¤ì •ëœ íŒŒí‹°í´ ì˜µì…˜ ë¶ˆëŸ¬ì™€ì„œ ì„¤ì •í•˜ê¸°
+    // -> í…ìŠ¤íŠ¸ ìž…ì¶œë ¥ì„ í™œìš©í•´ì„œ ìš°ë¦¬ê°€ ì‚¬ì „ì— ë§Œë“¤ ìˆ˜ë„ ìžˆê³  (ê·¸ë ‡ê²Œ ë§Œë“  ê²ƒì„ ê°€ì ¸ì˜¬ ìˆ˜ë„ ìžˆê³ )
+    // -> ë³´í†µ íŒŒí‹°í´ì´ë©´ ì§€ê¸ˆ í—¤ë”ì—ì„œ êµ¬í˜„ëœ ì •ë„ì˜ ì˜µì…˜ì€ ìµœì†Œí•œìœ¼ë¡œ ê°€ì§€ê²Œ ë˜ê¸° ë•Œë¬¸ì— ì—¬ê¸°ì„œ
+    //    íŒŒì¼ì„ ì½ì–´ì„œ ë°”ë¡œ ì˜µì…˜ ì ìš©ì´ ê°€ëŠ¥í•˜ë‹¤
 
     ParticleData* pData = new ParticleData();
     reader->Byte((void**)&pData, sizeof(ParticleData));
     data = *pData;
 
-    //º¤ÅÍ ¸®¼Â
+    //ë²¡í„° ë¦¬ì…‹
     instances.resize(data.count);
     particleInfos.resize(data.count);
 
@@ -252,22 +252,22 @@ void ParticleSystem::LoadData(string file)
 
 void ParticleSystem::LoadData(wstring file)
 {
-    //±×¸² ¸¸µé±â
-    quad = new Quad(Vector2(1, 1)); // ¼³Á¤Àº ±âÁØ°ª. ¿©±â¼­ ¹Ù²ãµµ µÇÁö¸¸,
-                                    // ¾îÂ÷ÇÇ ¿É¼Ç¿¡¼­ ¼³Á¤ÇÏ´Â ÆíÀÌ ³´´Ù
+    //ê·¸ë¦¼ ë§Œë“¤ê¸°
+    quad = new Quad(Vector2(1, 1)); // ì„¤ì •ì€ ê¸°ì¤€ê°’. ì—¬ê¸°ì„œ ë°”ê¿”ë„ ë˜ì§€ë§Œ,
+                                    // ì–´ì°¨í”¼ ì˜µì…˜ì—ì„œ ì„¤ì •í•˜ëŠ” íŽ¸ì´ ë‚«ë‹¤
 
-    quad->GetMaterial()->SetDiffuseMap(file); // ±×¸² ÆÄÀÏ ºÒ·¯¿À±â
-    quad->GetMaterial()->SetShader(L"Effect/Particle.hlsl"); // ±âº» ÅØ½ºÃ³ È¤Àº ¸ÂÃã ¼ÎÀÌ´õ
+    quad->GetMaterial()->SetDiffuseMap(file); // ê·¸ë¦¼ íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°
+    quad->GetMaterial()->SetShader(L"Effect/Particle.hlsl"); // ê¸°ë³¸ í…ìŠ¤ì²˜ í˜¹ì€ ë§žì¶¤ ì…°ì´ë”
 
-    //°°Àº ÀÌÆåÆ®, º¹¼ö ÀÎ½ºÅÏ½º¿¡ ´ëºñÇØ¼­ º¤ÅÍ ¸®¼Â(¸®»çÀÌÁî)
+    //ê°™ì€ ì´íŽ™íŠ¸, ë³µìˆ˜ ì¸ìŠ¤í„´ìŠ¤ì— ëŒ€ë¹„í•´ì„œ ë²¡í„° ë¦¬ì…‹(ë¦¬ì‚¬ì´ì¦ˆ)
     instances.resize(data.count);
     
-    //°³º° ÀÎ½ºÅÏ½º Á¤º¸°¡ ÇÊ¿äÇÏ´Ù¸é Á¤º¸ º¤ÅÍµµ ¸®¼Â
+    //ê°œë³„ ì¸ìŠ¤í„´ìŠ¤ ì •ë³´ê°€ í•„ìš”í•˜ë‹¤ë©´ ì •ë³´ ë²¡í„°ë„ ë¦¬ì…‹
     particleInfos.resize(data.count);
 
-    // ¿©±â±îÁö ¸¸µé¸é ±×¸²¿¡ ÀÇÇÑ Äõµå(ÆÄÆ¼Å¬ ±âº» ±×¸²) ¹× ±âº» µ¥ÀÌÅÍ´Â Çü¼º ³¡
-    // ÀÌÈÄ ¿É¼ÇÀ» ¼³Á¤ÇÏ°í... (data ±¸Á¶Ã¼¸¦ ¼³Á¤ÇÏ°í)
-    // °Å±â¿¡ ÀÖ´Â count¿¡ µû¶ó À§ º¤ÅÍ ¸®¼Â 2ÁÙÀ» ´Ù½Ã ¼öÇàÇØÁà¾ß ÇÑ´Ù
+    // ì—¬ê¸°ê¹Œì§€ ë§Œë“¤ë©´ ê·¸ë¦¼ì— ì˜í•œ ì¿¼ë“œ(íŒŒí‹°í´ ê¸°ë³¸ ê·¸ë¦¼) ë° ê¸°ë³¸ ë°ì´í„°ëŠ” í˜•ì„± ë
+    // ì´í›„ ì˜µì…˜ì„ ì„¤ì •í•˜ê³ ... (data êµ¬ì¡°ì²´ë¥¼ ì„¤ì •í•˜ê³ )
+    // ê±°ê¸°ì— ìžˆëŠ” countì— ë”°ë¼ ìœ„ ë²¡í„° ë¦¬ì…‹ 2ì¤„ì„ ë‹¤ì‹œ ìˆ˜í–‰í•´ì¤˜ì•¼ í•œë‹¤
 
-    // -> ´Ù¸¥ ÂÊ LoadData ÇÔ¼ö¸¦ ÀÀ¿ëÇÏ¸é ¾Æ¸¶ Àü¿ë ¼³Á¤ ÆÄÀÏÀ» ¸¸µé ¼öµµ ÀÖÀ» °Í.
+    // -> ë‹¤ë¥¸ ìª½ LoadData í•¨ìˆ˜ë¥¼ ì‘ìš©í•˜ë©´ ì•„ë§ˆ ì „ìš© ì„¤ì • íŒŒì¼ì„ ë§Œë“¤ ìˆ˜ë„ ìžˆì„ ê²ƒ.
 }

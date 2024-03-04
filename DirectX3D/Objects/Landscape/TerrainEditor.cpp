@@ -1,4 +1,4 @@
-#include "Framework.h"
+Ôªø#include "Framework.h"
 
 TerrainEditor::TerrainEditor()
     : GameObject(L"Landscape/TerrainEditor.hlsl"),
@@ -214,7 +214,7 @@ void TerrainEditor::MakeMesh()
         heightMap->ReadPixels(pixels);
     }    
 
-    //¡§¡° µ•¿Ã≈Õ
+    //Ï†ïÏ†ê Îç∞Ïù¥ÌÑ∞
     vector<VertexType>& vertices = mesh->GetVertices(); 
     vertices.clear();
 
@@ -235,7 +235,7 @@ void TerrainEditor::MakeMesh()
         }
     }
 
-    //¡§¡° ¿Œµ¶Ω∫
+    //Ï†ïÏ†ê Ïù∏Îç±Ïä§
     vector<UINT>& indices = mesh->GetIndices();
     indices.clear();
 

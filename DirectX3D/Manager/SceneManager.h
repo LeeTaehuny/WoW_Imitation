@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 class SceneManager : public Singleton<SceneManager>
 {
@@ -16,14 +16,14 @@ public:
     void PostRender();
     void GUIRender();
 
-    // ¾ÀÀ» µî·ÏÇÏ±â À§ÇÑ ÇÔ¼ö¸¦ ¼±¾ğÇÕ´Ï´Ù.
+    // ì”¬ì„ ë“±ë¡í•˜ê¸° ìœ„í•œ í•¨ìˆ˜ë¥¼ ì„ ì–¸í•©ë‹ˆë‹¤.
     void Register(string key, Scene* scene);
-    // ¾ÀÀ» º¯°æÇÏ±â À§ÇÑ ÇÔ¼ö¸¦ ¼±¾ğÇÕ´Ï´Ù.
+    // ì”¬ì„ ë³€ê²½í•˜ê¸° ìœ„í•œ í•¨ìˆ˜ë¥¼ ì„ ì–¸í•©ë‹ˆë‹¤.
     void ChangeScene(string key);
 
 private:
-    // ¾ÀÀ» ÀúÀåÇÏ±â À§ÇÑ ¸Ê ÄÁÅ×ÀÌ³Ê¸¦ ¼±¾ğÇÕ´Ï´Ù.
+    // ì”¬ì„ ì €ì¥í•˜ê¸° ìœ„í•œ ë§µ ì»¨í…Œì´ë„ˆë¥¼ ì„ ì–¸í•©ë‹ˆë‹¤.
     map<string, Scene*> scenes;
-    // ÇöÀç ÇÃ·¹ÀÌ ÁßÀÎ ¾ÀÀ» ÀÓ½Ã·Î ÀúÀåÇÏ±â À§ÇÑ º¯¼ö¸¦ ¼±¾ğÇÕ´Ï´Ù.
+    // í˜„ì¬ í”Œë ˆì´ ì¤‘ì¸ ì”¬ì„ ì„ì‹œë¡œ ì €ì¥í•˜ê¸° ìœ„í•œ ë³€ìˆ˜ë¥¼ ì„ ì–¸í•©ë‹ˆë‹¤.
     Scene* curScene = nullptr;
 };

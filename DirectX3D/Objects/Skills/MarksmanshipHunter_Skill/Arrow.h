@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 class Arrow : public Transform
 {
 public:
@@ -7,9 +7,9 @@ public:
 
 	void Update();
 
-	// ÇöÀç ÀÌ È­»ìÀÌ »ç¿ëÁßÀÎÁö¸¦ È®ÀÎÇÏ±â À§ÇÑ °ÙÅÍ
+	// í˜„ìž¬ ì´ í™”ì‚´ì´ ì‚¬ìš©ì¤‘ì¸ì§€ë¥¼ í™•ì¸í•˜ê¸° ìœ„í•œ ê²Ÿí„°
 	bool GetIsRun() { return isRun; }
-	// È­»ìÀÇ »ç¿ë »óÅÂ¸¦ º¯°æÇÏ±â À§ÇÑ ¼ÂÅÍ
+	// í™”ì‚´ì˜ ì‚¬ìš© ìƒíƒœë¥¼ ë³€ê²½í•˜ê¸° ìœ„í•œ ì…‹í„°
 	void SetIsRun(bool cam) { this->isRun = cam; }
 
 private:

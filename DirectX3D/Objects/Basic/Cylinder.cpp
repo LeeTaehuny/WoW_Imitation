@@ -1,4 +1,4 @@
-#include "Framework.h"
+Ôªø#include "Framework.h"
 
 Cylinder::Cylinder(float radius, float height, UINT sliceCount)
     : radius(radius), height(height), sliceCount(sliceCount)
@@ -89,7 +89,7 @@ void Cylinder::MakeMesh()
         vertices.push_back(vertex);
     }
 
-    //¡§¡° ¿Œµ¶Ω∫
+    //Ï†ïÏ†ê Ïù∏Îç±Ïä§
     vector<UINT>& indices = mesh->GetIndices();
 
     indices.reserve(sliceCount * 6);

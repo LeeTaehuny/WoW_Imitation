@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 Device::Device()
 {
@@ -16,7 +16,7 @@ Device::Device()
     swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
     swapChainDesc.BufferCount = 1;
     swapChainDesc.OutputWindow = hWnd;
-    swapChainDesc.Windowed = true;//Ã¢¸ðµå À¯¹«
+    swapChainDesc.Windowed = true;//ì°½ëª¨ë“œ ìœ ë¬´
 
     D3D11CreateDeviceAndSwapChain(
         nullptr,

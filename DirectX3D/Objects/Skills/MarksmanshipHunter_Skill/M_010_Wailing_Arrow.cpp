@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "M_010_Wailing_Arrow.h"
 
 M_010_Wailing_Arrow::M_010_Wailing_Arrow() : ActiveSkill(SkillType::Target)
@@ -11,23 +11,23 @@ M_010_Wailing_Arrow::M_010_Wailing_Arrow() : ActiveSkill(SkillType::Target)
 	hitCollider->Scale() *= 7;
 	hitCollider->SetActive(false);
 
-	// ±âº» »ý¼º ¿ä¼Ò
+	// ê¸°ë³¸ ìƒì„± ìš”ì†Œ
 	{
-		// ½ºÅ³ ¼Óµµ
+		// ìŠ¤í‚¬ ì†ë„
 		speed = 20.0f;
 
-		// ½ºÅ³ µ¥¹ÌÁö
+		// ìŠ¤í‚¬ ë°ë¯¸ì§€
 		skillDamage = 0.0f;
 
-		// ÄðÅ¸ÀÓ ¼³Á¤ ±âº» ÄðÅ¸ÀÓÀº : (60ÃÊ)
+		// ì¿¨íƒ€ìž„ ì„¤ì • ê¸°ë³¸ ì¿¨íƒ€ìž„ì€ : (60ì´ˆ)
 		MAX_delay = 60.0f;
 		coolTime = MAX_delay;
 
-		// Ã³À½Àº ½ºÅ³ ½ÇÇàÁßÀÎ »óÅÂ°¡ ¾Æ´Ïµµ·Ï ¼³Á¤
+		// ì²˜ìŒì€ ìŠ¤í‚¬ ì‹¤í–‰ì¤‘ì¸ ìƒíƒœê°€ ì•„ë‹ˆë„ë¡ ì„¤ì •
 		isRun = false;
 		isCooldown = false;
 
-		// ¸¶³ª ¼Ò¸ð : 1.5%
+		// ë§ˆë‚˜ ì†Œëª¨ : 1.5%
 		requiredMp = 15;
 		usingType = monster_Data;
 	}

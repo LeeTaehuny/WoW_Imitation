@@ -1,8 +1,8 @@
-#pragma once
+ï»¿#pragma once
 
 class ProgressBar : public Quad
 {
-    // ÁøÇà Á¤µµ Ç¥½Ã±â : ÀÀ¿ëÇÏ¸é Ã¼·Â¹Ù µî¿¡ »ç¿ë °¡´É
+    // ì§„í–‰ ì •ë„ í‘œì‹œê¸° : ì‘ìš©í•˜ë©´ ì²´ë ¥ë°” ë“±ì— ì‚¬ìš© ê°€ëŠ¥
 
 public:
     ProgressBar(wstring frontImageFile, wstring backImageFile);
@@ -10,13 +10,13 @@ public:
 
     void Render();
 
-    //ÁøÇà Á¤µµ ÁöÁ¤ ÇÔ¼ö
+    //ì§„í–‰ ì •ë„ ì§€ì • í•¨ìˆ˜
     void SetAmount(float value);
 
 private:
     FloatValueBuffer* valueBuffer;
-    Texture* backImage; //¹è°æ
+    Texture* backImage; //ë°°ê²½
 
-    float fillAmount = 1; // Ã¤¿öÁø(ÁøÇàµÈ) Á¤µµ : ÃÊ±â°ªÀº "ÀüÃ¼"
+    float fillAmount = 1; // ì±„ì›Œì§„(ì§„í–‰ëœ) ì •ë„ : ì´ˆê¸°ê°’ì€ "ì „ì²´"
 };
 

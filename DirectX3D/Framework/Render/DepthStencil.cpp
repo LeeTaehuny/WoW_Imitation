@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 
 DepthStencil::DepthStencil(UINT width, UINT height, bool isStencil)
     : width(width), height(height), isStencil(isStencil)

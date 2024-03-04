@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 
 unordered_map<wstring, Texture*> Texture::textures;
 

@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 
 ModelAnimator::ModelAnimator(string name)
     : Model(name)

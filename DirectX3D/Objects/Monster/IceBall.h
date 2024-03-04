@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 class IceBall : public MonsterBase
 {
 public:
@@ -9,18 +9,18 @@ public:
     virtual void Render() override;
     virtual void PostRender() override;
 
-    // µ¥¹ÌÁö¸¦ ¹Ş±â À§ÇÑ ÇÔ¼ö
+    // ë°ë¯¸ì§€ë¥¼ ë°›ê¸° ìœ„í•œ í•¨ìˆ˜
     virtual void Hit(float amount = 1) override;
-    // ¸ó½ºÅÍ¸¦ ½ºÆùÇÏ±â À§ÇÑ ÇÔ¼ö
+    // ëª¬ìŠ¤í„°ë¥¼ ìŠ¤í°í•˜ê¸° ìœ„í•œ í•¨ìˆ˜
     virtual void Spawn(Vector3 pos) override;
 
 public:
-    // ¾óÀ½±¸½½ÀÇ ¿òÁ÷ÀÓÀ» ´ã´çÇÒ ÇÔ¼ö
+    // ì–¼ìŒêµ¬ìŠ¬ì˜ ì›€ì§ì„ì„ ë‹´ë‹¹í•  í•¨ìˆ˜
     void Move();
-    // ¾óÀ½±¸½½ÀÇ °ø°İÀ» ´ã´çÇÒ ÇÔ¼ö
+    // ì–¼ìŒêµ¬ìŠ¬ì˜ ê³µê²©ì„ ë‹´ë‹¹í•  í•¨ìˆ˜
     void targetAttack();
 
-private: // °ø°İÀ» À§ÇÑ º¯¼ö ¸ğÀ½
+private: // ê³µê²©ì„ ìœ„í•œ ë³€ìˆ˜ ëª¨ìŒ
     Sphere* iceball;
 
     bool TaxiMode = false;

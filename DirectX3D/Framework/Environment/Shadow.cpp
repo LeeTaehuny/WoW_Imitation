@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 
 Shadow::Shadow(UINT width, UINT height)
     : width(width), height(height)

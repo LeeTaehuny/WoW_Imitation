@@ -1,9 +1,9 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 Node::Node(Vector3 pos, int index)
     : index(index)
 {
-    // Äİ¶óÀÌ´õ Á¤º¸ ¼³Á¤
+    // ì½œë¼ì´ë” ì •ë³´ ì„¤ì •
     Pos() = pos;
     UpdateWorld();
 }
@@ -19,23 +19,23 @@ void Node::Render()
     switch (state)
     {
     case Node::NONE:
-        SetColor({ 0, 1, 1, 1 }); // Ã»·Ï»ö
+        SetColor({ 0, 1, 1, 1 }); // ì²­ë¡ìƒ‰
         break;
 
     case Node::OPEN:
-        SetColor({ 0, 0, 1, 1 }); // ÆÄ¶õ»ö
+        SetColor({ 0, 0, 1, 1 }); // íŒŒë€ìƒ‰
         break;
 
     case Node::CLOSED:
-        SetColor({ 0, 0, 0, 1 }); // ±î¸¸»ö
+        SetColor({ 0, 0, 0, 1 }); // ê¹Œë§Œìƒ‰
         break;
 
     case Node::USING:
-        SetColor({ 0, 1, 0, 1 }); // ÃÊ·Ï»ö
+        SetColor({ 0, 1, 0, 1 }); // ì´ˆë¡ìƒ‰
         break;
 
     case Node::OBSTACLE:
-        SetColor({ 1, 0, 0, 1 }); // »¡°£»ö
+        SetColor({ 1, 0, 0, 1 }); // ë¹¨ê°„ìƒ‰
         break;
     }
 
@@ -46,7 +46,7 @@ void Node::AddEdge(Node* node)
 {
     Edge* edge = new Edge();
     edge->index = node->index;
-    edge->cost = Distance(node->GlobalPos(), GlobalPos()); // Äİ¶óÀÌ´õ·Î¼­ÀÇ µÎ ³ëµå °Å¸®
+    edge->cost = Distance(node->GlobalPos(), GlobalPos()); // ì½œë¼ì´ë”ë¡œì„œì˜ ë‘ ë…¸ë“œ ê±°ë¦¬
 
     edges.push_back(edge);
 }

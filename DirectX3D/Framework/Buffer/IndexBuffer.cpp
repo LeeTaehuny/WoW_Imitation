@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 
 IndexBuffer::IndexBuffer(void* data, UINT count)
 {

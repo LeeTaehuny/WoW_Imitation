@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 AStar::AStar(UINT width, UINT height)
     : width(width), height(height)
@@ -15,7 +15,7 @@ AStar::~AStar()
 
 void AStar::Update()
 {
-    // ½ÃÇÁÆ®+¿ìÅ¬¸¯ÇÏ¸é ¼öµ¿À¸·Î Àå¾Ö¹° ÁöÁ¤ (Å¸ÀÏ¸Ê ÆíÁı ´ëÃ¼)
+    // ì‹œí”„íŠ¸+ìš°í´ë¦­í•˜ë©´ ìˆ˜ë™ìœ¼ë¡œ ì¥ì• ë¬¼ ì§€ì • (íƒ€ì¼ë§µ í¸ì§‘ ëŒ€ì²´)
     if (KEY_PRESS(VK_LSHIFT))
     {
         if (KEY_DOWN(VK_RBUTTON))
@@ -75,20 +75,20 @@ void AStar::GetPath(IN int start, IN int end, OUT vector<Vector3>& path)
     while (curIndex != start)
     {
         nodes[curIndex]->state = Node::USING;
-        path.push_back(nodes[curIndex]->GlobalPos()); // ³ëµåÀÇ ¸â¹öº¯¼ö ´ë½Å Äİ¶óÀÌ´õ·Î¼­ÀÇ À§Ä¡¸¦ »ç¿ë
+        path.push_back(nodes[curIndex]->GlobalPos()); // ë…¸ë“œì˜ ë©¤ë²„ë³€ìˆ˜ ëŒ€ì‹  ì½œë¼ì´ë”ë¡œì„œì˜ ìœ„ì¹˜ë¥¼ ì‚¬ìš©
         curIndex = nodes[curIndex]->via;
     }
 
-    //¸Ê ³» µ¥ÀÌÅÍ°¡ ¾Æ´Ï¶ó ¾Æ¿¹ Á¤Á¡°£ °è»êÀÌ¶ó,
-    //½ÃÀÛ À§Ä¡ = Ä³¸¯ÅÍ³ª ÁÖ¾îÁø À§Ä¡¸¦ ±×´ë·Î ´ëÀÔÇØµµ ¹®Á¦x
+    //ë§µ ë‚´ ë°ì´í„°ê°€ ì•„ë‹ˆë¼ ì•„ì˜ˆ ì •ì ê°„ ê³„ì‚°ì´ë¼,
+    //ì‹œì‘ ìœ„ì¹˜ = ìºë¦­í„°ë‚˜ ì£¼ì–´ì§„ ìœ„ì¹˜ë¥¼ ê·¸ëŒ€ë¡œ ëŒ€ì…í•´ë„ ë¬¸ì œx
     //path.push_back(nodes[start]->GlobalPos());
 }
 
 void AStar::MakeDirectionPath(IN Vector3 start, IN Vector3 end, OUT vector<Vector3>& path)
 {
-    //ÀÌ ÇÔ¼öÀÇ ¸ñÀû : 1. ½ÃÀÛÁ¡¿¡¼­ Á¾Á¡±îÁö °¡´Â Á÷¼± °Å¸® Áß, ±æÀ» »©¹ö¸®°í ³²Àº Àå¾Ö¹°ÀÇ °Å¸® µµÃâ
-    //                2. (1.¿¡¼­ °£Á¢ µµÃâ) ½ÃÀÛÁ¡¿¡¼­, Á¾Á¡À» ÇâÇØ °¡¸é Àå¾Ö¹°À» ¾È ¸¸³ª°í °¥ ¼ö ÀÖ´Â °¡Àå ¸Õ °Å¸®
-    //                ...Áß ÇÏ³ª¸¦ ¾ò±â À§ÇÔ
+    //ì´ í•¨ìˆ˜ì˜ ëª©ì  : 1. ì‹œì‘ì ì—ì„œ ì¢…ì ê¹Œì§€ ê°€ëŠ” ì§ì„  ê±°ë¦¬ ì¤‘, ê¸¸ì„ ë¹¼ë²„ë¦¬ê³  ë‚¨ì€ ì¥ì• ë¬¼ì˜ ê±°ë¦¬ ë„ì¶œ
+    //                2. (1.ì—ì„œ ê°„ì ‘ ë„ì¶œ) ì‹œì‘ì ì—ì„œ, ì¢…ì ì„ í–¥í•´ ê°€ë©´ ì¥ì• ë¬¼ì„ ì•ˆ ë§Œë‚˜ê³  ê°ˆ ìˆ˜ ìˆëŠ” ê°€ì¥ ë¨¼ ê±°ë¦¬
+    //                ...ì¤‘ í•˜ë‚˜ë¥¼ ì–»ê¸° ìœ„í•¨
     
     int cutNodeNum = 0;
     Ray ray;
@@ -128,19 +128,19 @@ void AStar::MakeDirectionPath(IN Vector3 start, IN Vector3 end, OUT vector<Vecto
 
 bool AStar::IsCollisionObstacle(Vector3 start, Vector3 end)
 {
-    Ray ray(start, (end - start).GetNormalized()); //½ÃÀÛÁ¡¿¡¼­, ³¡À» ÇâÇÏ´Â ±¤¼± ÁØºñ
+    Ray ray(start, (end - start).GetNormalized()); //ì‹œì‘ì ì—ì„œ, ëì„ í–¥í•˜ëŠ” ê´‘ì„  ì¤€ë¹„
 
-    float distance = Distance(start, end); //°Å¸® ³»±â
+    float distance = Distance(start, end); //ê±°ë¦¬ ë‚´ê¸°
 
-    Contact contact; // Á¢Á¡Á¤º¸ ÁØºñ
+    Contact contact; // ì ‘ì ì •ë³´ ì¤€ë¹„
 
     for (Collider* obstacle : obstacles)
     {
         if (obstacle->IsRayCollision(ray, &contact))
         {
-            if (contact.distance < distance) //Á¢Á¡±îÁöÀÇ °Å¸®°¡ Á¾Á¡±îÁöÀÇ °Å¸®º¸´Ù ÂªÀ¸¸é
+            if (contact.distance < distance) //ì ‘ì ê¹Œì§€ì˜ ê±°ë¦¬ê°€ ì¢…ì ê¹Œì§€ì˜ ê±°ë¦¬ë³´ë‹¤ ì§§ìœ¼ë©´
             {
-                return true; //Á÷¼±À¸·Î °¡´Â Áß¿¡ Àå¾Ö¹°ÀÌ ÀÖ¾úÀ½
+                return true; //ì§ì„ ìœ¼ë¡œ ê°€ëŠ” ì¤‘ì— ì¥ì• ë¬¼ì´ ìˆì—ˆìŒ
             }
         }
     }
@@ -155,49 +155,49 @@ void AStar::AddObstacle(Collider* collider)
 
 void AStar::SetNode(Terrain* terrain)
 {
-    //ÅÍ·¹ÀÎ (È¤Àº ´Ù¸¥ Å¬·¡½º¶óµµ °¡´É) ¹Ş¾Æ¿Í¼­ ÇØ´ç À§Ä¡¿¡ ³ëµå ¹èÄ¡ÇÏ±â
+    //í„°ë ˆì¸ (í˜¹ì€ ë‹¤ë¥¸ í´ë˜ìŠ¤ë¼ë„ ê°€ëŠ¥) ë°›ì•„ì™€ì„œ í•´ë‹¹ ìœ„ì¹˜ì— ë…¸ë“œ ë°°ì¹˜í•˜ê¸°
 
-    //ÁöÇüÀÌ ±âÁØÀÌ¹Ç·Î ¿©±â¼­´Â 2Â÷¿øÀÎ °ÍÃ³·³ ÀÌÇØ¸¦ ÇØµµ µÉ °Í
+    //ì§€í˜•ì´ ê¸°ì¤€ì´ë¯€ë¡œ ì—¬ê¸°ì„œëŠ” 2ì°¨ì›ì¸ ê²ƒì²˜ëŸ¼ ì´í•´ë¥¼ í•´ë„ ë  ê²ƒ
     //Vector2 mapSize = terrain->GetMaterial()->GetDiffuseMap()->GetSize();
-    //TODO : ÁöÇüÀÌ ÀÌÈÄ Å©±â°¡ µû·Î ÁöÁ¤ÀÌ °¡´ÉÇÏ´Ù¸é ¿©±â¼­µµ Å©±â¸¦ ºÒ·¯¿Í¾ß ÇÑ´Ù
-    //       ¿¹ : ÅÍ·¹ÀÎ ¿¡µğÅÍ... (ÅÍ·¹ÀÎ Å¬·¡½ºµµ ÀÌÈÄ Å©±â°¡ ¹Ù²ï´Ù¸é GetSize ÇÊ¿ä)
-    //       * ¿äÁ¡Àº ¸Å°³º¯¼ö·Î ¹ŞÀ» ÁöÇü ´ã´ç Å¬·¡½º°¡ GetSize¸¦ Àß ÁÙ ¼ö ÀÖ¾î¾ß ÇÑ´Ù
+    //TODO : ì§€í˜•ì´ ì´í›„ í¬ê¸°ê°€ ë”°ë¡œ ì§€ì •ì´ ê°€ëŠ¥í•˜ë‹¤ë©´ ì—¬ê¸°ì„œë„ í¬ê¸°ë¥¼ ë¶ˆëŸ¬ì™€ì•¼ í•œë‹¤
+    //       ì˜ˆ : í„°ë ˆì¸ ì—ë””í„°... (í„°ë ˆì¸ í´ë˜ìŠ¤ë„ ì´í›„ í¬ê¸°ê°€ ë°”ë€ë‹¤ë©´ GetSize í•„ìš”)
+    //       * ìš”ì ì€ ë§¤ê°œë³€ìˆ˜ë¡œ ë°›ì„ ì§€í˜• ë‹´ë‹¹ í´ë˜ìŠ¤ê°€ GetSizeë¥¼ ì˜ ì¤„ ìˆ˜ ìˆì–´ì•¼ í•œë‹¤
 
-    Vector2 mapSize = terrain->GetSize(); // ÁöÇü Å©±â ¹İ¿µµÊ
+    Vector2 mapSize = terrain->GetSize(); // ì§€í˜• í¬ê¸° ë°˜ì˜ë¨
 
-    //¹èÄ¡°£°İ ±¸ÇÏ±â
-    interval.x = mapSize.x / width; //¸Ê Å©±â¸¦ ±æÃ£±âÀÇ °¡·Î·Î ³ª´©±â
+    //ë°°ì¹˜ê°„ê²© êµ¬í•˜ê¸°
+    interval.x = mapSize.x / width; //ë§µ í¬ê¸°ë¥¼ ê¸¸ì°¾ê¸°ì˜ ê°€ë¡œë¡œ ë‚˜ëˆ„ê¸°
     interval.y = mapSize.y / height;
 
-    nodes.reserve((width + 1) * (height + 1)); // +1 : Å©±â ¿¬»ê°ú º¤ÅÍ ¼ø¹ø ¿¬»ê ¿ÀÂ÷
+    nodes.reserve((width + 1) * (height + 1)); // +1 : í¬ê¸° ì—°ì‚°ê³¼ ë²¡í„° ìˆœë²ˆ ì—°ì‚° ì˜¤ì°¨
 
     for (UINT z = 0; z <= height; ++z)
     {
         for (UINT x = 0; x <= width; ++x)
         {
-            //¹èÄ¡°£°İ°ú °¡·Î¼¼·Î ÁÂÇ¥¸¦ ¹İ¿µÇØ¼­ À§Ä¡ ³»±â
+            //ë°°ì¹˜ê°„ê²©ê³¼ ê°€ë¡œì„¸ë¡œ ì¢Œí‘œë¥¼ ë°˜ì˜í•´ì„œ ìœ„ì¹˜ ë‚´ê¸°
             Vector3 pos = Vector3(x * interval.x, 0, z * interval.y);
-            //pos.y = 0; // ±âÁØ°ª 0 : ±âº»°ª
-            //TODO : ±âÁØ°ªÀÌ ¹Ù²î¸é À§ ÄÚµå ¼öÁ¤ÇÒ °Í
-            //       ¿¹ : ÅÍ·¹ÀÎ ¿¡µğÅÍ, ºí·Ï ¸Å´ÏÀú... ¾Æ¹«Æ°°£ ³ôÀÌ¸¦ Ã£À» ¼ö ÀÖ´Â ÁöÇü Å¬·¡½ºµé
-            pos.y = terrain->GetHeight(pos); //ÁöÇü¿¡ ÀÇÇÑ ³ôÀÌ
+            //pos.y = 0; // ê¸°ì¤€ê°’ 0 : ê¸°ë³¸ê°’
+            //TODO : ê¸°ì¤€ê°’ì´ ë°”ë€Œë©´ ìœ„ ì½”ë“œ ìˆ˜ì •í•  ê²ƒ
+            //       ì˜ˆ : í„°ë ˆì¸ ì—ë””í„°, ë¸”ë¡ ë§¤ë‹ˆì €... ì•„ë¬´íŠ¼ê°„ ë†’ì´ë¥¼ ì°¾ì„ ìˆ˜ ìˆëŠ” ì§€í˜• í´ë˜ìŠ¤ë“¤
+            pos.y = terrain->GetHeight(pos); //ì§€í˜•ì— ì˜í•œ ë†’ì´
 
             nodes.push_back(new Node(pos, nodes.size()));
-            nodes.back()->Scale() = { interval.x, 50, interval.y }; // ³ëµåÀÇ Å©±â : °¡·Î¼¼·Î = °£°İ
-                                                                    // ³ôÀÌ : "¾Æ¹«Æ° ÁöÇü ¾È¿¡¼­ Á¡ÇÁÇÏ´Â °É·Î´Â ¸ø ¹ş¾î³¯ Á¤µµ·Î"
+            nodes.back()->Scale() = { interval.x, 50, interval.y }; // ë…¸ë“œì˜ í¬ê¸° : ê°€ë¡œì„¸ë¡œ = ê°„ê²©
+                                                                    // ë†’ì´ : "ì•„ë¬´íŠ¼ ì§€í˜• ì•ˆì—ì„œ ì í”„í•˜ëŠ” ê±¸ë¡œëŠ” ëª» ë²—ì–´ë‚  ì •ë„ë¡œ"
             nodes.back()->UpdateWorld();
 
-            //³ôÀÌ°¡ ³ôÀº °æ¿ì ´ëºñ
+            //ë†’ì´ê°€ ë†’ì€ ê²½ìš° ëŒ€ë¹„
             if (pos.y > 0)
             {
-                //»ùÇÃ ÄÚµå : ³ôÀº °÷Àº Àå¾Ö¹°ÀÌ´Ù! (TODO : ´Ù¸¥ ½Ã³ª¸®¿À°¡ ÀÖ´Â °æ¿ì ¼öÁ¤ÇÒ °Í)
+                //ìƒ˜í”Œ ì½”ë“œ : ë†’ì€ ê³³ì€ ì¥ì• ë¬¼ì´ë‹¤! (TODO : ë‹¤ë¥¸ ì‹œë‚˜ë¦¬ì˜¤ê°€ ìˆëŠ” ê²½ìš° ìˆ˜ì •í•  ê²ƒ)
                 nodes.back()->SetState(Node::OBSTACLE);
                 AddObstacle(nodes.back());
             }
         }
     }
 
-    SetEdge(); // ÀÎÁ¢ ³ëµå¿Í °æ·Î °ü°è ¿¬°áÇÏ±â
+    SetEdge(); // ì¸ì ‘ ë…¸ë“œì™€ ê²½ë¡œ ê´€ê³„ ì—°ê²°í•˜ê¸°
 }
 
 int AStar::FindCloseNode(Vector3 pos)
@@ -208,7 +208,7 @@ int AStar::FindCloseNode(Vector3 pos)
     for (UINT i = 0; i < nodes.size(); ++i)
     {
         if (nodes[i]->state == Node::OBSTACLE)
-            continue; //»ùÇÃ ½Ã³ª¸®¿À : ³ôÀÌ°¡ 0º¸´Ù Å« ÁöÇüÀÇ ³ëµå´Â Ãë±Ş ¾È ÇÑ´Ù
+            continue; //ìƒ˜í”Œ ì‹œë‚˜ë¦¬ì˜¤ : ë†’ì´ê°€ 0ë³´ë‹¤ í° ì§€í˜•ì˜ ë…¸ë“œëŠ” ì·¨ê¸‰ ì•ˆ í•œë‹¤
 
         float distance = Distance(pos, nodes[i]->GlobalPos());
         if (distance < minDist)
@@ -225,16 +225,16 @@ int AStar::FindRandomPos(Vector3 pos, float range)
 {
     vector<Node*> findNodes;
 
-    for (Node* node : nodes) // Å¬·¡½º ³» º¤ÅÍ¿¡¼­ ³ëµå¸¦ ²ø¾î¿Í¼­
+    for (Node* node : nodes) // í´ë˜ìŠ¤ ë‚´ ë²¡í„°ì—ì„œ ë…¸ë“œë¥¼ ëŒì–´ì™€ì„œ
     {
-        //°Å¸®°¡ ¹üÀ§ ÀÌ³»¸é ÀÓ½Ã º¤ÅÍ¿¡µµ °°ÀÌ Ãß°¡
+        //ê±°ë¦¬ê°€ ë²”ìœ„ ì´ë‚´ë©´ ì„ì‹œ ë²¡í„°ì—ë„ ê°™ì´ ì¶”ê°€
         float distance = Distance(pos, node->GlobalPos());
         if (distance < range) findNodes.push_back(node);
     }
 
     Node* findNode = findNodes[Random(0, findNodes.size())];
 
-    return findNode->index; // <- Å¬¸¯ÇÑ °÷ÀÌµç, µµÃâÇÑ °÷ÀÌµç, ¹üÀ§ ³» ·£´ı ³ëµå ±×´ë·Î ¹İÈ¯
+    return findNode->index; // <- í´ë¦­í•œ ê³³ì´ë“ , ë„ì¶œí•œ ê³³ì´ë“ , ë²”ìœ„ ë‚´ ëœë¤ ë…¸ë“œ ê·¸ëŒ€ë¡œ ë°˜í™˜
 }
 
 void AStar::SetEdge()

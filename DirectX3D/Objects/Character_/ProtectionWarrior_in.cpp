@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "Objects/Item/Weapon.h"
 #include "Objects/Item/Potion.h"
 #include "Objects/Inventory/Inventory.h"
@@ -25,7 +25,7 @@ ProtectionWarrior_in::ProtectionWarrior_in(CreatureType type, Transform* transfo
 	SetEvent(DIE, bind(&ProtectionWarrior_in::EndDie, this), 1);
 	SetEvent(SKILL1, bind(&ProtectionWarrior_in::EndCasting, this), 1);
 
-	// ÀÚ½ÅÀÇ Å¸ÀÔ¿¡ µû¶ó 
+	// ìì‹ ì˜ íƒ€ì…ì— ë”°ë¼ 
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -97,10 +97,10 @@ ProtectionWarrior_in::~ProtectionWarrior_in()
 
 void ProtectionWarrior_in::Update()
 {
-	// ¾×Æ¼ºê »óÅÂ°¡ ¾Æ´Ï¶ó¸é ¾÷µ¥ÀÌÆ®ÇÏÁö ¾ÊÀ½
+	// ì•¡í‹°ë¸Œ ìƒíƒœê°€ ì•„ë‹ˆë¼ë©´ ì—…ë°ì´íŠ¸í•˜ì§€ ì•ŠìŒ
 	if (!Active()) return;
 
-	// ÇÃ·¹ÀÌ¾î Å¸ÀÔ¿¡ µû¶ó ¾÷µ¥ÀÌÆ® ¼öÇà
+	// í”Œë ˆì´ì–´ íƒ€ì…ì— ë”°ë¼ ì—…ë°ì´íŠ¸ ìˆ˜í–‰
 	switch (creatureType)
 	{
 	case CreatureType::Player:
@@ -112,7 +112,7 @@ void ProtectionWarrior_in::Update()
 		break;
 	}
 
-	// ½Çµå ¾÷µ¥ÀÌÆ®
+	// ì‹¤ë“œ ì—…ë°ì´íŠ¸
 	if (shield && sub)
 	{
 		sub->SetWorld(instancing->GetTransformByNode(index, 18));
@@ -131,7 +131,7 @@ void ProtectionWarrior_in::Update()
 
 void ProtectionWarrior_in::Render()
 {
-	// ¾×Æ¼ºê »óÅÂ°¡ ¾Æ´Ï¶ó¸é ¾÷µ¥ÀÌÆ®ÇÏÁö ¾ÊÀ½
+	// ì•¡í‹°ë¸Œ ìƒíƒœê°€ ì•„ë‹ˆë¼ë©´ ì—…ë°ì´íŠ¸í•˜ì§€ ì•ŠìŒ
 	if (!Active()) return;
 
 	if (attackRange)
@@ -189,7 +189,7 @@ void ProtectionWarrior_in::PlayerUpdate()
 		}
 	}
 
-	// Ãæµ¹Ã¼ ¾÷µ¥ÀÌÆ®
+	// ì¶©ëŒì²´ ì—…ë°ì´íŠ¸
 	myCollider->UpdateWorld();
 	range->UpdateWorld();
 }
@@ -237,12 +237,12 @@ void ProtectionWarrior_in::AIUpdate()
 			SetState(WALK_F);
 		}
 	}
-	// Áö±İ °ø°İÇÒ Å¸°ÙÀÌ ¾ø´Ù¸é
+	// ì§€ê¸ˆ ê³µê²©í•  íƒ€ê²Ÿì´ ì—†ë‹¤ë©´
 	else if (!atkTarget)
 	{
 		AI_animation_Moving();
 	}
-	// °ø°İÇÒ Å¸°ÙÀÌ ÀÖ´Ù¸é
+	// ê³µê²©í•  íƒ€ê²Ÿì´ ìˆë‹¤ë©´
 	else
 	{
 		if (curState == ATTACK1 || curState == SKILL1) return;
@@ -298,7 +298,7 @@ void ProtectionWarrior_in::OnHit(float damage, bool motion)
 
 void ProtectionWarrior_in::AI_animation_Moving()
 {
-	// ³»°¡ ÇÃ·¹ÀÌ¾îÀÇ ÁÖÀ§¿¡ ÀÖ´Ù¸é
+	// ë‚´ê°€ í”Œë ˆì´ì–´ì˜ ì£¼ìœ„ì— ìˆë‹¤ë©´
 	if (myPlayer->GetRange()->IsCollision(myCollider))
 	{
 		randomHangdong -= DELTA;
@@ -314,7 +314,7 @@ void ProtectionWarrior_in::AI_animation_Moving()
 
 		SetState(WALK_F);
 	}
-	// ÇÃ·¹ÀÌ¾îÀÇ ÁÖº¯ÀÌ ¾Æ´Ï¶ó¸é
+	// í”Œë ˆì´ì–´ì˜ ì£¼ë³€ì´ ì•„ë‹ˆë¼ë©´
 	else
 	{
 		Vector3 velo = (myPlayer->Pos() - this->Pos()).GetNormalized();
@@ -354,13 +354,13 @@ void ProtectionWarrior_in::Control()
 
 void ProtectionWarrior_in::Moving()
 {
-	// Á¡ÇÁ, °ø°İ, ¸ÂÀ» ¶§, Á×¾úÀ» °æ¿ì ¿òÁ÷ÀÌÁö ¾Ê±â
+	// ì í”„, ê³µê²©, ë§ì„ ë•Œ, ì£½ì—ˆì„ ê²½ìš° ì›€ì§ì´ì§€ ì•Šê¸°
 	if (curState == ATTACK1 || curState == DIE || curState == HIT || curState == SKILL1) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
 
-	// Ä³¸¯ÅÍ ±âº» ÀÌµ¿ : W(¾Õ), S(µÚ), Q(ÁÂ), E(¿ì)
+	// ìºë¦­í„° ê¸°ë³¸ ì´ë™ : W(ì•), S(ë’¤), Q(ì¢Œ), E(ìš°)
 	{
 		if (KEY_PRESS('W'))
 		{
@@ -384,11 +384,11 @@ void ProtectionWarrior_in::Moving()
 		}
 	}
 
-	// Ä³¸¯ÅÍ ¸¶¿ì½º ¿ìÅ¬¸¯¿¡ µû¸¥ ÀÌµ¿ º¯È­
+	// ìºë¦­í„° ë§ˆìš°ìŠ¤ ìš°í´ë¦­ì— ë”°ë¥¸ ì´ë™ ë³€í™”
 	{
 		if (KEY_PRESS(VK_RBUTTON))
 		{
-			// ÁÂ¿ì ÀÌµ¿
+			// ì¢Œìš° ì´ë™
 			if (KEY_PRESS('A'))
 			{
 				velocity.x -= DELTA;
@@ -402,10 +402,10 @@ void ProtectionWarrior_in::Moving()
 		}
 		else
 		{
-			// ¾ÕµÚ·Î ÀÌµ¿ ÁßÀÌ ¾Æ´Ò ¶§
+			// ì•ë’¤ë¡œ ì´ë™ ì¤‘ì´ ì•„ë‹ ë•Œ
 			if (KEY_PRESS('W') || KEY_PRESS('S'))
 			{
-				// ÁÂ¿ì È¸Àü
+				// ì¢Œìš° íšŒì „
 				if (KEY_PRESS('A'))
 				{
 					Rot().y -= turnSpeed * DELTA;
@@ -418,7 +418,7 @@ void ProtectionWarrior_in::Moving()
 		}
 	}
 
-	// °¡¼Óµµ ¼³Á¤
+	// ê°€ì†ë„ ì„¤ì •
 	if (velocity.Length() > 1) velocity.Normalize();
 	if (!isMoveZ) velocity.z = Lerp(velocity.z, 0, deceleration * DELTA);
 	if (!isMoveX) velocity.x = Lerp(velocity.x, 0, deceleration * DELTA);
@@ -426,10 +426,10 @@ void ProtectionWarrior_in::Moving()
 	Matrix rotY = XMMatrixRotationY(Rot().y);
 	Vector3 direction = XMVector3TransformCoord(velocity, rotY);
 
-	// À§Ä¡ ÀÌµ¿
+	// ìœ„ì¹˜ ì´ë™
 	this->Pos() += direction * -1 * moveSpeed * DELTA;
 
-	// Á¡ÇÁÀÎ °æ¿ì¶ó¸é ¾Ö´Ï¸ŞÀÌ¼Ç ¼³Á¤ X
+	// ì í”„ì¸ ê²½ìš°ë¼ë©´ ì• ë‹ˆë©”ì´ì…˜ ì„¤ì • X
 	if (curState == JUMP) return;
 
 	if (velocity.z > 0.1f)
@@ -446,7 +446,7 @@ void ProtectionWarrior_in::Moving()
 
 void ProtectionWarrior_in::Jump()
 {
-	// Á¡ÇÁÁßÀÌ ¾Æ´Ï¶ó¸é ¸®ÅÏ
+	// ì í”„ì¤‘ì´ ì•„ë‹ˆë¼ë©´ ë¦¬í„´
 	if (!isJump)
 	{
 		jumpVelocity -= 1.8f * gravityMult * DELTA;
@@ -463,10 +463,10 @@ void ProtectionWarrior_in::Jump()
 	jumpVelocity -= 1.8f * gravityMult * DELTA;
 	Pos().y += jumpVelocity;
 
-	// ÇöÀçÀÇ ÁöÁ¤ ³ôÀÌº¸´Ù À§Ä¡°¡ ³·´Ù¸é?
+	// í˜„ì¬ì˜ ì§€ì • ë†’ì´ë³´ë‹¤ ìœ„ì¹˜ê°€ ë‚®ë‹¤ë©´?
 	if (Pos().y < curheight)
 	{
-		// À§Ä¡ ÃÊ±âÈ­ ¹× »óÅÂ ÀüÈ¯
+		// ìœ„ì¹˜ ì´ˆê¸°í™” ë° ìƒíƒœ ì „í™˜
 		Pos().y = curheight;
 		jumpVelocity = 0;
 		SetState(IDLE1);
@@ -476,10 +476,10 @@ void ProtectionWarrior_in::Jump()
 
 void ProtectionWarrior_in::Attack()
 {
-	// Á¡ÇÁ, »ç¸Á, ÇÇ°İ, °ø°İ »óÅÂÀÎ °æ¿ì ¸®ÅÏ
+	// ì í”„, ì‚¬ë§, í”¼ê²©, ê³µê²© ìƒíƒœì¸ ê²½ìš° ë¦¬í„´
 	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
 
-	// ÀÎº¥Åä¸®°¡ ¿­·ÁÀÖÀ¸¸é °ø°İ X
+	// ì¸ë²¤í† ë¦¬ê°€ ì—´ë ¤ìˆìœ¼ë©´ ê³µê²© X
 	if (creatureType == CreatureType::Player && inventory->Active()) return;
 
 	if (KEY_DOWN(VK_LBUTTON) && weapon != nullptr)
@@ -513,7 +513,7 @@ void ProtectionWarrior_in::ai_attack()
 	attackRange->UpdateWorld();
 	if (!monsterSelectData->GetCollider()->Active()) return;
 
-	// °ø°İÇÒ ´ë»óÀ» ¹Ù¶óº¸°Ô ÇÏ´Â ÄÚµå
+	// ê³µê²©í•  ëŒ€ìƒì„ ë°”ë¼ë³´ê²Œ í•˜ëŠ” ì½”ë“œ
 	Vector3 poldirect = monsterSelectData->GetTransform()->GlobalPos() - this->GlobalPos();
 	this->Rot().y = atan2(poldirect.x, poldirect.z) + XM_PI;
 
@@ -605,7 +605,7 @@ void ProtectionWarrior_in::ai_attack()
 		{
 			SetState(ATTACK1);
 			
-			// ¹«±âÀÇ Äİ¶óÀÌ´õ¸¦ ÄÑÁÖ°í, ÇÃ·¹ÀÌ¾îÀÇ µ¥¹ÌÁö¸¦ Àü´Ş
+			// ë¬´ê¸°ì˜ ì½œë¼ì´ë”ë¥¼ ì¼œì£¼ê³ , í”Œë ˆì´ì–´ì˜ ë°ë¯¸ì§€ë¥¼ ì „ë‹¬
 			weapon->GetCollider()->SetActive(true);
 			weapon->SetDamage(stat.damage);
 			
@@ -628,10 +628,10 @@ void ProtectionWarrior_in::SetState(State state)
 {
 	if (state == curState) return;
 
-	// ÇÃ·¹ÀÌ¾î°¡ °È±â·Î »óÅÂ¸¦ º¯È¯Çß´Ù¸é
+	// í”Œë ˆì´ì–´ê°€ ê±·ê¸°ë¡œ ìƒíƒœë¥¼ ë³€í™˜í–ˆë‹¤ë©´
 	if (creatureType == CreatureType::Player && (state == WALK_F || state == WALK_B || state == WALK_L || state == WALK_R))
 	{
-		// °È±â »ç¿îµå Àç»ı ÁßÀÌ ¾Æ´Ï¶ó¸é
+		// ê±·ê¸° ì‚¬ìš´ë“œ ì¬ìƒ ì¤‘ì´ ì•„ë‹ˆë¼ë©´
 		if (!Audio::Get()->IsPlaySound("Walk"))
 		{
 			Audio::Get()->Play("Walk", Pos(), 1.0f);
@@ -639,7 +639,7 @@ void ProtectionWarrior_in::SetState(State state)
 	}
 	else
 	{
-		// °È±â »ç¿îµå Àç»ıÁßÀÌ¶ó¸é
+		// ê±·ê¸° ì‚¬ìš´ë“œ ì¬ìƒì¤‘ì´ë¼ë©´
 		if (Audio::Get()->IsPlaySound("Walk"))
 		{
 			Audio::Get()->Stop("Walk");
@@ -657,7 +657,7 @@ void ProtectionWarrior_in::EndATK()
 
 	if (weapon)
 	{
-		// °ø°İÀÌ ³¡³µÀ¸¹Ç·Î ¹«±âÀÇ Ãæµ¹Ã¼ Á¤º¸¸¦ ²¨ÁÖ±â
+		// ê³µê²©ì´ ëë‚¬ìœ¼ë¯€ë¡œ ë¬´ê¸°ì˜ ì¶©ëŒì²´ ì •ë³´ë¥¼ êº¼ì£¼ê¸°
 		weapon->GetCollider()->SetActive(false);
 		weapon->ClearHit();
 	}

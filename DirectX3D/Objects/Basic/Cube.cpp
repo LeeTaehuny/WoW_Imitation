@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 
 Cube::Cube(Vector3 size)
     : GameObject(L"Basic/Texture.hlsl"), size(size)

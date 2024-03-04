@@ -8,15 +8,5 @@ SkillBase::SkillBase(SkillBaseType skillBaseType) : skillBaseType(skillBaseType)
 
 SkillBase::~SkillBase()
 {
-	//delete myCollider;
+	
 }
-
-//void SkillBase::Cooldown()
-//{
-//	delay -= DELTA;
-//	if (delay <= 0)
-//	{
-//		delay = MAX_delay;
-//		isCooldown = false;
-//	}
-//}
