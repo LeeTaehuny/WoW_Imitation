@@ -30,6 +30,11 @@ void Quad::Render()
 {
     if (!Active()) return;
 
+    if (isUsedColor)
+    {
+        colorBuffer->SetPS(5);
+    }
+
     SetRender();
     mesh->Draw();
 }
@@ -40,6 +45,12 @@ void Quad::SetRender()
     mesh->GetIndexBuffer()->Set();
 
     GameObject::SetRender();
+}
+
+void Quad::UseColorBuffer()
+{
+    colorBuffer = new ColorBuffer();
+    isUsedColor = true;
 }
 
 void Quad::MakeMesh()

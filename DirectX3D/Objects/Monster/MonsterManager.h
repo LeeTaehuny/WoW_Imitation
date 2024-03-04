@@ -1,0 +1,85 @@
+﻿#pragma once
+class MonsterManager : public Singleton<MonsterManager>
+{
+private:
+    friend class Singleton;
+
+public:
+
+    MonsterManager();
+    ~MonsterManager();
+
+    void Update();
+    void Render();
+    void PostRender();
+    void GUIRender();
+
+    // 스켈레톤 스폰
+    void SpawnSkeleton(Vector3 pos);
+    // 스켈레톤 나이트 스폰
+    void SpawnSkeletonKnight(Vector3 pos);
+    // 허수아비 스폰
+    void SpawnScarecrow(Vector3 pos);
+    // 발키리 스폰
+    void SpawnVAlkier(Vector3 pos);
+    // 얼음구슬 스폰
+    void SpawnIceBall(Vector3 pos);
+    // 리치왕 스폰
+    void SpawnLickKing(Vector3 pos);
+
+    // 캐릭터와 가장 가까운 몬스터의 값을 얻기 위한 함수
+    MonsterBase* hitCollision(IN Collider* collider);
+
+// Getter & Setter
+public:
+    // 지금 필드에 있는 플레이어 캐릭터들의 모든 콜라이더 정보를 저장함
+    void SetTarget(CH_Base_ver2* transform);
+    // 스켈레톤의 배열 정보를 얻기 위한 함수
+    vector<MonsterBase*> GetSkeleton() { return skeleton; }
+    // 스켈레톤 나이트의 배열 정보를 얻기 위한 함수
+    vector<MonsterBase*> GetSkeleton_Knight() { return skeleton_Knight; }
+    // 허수아비의 배열 정보를 얻기 위한 함수
+    vector<MonsterBase*> GetScarecrow() { return scarecrow; }
+    // 발키리의 배열 정보를 얻기 위한 함수
+    vector<MonsterBase*> GetVAlkier() { return valkier; }
+    // 얼음구슬의 배열 정보를 얻기 위한 함수
+    vector<MonsterBase*> GetIceBall() { return valkier; }
+    // 리치왕의 정보를 얻기 위한 함수
+    MonsterBase* GetLichKing() { return LickKing; }
+
+public:
+    // 플레이어 캐릭터들의 정보를 저장함
+    vector<CH_Base_ver2*> targets;
+private:
+    // 스켈레톤의 인스턴싱
+    ModelAnimatorInstancing* skeleton_body;
+    // 스켈레톤 클래스
+    vector<MonsterBase*> skeleton;
+
+    // 스켈레톤 나이트의 인스턴싱
+    ModelAnimatorInstancing* skeletonKnight_body;
+    // 스켈레톤 나이트 클래스
+    vector<MonsterBase*> skeleton_Knight;
+
+    // 허수아비 인스턴싱 (스켈레톤 나이트로 대체)
+    ModelAnimatorInstancing* scarecrow_body;
+    // 스켈레톤 나이트 클래스
+    vector<MonsterBase*> scarecrow;
+
+    // 발키리 인스턴싱
+    ModelAnimatorInstancing* valkier_body;
+    // 발키리 클래스
+    vector<MonsterBase*> valkier;
+
+    // 아이스볼 클래스
+    vector<MonsterBase*> iceBall;
+
+    // 리치왕 클래스
+    MonsterBase* LickKing;
+
+private:
+    UINT skeleton_Count = 0;
+    UINT skeleton_Night_Count = 0;
+    UINT scarecrow_Count = 0;
+    UINT Valkier_Count = 0;
+};

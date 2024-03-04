@@ -3,7 +3,7 @@
 TerrainLOD::TerrainLOD(wstring heightFile)
 {
     material->SetShader(L"TS/TerrainLOD.hlsl");
-    material->SetDiffuseMap(L"Textures/Landscape/Dirt2.png");
+    material->SetDiffuseMap(L"Textures/Landscape/Tile_Ice.png");
 
     hullShader = Shader::AddHS(L"TS/TerrainLOD.hlsl");
     domainShader = Shader::AddDS(L"TS/TerrainLOD.hlsl");

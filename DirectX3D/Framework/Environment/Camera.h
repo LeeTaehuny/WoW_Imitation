@@ -12,6 +12,8 @@ public:
     void SetView();
 
     void SetTarget(Transform* target) { this->target = target; }    
+    void SetTargetDistance(float value) { this->distance = value; }
+    void SetTargetHeight(float value) { this->height = value; }
 
     Vector3 ScreenToWorld(Vector3 screenPos);
     Vector3 WorldToScreen(Vector3 worldPos);
@@ -42,15 +44,15 @@ private:
     Vector3 planes[6];
     float a, b, c, d;
 
-    float moveSpeed = 50.0f;
+    float moveSpeed = 100.0f;
     float rotSpeed = 10.0f;
 
     Vector3 prevMousePos;
 
     Transform* target = nullptr;    
 
-    float distance = 20.0f;
-    float height = 20.0f;
+    float distance = -20.0f;
+    float height = 10.0f;
     float moveDamping = 5.0f;
     float rotDamping = 1.0f;
 

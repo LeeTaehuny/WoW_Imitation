@@ -13,11 +13,19 @@ public:
     void Render();
     void SetRender();
 
+public:
+    Vector2 GetSize() { return size; }
+    Float4& GetColor() { return colorBuffer->Get(); }
+
+    void UseColorBuffer();
+
 private:
     void MakeMesh();
 
-private:
-    Vector2 size;
+    bool isUsedColor = false;
 
+protected:
+    Vector2 size;
+    ColorBuffer* colorBuffer = nullptr;
     Mesh<VertexType>* mesh;    
 };

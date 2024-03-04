@@ -11,7 +11,7 @@ ParticleConfigScene::ParticleConfigScene()
     //셰이더 설정 (기본은 기본 파티클 셰이더)
     quad->GetMaterial()->SetShader(L"Effect/Particle.hlsl"); // <-매개변수 교체 = 셰이더
     //디퓨즈맵(=파티클의 모양) 설정 (샘플은 눈)
-    quad->GetMaterial()->SetDiffuseMap(L"Textures/Effect/Snow.png"); // <-매개변수 교체 = 텍스처
+    quad->GetMaterial()->SetDiffuseMap(L"Textures/Effect/lich_snow.png"); // <-매개변수 교체 = 텍스처
 
     instances.resize(MAX_COUNT);
     particleInfos.resize(MAX_COUNT);

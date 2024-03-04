@@ -32,6 +32,7 @@ public:
     void SetActive(bool isActive) { this->isActive = isActive; }
 
     void SetTag(string tag) { this->tag = tag; }
+    string GetTag() { return tag; }
 
     Vector3& Pos() { return localPosition; }
     Vector3& Rot() { return localRotation; }
@@ -40,6 +41,7 @@ public:
     void Save();
     void Load();
 
+    float hate = 0;
 protected:
     string tag;
 

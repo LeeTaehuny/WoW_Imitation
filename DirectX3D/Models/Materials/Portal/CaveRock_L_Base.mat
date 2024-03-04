@@ -1,0 +1,10 @@
+<Material Name="CaveRock_L_Base">
+    <Shader Vertex="" Pixel=""/>
+    <Texture Diffuse="Textures/Model/IceEdge1/ce_arthas_side_2.png" Specular="Textures/Color/White.png" Normal="Textures/Color/White.png"/>
+    <Property Shininess="73.725487" HasNormalMap="0">
+        <Diffuse R="0.56900001" G="0.56900001" B="0.56900001" A="1"/>
+        <Specular R="0.68599999" G="0.68599999" B="0.68599999" A="1"/>
+        <Ambient R="0" G="0" B="0" A="1"/>
+        <Emissive R="0" G="0" B="0" A="1"/>
+    </Property>
+</Material>

@@ -56,7 +56,7 @@ void TerrainData::MakeNormal()
 {
     for (UINT i = 0; i < indices.size() / 3; i++)
     {
-        UINT index0 = indices[i * 3 + 0];
+        UINT index0 = indices[i * 3 + 0]; 
         UINT index1 = indices[i * 3 + 1];
         UINT index2 = indices[i * 3 + 2];
 
@@ -83,11 +83,12 @@ void TerrainData::AlignVertexData()
     {
         for (UINT x = 0; x < width - 1; x++)
         {
-            UINT index0 = width * z + x;
-            UINT index1 = width * z + x + 1;
-            UINT index2 = width * (z + 1) + x;
-            UINT index3 = width * (z + 1) + x + 1;
+            UINT index0 = width * z + x; // 자신
+            UINT index1 = width * z + x + 1; // 우
+            UINT index2 = width * (z + 1) + x; // 하
+            UINT index3 = width * (z + 1) + x + 1; //대각
 
+            
             alignedVertices.push_back(vertices[index0]);
             alignedVertices.push_back(vertices[index1]);
             alignedVertices.push_back(vertices[index2]);

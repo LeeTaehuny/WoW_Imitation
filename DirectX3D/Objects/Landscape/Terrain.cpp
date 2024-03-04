@@ -1,16 +1,23 @@
 #include "Framework.h"
 
 Terrain::Terrain()
-    : GameObject(L"Landscape/Terrain.hlsl"), width(60), height(60)
+    : GameObject(L"Landscape/Terrain.hlsl"), width(256), height(256)
 {    
     material->SetDiffuseMap(L"Textures/Landscape/Dirt2.png");
     //material->SetSpecularMap(L"Textures/Landscape/Fieldstone_SM.tga");
     //material->SetNormalMap(L"Textures/Landscape/Fieldstone_NM.tga");
       
-    heightMap = Texture::Add(L"Textures/HeightMaps/AStarMap.png");
-    alphaMap = Texture::Add(L"Textures/AlphaMaps/TestAlphaMap.png");
+    heightMap = Texture::Add(L"Textures/HeightMaps/TownHeightMap.png");
+    alphaMap = Texture::Add(L"Textures/AlphaMaps/TownAlphaMap.png");
     secondMap = Texture::Add(L"Textures/Landscape/Dirt.png");
     thirdMap = Texture::Add(L"Textures/Landscape/Dirt3.png");
+
+    // Test Adds
+    //material->SetSpecularMap(L"Textures/Landscape/Tile_Ice.png");
+    //heightMap = Texture::Add(L"Textures/HeightMaps/TestTerrain_A.png");
+    //alphaMap = Texture::Add(L"Textures/AlphaMaps/TestTerrain_H.png");
+    //secondMap = Texture::Add(L"Textures/Landscape/Dirt.png");
+    //thirdMap = Texture::Add(L"Textures/Landscape/Dirt3.png");
 
     mesh = new Mesh<VertexType>();
     MakeMesh();
@@ -190,7 +197,7 @@ void Terrain::MakeMesh()
     vector<Float4> pixels;
     heightMap->ReadPixels(pixels);
 
-    //Á¤Á¡ µ¥ÀÌÅÍ
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     vector<VertexType>& vertices = mesh->GetVertices();
 
     vertices.reserve(width * height);
@@ -210,7 +217,7 @@ void Terrain::MakeMesh()
         }
     }
 
-    //Á¤Á¡ ÀÎµ¦½º
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
     vector<UINT>& indices = mesh->GetIndices();
 
     indices.reserve((width - 1) * (height - 1) * 6);

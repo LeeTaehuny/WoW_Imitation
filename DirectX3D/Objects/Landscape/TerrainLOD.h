@@ -18,9 +18,9 @@ private:
 private:
     FloatValueBuffer* terrainBuffer;
     FloatValueBuffer* heightBuffer;
-
+    
     Mesh<VertexType>* mesh;
-
+    
     HullShader* hullShader;
     DomainShader* domainShader;
 

@@ -1,84 +1,29 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
-#include "Scenes/CubeScene.h"
-#include "Scenes/GridScene.h"
-#include "Scenes/SphereScene.h"
 #include "Scenes/TerrainEditorScene.h"
-#include "Scenes/CollisionScene.h"
 #include "Scenes/ModelExportScene.h"
 #include "Scenes/ModelRenderScene.h"
-#include "Scenes/ModelAnimationScene.h"
-#include "Scenes/IntancingScene.h"
-#include "Scenes/HumanScene.h"
-#include "Scenes/GameScene.h"
-#include "Scenes/RenderTargetScene.h"
-#include "Scenes/GBufferScene.h"
-#include "Scenes/ShadowScene.h"
-#include "Scenes/AStarScene.h"
-#include "Scenes/LightScene.h"
-#include "Scenes/BillboardScene.h"
-#include "Scenes/ParticleScene.h"
 #include "Scenes/ParticleConfigScene.h"
-#include "Scenes/MirrorScene.h"
-#include "Scenes/WaterScene.h"
-#include "Scenes/QuadTreeScene.h"
-#include "Scenes/TessellationScene.h"
-#include "Scenes/TerrainLODScene.h"
-
-// ¿À´Ã ÁøÇàµÈ ¼³¸í : ±ËÀû ÆÄÆ¼Å¬, ´Ù¸¥ Æ¯¼ö ÆÄÆ¼Å¬(´«, ½ºÆÄÅ©)
-//                   + ±ËÀû ÆÄÆ¼Å¬ Àû¿ë (ÈÞ¸Õ Å¬·¡½º¿¡ Ãß°¡ÇÔ)
-//                   + ÆÄÆ¼Å¬ ÆÄÀÏ ¼³Á¤¿ë ¾À
-
-// * ÆÄÆ¼Å¬ ¼³Á¤ ¾À -> Æ¯¼öÈ¿°ú°¡ Ãß°¡·Î ÇÊ¿äÇÏ°Å³ª, È¤Àº ±×³É º¹½ÀÇÏ½Ç ºÐÀÌ¶óµµ...
-//                    ±×·± °æ¿ì¿¡ ÇØ´çÇÏ´Â ºÐµéÀº ¹Ù·Î ÇÑ¹ø ½áº¾½Ã´Ù.
+///////////////////////////////////////////
+#include "Scenes/GameScene/SelectScene.h"
+#include "Scenes/GameScene/LichKimgBossScene.h"
+#include "Scenes/GameScene/DungeonScene.h"
+#include "Scenes/GameScene/TownScene.h"
 
 GameManager::GameManager()
 {
     Create();
 
-    SceneManager::Get()->Create("Grid", new GridScene());
-    //SceneManager::Get()->Create("ModelExport", new ModelExportScene());
+    //SceneManager::Get()->Register("ModelExport", new ModelExportScene());
+    //SceneManager::Get()->ChangeScene("ModelExport");    
 
-    //SceneManager::Get()->Create("Cube", new CubeScene());
-    //SceneManager::Get()->Create("Sphere", new SphereScene());
-    //SceneManager::Get()->Create("Terrain", new TerrainEditorScene());
-    //SceneManager::Get()->Create("Collision", new CollisionScene());
-    //SceneManager::Get()->Create("ModelRender", new ModelRenderScene());
-    //SceneManager::Get()->Create("ModelAnimationScene", new ModelAnimationScene());
-    //SceneManager::Get()->Create("Instancing", new IntancingScene());
-    SceneManager::Get()->Create("HumanTest", new HumanScene());
-    //SceneManager::Get()->Create("Game", new GameScene());
-    //SceneManager::Get()->Create("RenderTarget", new RenderTargetScene());
-    //SceneManager::Get()->Create("GeometryBuffer", new GBufferScene());
-    //SceneManager::Get()->Create("ShadowScene", new ShadowScene());
-    //SceneManager::Get()->Create("AStar", new AStarScene());
-    //SceneManager::Get()->Create("LightTest", new LightScene());
-    //SceneManager::Get()->Create("Billboard", new BillboardScene());
-    //SceneManager::Get()->Create("Particle", new ParticleScene());
-    //SceneManager::Get()->Create("ParticleConfig", new ParticleConfigScene());
-    // * ÀÛ¾÷Áß. //SceneManager::Get()->Create("MirrorScene", new MirrorScene());
-    //SceneManager::Get()->Create("WaterScene", new WaterScene());
-    //SceneManager::Get()->Create("QuadTree", new QuadTreeScene());
-    //SceneManager::Get()->Create("Tessellation", new TessellationScene());
-    //SceneManager::Get()->Create("LOD", new TerrainLODScene());
-
-    SceneManager::Get()->Add("Grid");
-    //SceneManager::Get()->Add("ModelExport");
-    SceneManager::Get()->Add("HumanTest");
-    //SceneManager::Get()->Add("Game");
-    //SceneManager::Get()->Add("RenderTarget");
-    //SceneManager::Get()->Add("GeometryBuffer");
-    //SceneManager::Get()->Add("ShadowScene");
-    //SceneManager::Get()->Add("AStar");
-    //SceneManager::Get()->Add("LightTest");
-    //SceneManager::Get()->Add("Billboard");
-    //SceneManager::Get()->Add("Particle");
-    //SceneManager::Get()->Add("ParticleConfig");
-    //SceneManager::Get()->Add("MirrorScene");
-    //SceneManager::Get()->Add("WaterScene");
-    //SceneManager::Get()->Add("QuadTree");
-    //SceneManager::Get()->Add("Tessellation");
-    //SceneManager::Get()->Add("LOD");
+    ///////////////////////////////////////////////////////////////////////////
+    SceneManager::Get()->Register("Select", new SelectScene());
+    SceneManager::Get()->Register("Town", new TownScene());
+    SceneManager::Get()->Register("DungeonScene", new DungeonScene());
+    SceneManager::Get()->Register("Boss", new LichKimgBossScene());
+    
+    SceneManager::Get()->ChangeScene("Select");
 }
 
 GameManager::~GameManager()
@@ -89,8 +34,8 @@ GameManager::~GameManager()
 void GameManager::Update()
 {
     Keyboard::Get()->Update();
-    Timer::Get()->Update();    
-
+    Timer::Get()->Update();
+    Audio::Get()->Update();
     SceneManager::Get()->Update();
 
     Environment::Get()->Update();
@@ -98,10 +43,13 @@ void GameManager::Update()
 
 void GameManager::Render()
 {
-    SceneManager::Get()->PreRender();
+    
     
     Device::Get()->Clear();
     Font::Get()->GetDC()->BeginDraw();
+
+    Environment::Get()->PostSet();
+    SceneManager::Get()->PreRender();
     
     Environment::Get()->Set();    
     SceneManager::Get()->Render();
@@ -114,7 +62,7 @@ void GameManager::Render()
     ImGui::NewFrame();
     
     string fps = "FPS : " + to_string(Timer::Get()->GetFPS());
-    Font::Get()->RenderText(fps, { 100, WIN_HEIGHT - 10 });
+    //Font::Get()->RenderText(fps, { 100, WIN_HEIGHT - 10 });
     
     static bool isActive = true;
 
@@ -143,7 +91,7 @@ void GameManager::Create()
     Observer::Get();
     
     Font::Get()->AddColor("White", 1, 1, 1);
-    Font::Get()->AddStyle("Default", L"¹è´ÞÀÇ¹ÎÁ· ÁÖ¾Æ");
+    Font::Get()->AddStyle("Default", L"ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„");
     
     Font::Get()->SetColor("White");
     Font::Get()->SetStyle("Default");

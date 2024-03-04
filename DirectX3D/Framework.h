@@ -27,12 +27,22 @@
 
 #define DIALOG ImGuiFileDialog::Instance()
 
+#define MONSTER MonsterManager::Get()
+
 #define FOR(n) for(int i = 0; i < n ; i++)
+
+#define SAFE_DEL(p) \
+if (p != nullptr)	\
+{					\
+	delete p;		\
+	p = nullptr;	\
+}					\
 
 #include <windows.h>
 #include <string>
 #include <vector>
 #include <map>
+#include <queue>
 #include <unordered_map>
 #include <functional>
 #include <algorithm>
@@ -157,7 +167,6 @@ using namespace GameMath;
 #include "Objects/Basic/Sphere.h"
 #include "Objects/Basic/Cylinder.h"
 
-#include "Objects/Actor/ActorUI.h"
 #include "Objects/UI/ProgressBar.h"
 
 #include "Objects/Landscape/Terrain.h"
@@ -167,8 +176,6 @@ using namespace GameMath;
 #include "Objects/Landscape/TerrainLOD.h"
 #include "Objects/Landscape/TerrainData.h"
 #include "Objects/Landscape/QuadTreeTerrain.h"
-
-#include "Objects/Static/Reflector.h"
 
 #include "Objects/Particle/ParticleSystem.h"
 #include "Objects/Particle/Particle.h"
@@ -182,19 +189,101 @@ using namespace GameMath;
 #include "Objects/Algorithm/Heap.h"
 #include "Objects/Algorithm/AStar.h"
 
-#include "Objects/Items/Weapons/Crowbar.h"
-#include "Objects/Items/Weapons/Kunai.h"
+// 캐릭터 인스턴싱 버전
+#include "Objects/Character_/CH_Base_ver2.h"
+#include "Objects/Character_/ArmsWarrior_in.h"
+#include "Objects/Character_/FireMage_in.h"
+#include "Objects/Character_/HolyPriest_in.h"
+#include "Objects/Character_/MarksmanshipHunter_in.h"
+#include "Objects/Character_/ProtectionWarrior_in.h"
+#include "Objects/Character_/CH_Manager.h"
 
-#include "Objects/Character/Human.h"
-#include "Objects/Character/Naruto.h"
-#include "Objects/Character/Robot.h"
-#include "Objects/Character/Fox.h"
+// 몬스터
+#include "Objects/Monster/MonsterBase.h"
+#include "Objects/Monster/Skeleton.h"
+#include "Objects/Monster/Skeleton_Knight.h"
+#include "Objects/Monster/Scarecrow.h"
+#include "Objects/Monster/VAlkier.h"
+#include "Objects/Monster/IceBall.h"
+#include "Objects/Monster/MonsterManager.h"
+#include "Objects/Monster/Boss/Boss_LichKing.h"
 
-#include "Objects/Manager/BlockManager.h"
-#include "Objects/Manager/KunaiManager.h"
-#include "Objects/Manager/RobotManager.h"
+#include "Objects/Monster/Boss/Lich_000_Base.h"
+#include "Objects/Monster/Boss/Lich_001_Necrotic_Plague.h"
+#include "Objects/Monster/Boss/Lich_002_Infest.h"
+#include "Objects/Monster/Boss/Lich_003_Summon_Drudge_Ghouls.h"
+#include "Objects/Monster/Boss/Lich_004_Summon_Shambling_Horror.h"
+#include "Objects/Monster/Boss/Lich_005_Remorseless_Winter.h"
+#include "Objects/Monster/Boss/Lick_006_Summon_IceSphere.h"
+#include "Objects/Monster/Boss/Lich_007_Defile.h"
+#include "Objects/Monster/Boss/Lick_008_Summon_Dark_Valkyr.h"
+
+// 스킬 배이스
+#include "Objects/Skills/Base/SkillBase.h"
+
+// 스킬
+#include "Objects/Skills/FireBall.h"
+
+// 화염 마법사 스킬
+#include "Objects/Skills/FireMage_Skill/F_000_Basic_Atttack.h"
+#include "Objects/Skills/FireMage_Skill/F_001_Pyroblast.h"
+#include "Objects/Skills/FireMage_Skill/F_002_FireBlast.h"
+#include "Objects/Skills/FireMage_Skill/F_004_Scorch.h"
+#include "Objects/Skills/FireMage_Skill/F_005_PhoenixFlame.h"
+#include "Objects/Skills/FireMage_Skill/F_009_Combustion.h"
+#include "Objects/Skills/FireMage_Skill/F_010_Meteor.h"
+
+// 무기 전사 스킬
+#include "Objects/Skills/ArmsWarrior_Skill/A_001_MortalStrike.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_002_Overpower.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_004_DiebytheSword.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_007_ColossusSmash.h"
+#include "Objects/Skills/ArmsWarrior_Skill/A_010_Bladestorm.h"
+
+// 보호 성기사 스킬
+#include "Objects/Skills/ProtectionWarrior_Skill/P_001_Avengers_Shield.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_002_HOTR.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_003_Grand_Crusader.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_004_Ardent_Defender.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_005_Barricade_Of_Faith.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_006_Bulwark_Of_Order.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_007_Blessing_of_Spellwarding.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_008_Guardian_Of_Ancient_Kings.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_009_Eye_Of_Tyr.h"
+#include "Objects/Skills/ProtectionWarrior_Skill/P_010_Moment_Of_Glory.h"
+
+// 신성 사제 스킬
+#include "Objects/Skills/HolyPriest_Skill/H_000_Basic_Atttack.h"
+#include "Objects/Skills/HolyPriest_Skill/H_001_Holy_Word_Serenity.h"
+#include "Objects/Skills/HolyPriest_Skill/H_002_Holy_Word_Sanctify.h"
+#include "Objects/Skills/HolyPriest_Skill/H_003_Guardian_Spirit.h"
+#include "Objects/Skills/HolyPriest_Skill/H_004_Holy_Word_Chastise.h"
+#include "Objects/Skills/HolyPriest_Skill/H_005_Censure.h"
+#include "Objects/Skills/HolyPriest_Skill/H_006_Circle_Of_Healing.h"
+#include "Objects/Skills/HolyPriest_Skill/H_007_Cosmic_Ripple.h"
+#include "Objects/Skills/HolyPriest_Skill/H_008_Divine_Hymn.h"
+#include "Objects/Skills/HolyPriest_Skill/H_009_Enlightenment.h"
+#include "Objects/Skills/HolyPriest_Skill/H_010_Everlasting_Light.h"
+
+// 사격 사냥꾼 스킬
+#include "Objects/Skills/MarksmanshipHunter_Skill/Arrow.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/ArrowManager.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_000_Basic_Atttack.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_001_Aimed_Shot.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_002_Crack_Shot.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_003_Rapid_Fire.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_004_Lone_Wolf.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_005_Chimaera_Shot.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_006_Streamline.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_007_Focused_Aim.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_008_Multi_Shot.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_009_Volley.h"
+#include "Objects/Skills/MarksmanshipHunter_Skill/M_010_Wailing_Arrow.h"
 
 #include "Objects/Test/TestLight.h"
+
+#include "Objects/MAP/BossMap.h"
+#include "Objects/MAP/Dungeon.h"
 
 //Scene Header
 #include "Scenes/Scene.h"
