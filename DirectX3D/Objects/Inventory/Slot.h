@@ -24,6 +24,7 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+// Event Func
 private:
 	void OnClick();
 	void OnHover();

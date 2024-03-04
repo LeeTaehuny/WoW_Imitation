@@ -50,6 +50,6 @@ private:
 private:
 	int MAX_COUNT = 28;				// 판매 칸 수
 	class Slot* shopFrame;			// 상점 프레임
-	vector<class Slot*> itemSlots;		// 상점 아이템 슬롯
+	vector<class Slot*> itemSlots;	// 상점 아이템 슬롯
 };
 

@@ -80,11 +80,13 @@ Shop::~Shop()
 
 void Shop::Update()
 {
+	// 플레이어가 10의 거리 이내로 접근하면 상점 UI 오픈
 	if ((CH->GetPlayerData()->GlobalPos() - GlobalPos()).Length() < 10.0f && !Active())
 	{
 		SetActive(true);
 		Audio::Get()->Play("OpenUI", 1.0f);
 	}
+	// 멀어지면 UI 비활성화
 	else if ((CH->GetPlayerData()->GlobalPos() - GlobalPos()).Length() >= 10.0f)
 	{
 		SetActive(false);

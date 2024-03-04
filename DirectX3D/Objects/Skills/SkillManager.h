@@ -19,6 +19,7 @@ public:
 	vector<class SkillBase*> GetSkills() { return skills; }
 
 private:
+	// 스킬트리 생성용 함수 5종
 	void CreateA_SkillTree();
 	void CreateF_SkillTree();
 	void CreateH_SkillTree();

@@ -52,7 +52,7 @@ private:
 	vector<class Item*> inventory;
 
 	// UI
-	int MAX_COUNT = 28;		// 인벤토리 칸 수
+	int MAX_COUNT = 28;				// 인벤토리 칸 수
 	class Slot* invFrame;			// 인벤토리 프레임
 	vector<class Slot*> invSlot;	// 인벤토리 칸
 
