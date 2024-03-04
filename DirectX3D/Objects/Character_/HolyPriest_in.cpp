@@ -303,7 +303,7 @@ void HolyPriest_in::AIUpdate()
 
 			if (characterSelectData)
 			{
-				// ȸ�� ��� ĳ������ ü�� ���� ���ϱ�
+				// 대상 캐릭터의 체력 비율을 내기 위한 코드
 				target_Proportion = characterSelectData->GetStat().hp / characterSelectData->GetStat().maxHp;
 				if (target_Proportion <= 0.6)
 				{

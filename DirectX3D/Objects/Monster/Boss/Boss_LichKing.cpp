@@ -339,6 +339,7 @@ void Boss_LichKing::Hit(float amount)
 void Boss_LichKing::SetState(State state)
 {
 	if (state == curState) return;
+	if (curState == DIE) return;
 	if (state == ATTACK)
 	{
 		Frost->Rot().z = XM_PI * 0.5f;

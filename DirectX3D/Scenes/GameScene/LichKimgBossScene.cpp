@@ -150,6 +150,21 @@ void LichKimgBossScene::Update()
 		}
 	}
 
+	if (!sound_change)
+	{
+		if (!Audio::Get()->IsPlaySound("bossScene_main_bgm"))
+		{
+			Audio::Get()->Play("bossScene_main_bgm");
+		}
+	}
+	else
+	{
+		if (!Audio::Get()->IsPlaySound("bossScene_end"))
+		{
+			Audio::Get()->Play("bossScene_end");
+		}
+	}
+
 	SKILL->Update();
 	vector<CH_Base_ver2*> con = CH->GetCharcterData();
 
