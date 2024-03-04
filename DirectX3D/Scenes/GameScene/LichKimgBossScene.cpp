@@ -119,6 +119,9 @@ void LichKimgBossScene::Start()
 	pop_time = Max_pop_time;
 
 	pop_time = Max_pop_time;
+
+	pldie_first = false;
+	bodie_first = false;
 }
 
 void LichKimgBossScene::Update()
