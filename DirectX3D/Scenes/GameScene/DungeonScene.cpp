@@ -96,7 +96,7 @@ void DungeonScene::Update()
 	MONSTER->Update();
 	SKILL->Update();
 
-	if (CH->GetPlayerData()->GetStat().hp <= 0)
+	if (!CH->GetPlayerData()->Active())
 	{
 		goTown->Update();
 		gaem_end->Update();
@@ -104,7 +104,6 @@ void DungeonScene::Update()
 		if (!sound_change)
 		{
 			sound_change = true;
-			
 		}
 	}
 
@@ -215,7 +214,7 @@ void DungeonScene::Render()
 
 void DungeonScene::PostRender()
 {
-	if (CH->GetPlayerData()->GetStat().hp <= 0)
+	if (!CH->GetPlayerData()->Active())
 	{
 		pop_time -= DELTA;
 		if (pop_time >= 0)
@@ -223,7 +222,7 @@ void DungeonScene::PostRender()
 			return;
 		}
 
-		if (CH->GetPlayerData()->GetStat().hp <= 0 && !Mounga_die)
+		if (!Mounga_die)
 		{
 			die_Gray->Render();
 			back_->Render();

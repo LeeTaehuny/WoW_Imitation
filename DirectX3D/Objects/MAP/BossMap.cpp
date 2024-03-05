@@ -92,6 +92,11 @@ BossMap::BossMap()
 
 	fixeds[0]->Pos().y -= 2.25f;
 	Phase1->SetParent(fixeds[0]);
+	Phase1->SetShader(L"Light/ItemLight.hlsl");
+	for (int i = 0; i < Phase2.size(); i++)
+	{
+		Phase2[i]->SetShader(L"Light/ItemLight.hlsl");
+	}	
 	for (int i = 0; i < Phase2.size(); i++) Phase2[i]->SetParent(fixeds[0]);
 	for (int i = 0; i < fixeds.size(); i++) fixeds[i]->SetParent(fixeds[0]);
 	for (int i = 0; i < disappears.size(); i++) disappears[i]->SetParent(fixeds[0]);
@@ -168,7 +173,7 @@ void BossMap::Render()
 	{
 	case 0:
 		Phase1->Render();
-		GroundColider1->Render();
+		//GroundColider1->Render();
 		for (int i = 0; i < disappears.size(); i++)
 		{
 			disappears[i]->Render();
@@ -182,7 +187,7 @@ void BossMap::Render()
 		break;
 	case 2:
 		Phase1->Render();
-		GroundColider1->Render();
+		//GroundColider1->Render();
 		break;
 	case 3:
 		Phase2[0]->Render();

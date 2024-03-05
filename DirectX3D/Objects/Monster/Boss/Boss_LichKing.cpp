@@ -318,7 +318,6 @@ void Boss_LichKing::Hit(float amount)
 	else
 	{
 		Audio::Get()->Play("bossScene_hit", transform->Pos(), 1.0f);
-		SetState(IDLE);
 	}
 
 	for (int i = 0; i < hitText.size(); i++)
@@ -340,6 +339,7 @@ void Boss_LichKing::SetState(State state)
 {
 	if (state == curState) return;
 	if (curState == DIE) return;
+
 	if (state == ATTACK)
 	{
 		Frost->Rot().z = XM_PI * 0.5f;
@@ -377,7 +377,7 @@ void Boss_LichKing::Moving()
 }
 void Boss_LichKing::Attack()
 {
-	if (curState == HIT || curState == DIE || curState == CASTING || siitpha) return;
+	if (curState == DIE || curState == CASTING || siitpha) return;
 
 	if (curState != ATTACK)
 	{
