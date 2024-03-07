@@ -195,32 +195,30 @@ void P_001_Avengers_Shield::Update()
 				for (int i = 0; i < monster.size(); ++i)
 				{
 					if (three[0] == monster[i] ||
-						three[1] == monster[i] ||
 						!Yad->IsCollision(monster[i]->GetCollider())) continue;
 
-					Vector3 im = monster[i]->GetCollider()->GlobalPos() - three[1]->GetTransform()->GlobalPos();
+					Vector3 im = monster[i]->GetCollider()->GlobalPos() - three[0]->GetTransform()->GlobalPos();
 					float length = abs(im.Length());
 
 					if (min_length >= length)
 					{
 						min_length = length;
-						three[2] = monster[i];
+						three[1] = monster[i];
 					}
 				}
 				monster = MONSTER->GetVAlkier();
 				for (int i = 0; i < monster.size(); ++i)
 				{
 					if (three[0] == monster[i] ||
-						three[1] == monster[i] ||
 						!Yad->IsCollision(monster[i]->GetCollider())) continue;
 
-					Vector3 im = monster[i]->GetCollider()->GlobalPos() - three[1]->GetTransform()->GlobalPos();
+					Vector3 im = monster[i]->GetCollider()->GlobalPos() - three[0]->GetTransform()->GlobalPos();
 					float length = abs(im.Length());
 
 					if (min_length >= length)
 					{
 						min_length = length;
-						three[2] = monster[i];
+						three[1] = monster[i];
 					}
 				}
 
@@ -228,20 +226,19 @@ void P_001_Avengers_Shield::Update()
 				if (lich != nullptr)
 				{
 					if (three[0] == lich ||
-						three[1] == lich ||
 						!Yad->IsCollision(lich->GetCollider()))
 					{
 
 					}
 					else
 					{
-						Vector3 im = lich->GetCollider()->GlobalPos() - three[1]->GetTransform()->GlobalPos();
+						Vector3 im = lich->GetCollider()->GlobalPos() - three[0]->GetTransform()->GlobalPos();
 						float length = abs(im.Length());
 
 						if (min_length >= length)
 						{
 							min_length = length;
-							three[2] = lich;
+							three[1] = lich;
 						}
 					}
 				}
@@ -291,7 +288,7 @@ void P_001_Avengers_Shield::Update()
 					// 0번에 저장된 값과 같은 것이라면 다음으로 진행
 					// 그리고 거리콜라이더와 충돌한 콜라이더만 연산
 					if (three[0] == monster[i] ||
-						three[2] == monster[i] ||
+						three[1] == monster[i] ||
 						!Yad->IsCollision(monster[i]->GetCollider())) continue;
 
 					// 몬스터 콜라이더의 위치값과 지금 타격한 대상의 위치 값의 차를 구함

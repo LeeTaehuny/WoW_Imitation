@@ -114,8 +114,6 @@ private:
     float Max_lasting_time = 1.5f;
     float lasting_time = Max_lasting_time;
 
-    vector<UINT> character_Damage_Data;
-
     // 스킬을 저장하기 위한 벡터
     vector<class Lich_000_Base*> lich_SkillList;
     CH_Base_ver2* target;

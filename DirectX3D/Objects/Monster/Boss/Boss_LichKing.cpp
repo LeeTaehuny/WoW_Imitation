@@ -34,7 +34,7 @@ Boss_LichKing::Boss_LichKing()
 	attackRange = new SphereCollider();
 	attackRange->SetParent(transform);
 	attackRange->Scale() *= 5;
-	
+
 	atk_serch = new SphereCollider();
 	atk_serch->SetParent(transform);
 	atk_serch->Scale() *= 100;
@@ -61,10 +61,6 @@ Boss_LichKing::Boss_LichKing()
 	SetState(IDLE);
 
 	characterData = CH->GetCharcterData();
-	FOR(characterData.size())
-	{
-		character_Damage_Data.push_back(0.0f);
-	}
 
 	lich_SkillList.push_back(new Lich_001_Necrotic_Plague(this));
 	lich_SkillList.push_back(new Lich_002_Infest(this));
@@ -146,7 +142,7 @@ void Boss_LichKing::Update()
 	if (lasting)
 	{
 		lasting_time -= DELTA;
-		if (lasting_time >= 0) 
+		if (lasting_time >= 0)
 		{
 			mainHand->SetWorld(lichking->GetTransformByNode(24));
 			Frost->UpdateWorld();
@@ -165,35 +161,32 @@ void Boss_LichKing::Update()
 		}
 	}
 	// 체력 비율을 내기 위한 변수
-	
-	if (curState != ATTACK)
+
+	switch (phase)
 	{
-		switch (phase)
-		{
-		case 1:
-			phaseOne();
-			break;
+	case 1:
+		phaseOne();
+		break;
 
-		case 2:
-			phaseSait();
-			break;
+	case 2:
+		phaseSait();
+		break;
 
-		case 3:
-			phaseTwo();
-			break;
+	case 3:
+		phaseTwo();
+		break;
 
-		case 4:
-			phaseSait2();
-			break;
+	case 4:
+		phaseSait2();
+		break;
 
-		case 5:
-			phaseThree();
-			break;
+	case 5:
+		phaseThree();
+		break;
 
-		default:
-			break;
-		}
-	}	
+	default:
+		break;
+	}
 
 	Moving();
 	Attack();
@@ -213,7 +206,7 @@ void Boss_LichKing::Update()
 
 void Boss_LichKing::PreRender()
 {
-	
+
 }
 
 void Boss_LichKing::Render()
@@ -228,12 +221,6 @@ void Boss_LichKing::Render()
 	attackRange->Render();
 
 	float Yvalue = 300;
-	FOR(character_Damage_Data.size())
-	{
-		string userData = to_string(character_Damage_Data[i]);
-		Font::Get()->RenderText(userData, { WIN_WIDTH - 20, WIN_HEIGHT - Yvalue });
-		Yvalue += 100;
-	}
 	for (int i = 0; i < lich_SkillList.size(); i++)
 	{
 		lich_SkillList[i]->Render();
@@ -372,7 +359,7 @@ void Boss_LichKing::Moving()
 	Vector3 direction = (target->GlobalPos() - transform->GlobalPos()).GetNormalized();
 
 	transform->Rot().y = atan2(direction.x, direction.z) + XM_PI;
-	transform->Pos() += direction * moveSpeed  * DELTA;
+	transform->Pos() += direction * moveSpeed * DELTA;
 	SetState(WALKING);
 }
 void Boss_LichKing::Attack()
@@ -486,7 +473,7 @@ void Boss_LichKing::End_CAST()
 		}
 		target = lom;
 		lasting = true;
-	}	
+	}
 
 	if (phase == 3 && thr_first == 1)
 	{
@@ -692,7 +679,7 @@ void Boss_LichKing::phaseThree()
 	if (fiv_first != 2) return;
 
 	sumon1 -= DELTA;
-	if (sumon1 <= 0) 
+	if (sumon1 <= 0)
 	{
 		sumon1 = 0;
 		return;
@@ -704,7 +691,7 @@ void Boss_LichKing::phaseThree()
 	}
 
 	skill1 -= DELTA;
-	if (skill1 <= 0) 
+	if (skill1 <= 0)
 	{
 		skill1 = 0;
 		return;
