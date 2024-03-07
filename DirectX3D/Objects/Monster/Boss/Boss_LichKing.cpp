@@ -11,6 +11,7 @@ Boss_LichKing::Boss_LichKing()
 	Audio::Get()->Add("bossScene_iceDown", "Sounds/BossScene/BGM/ice_down.ogg");
 
 	transform = new Transform();
+	transform->Scale() *= 2;
 
 	lichking = new ModelAnimator("LichKing");
 	lichking->SetParent(transform);
