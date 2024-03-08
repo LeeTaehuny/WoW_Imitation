@@ -1,6 +1,9 @@
 ﻿#include "Framework.h"
 #include "H_006_Circle_Of_Healing.h"
 
+#include "Objects/UI/PlayerUI_Bar.h"
+#include "Objects/UI/PartyUI_Bar.h"
+
 H_006_Circle_Of_Healing::H_006_Circle_Of_Healing() : ActiveSkill(SkillType::Target)
 {
 	skillName = "H_006_Circle_Of_Healing";
@@ -132,6 +135,11 @@ void H_006_Circle_Of_Healing::Update()
 					{
 						owner->GetStat().hp = owner->GetStat().maxHp;
 					}
+
+					if (healingTargets[i]->GetcreatureType() == CreatureType::Player)
+						healingTargets[i]->GetPlayerUI()->SetHpPercent(healingTargets[i]->GetStat().hp / healingTargets[i]->GetStat().maxHp);
+					else
+						CH->GetPartyUI()->SetHpPercent(healingTargets[i]->GetStat().hp / healingTargets[i]->GetStat().maxHp, stoi(healingTargets[i]->GetTag().c_str()));
 
 					healingTargets[i] = nullptr;
 					continue;

@@ -1,6 +1,9 @@
 ﻿#include "Framework.h"
 #include "H_002_Holy_Word_Sanctify.h"
 
+#include "Objects/UI/PlayerUI_Bar.h"
+#include "Objects/UI/PartyUI_Bar.h"
+
 H_002_Holy_Word_Sanctify::H_002_Holy_Word_Sanctify() : ActiveSkill(SkillType::NonTarget)
 {
 	skillName = "H_002_Holy_Word_Sanctify";
@@ -120,6 +123,11 @@ void H_002_Holy_Word_Sanctify::Update()
 					{
 						owner->GetStat().hp = owner->GetStat().maxHp;
 					}
+
+					if (healingTargets[i]->GetcreatureType() == CreatureType::Player)
+						healingTargets[i]->GetPlayerUI()->SetHpPercent(healingTargets[i]->GetStat().hp / healingTargets[i]->GetStat().maxHp);
+					else
+						CH->GetPartyUI()->SetHpPercent(healingTargets[i]->GetStat().hp / healingTargets[i]->GetStat().maxHp, stoi(healingTargets[i]->GetTag().c_str()));
 
 					healingTargets[i] = nullptr;
 					continue;

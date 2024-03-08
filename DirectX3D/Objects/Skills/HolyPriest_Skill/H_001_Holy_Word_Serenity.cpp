@@ -1,6 +1,9 @@
 ﻿#include "Framework.h"
 #include "H_001_Holy_Word_Serenity.h"
 
+#include "Objects/UI/PlayerUI_Bar.h"
+#include "Objects/UI/PartyUI_Bar.h"
+
 H_001_Holy_Word_Serenity::H_001_Holy_Word_Serenity() : ActiveSkill(SkillType::Target)
 {
 	skillName = "H_001_Holy_Word_Serenity";
@@ -56,12 +59,17 @@ void H_001_Holy_Word_Serenity::Update()
 			isOne++;
 
 			// 체력을 회복시키고
-			owner->GetStat().hp += skillDamage;
+			healingTarget->GetStat().hp += skillDamage;
 			// 체력이 오버를 했다면 조정
-			if (owner->GetStat().hp >= owner->GetStat().maxHp)
+			if (healingTarget->GetStat().hp >= healingTarget->GetStat().maxHp)
 			{
-				owner->GetStat().hp = owner->GetStat().maxHp;
+				healingTarget->GetStat().hp = healingTarget->GetStat().maxHp;
 			}
+
+			if (healingTarget->GetcreatureType()== CreatureType::Player)
+				healingTarget->GetPlayerUI()->SetHpPercent(healingTarget->GetStat().hp / healingTarget->GetStat().maxHp);
+			else
+				CH->GetPartyUI()->SetHpPercent(healingTarget->GetStat().hp / healingTarget->GetStat().maxHp, stoi(healingTarget->GetTag().c_str()));
 
 			switch (owner->GetcreatureType())
 			{

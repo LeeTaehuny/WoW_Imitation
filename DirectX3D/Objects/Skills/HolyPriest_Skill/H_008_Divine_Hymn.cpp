@@ -109,6 +109,11 @@ void H_008_Divine_Hymn::Update()
 				{
 					owner->GetStat().hp = owner->GetStat().maxHp;
 				}
+
+				if (ch->GetcreatureType() == CreatureType::Player)
+					ch->GetPlayerUI()->SetHpPercent(ch->GetStat().hp / ch->GetStat().maxHp);
+				else
+					CH->GetPartyUI()->SetHpPercent(ch->GetStat().hp / ch->GetStat().maxHp, stoi(ch->GetTag().c_str()));
 			}
 		}
 
@@ -120,7 +125,7 @@ void H_008_Divine_Hymn::Update()
 			
 			if (owner->GetcreatureType() == CreatureType::Player)
 			{
-				owner->GetPlayerUI()->SetMpPercent(owner->GetStat().mp / owner->GetStat().maxMp);
+				owner->GetPlayerUI()->SetMpPercent((float)owner->GetStat().mp / (float)owner->GetStat().maxMp);
 			}
 			
 			if (owner->GetStat().mp <= 0)

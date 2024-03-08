@@ -1,6 +1,9 @@
 ﻿#include "Framework.h"
 #include "H_003_Guardian_Spirit.h"
 
+#include "Objects/UI/PlayerUI_Bar.h"
+#include "Objects/UI/PartyUI_Bar.h"
+
 H_003_Guardian_Spirit::H_003_Guardian_Spirit() : ActiveSkill(SkillType::Target)
 {
 	skillName = "H_003_Guardian_Spirit";
@@ -82,7 +85,7 @@ void H_003_Guardian_Spirit::Update()
 		}
 
 		healingTick -= DELTA;
-		if (healingTick >= Max_healingTick)
+		if (healingTick <= 0)
 		{
 			healingTick = Max_healingTick;
 
@@ -91,6 +94,11 @@ void H_003_Guardian_Spirit::Update()
 			{
 				healingTarget->GetStat().hp = healingTarget->GetStat().maxHp;
 			}
+
+			if (healingTarget->GetcreatureType() == CreatureType::Player)
+				healingTarget->GetPlayerUI()->SetHpPercent(healingTarget->GetStat().hp / healingTarget->GetStat().maxHp);
+			else
+				CH->GetPartyUI()->SetHpPercent(healingTarget->GetStat().hp / healingTarget->GetStat().maxHp, stoi(healingTarget->GetTag().c_str()));
 		}
 
 		// 스탯이 추가되면 이곳에 추가 효과를 주면 됩니다.
@@ -127,7 +135,7 @@ void H_003_Guardian_Spirit::UseSkill(CH_Base_ver2* chbase)
 		owner->GetStat().mp < requiredMp ||
 		!owner->GetWeapon()) return;
 
-	skillDamage = owner->GetStat().damage * 0.0291f;
+	skillDamage = owner->GetStat().damage * 0.2f;
 	owner->GetStat().mp -= requiredMp;
 
 	if (HolyPriest_in* c = dynamic_cast<HolyPriest_in*>(owner))
