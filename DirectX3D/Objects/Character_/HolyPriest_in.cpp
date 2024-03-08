@@ -109,6 +109,12 @@ void HolyPriest_in::Update()
 	// 캐릭터의 액티브가 꺼져있을 경우 업데이트하지 않음
 	if (!Active()) return;
 
+	if (curState == DIE)
+	{
+		ExecuteEvent();
+		return;
+	}
+
 	// 캐릭터의 타입에따라 업데이트를 다르게 함
 	// NPC와 플레이어 구분
 	switch (creatureType)
@@ -193,8 +199,7 @@ void HolyPriest_in::PlayerUpdate()
 
 void HolyPriest_in::AIUpdate()
 {
-	if (!myPlayer) return;
-	if (curState == HIT || curState == DIE) return;
+	if (!myPlayer || curState == HIT) return;
 
 	/* 공격 사운드 */
 	if (one_atk_sound02)
@@ -426,8 +431,8 @@ void HolyPriest_in::Control()
 
 void HolyPriest_in::Moving()
 {
-	// 현재 재생중인 애니메이션이 공격, 죽음, 히트 중 하나일경우 해당 함수를 동작시키지 않음
-	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
+	// 현재 재생중인 애니메이션이 공격, 히트 중 하나일경우 해당 함수를 동작시키지 않음
+	if (curState == ATTACK1 || curState == HIT) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
@@ -548,8 +553,8 @@ void HolyPriest_in::Jump()
 
 void HolyPriest_in::Attack()
 {
-	// 점프, 죽음, 히트, 공격 애니메이션이 실행중이라면 함수 종료
-	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
+	// 점프, 히트, 공격 애니메이션이 실행중이라면 함수 종료
+	if (curState == JUMP || curState == HIT || curState == ATTACK1) return;
 
 	// 무기가 착용되어 있고 타겟이 널이 아닌 경우 공격 가능
 	if (KEY_DOWN(VK_LBUTTON) && weapon != nullptr && targetMonster)
@@ -561,8 +566,8 @@ void HolyPriest_in::Attack()
 
 void HolyPriest_in::ai_attack()
 {
-	// 죽음, 히트, 공격죽이라면 하무 종료
-	if (curState == DIE || curState == HIT || curState == ATTACK1) return;
+	// 히트, 공격죽이라면 하무 종료
+	if (curState == HIT || curState == ATTACK1) return;
 
 	if (heal)
 	{

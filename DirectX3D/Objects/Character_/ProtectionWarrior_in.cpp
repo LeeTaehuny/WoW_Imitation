@@ -100,6 +100,12 @@ void ProtectionWarrior_in::Update()
 	// 액티브 상태가 아니라면 업데이트하지 않음
 	if (!Active()) return;
 
+	if (curState == DIE) 
+	{
+		ExecuteEvent();
+		return;
+	}
+
 	// 플레이어 타입에 따라 업데이트 수행
 	switch (creatureType)
 	{
@@ -197,7 +203,7 @@ void ProtectionWarrior_in::PlayerUpdate()
 void ProtectionWarrior_in::AIUpdate()
 {
 	if (!myPlayer) return;
-	if (curState == HIT || curState == DIE) return;
+	if (curState == HIT) return;
 
 	if (one_atk_sound02)
 	{
@@ -354,8 +360,8 @@ void ProtectionWarrior_in::Control()
 
 void ProtectionWarrior_in::Moving()
 {
-	// 점프, 공격, 맞을 때, 죽었을 경우 움직이지 않기
-	if (curState == ATTACK1 || curState == DIE || curState == HIT || curState == SKILL1) return;
+	// 점프, 공격, 맞을 때 움직이지 않기
+	if (curState == ATTACK1 || curState == HIT || curState == SKILL1) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
@@ -476,8 +482,8 @@ void ProtectionWarrior_in::Jump()
 
 void ProtectionWarrior_in::Attack()
 {
-	// 점프, 사망, 피격, 공격 상태인 경우 리턴
-	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
+	// 점프, 피격, 공격 상태인 경우 리턴
+	if (curState == JUMP || curState == HIT || curState == ATTACK1) return;
 
 	// 인벤토리가 열려있으면 공격 X
 	if (creatureType == CreatureType::Player && inventory->Active()) return;

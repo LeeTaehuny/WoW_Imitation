@@ -105,6 +105,12 @@ void FireMage_in::Update()
 	// 액티브 상태가 아니라면 업데이트하지 않음
 	if (!Active()) return;
 
+	if (curState == DIE)
+	{
+		ExecuteEvent();
+		return;
+	}
+
 	// 플레이어 타입에 따라 업데이트 수행
 	switch (creatureType)
 	{
@@ -198,8 +204,7 @@ void FireMage_in::PlayerUpdate()
 
 void FireMage_in::AIUpdate()
 {
-	if (!myPlayer) return;
-	if (curState == HIT || curState == DIE) return;
+	if (!myPlayer || curState == HIT) return;
 
 	// 지금 공격할 타겟이 없다면
 	if (!atkTarget)
@@ -318,8 +323,8 @@ void FireMage_in::Control()
 
 void FireMage_in::Moving()
 {
-	/* 점프, 공격, 맞을 때, 죽었을 경우 움직이지 않기 */
-	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
+	/* 점프, 공격, 맞을 경우 움직이지 않기 */
+	if (curState == ATTACK1 || curState == HIT) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
@@ -440,8 +445,8 @@ void FireMage_in::Jump()
 
 void FireMage_in::Attack()
 {
-	// 점프, 사망, 피격, 공격 상태라면 리턴
-	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
+	// 점프, 피격, 공격 상태라면 리턴
+	if (curState == JUMP || curState == HIT || curState == ATTACK1) return;
 
 	// 무기가 없으면 리턴
 	if (weapon == nullptr) return;

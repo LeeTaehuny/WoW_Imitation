@@ -104,6 +104,12 @@ void MarksmanshipHunter_in::Update()
 	// 액티브가 꺼져 있다면 함수 종료
 	if (!Active()) return;
 
+	if (curState == DIE)
+	{
+		ExecuteEvent();
+		return;
+	}
+
 	// 캐릭터의 타입에따라 업데이트를 다르게 함
 	// NPC와 플레이어 구분
 	switch (creatureType)
@@ -184,8 +190,7 @@ void MarksmanshipHunter_in::PlayerUpdate()
 
 void MarksmanshipHunter_in::AIUpdate()
 {
-	if (!myPlayer) return;
-	if (curState == HIT || curState == DIE) return;
+	if (!myPlayer || curState == HIT) return;
 
 	if (one_atk_sound02)
 	{
@@ -303,8 +308,8 @@ void MarksmanshipHunter_in::Control()
 
 void MarksmanshipHunter_in::Moving()
 {
-	/* 공격, 죽음, 히트, 캐스팅 애니메이션이 실행중이라면 함수 종료 */
-	if (curState == ATTACK1 || curState == DIE || curState == HIT ||
+	/* 공격, 히트, 캐스팅 애니메이션이 실행중이라면 함수 종료 */
+	if (curState == ATTACK1 || curState == HIT ||
 		curState == SKILL1 || curState == SKILL2) return;
 
 	bool isMoveZ = false;
@@ -426,8 +431,8 @@ void MarksmanshipHunter_in::Jump()
 
 void MarksmanshipHunter_in::Attack()
 {
-	// 점프, 죽음, 히트, 공격 애니메이션이 실행중이라면 함수를 작동시키지 않음
-	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
+	// 점프, 히트, 공격 애니메이션이 실행중이라면 함수를 작동시키지 않음
+	if (curState == JUMP || curState == HIT || curState == ATTACK1) return;
 	if (!weapon) return;
 
 	// 무기가 착용되어 있고 타겟이 널이 아닌 경우 공격 가능
@@ -440,8 +445,8 @@ void MarksmanshipHunter_in::Attack()
 
 void MarksmanshipHunter_in::ai_attack()
 {
-	// 죽음, 히트, 공격 애니메이션이 재생중이라면 함수 종료
-	if (curState == DIE || curState == HIT || curState == ATTACK1) return;
+	// 히트, 공격 애니메이션이 재생중이라면 함수 종료
+	if (curState == HIT || curState == ATTACK1) return;
 
 	ActionTickTime -= DELTA;
 	if (ActionTickTime <= 0)

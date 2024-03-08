@@ -93,6 +93,12 @@ void ArmsWarrior_in::Update()
 	// 액티브 상태가 아니라면 업데이트하지 않음
 	if (!Active()) return;
 
+	if (curState == DIE)
+	{
+		ExecuteEvent();
+		return;
+	}
+
 	// 플레이어 타입에 따라 업데이트 수행
 	switch (creatureType)
 	{
@@ -202,8 +208,7 @@ void ArmsWarrior_in::PlayerUpdate()
 
 void ArmsWarrior_in::AIUpdate()
 {
-	if (!myPlayer) return;
-	if (curState == HIT || curState == DIE) return;
+	if (!myPlayer || curState == HIT) return;
 
 	if (atkGannnnn)
 	{
@@ -360,8 +365,8 @@ void ArmsWarrior_in::Control()
 
 void ArmsWarrior_in::Moving()
 {
-	// 공격, 사망, 피격 중이라면 리턴
-	if (curState == ATTACK1 || curState == DIE || curState == HIT) return;
+	// 공격, 피격 중이라면 리턴
+	if (curState == ATTACK1 || curState == HIT) return;
 
 	bool isMoveZ = false;
 	bool isMoveX = false;
@@ -480,8 +485,8 @@ void ArmsWarrior_in::Jump()
 
 void ArmsWarrior_in::Attack()
 {
-	// 점프, 사망, 피격, 공격 모션 중에는 다시 공격 X
-	if (curState == JUMP || curState == DIE || curState == HIT || curState == ATTACK1) return;
+	// 점프, 피격, 공격 모션 중에는 다시 공격 X
+	if (curState == JUMP || curState == HIT || curState == ATTACK1) return;
 
 	// 인벤토리가 열려있으면 공격 X
 	if (creatureType == CreatureType::Player && inventory->Active()) return;
