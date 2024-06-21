@@ -1,10 +1,10 @@
 # [DirectX11 3D Team Project] WoW_Imitation
 ## 개요
 - 원작 : World of Warcraft
-- 장르 : MMORPG
+- 장르 : RPG
 - 개발 기간 : 5주 (24.01.22 ~ 24.02.29 [기획 & 리소스 수집 및 개발])
 - 개발 인원 : 3인 (김진우, 이태현, 최성빈)
-- 개발 목적 : 전통 RPG를 만들어보며 그래픽스에 대한 공부내용 적용
+- 개발 목적 : 전통 RPG요소를 직접 구현해보며 그래픽스에 대한 공부내용 적용
 - 개발 환경    
     * 사용 언어 : C++    
     * Tool : Visual Studio 2022    
